@@ -35,13 +35,14 @@ export class MapService {
 
       this.map.addImage('stage', img);
 
-      this.map.addSource('point', {
+      this.map.addSource('stage', {
         type: 'geojson',
         data: {
           type: 'FeatureCollection',
           features: [
             {
               type: 'Feature',
+              properties: {name: 'ComaClub'},
               geometry: {
                 type: 'Point',
                 coordinates: coords
@@ -52,16 +53,16 @@ export class MapService {
       });
 
       this.map.addLayer({
-        id: 'points',
+        id: 'stage',
         type: 'symbol',
-        source: 'point',
+        source: 'stage',
         minzoom: 13,
         layout: {
           'icon-image': 'stage',
           'icon-size': [
             'interpolate', ['linear'], ['zoom'],
             13, 0.02,
-            22, 2
+            22, 1.5
           ]
         }
       });
