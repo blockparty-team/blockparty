@@ -45,6 +45,8 @@ GRANT SELECT ON TABLE public.icon TO anon;
 create table if not exists public.day(
 	id uuid not null primary key DEFAULT uuid_generate_v4(),
 	day date not null,
+	name text,
+	description text,
 	inserted_at timestamp with time zone default timezone('utc'::text, now()) not null,
 	public boolean default false
 );
@@ -93,20 +95,40 @@ create table if not exists public.artist (
 	name text,
 	description text,
 	storage_path text,
-	stage_id uuid references public.stage,
-	links jsonb,
+	bandcamp text,
+	spotify text,
+	tidal text,
+	apple_music text,
+	soundcloud text,
+	youtube text,
+	intagram text,
+	facebook text,
+	webpage text,
 	inserted_at timestamp with time zone default timezone('utc'::text, now()) not null,
 	public boolean default false
 );
 
 GRANT SELECT ON TABLE public.artist TO anon;
 
+-- Row level security
+ALTER TABLE artist ENABLE ROW LEVEL SECURITY;
+
+--drop policy anon_can_read_public_artists on artist;
+create policy anon_can_read_public_artists 
+	ON artist 
+	FOR SELECT
+	TO anon 
+	USING (public);
+
+
 -------------
 -- SCHEDULE
 -------------
 create table if not exists public.schedule (
 	id uuid not null primary key DEFAULT uuid_generate_v4(),
-	timerange tstzrange,
+	day_id uuid references public.day not null,
+	start_time timestamp with time zone not null,
+	end_time timestamp with time zone not null,
 	artist_id uuid references public.artist not null,
 	stage_id uuid references public.stage not null,
 	inserted_at timestamp with time zone default timezone('utc'::text, now()) not null,
@@ -115,6 +137,15 @@ create table if not exists public.schedule (
 
 GRANT SELECT ON TABLE public.schedule TO anon;
 
+-- Row level security
+ALTER TABLE public.schedule ENABLE ROW LEVEL SECURITY;
+
+--drop policy anon_can_read_public_schedules on schedule;
+create policy anon_can_read_public_schedules 
+	ON schedule 
+	FOR SELECT
+	TO anon 
+	USING (public);
 
 -------------
 -- ASSET
@@ -140,3 +171,6 @@ GRANT SELECT ON TABLE public.asset TO anon;
 INSERT INTO "storage".buckets (id,"name",public) VALUES
 	('icon','icon',false),
 	('artist','artist',false);
+
+
+
