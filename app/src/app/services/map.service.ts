@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Map } from 'maplibre-gl';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class MapService {
   initMap(): void {
     this.map = new Map({
       container: 'map-container',
-      style: 'https://api.maptiler.com/maps/decadbf9-1a07-4b7b-9726-fed2f003b673/style.json?key=MZCjtFvEvhy0zEdhtmhp',
+      style: environment.maptilerStyleJson,
       center: [12.547927, 55.667071],
       zoom: 15,
       attributionControl: false,
