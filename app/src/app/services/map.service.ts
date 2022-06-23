@@ -17,8 +17,7 @@ export class MapService {
       style: environment.maptilerStyleJson,
       center: [12.547927, 55.667071],
       zoom: 15,
-      attributionControl: false,
-      hash: true
+      attributionControl: false
     });
 
     this.map.on('load', () => {

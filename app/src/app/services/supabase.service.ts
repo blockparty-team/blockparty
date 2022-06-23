@@ -15,7 +15,7 @@ export class SupabaseService {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
-  get artists() {
+  get artists$() {
     return from(
       this.supabase
         .from('artist')
@@ -23,6 +23,18 @@ export class SupabaseService {
         .limit(10)
     ).pipe(
       map(res => res.data)
+    );
+  }
+
+  searchArtist(searchTerm: string) {
+    return from(
+      this.supabase
+        .from('artist')
+        .select()
+        .textSearch('ts', searchTerm, {
+          config: 'english',
+          type: 'plain'
+        })
     );
   }
 }

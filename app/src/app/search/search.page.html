@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>search</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-label position="floating">Search</ion-label>
+    <ion-input [formControl]="searchTerm"></ion-input>
+  </ion-item>
+  <div class="search-results" *ngIf="searchResults$ | async as result">
+    <ion-list>
+      <ion-item *ngFor="let artist of result">
+        <!-- <ion-avatar slot="start">
+          <img src="./avatar-finn.png" />
+        </ion-avatar> -->
+        <ion-label>
+          <h2>{{artist.name}}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <!-- <ng-template #loading></ng-template> -->
+  </div>
+</ion-content>

@@ -18,9 +18,14 @@ const routes: Routes = [
         loadChildren: () => import('../tab-timetable/tab-timetable.module').then(m => m.TabTimetablePageModule)
       },
       {
-        path: 'favorites',
-        title: 'Favorites',
-        loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+        path: 'artist',
+        title: 'Artist',
+        loadChildren: () => import('../tab-artist/tab-artist.module').then( m => m.TabArtistPageModule)
+      },
+      {
+        path: 'search',
+        title: 'Search',
+        loadChildren: () => import('../search/search.module').then(m => m.SearchPageModule)
       },
       {
         path: '',
