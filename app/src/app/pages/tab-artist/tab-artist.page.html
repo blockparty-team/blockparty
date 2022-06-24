@@ -7,7 +7,7 @@
 <ion-content>
   <ng-container *ngIf="artists$ | async as artists">
     <ion-list>
-      <ion-item *ngFor="let artist of artists">
+      <ion-item *ngFor="let artist of artists" [routerLink]="['./', artist.id]">
         <ion-avatar slot="start">
           <img src="assets/map-icons/stage.png" />
         </ion-avatar>

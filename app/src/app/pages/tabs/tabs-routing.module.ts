@@ -20,7 +20,16 @@ const routes: Routes = [
       {
         path: 'artist',
         title: 'Artist',
-        loadChildren: () => import('../tab-artist/tab-artist.module').then( m => m.TabArtistPageModule)
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../tab-artist/tab-artist.module').then( m => m.TabArtistPageModule)
+          },
+          {
+            path: ':id',
+            loadChildren: () => import('../artist-detail/artist-detail.module').then( m => m.ArtistDetailPageModule)
+          }
+        ]
       },
       {
         path: 'search',

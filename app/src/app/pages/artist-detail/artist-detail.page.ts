@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { SupabaseService } from '../services/supabase.service';
+import { SupabaseService } from '../../services/supabase.service';
 
 @Component({
   selector: 'app-artist-detail',
@@ -9,7 +10,10 @@ import { SupabaseService } from '../services/supabase.service';
 })
 export class ArtistDetailPage implements OnInit {
 
-  constructor() { }
+
+  constructor(
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit() {
   }
