@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Artists</ion-title>
+    <ion-title class="ion-text-center">Artists</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -9,7 +9,7 @@
     <ion-list>
       <ion-item *ngFor="let artist of artists" [routerLink]="['./', artist.id]">
         <ion-avatar slot="start">
-          <img src="assets/map-icons/stage.png" />
+          <img [src]="imgUrl(artist.storage_path)" />
         </ion-avatar>
         <ion-label>
           <h2>

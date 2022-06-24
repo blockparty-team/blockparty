@@ -1,9 +1,33 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>artist-detail</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="artist$ | async as artist; else loading">
+  <ion-header>
+    <ion-toolbar translucent>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="tabs/artist"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <ion-img [src]="imgUrl(artist.storage_path)"></ion-img>
+    <div class="artist-info">
+      <h1>{{artist.name}}</h1>
+      <p>{{artist.description}}</p>
+      <div class="actions">
+        <a [href]="artist.intagram" target="_blank">
+          <ion-icon size="large" name="logo-instagram"></ion-icon>
+        </a>
+        <a [href]="artist.soundcloud" target="_blank">
+          <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+        </a>
+        <ion-icon size="large" name="logo-youtube"></ion-icon>
+        <ion-icon size="large" name="play"></ion-icon>
+      </div>
+    </div>
+  </ion-content>
+</ng-container>
 
-<ion-content>
-
-</ion-content>
+<ng-template #loading>
+  <div class="loading">
+    <ion-spinner></ion-spinner>
+  </div>
+</ng-template>

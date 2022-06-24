@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { pathToImageUrl } from '@app/shared/utils';
 import { Observable } from 'rxjs';
-import { SupabaseService } from '../../services/supabase.service';
+import { SupabaseService } from '@app/services/supabase.service';
+import { definitions } from '@app/interfaces/supabase';
 
 @Component({
   selector: 'app-tab-artist',
@@ -9,7 +11,7 @@ import { SupabaseService } from '../../services/supabase.service';
 })
 export class TabArtistPage implements OnInit {
 
-  artists$: Observable<any>;
+  artists$: Observable<definitions['artist'][]>;
 
   constructor(
     private supabaseService: SupabaseService
@@ -17,6 +19,10 @@ export class TabArtistPage implements OnInit {
 
   ngOnInit() {
     this.artists$ = this.supabaseService.artists$;
+  }
+
+  imgUrl(path: string): string {
+    return pathToImageUrl(path);
   }
 
 }
