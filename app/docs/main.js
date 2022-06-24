@@ -20,19 +20,7 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_tabs_tabs_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./tabs/tabs.module */ 5564)).then(m => m.TabsPageModule)
-    },
-    {
-        path: 'search',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_search_search_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./search/search.module */ 4682)).then(m => m.SearchPageModule)
-    },
-    {
-        path: 'artist-detail',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_artist-detail_artist-detail_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./artist-detail/artist-detail.module */ 830)).then(m => m.ArtistDetailPageModule)
-    },
-    {
-        path: 'tab-artist',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_tab-artist_tab-artist_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./tab-artist/tab-artist.module */ 8006)).then(m => m.TabArtistPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_tabs_tabs_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./pages/tabs/tabs.module */ 5557)).then(m => m.TabsPageModule)
     }
 ];
 let AppRoutingModule = class AppRoutingModule {
@@ -76,7 +64,6 @@ let AppComponent = class AppComponent {
         this.supabaseService = supabaseService;
     }
     ngOnInit() {
-        this.supabaseService.artists$.subscribe(console.log);
     }
 };
 AppComponent.ctorParameters = () => [
@@ -164,8 +151,17 @@ let SupabaseService = class SupabaseService {
     get artists$() {
         return (0,rxjs__WEBPACK_IMPORTED_MODULE_2__.from)(this.supabase
             .from('artist')
-            .select('*')
+            .select()
+            .order('name')
             .limit(10)).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(res => res.data));
+    }
+    artist(id) {
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_2__.from)(this.supabase
+            .from('artist')
+            .select()
+            .filter('id', 'eq', id)
+            .single()).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)(res => res.data));
+        ;
     }
     searchArtist(searchTerm) {
         return (0,rxjs__WEBPACK_IMPORTED_MODULE_2__.from)(this.supabase
@@ -175,6 +171,12 @@ let SupabaseService = class SupabaseService {
             config: 'english',
             type: 'plain'
         }));
+    }
+    downloadPhoto(bucket, path) {
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_2__.from)(this.supabase
+            .storage
+            .from(bucket)
+            .download(path));
     }
 };
 SupabaseService.ctorParameters = () => [];

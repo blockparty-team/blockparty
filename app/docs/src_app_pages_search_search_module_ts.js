@@ -1,10 +1,10 @@
 "use strict";
-(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_search_search_module_ts"],{
+(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_pages_search_search_module_ts"],{
 
-/***/ 9730:
-/*!*************************************************!*\
-  !*** ./src/app/search/search-routing.module.ts ***!
-  \*************************************************/
+/***/ 6980:
+/*!*******************************************************!*\
+  !*** ./src/app/pages/search/search-routing.module.ts ***!
+  \*******************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 124);
-/* harmony import */ var _search_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.page */ 5105);
+/* harmony import */ var _search_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.page */ 9166);
 
 
 
@@ -38,10 +38,10 @@ SearchPageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 
 /***/ }),
 
-/***/ 4682:
-/*!*****************************************!*\
-  !*** ./src/app/search/search.module.ts ***!
-  \*****************************************/
+/***/ 281:
+/*!***********************************************!*\
+  !*** ./src/app/pages/search/search.module.ts ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -53,8 +53,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 4666);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _search_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search-routing.module */ 9730);
-/* harmony import */ var _search_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.page */ 5105);
+/* harmony import */ var _search_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search-routing.module */ 6980);
+/* harmony import */ var _search_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.page */ 9166);
 
 
 
@@ -80,10 +80,10 @@ SearchPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 
 /***/ }),
 
-/***/ 5105:
-/*!***************************************!*\
-  !*** ./src/app/search/search.page.ts ***!
-  \***************************************/
+/***/ 9166:
+/*!*********************************************!*\
+  !*** ./src/app/pages/search/search.page.ts ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -91,8 +91,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "SearchPage": () => (/* binding */ SearchPage)
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _search_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.page.html?ngResource */ 463);
-/* harmony import */ var _search_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.page.scss?ngResource */ 9090);
+/* harmony import */ var _search_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.page.html?ngResource */ 2671);
+/* harmony import */ var _search_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.page.scss?ngResource */ 9541);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 823);
@@ -100,7 +100,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 9095);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 6942);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 8759);
-/* harmony import */ var _services_supabase_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../services/supabase.service */ 1829);
+/* harmony import */ var _services_supabase_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/supabase.service */ 1829);
 
 
 
@@ -464,20 +464,20 @@ const async = asyncScheduler;
 
 /***/ }),
 
-/***/ 9090:
-/*!****************************************************!*\
-  !*** ./src/app/search/search.page.scss?ngResource ***!
-  \****************************************************/
+/***/ 9541:
+/*!**********************************************************!*\
+  !*** ./src/app/pages/search/search.page.scss?ngResource ***!
+  \**********************************************************/
 /***/ ((module) => {
 
 module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzZWFyY2gucGFnZS5zY3NzIn0= */";
 
 /***/ }),
 
-/***/ 463:
-/*!****************************************************!*\
-  !*** ./src/app/search/search.page.html?ngResource ***!
-  \****************************************************/
+/***/ 2671:
+/*!**********************************************************!*\
+  !*** ./src/app/pages/search/search.page.html?ngResource ***!
+  \**********************************************************/
 /***/ ((module) => {
 
 module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>search</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-item>\n    <ion-label position=\"floating\">Search</ion-label>\n    <ion-input [formControl]=\"searchTerm\"></ion-input>\n  </ion-item>\n  <div class=\"search-results\" *ngIf=\"searchResults$ | async as result\">\n    <ion-list>\n      <ion-item *ngFor=\"let artist of result\">\n        <!-- <ion-avatar slot=\"start\">\n          <img src=\"./avatar-finn.png\" />\n        </ion-avatar> -->\n        <ion-label>\n          <h2>{{artist.name}}</h2>\n        </ion-label>\n      </ion-item>\n    </ion-list>\n    <!-- <ng-template #loading></ng-template> -->\n  </div>\n</ion-content>\n";
@@ -485,4 +485,4 @@ module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>search</ion-titl
 /***/ })
 
 }]);
-//# sourceMappingURL=src_app_search_search_module_ts.js.map
+//# sourceMappingURL=src_app_pages_search_search_module_ts.js.map

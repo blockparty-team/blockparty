@@ -1,4 +1,167 @@
-(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_tab-map_tab-map_module_ts"],{
+(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_pages_tab-map_tab-map_module_ts"],{
+
+/***/ 5944:
+/*!****************************************************!*\
+  !*** ./src/app/pages/tab-map/map/map.component.ts ***!
+  \****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MapComponent": () => (/* binding */ MapComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _map_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.component.html?ngResource */ 2399);
+/* harmony import */ var _map_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map.component.scss?ngResource */ 6323);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var src_app_services_map_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/map.service */ 9947);
+
+
+
+
+
+let MapComponent = class MapComponent {
+    constructor(mapSerice) {
+        this.mapSerice = mapSerice;
+    }
+    ngOnInit() { }
+    ngAfterViewInit() {
+        this.mapSerice.initMap();
+    }
+};
+MapComponent.ctorParameters = () => [
+    { type: src_app_services_map_service__WEBPACK_IMPORTED_MODULE_2__.MapService }
+];
+MapComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+        selector: 'app-map',
+        template: _map_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_map_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], MapComponent);
+
+
+
+/***/ }),
+
+/***/ 8874:
+/*!*********************************************************!*\
+  !*** ./src/app/pages/tab-map/tab-map-routing.module.ts ***!
+  \*********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TabMapPageRoutingModule": () => (/* binding */ TabMapPageRoutingModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _tab_map_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page */ 2407);
+
+
+
+
+const routes = [
+    {
+        path: '',
+        component: _tab_map_page__WEBPACK_IMPORTED_MODULE_0__.TabMapPage,
+    }
+];
+let TabMapPageRoutingModule = class TabMapPageRoutingModule {
+};
+TabMapPageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule]
+    })
+], TabMapPageRoutingModule);
+
+
+
+/***/ }),
+
+/***/ 9015:
+/*!*************************************************!*\
+  !*** ./src/app/pages/tab-map/tab-map.module.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TabMapPageModule": () => (/* binding */ TabMapPageModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _tab_map_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page */ 2407);
+/* harmony import */ var _tab_map_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-map-routing.module */ 8874);
+/* harmony import */ var _map_map_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./map/map.component */ 5944);
+
+
+
+
+
+
+
+
+let TabMapPageModule = class TabMapPageModule {
+};
+TabMapPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
+        imports: [
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule,
+            _tab_map_routing_module__WEBPACK_IMPORTED_MODULE_1__.TabMapPageRoutingModule
+        ],
+        declarations: [_tab_map_page__WEBPACK_IMPORTED_MODULE_0__.TabMapPage, _map_map_component__WEBPACK_IMPORTED_MODULE_2__.MapComponent]
+    })
+], TabMapPageModule);
+
+
+
+/***/ }),
+
+/***/ 2407:
+/*!***********************************************!*\
+  !*** ./src/app/pages/tab-map/tab-map.page.ts ***!
+  \***********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TabMapPage": () => (/* binding */ TabMapPage)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _tab_map_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page.html?ngResource */ 5279);
+/* harmony import */ var _tab_map_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-map.page.scss?ngResource */ 4222);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+
+
+
+
+let TabMapPage = class TabMapPage {
+    constructor() { }
+};
+TabMapPage.ctorParameters = () => [];
+TabMapPage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+        selector: 'app-tab-map',
+        template: _tab_map_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_tab_map_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], TabMapPage);
+
+
+
+/***/ }),
 
 /***/ 9947:
 /*!*****************************************!*\
@@ -86,173 +249,10 @@ MapService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 
 /***/ }),
 
-/***/ 3676:
-/*!**********************************************!*\
-  !*** ./src/app/tab-map/map/map.component.ts ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "MapComponent": () => (/* binding */ MapComponent)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _map_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./map.component.html?ngResource */ 2938);
-/* harmony import */ var _map_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./map.component.scss?ngResource */ 9812);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var src_app_services_map_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/map.service */ 9947);
-
-
-
-
-
-let MapComponent = class MapComponent {
-    constructor(mapSerice) {
-        this.mapSerice = mapSerice;
-    }
-    ngOnInit() { }
-    ngAfterViewInit() {
-        this.mapSerice.initMap();
-    }
-};
-MapComponent.ctorParameters = () => [
-    { type: src_app_services_map_service__WEBPACK_IMPORTED_MODULE_2__.MapService }
-];
-MapComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
-        selector: 'app-map',
-        template: _map_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_map_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], MapComponent);
-
-
-
-/***/ }),
-
-/***/ 1160:
-/*!***************************************************!*\
-  !*** ./src/app/tab-map/tab-map-routing.module.ts ***!
-  \***************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TabMapPageRoutingModule": () => (/* binding */ TabMapPageRoutingModule)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 124);
-/* harmony import */ var _tab_map_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page */ 238);
-
-
-
-
-const routes = [
-    {
-        path: '',
-        component: _tab_map_page__WEBPACK_IMPORTED_MODULE_0__.TabMapPage,
-    }
-];
-let TabMapPageRoutingModule = class TabMapPageRoutingModule {
-};
-TabMapPageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
-        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forChild(routes)],
-        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule]
-    })
-], TabMapPageRoutingModule);
-
-
-
-/***/ }),
-
-/***/ 1976:
-/*!*******************************************!*\
-  !*** ./src/app/tab-map/tab-map.module.ts ***!
-  \*******************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TabMapPageModule": () => (/* binding */ TabMapPageModule)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 4666);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 2508);
-/* harmony import */ var _tab_map_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page */ 238);
-/* harmony import */ var _tab_map_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-map-routing.module */ 1160);
-/* harmony import */ var _map_map_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./map/map.component */ 3676);
-
-
-
-
-
-
-
-
-let TabMapPageModule = class TabMapPageModule {
-};
-TabMapPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
-        imports: [
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicModule,
-            _angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule,
-            _tab_map_routing_module__WEBPACK_IMPORTED_MODULE_1__.TabMapPageRoutingModule
-        ],
-        declarations: [_tab_map_page__WEBPACK_IMPORTED_MODULE_0__.TabMapPage, _map_map_component__WEBPACK_IMPORTED_MODULE_2__.MapComponent]
-    })
-], TabMapPageModule);
-
-
-
-/***/ }),
-
-/***/ 238:
-/*!*****************************************!*\
-  !*** ./src/app/tab-map/tab-map.page.ts ***!
-  \*****************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "TabMapPage": () => (/* binding */ TabMapPage)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _tab_map_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page.html?ngResource */ 2951);
-/* harmony import */ var _tab_map_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-map.page.scss?ngResource */ 6915);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
-
-
-
-
-let TabMapPage = class TabMapPage {
-    constructor() { }
-};
-TabMapPage.ctorParameters = () => [];
-TabMapPage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
-        selector: 'app-tab-map',
-        template: _tab_map_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
-        styles: [_tab_map_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], TabMapPage);
-
-
-
-/***/ }),
-
-/***/ 9812:
-/*!***********************************************************!*\
-  !*** ./src/app/tab-map/map/map.component.scss?ngResource ***!
-  \***********************************************************/
+/***/ 6323:
+/*!*****************************************************************!*\
+  !*** ./src/app/pages/tab-map/map/map.component.scss?ngResource ***!
+  \*****************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -260,10 +260,10 @@ module.exports = "#map-container {\n  height: 100%;\n  width: 100%;\n}\n/*# sour
 
 /***/ }),
 
-/***/ 6915:
-/*!******************************************************!*\
-  !*** ./src/app/tab-map/tab-map.page.scss?ngResource ***!
-  \******************************************************/
+/***/ 4222:
+/*!************************************************************!*\
+  !*** ./src/app/pages/tab-map/tab-map.page.scss?ngResource ***!
+  \************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -271,10 +271,10 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 2938:
-/*!***********************************************************!*\
-  !*** ./src/app/tab-map/map/map.component.html?ngResource ***!
-  \***********************************************************/
+/***/ 2399:
+/*!*****************************************************************!*\
+  !*** ./src/app/pages/tab-map/map/map.component.html?ngResource ***!
+  \*****************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -282,10 +282,10 @@ module.exports = "<div id=\"map-container\"></div>";
 
 /***/ }),
 
-/***/ 2951:
-/*!******************************************************!*\
-  !*** ./src/app/tab-map/tab-map.page.html?ngResource ***!
-  \******************************************************/
+/***/ 5279:
+/*!************************************************************!*\
+  !*** ./src/app/pages/tab-map/tab-map.page.html?ngResource ***!
+  \************************************************************/
 /***/ ((module) => {
 
 "use strict";
@@ -28620,4 +28620,4 @@ module.exports = "<ion-content [fullscreen]=\"true\">\n  <app-map></app-map>\n</
 /***/ })
 
 }]);
-//# sourceMappingURL=src_app_tab-map_tab-map_module_ts.js.map
+//# sourceMappingURL=src_app_pages_tab-map_tab-map_module_ts.js.map

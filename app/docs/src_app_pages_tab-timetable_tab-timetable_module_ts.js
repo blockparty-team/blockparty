@@ -1,10 +1,10 @@
 "use strict";
-(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_tab-timetable_tab-timetable_module_ts"],{
+(self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_pages_tab-timetable_tab-timetable_module_ts"],{
 
-/***/ 2499:
-/*!***************************************************************!*\
-  !*** ./src/app/tab-timetable/tab-timetable-routing.module.ts ***!
-  \***************************************************************/
+/***/ 3216:
+/*!*********************************************************************!*\
+  !*** ./src/app/pages/tab-timetable/tab-timetable-routing.module.ts ***!
+  \*********************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -14,7 +14,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 124);
-/* harmony import */ var _tab_timetable_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-timetable.page */ 9656);
+/* harmony import */ var _tab_timetable_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-timetable.page */ 4845);
 
 
 
@@ -38,10 +38,10 @@ TabTimetablePageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate
 
 /***/ }),
 
-/***/ 4619:
-/*!*******************************************************!*\
-  !*** ./src/app/tab-timetable/tab-timetable.module.ts ***!
-  \*******************************************************/
+/***/ 5920:
+/*!*************************************************************!*\
+  !*** ./src/app/pages/tab-timetable/tab-timetable.module.ts ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -53,8 +53,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/common */ 4666);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ 2508);
-/* harmony import */ var _tab_timetable_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-timetable.page */ 9656);
-/* harmony import */ var _tab_timetable_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-timetable-routing.module */ 2499);
+/* harmony import */ var _tab_timetable_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-timetable.page */ 4845);
+/* harmony import */ var _tab_timetable_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-timetable-routing.module */ 3216);
 
 
 
@@ -80,10 +80,10 @@ TabTimetablePageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 
 /***/ }),
 
-/***/ 9656:
-/*!*****************************************************!*\
-  !*** ./src/app/tab-timetable/tab-timetable.page.ts ***!
-  \*****************************************************/
+/***/ 4845:
+/*!***********************************************************!*\
+  !*** ./src/app/pages/tab-timetable/tab-timetable.page.ts ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -91,8 +91,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "TabTimetablePage": () => (/* binding */ TabTimetablePage)
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _tab_timetable_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-timetable.page.html?ngResource */ 4697);
-/* harmony import */ var _tab_timetable_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-timetable.page.scss?ngResource */ 7827);
+/* harmony import */ var _tab_timetable_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-timetable.page.html?ngResource */ 4989);
+/* harmony import */ var _tab_timetable_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-timetable.page.scss?ngResource */ 6456);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
 
 
@@ -114,20 +114,20 @@ TabTimetablePage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 
 /***/ }),
 
-/***/ 7827:
-/*!******************************************************************!*\
-  !*** ./src/app/tab-timetable/tab-timetable.page.scss?ngResource ***!
-  \******************************************************************/
+/***/ 6456:
+/*!************************************************************************!*\
+  !*** ./src/app/pages/tab-timetable/tab-timetable.page.scss?ngResource ***!
+  \************************************************************************/
 /***/ ((module) => {
 
 module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0YWItdGltZXRhYmxlLnBhZ2Uuc2NzcyJ9 */";
 
 /***/ }),
 
-/***/ 4697:
-/*!******************************************************************!*\
-  !*** ./src/app/tab-timetable/tab-timetable.page.html?ngResource ***!
-  \******************************************************************/
+/***/ 4989:
+/*!************************************************************************!*\
+  !*** ./src/app/pages/tab-timetable/tab-timetable.page.html?ngResource ***!
+  \************************************************************************/
 /***/ ((module) => {
 
 module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title>\n      Timetable\n    </ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content [fullscreen]=\"true\">\n  Her comes timetable\n</ion-content>\n";
@@ -135,4 +135,4 @@ module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion
 /***/ })
 
 }]);
-//# sourceMappingURL=src_app_tab-timetable_tab-timetable_module_ts.js.map
+//# sourceMappingURL=src_app_pages_tab-timetable_tab-timetable_module_ts.js.map
