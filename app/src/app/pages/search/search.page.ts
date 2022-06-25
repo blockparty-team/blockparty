@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { pathToImageUrl } from '@app/shared/utils';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from '../../services/supabase.service';
@@ -27,6 +28,10 @@ export class SearchPage implements OnInit {
       map(res => res.data),
       tap(console.log)
     );
+  }
+
+  imgUrl(path: string): string {
+    return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
 }

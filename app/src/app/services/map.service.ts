@@ -23,11 +23,11 @@ export class MapService {
     this.map.on('load', () => {
       this.map.resize();
 
-      this.addIcon([12.547927, 55.667071]);
+      this.addStages();
     });
   }
 
-  addIcon(coords: [number, number]): void {
+  addStages(): void {
     this.map.loadImage('assets/map-icons/stage.png', (error, img) => {
       if (error) {
         throw error;
@@ -45,7 +45,21 @@ export class MapService {
               properties: {name: 'ComaClub'},
               geometry: {
                 type: 'Point',
-                coordinates: coords
+                coordinates: [12.547927, 55.667071]
+              }
+            },            {
+              type: 'Feature',
+              properties: {name: 'ComaClub'},
+              geometry: {
+                type: 'Point',
+                coordinates: [12.540923, 55.667300]
+              }
+            },            {
+              type: 'Feature',
+              properties: {name: 'ComaClub'},
+              geometry: {
+                type: 'Point',
+                coordinates: [12.547197, 55.668172]
               }
             }
           ]

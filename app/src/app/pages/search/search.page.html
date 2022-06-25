@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>search</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -7,9 +7,9 @@
 <ion-content fullscreen="">
  <div class="container">
    <div class="filter-badges">
-     <ion-badge color="medium">artists</ion-badge>
-     <ion-badge color="medium">stage</ion-badge>
-     <ion-badge color="medium">event</ion-badge>
+     <ion-badge color="primary">artists</ion-badge>
+     <ion-badge color="secondary">stage</ion-badge>
+     <ion-badge color="tertiary">event</ion-badge>
    </div>
  
    <ion-item>
@@ -19,13 +19,14 @@
  
    <div class="search-results" *ngIf="searchResults$ | async as result">
      <ion-list>
-       <ion-item *ngFor="let artist of result">
+       <ion-item *ngFor="let artist of result" [routerLink]="['/tabs', 'artist', artist.id]">
          <ion-avatar slot="start">
-           <img [src]="artist.storage_path" />
+           <img [src]="imgUrl(artist.storage_path)" />
          </ion-avatar>
          <ion-label>
            <h2>{{artist.name}}</h2>
          </ion-label>
+         <ion-badge slot="end" color="primary">artist</ion-badge>
        </ion-item>
      </ion-list>
    </div>

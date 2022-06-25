@@ -22,8 +22,8 @@
         <a *ngIf="artist.spotify" [href]="artist.spotify" target="_blank">
           <ion-icon size="large" src="assets/so-me-icons/spotify.svg"></ion-icon>
         </a>
-        <a *ngIf="artist.bandcamp" src="assets/so-me-icons/bandcamp.svg" target="_blank">
-          <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+        <a *ngIf="artist.bandcamp" [href]="artist.bandcamp" target="_blank">
+          <ion-icon size="large" src="assets/so-me-icons/bandcamp.svg"></ion-icon>
         </a>
         <a *ngIf="artist.apple_music" [href]="artist.apple_music" target="_blank">
           <ion-icon size="large" name="logo-soundcloud"></ion-icon>

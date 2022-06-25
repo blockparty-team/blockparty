@@ -1,6 +1,11 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title class="ion-text-center">Artists</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="heart"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,8 +23,7 @@
           <p>{{artist.description}}</p>
         </ion-label>
         <div slot="end" class="actions">
-          <ion-icon name="location"></ion-icon>
-          <ion-icon name="heart"></ion-icon>
+          <ion-icon name="heart-outline"></ion-icon>
         </div>
       </ion-item>
     </ion-list>

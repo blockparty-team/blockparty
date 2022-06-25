@@ -28,7 +28,7 @@ export class ArtistDetailPage implements OnInit {
   }
 
   imgUrl(path: string): string {
-    return pathToImageUrl(path);
+    return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
 }
