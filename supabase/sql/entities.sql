@@ -105,7 +105,7 @@ create table if not exists public.artist (
 	apple_music text,
 	soundcloud text,
 	youtube text,
-	intagram text,
+	instagram text,
 	facebook text,
 	webpage text,
 	inserted_at timestamp with time zone default now() not null,

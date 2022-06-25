@@ -225,7 +225,7 @@ export interface paths {
           apple_music?: parameters['rowFilter.artist.apple_music'];
           soundcloud?: parameters['rowFilter.artist.soundcloud'];
           youtube?: parameters['rowFilter.artist.youtube'];
-          intagram?: parameters['rowFilter.artist.intagram'];
+          instagram?: parameters['rowFilter.artist.instagram'];
           facebook?: parameters['rowFilter.artist.facebook'];
           webpage?: parameters['rowFilter.artist.webpage'];
           inserted_at?: parameters['rowFilter.artist.inserted_at'];
@@ -291,7 +291,7 @@ export interface paths {
           apple_music?: parameters['rowFilter.artist.apple_music'];
           soundcloud?: parameters['rowFilter.artist.soundcloud'];
           youtube?: parameters['rowFilter.artist.youtube'];
-          intagram?: parameters['rowFilter.artist.intagram'];
+          instagram?: parameters['rowFilter.artist.instagram'];
           facebook?: parameters['rowFilter.artist.facebook'];
           webpage?: parameters['rowFilter.artist.webpage'];
           inserted_at?: parameters['rowFilter.artist.inserted_at'];
@@ -321,7 +321,7 @@ export interface paths {
           apple_music?: parameters['rowFilter.artist.apple_music'];
           soundcloud?: parameters['rowFilter.artist.soundcloud'];
           youtube?: parameters['rowFilter.artist.youtube'];
-          intagram?: parameters['rowFilter.artist.intagram'];
+          instagram?: parameters['rowFilter.artist.instagram'];
           facebook?: parameters['rowFilter.artist.facebook'];
           webpage?: parameters['rowFilter.artist.webpage'];
           inserted_at?: parameters['rowFilter.artist.inserted_at'];
@@ -993,7 +993,7 @@ export interface definitions {
     /** Format: text */
     youtube?: string;
     /** Format: text */
-    intagram?: string;
+    instagram?: string;
     /** Format: text */
     facebook?: string;
     /** Format: text */
@@ -1302,7 +1302,7 @@ export interface parameters {
   /** Format: text */
   'rowFilter.artist.youtube': string;
   /** Format: text */
-  'rowFilter.artist.intagram': string;
+  'rowFilter.artist.instagram': string;
   /** Format: text */
   'rowFilter.artist.facebook': string;
   /** Format: text */
