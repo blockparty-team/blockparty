@@ -1,0 +1,13 @@
+.container {
+    padding: 30px 10px 10px 10px;
+
+    .filter-badges {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        ion-badge {
+            margin: 5px;
+        }
+    }
+}

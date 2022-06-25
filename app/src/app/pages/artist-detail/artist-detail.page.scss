@@ -9,6 +9,10 @@ ion-toolbar, ion- {
     .actions {
         display: flex;
         justify-content: space-evenly;
+
+        a {
+            color: black
+        }
     }
 }
 
@@ -18,4 +22,5 @@ ion-toolbar, ion- {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-x: auto;
 }

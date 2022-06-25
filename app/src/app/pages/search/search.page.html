@@ -4,22 +4,34 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-item>
-    <ion-label position="floating">Search</ion-label>
-    <ion-input [formControl]="searchTerm"></ion-input>
-  </ion-item>
-  <div class="search-results" *ngIf="searchResults$ | async as result">
-    <ion-list>
-      <ion-item *ngFor="let artist of result">
-        <!-- <ion-avatar slot="start">
-          <img src="./avatar-finn.png" />
-        </ion-avatar> -->
-        <ion-label>
-          <h2>{{artist.name}}</h2>
-        </ion-label>
-      </ion-item>
-    </ion-list>
-    <!-- <ng-template #loading></ng-template> -->
-  </div>
+<ion-content fullscreen="">
+ <div class="container">
+   <div class="filter-badges">
+     <ion-badge color="medium">artists</ion-badge>
+     <ion-badge color="medium">stage</ion-badge>
+     <ion-badge color="medium">event</ion-badge>
+   </div>
+ 
+   <ion-item>
+     <ion-label position="floating">Search</ion-label>
+     <ion-input [formControl]="searchTerm"></ion-input>
+   </ion-item>
+ 
+   <div class="search-results" *ngIf="searchResults$ | async as result">
+     <ion-list>
+       <ion-item *ngFor="let artist of result">
+         <ion-avatar slot="start">
+           <img [src]="artist.storage_path" />
+         </ion-avatar>
+         <ion-label>
+           <h2>{{artist.name}}</h2>
+         </ion-label>
+       </ion-item>
+     </ion-list>
+   </div>
+ </div>
 </ion-content>
+
+<!-- <ng-template #loading>
+  <ion-spinner></ion-spinner>
+</ng-template> -->

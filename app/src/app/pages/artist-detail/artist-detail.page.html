@@ -13,14 +13,27 @@
       <h1>{{artist.name}}</h1>
       <p>{{artist.description}}</p>
       <div class="actions">
-        <a [href]="artist.intagram" target="_blank">
+        <a *ngIf="artist.instagram" [href]="artist.instagram" target="_blank">
           <ion-icon size="large" name="logo-instagram"></ion-icon>
         </a>
-        <a [href]="artist.soundcloud" target="_blank">
+        <a *ngIf="artist.soundcloud" [href]="artist.soundcloud" target="_blank">
           <ion-icon size="large" name="logo-soundcloud"></ion-icon>
         </a>
-        <ion-icon size="large" name="logo-youtube"></ion-icon>
-        <ion-icon size="large" name="play"></ion-icon>
+        <a *ngIf="artist.spotify" [href]="artist.spotify" target="_blank">
+          <ion-icon size="large" src="assets/so-me-icons/spotify.svg"></ion-icon>
+        </a>
+        <a *ngIf="artist.bandcamp" src="assets/so-me-icons/bandcamp.svg" target="_blank">
+          <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+        </a>
+        <a *ngIf="artist.apple_music" [href]="artist.apple_music" target="_blank">
+          <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+        </a>
+        <a *ngIf="artist.tidal" [href]="artist.tidal" target="_blank">
+          <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+        </a>
+        <a *ngIf="artist.youtube" [href]="artist.youtube" target="_blank">
+          <ion-icon size="large" name="logo-youtube"></ion-icon>
+        </a>
       </div>
     </div>
   </ion-content>
