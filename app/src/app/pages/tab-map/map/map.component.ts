@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { MapService } from 'src/app/services/map.service';
 
 @Component({
@@ -6,13 +6,11 @@ import { MapService } from 'src/app/services/map.service';
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss'],
 })
-export class MapComponent implements OnInit, AfterViewInit {
+export class MapComponent implements AfterViewInit {
 
   constructor(
-    private mapSerice: MapService
+    private mapSerice: MapService,
   ) { }
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.mapSerice.initMap();

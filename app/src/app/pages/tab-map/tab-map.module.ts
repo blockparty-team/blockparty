@@ -6,6 +6,7 @@ import { TabMapPage } from './tab-map.page';
 
 import { TabMapPageRoutingModule } from './tab-map-routing.module';
 import { MapComponent } from './map/map.component';
+import { StageTimetableModalComponent } from '@app/components/stage-timetable-modal/stage-timetable-modal.component';
 
 @NgModule({
   imports: [
@@ -14,6 +15,6 @@ import { MapComponent } from './map/map.component';
     FormsModule,
     TabMapPageRoutingModule
   ],
-  declarations: [TabMapPage, MapComponent]
+  declarations: [TabMapPage, MapComponent, StageTimetableModalComponent]
 })
 export class TabMapPageModule {}

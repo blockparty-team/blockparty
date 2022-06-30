@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { createClient, SupabaseClient} from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { from, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { definitions } from '../interfaces/supabase';
 
@@ -9,15 +9,15 @@ import { definitions } from '../interfaces/supabase';
   providedIn: 'root'
 })
 export class SupabaseService {
-  private supabase: SupabaseClient;
+  private client: SupabaseClient;
 
   constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey);
+    this.client = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
   get artists$(): Observable<definitions['artist'][]> {
     return from(
-      this.supabase
+      this.client
         .from<definitions['artist']>('artist')
         .select()
         .order('name')
@@ -29,7 +29,7 @@ export class SupabaseService {
 
   artist(id: string): Observable<definitions['artist']> {
     return from(
-      this.supabase
+      this.client
         .from<definitions['artist']>('artist')
         .select()
         .filter('id', 'eq', id)
@@ -41,7 +41,7 @@ export class SupabaseService {
 
   searchArtist(searchTerm: string) {
     return from(
-      this.supabase
+      this.client
         .from('artist')
         .select()
         .textSearch('ts', searchTerm, {
@@ -51,12 +51,42 @@ export class SupabaseService {
     );
   }
 
+  stageTimeTable(stageId: string) {
+    return from(
+      this.client
+        .from<definitions['timetable']>('timetable')
+        .select(`
+          start_time,
+          end_time,
+          artist(
+            id,
+            name
+          ),
+          stage(
+            name
+          )
+        `)
+        .filter('stage_id', 'eq', stageId)
+        .order('start_time')
+    );
+  }
+
   downloadPhoto(bucket: string, path: string) {
     return from(
-      this.supabase
+      this.client
         .storage
         .from(bucket)
         .download(path)
     );
   }
+
+  //RPC
+  tableAsGeojson(table: keyof definitions) {
+    return from(
+      this.client.rpc('table_as_geojson', {_tbl: table})
+    ).pipe(
+      pluck('data', 'geojson')
+    );
+  }
+
 }

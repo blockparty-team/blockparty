@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="(timetable$ | async) as timetable">{{timetable[0].stage.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="onDismissModal()" [strong]="true">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ng-container *ngIf="timetable$ | async as timetable; else loading;">
+    <ion-item *ngFor="let act of timetable">
+      <span slot="start">
+        {{act?.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
+      </span>
+      <ion-label (click)="onGoToArtist(act.artist.id)">
+        {{act.artist.name}}
+      </ion-label>
+    </ion-item>
+  </ng-container>
+
+  <ng-template #loading>
+    <ion-spinner></ion-spinner>
+  </ng-template>
+
+</ion-content>

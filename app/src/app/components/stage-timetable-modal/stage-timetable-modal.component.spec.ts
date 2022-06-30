@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { StageTimetableModalPage } from './stage-timetable-modal.page';
+import { StageTimetableModalComponent } from './stage-timetable-modal.component';
 
-describe('StageTimetableModalPage', () => {
-  let component: StageTimetableModalPage;
-  let fixture: ComponentFixture<StageTimetableModalPage>;
+describe('StageTimetableModalComponent', () => {
+  let component: StageTimetableModalComponent;
+  let fixture: ComponentFixture<StageTimetableModalComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ StageTimetableModalPage ],
+      declarations: [ StageTimetableModalComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(StageTimetableModalPage);
+    fixture = TestBed.createComponent(StageTimetableModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

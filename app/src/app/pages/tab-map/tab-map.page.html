@@ -1,3 +1,39 @@
 <ion-content [fullscreen]="true">
   <app-map></app-map>
+  <!-- <ng-container *ngIf="timetable$ | async as timetable"></ng-container>
+
+  <ion-modal #modal [isOpen]="showTimetableModal$ | async" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+
+    <ng-template>
+      <ng-container *ngIf="timetable$ | async as timetable; else loading;">
+        <ion-header>
+          <ion-toolbar>
+            <ion-title>{{timetable[0]?.stage.name}}</ion-title>
+            <ion-buttons slot="end">
+              <ion-button (click)="modal.dismiss()" [strong]="true">
+                <ion-icon name="close"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+
+        <ion-content class="ion-padding">
+          <ion-item *ngFor="let act of timetable">
+            <span slot="start">
+              {{act?.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
+            </span>
+            <ion-label>
+              {{act?.artist.name}}
+            </ion-label>
+          </ion-item>
+        </ion-content>
+      </ng-container>
+
+      <ng-template #loading>
+        <ion-spinner></ion-spinner>
+      </ng-template>
+    </ng-template>
+
+  </ion-modal> -->
+
 </ion-content>

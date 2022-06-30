@@ -186,6 +186,30 @@ INSERT INTO "storage".buckets (id,"name",public) VALUES
 
 
 -----------------------
+-- RPC
+-----------------------
+
+
+
+-- table as geojson
+CREATE OR REPLACE FUNCTION table_as_geojson(_tbl regclass, OUT geojson json)
+    LANGUAGE plpgsql AS
+$func$
+BEGIN
+   EXECUTE format('
+	SELECT 
+		  json_build_object(
+		    ''type'', ''FeatureCollection'',
+		    ''features'', json_agg(ST_AsGeoJSON(s.*)::json)
+		  )
+	FROM %s as s', _tbl)
+   INTO geojson;
+END
+$func$;
+
+
+
+-----------------------
 -- Auditlog
 -----------------------
 -- Source https://supabase.com/blog/2022/03/08/audit 
@@ -374,6 +398,7 @@ select audit.enable_tracking('public.event');
 select audit.enable_tracking('public.icon');
 select audit.enable_tracking('public.stage');
 select audit.enable_tracking('public.timetable');
+
 
 
 
