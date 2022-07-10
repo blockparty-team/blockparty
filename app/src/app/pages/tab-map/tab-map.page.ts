@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StageTimetableModalComponent } from '@app/components/stage-timetable-modal/stage-timetable-modal.component';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { SupabaseService } from '@app/services/supabase.service';
-import { UiStateService } from '@app/services/ui-state.service';
+import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
 import { empty, from, Observable } from 'rxjs';
 import { catchError, filter, finalize, map, mapTo, pluck, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
@@ -20,18 +20,15 @@ export class TabMapPage implements OnInit {
   showTimetableModal$: Observable<boolean>;
 
   constructor(
-    private uiStateService: UiStateService,
+    private mapStateService: MapStateService,
     private supabaseService: SupabaseService,
     private modalCtrl: ModalController
   ) { }
 
   ngOnInit(): void {
-    this.uiStateService.selectedMapFeatures$.pipe(
+    this.mapStateService.selectedMapFeatures$.pipe(
       filter(features => !!features),
-      switchMap(features => this.openFeatureInfoModal(features[0])),
-      // switchMap(stage => this.supabaseService.stageTimeTable(stage[0].id)),
-      pluck('data'),
-      finalize(() => console.log('asdf'))
+      switchMap(features => this.openFeatureInfoModal(features[0]))
     ).subscribe();
 
     this.supabaseService.allEntities().subscribe(console.log);

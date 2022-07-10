@@ -7,7 +7,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class UiStateService {
+export class MapStateService {
 
   private _selectedMapFeatures$ = new BehaviorSubject<MapClickedFeature[]>(null);
   selectedMapFeatures$: Observable<MapClickedFeature[]> = this._selectedMapFeatures$.asObservable();

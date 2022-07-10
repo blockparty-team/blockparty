@@ -1,31 +1,39 @@
-<ion-header>
-  <ion-toolbar color="primary">
-    <ion-title *ngIf="(timetable$ | async) as timetable">{{timetable[0].stage.name}}</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="compass-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="onDismissModal()" [strong]="true">
-        <ion-icon name="close"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="timetable$ | async as timetable; else loading;">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>{{timetable[0].stage.name}}</ion-title>
+      <ion-buttons slot="end">
+        <ng-container *ngIf="location$ | async as location">
+          <ion-button (click)="onDirectionsTo(location)">
+            <ion-icon name="compass-outline"></ion-icon>
+          </ion-button>
+        </ng-container>
+        <ion-button (click)="onDismissModal()" [strong]="true">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+      <ion-item *ngFor="let act of timetable">
+        <span slot="start">
+          {{act?.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
+        </span>
+        <ion-label (click)="onGoToArtist(act.artist.id)">
+          {{act.artist.name}}
+        </ion-label>
+      </ion-item>
+  </ion-content>
 
-<ion-content class="ion-padding">
-  <ng-container *ngIf="timetable$ | async as timetable; else loading;">
-    <ion-item *ngFor="let act of timetable">
-      <span slot="start">
-        {{act?.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
-      </span>
-      <ion-label (click)="onGoToArtist(act.artist.id)">
-        {{act.artist.name}}
-      </ion-label>
-    </ion-item>
-  </ng-container>
+</ng-container>
 
-  <ng-template #loading>
+<ng-template #loading>
+  <ion-header>
+    <ion-toolbar color="primary">
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
     <ion-spinner></ion-spinner>
-  </ng-template>
-
-</ion-content>
+  </ion-content>
+</ng-template>

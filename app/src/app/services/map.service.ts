@@ -4,8 +4,9 @@ import { MapLayer } from '@app/interfaces/map-layer';
 import { Map, MapMouseEvent } from 'maplibre-gl';
 import { environment } from 'src/environments/environment';
 import { SupabaseService } from './supabase.service';
-import { UiStateService } from './ui-state.service';
+import { MapStateService } from '../pages/tab-map/state/map-state.service';
 import { tap } from 'rxjs/operators';
+import { Feature, Point, Polygon } from 'geojson';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class MapService {
   private map: Map;
 
   constructor(
-    private uiStateService: UiStateService,
+    private mapStateService: MapStateService,
     private supabaseService: SupabaseService
   ) { }
 
@@ -45,10 +46,11 @@ export class MapService {
       if (e.features.length > 0) {
         const features: MapClickedFeature[] = e.features.map(feature => ({
           id: feature.properties.id,
-          layerName
+          layerName,
+          geometry: feature.geometry as any
         }));
 
-        this.uiStateService.selectedMapFeatures(features);
+        this.mapStateService.selectedMapFeatures(features);
       }
     });
 

@@ -101,6 +101,8 @@ export class SupabaseService {
         `)
         .filter('stage_id', 'eq', stageId)
         .order('start_time')
+    ).pipe(
+      pluck('data')
     );
   }
 
