@@ -50,7 +50,7 @@ export class StageTimetableModalComponent implements OnInit {
 
   onDirectionsTo(coords: [number, number]): void {
 
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${coords[0]},${coords[1]}`;
+    const url = `https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${coords[0]},${coords[1]}`;
 
     window.open(url, '_blank');
   }
