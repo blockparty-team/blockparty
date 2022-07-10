@@ -2,8 +2,10 @@
 ALTER DATABASE postgres SET timezone TO 'Europe/Copenhagen';
 SELECT pg_reload_conf();
 
+-- Extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS postgis;
+create extension if not exists PG_TRGM;
 
 -- Create mask 
 create materialized view public.mask as
@@ -189,8 +191,6 @@ INSERT INTO "storage".buckets (id,"name",public) VALUES
 -- RPC
 -----------------------
 
-
-
 -- table as geojson
 CREATE OR REPLACE FUNCTION table_as_geojson(_tbl regclass, OUT geojson json)
     LANGUAGE plpgsql AS
@@ -207,6 +207,9 @@ BEGIN
 END
 $func$;
 
+
+select to_tsquery() 
+from artist a 
 
 
 -----------------------

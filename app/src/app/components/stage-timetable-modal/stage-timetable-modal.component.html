@@ -2,6 +2,9 @@
   <ion-toolbar color="primary">
     <ion-title *ngIf="(timetable$ | async) as timetable">{{timetable[0].stage.name}}</ion-title>
     <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="compass-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="onDismissModal()" [strong]="true">
         <ion-icon name="close"></ion-icon>
       </ion-button>

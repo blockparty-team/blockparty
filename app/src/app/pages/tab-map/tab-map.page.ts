@@ -34,17 +34,7 @@ export class TabMapPage implements OnInit {
       finalize(() => console.log('asdf'))
     ).subscribe();
 
-    // this.showTimetableModal$ = this.timetable$.pipe(
-    //   startWith(false),
-    //   tap(console.log),
-    //   filter(timetable => !!timetable),
-    //   mapTo(true),
-    //   tap(console.log),
-    //   catchError(err => {
-    //     console.log(err);
-    //     return empty();
-    //   })
-    // );
+    this.supabaseService.allEntities().subscribe(console.log);
   }
 
   openFeatureInfoModal(mapFeature: MapClickedFeature) {

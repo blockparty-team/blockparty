@@ -27,6 +27,39 @@ export class SupabaseService {
     );
   }
 
+  allEntities(): Observable<any> {
+    return from(
+      this.client
+        .from<definitions['day']>('day')
+        .select(`
+          id,
+          day,
+          name,
+          description,
+          event(
+            id,
+            name,
+            description,
+            stage(
+              id,
+              name, 
+              description,
+              timetable(
+                id,
+                start_time,
+                end_time,
+                artist(
+                  *
+                )
+
+              )
+            )
+          )
+        `)
+
+    );
+  }
+
   artist(id: string): Observable<definitions['artist']> {
     return from(
       this.client
@@ -83,7 +116,7 @@ export class SupabaseService {
   //RPC
   tableAsGeojson(table: keyof definitions) {
     return from(
-      this.client.rpc('table_as_geojson', {_tbl: table})
+      this.client.rpc('table_as_geojson', { _tbl: table })
     ).pipe(
       pluck('data', 'geojson')
     );
