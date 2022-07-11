@@ -5,32 +5,41 @@
 </ion-header>
 
 <ion-content fullscreen="">
- <div class="container">
-   <div class="filter-badges">
-     <ion-badge color="primary">artists</ion-badge>
-     <ion-badge color="secondary">stage</ion-badge>
-     <ion-badge color="tertiary">event</ion-badge>
-   </div>
- 
-   <ion-item>
-     <ion-label position="floating">Search</ion-label>
-     <ion-input [formControl]="searchTerm"></ion-input>
-   </ion-item>
- 
-   <div class="search-results" *ngIf="searchResults$ | async as result">
-     <ion-list>
-       <ion-item *ngFor="let artist of result" [routerLink]="['/tabs', 'artist', artist.id]">
-         <ion-avatar slot="start">
-           <img [src]="imgUrl(artist.storage_path)" />
-         </ion-avatar>
-         <ion-label>
-           <h2>{{artist.name}}</h2>
-         </ion-label>
-         <ion-badge slot="end" color="primary">artist</ion-badge>
-       </ion-item>
-     </ion-list>
-   </div>
- </div>
+  <div class="container">
+
+    <div class="search-mode">
+      <ion-segment mode="ios" value="all">
+        <ion-segment-button value="all">
+          <ion-label>All</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="near_by">
+          <ion-label>Near by</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+
+    <ion-searchbar [formControl]="searchTerm"></ion-searchbar>
+
+    <div class="filter-badges">
+      <ion-badge color="primary">artists</ion-badge>
+      <ion-badge color="secondary">stage</ion-badge>
+      <ion-badge color="tertiary">event</ion-badge>
+    </div>
+
+    <div class="search-results" *ngIf="searchResults$ | async as result">
+      <ion-list>
+        <ion-item *ngFor="let artist of result" [routerLink]="['/tabs', 'artist', artist.id]">
+          <ion-avatar slot="start">
+            <img [src]="imgUrl(artist.storage_path)" />
+          </ion-avatar>
+          <ion-label>
+            <h2>{{artist.name}}</h2>
+          </ion-label>
+          <ion-badge slot="end" color="primary">artist</ion-badge>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
 </ion-content>
 
 <!-- <ng-template #loading>

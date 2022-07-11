@@ -20,7 +20,7 @@
           <h2>
             {{artist.name}}
           </h2>
-          <p>{{artist.description}}</p>
+          <p>{{artist.timetable[0]?.day.name}}, {{artist.timetable[0]?.start_time | date:'HH:mm'}}, {{artist.timetable[0]?.stage.name}}</p>
         </ion-label>
         <div slot="end" class="actions">
           <ion-icon name="heart-outline"></ion-icon>

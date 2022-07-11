@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { from, Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
@@ -19,7 +20,22 @@ export class SupabaseService {
     return from(
       this.client
         .from<definitions['artist']>('artist')
-        .select()
+        .select(`
+          id,
+          name,
+          description,
+          storage_path,
+          timetable(
+            start_time,
+            end_time,
+            day(
+              name
+            ),
+            stage(
+              name
+            )
+          )
+        `)
         .order('name')
         .limit(10)
     ).pipe(
@@ -27,10 +43,10 @@ export class SupabaseService {
     );
   }
 
-  allEntities(): Observable<any> {
+  allEntities(): Observable<DayWithRelations[]> {
     return from(
       this.client
-        .from<definitions['day']>('day')
+        .from<DayWithRelations>('day')
         .select(`
           id,
           day,
@@ -56,7 +72,8 @@ export class SupabaseService {
             )
           )
         `)
-
+    ).pipe(
+      pluck('data')
     );
   }
 

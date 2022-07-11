@@ -27,6 +27,7 @@
     "@capacitor/ios": "3.6.0",
     "@capacitor/keyboard": "1.2.3",
     "@capacitor/status-bar": "1.0.8",
+    "@capacitor/storage": "^1.2.5",
     "@ionic/angular": "^6.1.9",
     "@supabase/supabase-js": "^1.35.3",
     "geojson": "^0.5.0",
@@ -69,8 +70,5 @@
     "ts-node": "~8.3.0",
     "typescript": "~4.7.3"
   },
-  "description": "An Ionic project",
-  "eslintIgnore": [
-    "src/app/interfaces/supabase.ts"
-  ]
+  "description": "An Ionic project"
 }

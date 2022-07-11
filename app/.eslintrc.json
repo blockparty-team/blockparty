@@ -1,7 +1,8 @@
 {
   "root": true,
   "ignorePatterns": [
-    "projects/**/*"
+    "projects/**/*",
+    "src/app/interfaces/supabase.ts"
   ],
   "overrides": [
     {
@@ -45,7 +46,9 @@
             "prefix": "app",
             "style": "camelCase"
           }
-        ]
+        ],
+        "@typescript-eslint/member-ordering": "off",
+        "no-underscore-dangle": "off"
       }
     },
     {

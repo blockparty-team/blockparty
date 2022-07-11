@@ -4,8 +4,7 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { filter, switchMap, map, tap, first } from 'rxjs/operators';
-import { Geometry, Point } from 'geojson';
+import { filter, switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-stage-timetable-modal',
@@ -48,7 +47,7 @@ export class StageTimetableModalComponent implements OnInit {
     this.router.navigate(['/tabs/', 'artist', artistId]);
   }
 
-  onDirectionsTo(coords: [number, number]): void {
+  onOpenGoogleMapseDirections(coords: [number, number]): void {
 
     const url = `https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${coords[0]},${coords[1]}`;
 

@@ -4,8 +4,9 @@ import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
-import { empty, from, Observable } from 'rxjs';
-import { catchError, filter, finalize, map, mapTo, pluck, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { filter, switchMap, tap, pluck } from 'rxjs/operators';
+import { StoreService } from '@app/store/store.service';
 
 @Component({
   selector: 'app-tab-map',
@@ -15,23 +16,21 @@ import { catchError, filter, finalize, map, mapTo, pluck, shareReplay, startWith
 })
 export class TabMapPage implements OnInit {
 
-  // timetable$: Observable<any>;
-  // showTimetableModal = false;
-  showTimetableModal$: Observable<boolean>;
+  days$: Observable<any>;
 
   constructor(
+    private store: StoreService,
     private mapStateService: MapStateService,
-    private supabaseService: SupabaseService,
     private modalCtrl: ModalController
   ) { }
 
   ngOnInit(): void {
+    this.days$ = this.store.daysWithRelations$;
+
     this.mapStateService.selectedMapFeatures$.pipe(
       filter(features => !!features),
       switchMap(features => this.openFeatureInfoModal(features[0]))
     ).subscribe();
-
-    this.supabaseService.allEntities().subscribe(console.log);
   }
 
   openFeatureInfoModal(mapFeature: MapClickedFeature) {
@@ -44,7 +43,6 @@ export class TabMapPage implements OnInit {
     ).pipe(
       tap(modal => modal.present())
     );
-
   }
 
 }

@@ -4,13 +4,13 @@
       <ion-title>{{timetable[0].stage.name}}</ion-title>
       <ion-buttons slot="end">
         <ng-container *ngIf="location$ | async as location">
-          <ion-button (click)="onDirectionsTo(location)">
-            <ion-icon name="compass-outline"></ion-icon>
+          <ion-button (click)="onOpenGoogleMapseDirections(location)">
+            directions            
           </ion-button>
         </ng-container>
-        <ion-button (click)="onDismissModal()" [strong]="true">
+        <!-- <ion-button (click)="onDismissModal()" [strong]="true">
           <ion-icon name="close"></ion-icon>
-        </ion-button>
+        </ion-button> -->
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
