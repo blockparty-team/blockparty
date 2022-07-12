@@ -3,7 +3,7 @@ import { Storage } from '@capacitor/storage';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export type StorageKeys = 'artists';
+export type StorageKeys = 'artists' | 'favorites';
 
 @Injectable({
   providedIn: 'root'

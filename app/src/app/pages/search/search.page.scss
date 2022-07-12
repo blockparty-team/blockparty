@@ -1,6 +1,15 @@
 .container {
     padding: 30px 10px 10px 10px;
 
+    .search-mode {
+        display: flex;
+        justify-content: center;
+
+        ion-segment {
+            width: 200px;
+        }
+    }
+
     .filter-badges {
         width: 100%;
         display: flex;

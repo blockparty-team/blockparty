@@ -5,6 +5,16 @@ ion-toolbar, ion- {
 
 .artist-info {
     padding: 10px;
+
+    .acts {
+        p {
+            color: var(--ion-color-medium);
+            overflow: hidden;
+            white-space: nowrap; 
+            text-overflow: ellipsis;
+            margin: 8px 0; 
+        }
+    }
     
     .actions {
         display: flex;

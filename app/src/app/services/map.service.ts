@@ -33,8 +33,11 @@ export class MapService {
       this.map.resize();
 
       this.addStages();
+      this.addEvents();
+      this.addAssets();
 
       this.addClickBehaviourToLayer('stage');
+      this.addClickBehaviourToLayer('asset');
 
     });
 
@@ -74,6 +77,63 @@ export class MapService {
     this.map.on('mouseleave', 'praj-point', () => {
       this.map.getCanvas().style.cursor = '';
     });
+  }
+
+  addEvents(): void {
+    this.supabaseService.tableAsGeojson('event').pipe(
+      tap(geojson => {
+        this.map.addSource('event', {
+          type: 'geojson',
+          data: geojson
+        });
+
+        this.map.addLayer({
+          id: 'event',
+          type: 'fill',
+          source: 'event',
+          layout: {},
+          paint: {
+            'fill-color': 'white',
+            'fill-opacity': 0.2,
+          }
+        });
+
+        this.map.addLayer({
+          id: 'event-outline',
+          type: 'line',
+          source: 'event',
+          layout: {},
+          paint: {
+            'line-color': 'gray',
+            'line-width': 5,
+            'line-dasharray': [4, 1]
+          }
+        });
+      })
+    ).subscribe();
+  }
+
+  addAssets(): void {
+    this.supabaseService.tableAsGeojson('asset').pipe(
+      tap(geojson => {
+        this.map.addSource('asset', {
+          type: 'geojson',
+          data: geojson
+        });
+
+        this.map.addLayer({
+          id: 'asset',
+          type: 'circle',
+          source: 'asset',
+          layout: {},
+          paint: {
+            'circle-color': '#088',
+            'circle-radius': 10
+          }
+        });
+
+      })
+    ).subscribe();
   }
 
   addStages(): void {

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { from, Observable } from 'rxjs';
@@ -16,15 +17,12 @@ export class SupabaseService {
     this.client = createClient(environment.supabaseUrl, environment.supabaseKey);
   }
 
-  get artists$(): Observable<definitions['artist'][]> {
+  get artists$(): Observable<ArtistWithRelations[]> {
     return from(
       this.client
-        .from<definitions['artist']>('artist')
+        .from<ArtistWithRelations>('artist')
         .select(`
-          id,
-          name,
-          description,
-          storage_path,
+          *,
           timetable(
             start_time,
             end_time,
@@ -37,7 +35,6 @@ export class SupabaseService {
           )
         `)
         .order('name')
-        .limit(10)
     ).pipe(
       map(res => res.data)
     );

@@ -6,14 +6,26 @@
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  
+
   <ion-content>
     <ion-img [src]="imgUrl(artist.storage_path)"></ion-img>
     <div class="artist-info">
       <h1>{{artist.name}}</h1>
+      <div class="acts">
+        <p *ngFor="let act of artist.timetable">
+          {{act.day.name}} |
+          {{act.start_time | date:'HH:mm'}} -
+          {{act.end_time | date:'HH:mm'}} | 
+          {{act.stage.name}}
+          slkdkfkslkldkfskf
+        </p>
+      </div>
       <p>{{artist.description}}</p>
 
-      <iframe style="border: 0; width: 100%; height: 42px;" src="https://bandcamp.com/EmbeddedPlayer/album=827433845/size=small/bgcol=ffffff/linkcol=0687f5/transparent=true/" seamless><a href="https://djkoze.bandcamp.com/album/knock-knock-pampacd013">knock knock - (PAMPACD013) by DJ Koze</a></iframe>
+      <iframe style="border: 0; width: 100%; height: 42px;"
+        src="https://bandcamp.com/EmbeddedPlayer/album=827433845/size=small/bgcol=ffffff/linkcol=0687f5/transparent=true/"
+        seamless><a href="https://djkoze.bandcamp.com/album/knock-knock-pampacd013">knock knock - (PAMPACD013) by DJ
+          Koze</a></iframe>
 
       <div class="actions">
         <a *ngIf="artist.instagram" [href]="artist.instagram" target="_blank">
