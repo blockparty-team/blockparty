@@ -40,6 +40,7 @@ export class MapService {
       this.addStages();
       this.addEvents();
       this.addAssets();
+      this.addMask();
 
       this.addClickBehaviourToLayer('stage');
       this.addClickBehaviourToLayer('asset');
@@ -136,6 +137,40 @@ export class MapService {
     }, 'label_road');
   }
 
+  addMask(): void {
+    this.supabaseService.tableAsGeojson('day_event_mask').pipe(
+      tap(geojson => {
+        this.map.addSource('day_event_mask', {
+          type: 'geojson',
+          data: {...geojson, features: [geojson.features[0]]}
+        });
+
+        this.map.addLayer({
+          id: 'day_event_mask',
+          type: 'fill',
+          source: 'day_event_mask',
+          layout: {},
+          paint: {
+            'fill-color': 'black',
+            'fill-opacity': 0.5,
+          }
+        });
+
+        // this.map.addLayer({
+        //   id: 'event-outline',
+        //   type: 'line',
+        //   source: 'event',
+        //   layout: {},
+        //   paint: {
+        //     'line-color': 'gray',
+        //     'line-width': 5,
+        //     'line-dasharray': [4, 1]
+        //   }
+        // });
+      })
+    ).subscribe();
+  }
+
   addEvents(): void {
     this.supabaseService.tableAsGeojson('event').pipe(
       tap(geojson => {
@@ -144,16 +179,16 @@ export class MapService {
           data: geojson
         });
 
-        this.map.addLayer({
-          id: 'event',
-          type: 'fill',
-          source: 'event',
-          layout: {},
-          paint: {
-            'fill-color': 'white',
-            'fill-opacity': 0.2,
-          }
-        });
+        // this.map.addLayer({
+        //   id: 'event',
+        //   type: 'fill',
+        //   source: 'event',
+        //   layout: {},
+        //   paint: {
+        //     'fill-color': 'white',
+        //     'fill-opacity': 0.2,
+        //   }
+        // });
 
         this.map.addLayer({
           id: 'event-outline',
@@ -161,9 +196,9 @@ export class MapService {
           source: 'event',
           layout: {},
           paint: {
-            'line-color': 'gray',
+            'line-color': '#599ae0',
             'line-width': 5,
-            'line-dasharray': [4, 1]
+            // 'line-dasharray': [4, 1]
           }
         });
       })

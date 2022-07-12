@@ -93,6 +93,7 @@ create policy anon_can_read_public_events
 	TO anon 
 	USING (public);
 
+
 -------------
 -- STAGE
 -------------
@@ -238,6 +239,37 @@ create policy anon_can_read_public_asset_types
 	FOR SELECT
 	TO anon 
 	USING (public);
+
+
+-------------------
+--  VIEWS
+-------------------
+-- Day/Event mask
+create view public.day_event_mask as
+select
+	d.id day_id,
+	st_difference(st_collect(m.geom), st_collect(e.geom)),
+	array[
+		array[
+			st_xmin(st_collect(e.geom)),
+			st_ymin(st_collect(e.geom))
+		],
+		array[
+			st_xmax(st_collect(e.geom)),
+			st_ymax(st_collect(e.geom))
+		]
+	] as bounds
+from
+	mask m
+join "event" e on
+	st_intersects(m.geom,
+	e.geom)
+join "day" d on
+	e.day_id = d.id
+group by
+	d.id;
+
+GRANT SELECT ON TABLE public.day_event_mask TO anon;
 
 -----------------------
 -- Buckets

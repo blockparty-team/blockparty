@@ -12,6 +12,41 @@ export interface paths {
       };
     };
   };
+  "/day_event_mask": {
+    get: {
+      parameters: {
+        query: {
+          day_id?: parameters["rowFilter.day_event_mask.day_id"];
+          st_difference?: parameters["rowFilter.day_event_mask.st_difference"];
+          bounds?: parameters["rowFilter.day_event_mask.bounds"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["day_event_mask"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/icon": {
     get: {
       parameters: {
@@ -99,105 +134,6 @@ export interface paths {
         body: {
           /** icon */
           icon?: definitions["icon"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-  };
-  "/asset_enum": {
-    get: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.asset_enum.id"];
-          name?: parameters["rowFilter.asset_enum.name"];
-          description?: parameters["rowFilter.asset_enum.description"];
-          inserted_at?: parameters["rowFilter.asset_enum.inserted_at"];
-          public?: parameters["rowFilter.asset_enum.public"];
-          /** Filtering Columns */
-          select?: parameters["select"];
-          /** Ordering */
-          order?: parameters["order"];
-          /** Limiting and Pagination */
-          offset?: parameters["offset"];
-          /** Limiting and Pagination */
-          limit?: parameters["limit"];
-        };
-        header: {
-          /** Limiting and Pagination */
-          Range?: parameters["range"];
-          /** Limiting and Pagination */
-          "Range-Unit"?: parameters["rangeUnit"];
-          /** Preference */
-          Prefer?: parameters["preferCount"];
-        };
-      };
-      responses: {
-        /** OK */
-        200: {
-          schema: definitions["asset_enum"][];
-        };
-        /** Partial Content */
-        206: unknown;
-      };
-    };
-    post: {
-      parameters: {
-        body: {
-          /** asset_enum */
-          asset_enum?: definitions["asset_enum"];
-        };
-        query: {
-          /** Filtering Columns */
-          select?: parameters["select"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** Created */
-        201: unknown;
-      };
-    };
-    delete: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.asset_enum.id"];
-          name?: parameters["rowFilter.asset_enum.name"];
-          description?: parameters["rowFilter.asset_enum.description"];
-          inserted_at?: parameters["rowFilter.asset_enum.inserted_at"];
-          public?: parameters["rowFilter.asset_enum.public"];
-        };
-        header: {
-          /** Preference */
-          Prefer?: parameters["preferReturn"];
-        };
-      };
-      responses: {
-        /** No Content */
-        204: never;
-      };
-    };
-    patch: {
-      parameters: {
-        query: {
-          id?: parameters["rowFilter.asset_enum.id"];
-          name?: parameters["rowFilter.asset_enum.name"];
-          description?: parameters["rowFilter.asset_enum.description"];
-          inserted_at?: parameters["rowFilter.asset_enum.inserted_at"];
-          public?: parameters["rowFilter.asset_enum.public"];
-        };
-        body: {
-          /** asset_enum */
-          asset_enum?: definitions["asset_enum"];
         };
         header: {
           /** Preference */
@@ -349,7 +285,7 @@ export interface paths {
           id?: parameters["rowFilter.asset.id"];
           description?: parameters["rowFilter.asset.description"];
           geom?: parameters["rowFilter.asset.geom"];
-          asset_id?: parameters["rowFilter.asset.asset_id"];
+          asset_type_id?: parameters["rowFilter.asset.asset_type_id"];
           icon_id?: parameters["rowFilter.asset.icon_id"];
           event_id?: parameters["rowFilter.asset.event_id"];
           inserted_at?: parameters["rowFilter.asset.inserted_at"];
@@ -407,7 +343,7 @@ export interface paths {
           id?: parameters["rowFilter.asset.id"];
           description?: parameters["rowFilter.asset.description"];
           geom?: parameters["rowFilter.asset.geom"];
-          asset_id?: parameters["rowFilter.asset.asset_id"];
+          asset_type_id?: parameters["rowFilter.asset.asset_type_id"];
           icon_id?: parameters["rowFilter.asset.icon_id"];
           event_id?: parameters["rowFilter.asset.event_id"];
           inserted_at?: parameters["rowFilter.asset.inserted_at"];
@@ -429,7 +365,7 @@ export interface paths {
           id?: parameters["rowFilter.asset.id"];
           description?: parameters["rowFilter.asset.description"];
           geom?: parameters["rowFilter.asset.geom"];
-          asset_id?: parameters["rowFilter.asset.asset_id"];
+          asset_type_id?: parameters["rowFilter.asset.asset_type_id"];
           icon_id?: parameters["rowFilter.asset.icon_id"];
           event_id?: parameters["rowFilter.asset.event_id"];
           inserted_at?: parameters["rowFilter.asset.inserted_at"];
@@ -768,6 +704,105 @@ export interface paths {
       };
     };
   };
+  "/asset_type": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.asset_type.id"];
+          name?: parameters["rowFilter.asset_type.name"];
+          description?: parameters["rowFilter.asset_type.description"];
+          inserted_at?: parameters["rowFilter.asset_type.inserted_at"];
+          public?: parameters["rowFilter.asset_type.public"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["asset_type"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** asset_type */
+          asset_type?: definitions["asset_type"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.asset_type.id"];
+          name?: parameters["rowFilter.asset_type.name"];
+          description?: parameters["rowFilter.asset_type.description"];
+          inserted_at?: parameters["rowFilter.asset_type.inserted_at"];
+          public?: parameters["rowFilter.asset_type.public"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.asset_type.id"];
+          name?: parameters["rowFilter.asset_type.name"];
+          description?: parameters["rowFilter.asset_type.description"];
+          inserted_at?: parameters["rowFilter.asset_type.inserted_at"];
+          public?: parameters["rowFilter.asset_type.public"];
+        };
+        body: {
+          /** asset_type */
+          asset_type?: definitions["asset_type"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/mask": {
     get: {
       parameters: {
@@ -910,6 +945,43 @@ export interface paths {
       };
     };
   };
+  "/rpc/show_limit": {
+    post: {
+      parameters: {
+        body: {
+          args: { [key: string]: unknown };
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferParams"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: unknown;
+      };
+    };
+  };
+  "/rpc/show_trgm": {
+    post: {
+      parameters: {
+        body: {
+          args: {
+            /** Format: text */
+            "": string;
+          };
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferParams"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: unknown;
+      };
+    };
+  };
   "/rpc/table_as_geojson": {
     post: {
       parameters: {
@@ -933,6 +1005,18 @@ export interface paths {
 }
 
 export interface definitions {
+  day_event_mask: {
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    day_id?: string;
+    /** Format: extensions.geometry */
+    st_difference?: string;
+    /** Format: ARRAY */
+    bounds?: unknown[];
+  };
   icon: {
     /**
      * Format: uuid
@@ -956,29 +1040,6 @@ export interface definitions {
      */
     public?: boolean;
   };
-  asset_enum: {
-    /**
-     * Format: uuid
-     * @description Note:
-     * This is a Primary Key.<pk/>
-     * @default extensions.uuid_generate_v4()
-     */
-    id: string;
-    /** Format: text */
-    name: string;
-    /** Format: text */
-    description?: string;
-    /**
-     * Format: timestamp with time zone
-     * @default timezone('utc'::text, now())
-     */
-    inserted_at: string;
-    /**
-     * Format: boolean
-     * @default false
-     */
-    public?: boolean;
-  };
   artist: {
     /**
      * Format: uuid
@@ -988,7 +1049,7 @@ export interface definitions {
      */
     id: string;
     /** Format: text */
-    name?: string;
+    name: string;
     /** Format: text */
     description?: string;
     /** Format: text */
@@ -1039,9 +1100,9 @@ export interface definitions {
     /**
      * Format: uuid
      * @description Note:
-     * This is a Foreign Key to `asset_enum.id`.<fk table='asset_enum' column='id'/>
+     * This is a Foreign Key to `asset_type.id`.<fk table='asset_type' column='id'/>
      */
-    asset_id: string;
+    asset_type_id: string;
     /**
      * Format: uuid
      * @description Note:
@@ -1099,7 +1160,7 @@ export interface definitions {
      */
     id: string;
     /** Format: text */
-    name?: string;
+    name: string;
     /** Format: text */
     description?: string;
     /** Format: extensions.geometry(Polygon,4326) */
@@ -1132,7 +1193,7 @@ export interface definitions {
      */
     id: string;
     /** Format: text */
-    name?: string;
+    name: string;
     /** Format: text */
     description?: string;
     /**
@@ -1149,6 +1210,29 @@ export interface definitions {
      * This is a Foreign Key to `event.id`.<fk table='event' column='id'/>
      */
     event_id: string;
+    /**
+     * Format: timestamp with time zone
+     * @default timezone('utc'::text, now())
+     */
+    inserted_at: string;
+    /**
+     * Format: boolean
+     * @default false
+     */
+    public?: boolean;
+  };
+  asset_type: {
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     * @default extensions.uuid_generate_v4()
+     */
+    id: string;
+    /** Format: text */
+    name: string;
+    /** Format: text */
+    description?: string;
     /**
      * Format: timestamp with time zone
      * @default timezone('utc'::text, now())
@@ -1242,6 +1326,14 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
+  /** @description day_event_mask */
+  "body.day_event_mask": definitions["day_event_mask"];
+  /** Format: uuid */
+  "rowFilter.day_event_mask.day_id": string;
+  /** Format: extensions.geometry */
+  "rowFilter.day_event_mask.st_difference": string;
+  /** Format: ARRAY */
+  "rowFilter.day_event_mask.bounds": string;
   /** @description icon */
   "body.icon": definitions["icon"];
   /** Format: uuid */
@@ -1254,18 +1346,6 @@ export interface parameters {
   "rowFilter.icon.inserted_at": string;
   /** Format: boolean */
   "rowFilter.icon.public": string;
-  /** @description asset_enum */
-  "body.asset_enum": definitions["asset_enum"];
-  /** Format: uuid */
-  "rowFilter.asset_enum.id": string;
-  /** Format: text */
-  "rowFilter.asset_enum.name": string;
-  /** Format: text */
-  "rowFilter.asset_enum.description": string;
-  /** Format: timestamp with time zone */
-  "rowFilter.asset_enum.inserted_at": string;
-  /** Format: boolean */
-  "rowFilter.asset_enum.public": string;
   /** @description artist */
   "body.artist": definitions["artist"];
   /** Format: uuid */
@@ -1309,7 +1389,7 @@ export interface parameters {
   /** Format: extensions.geometry(Point,4326) */
   "rowFilter.asset.geom": string;
   /** Format: uuid */
-  "rowFilter.asset.asset_id": string;
+  "rowFilter.asset.asset_type_id": string;
   /** Format: uuid */
   "rowFilter.asset.icon_id": string;
   /** Format: uuid */
@@ -1368,6 +1448,18 @@ export interface parameters {
   "rowFilter.stage.inserted_at": string;
   /** Format: boolean */
   "rowFilter.stage.public": string;
+  /** @description asset_type */
+  "body.asset_type": definitions["asset_type"];
+  /** Format: uuid */
+  "rowFilter.asset_type.id": string;
+  /** Format: text */
+  "rowFilter.asset_type.name": string;
+  /** Format: text */
+  "rowFilter.asset_type.description": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.asset_type.inserted_at": string;
+  /** Format: boolean */
+  "rowFilter.asset_type.public": string;
   /** @description mask */
   "body.mask": definitions["mask"];
   /** Format: bigint */

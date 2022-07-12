@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { from, Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -130,7 +131,7 @@ export class SupabaseService {
   }
 
   //RPC
-  tableAsGeojson(table: keyof definitions) {
+  tableAsGeojson(table: keyof definitions): Observable<FeatureCollection<Point | LineString | Polygon>> {
     return from(
       this.client.rpc('table_as_geojson', { _tbl: table })
     ).pipe(
