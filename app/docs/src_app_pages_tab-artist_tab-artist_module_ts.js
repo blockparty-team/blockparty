@@ -95,7 +95,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _tab_artist_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-artist.page.scss?ngResource */ 2359);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var _app_shared_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/shared/utils */ 2134);
-/* harmony import */ var _app_services_supabase_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @app/services/supabase.service */ 1829);
+/* harmony import */ var _app_store_store_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @app/store/store.service */ 2923);
 
 
 
@@ -103,23 +103,24 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let TabArtistPage = class TabArtistPage {
-    constructor(supabaseService) {
-        this.supabaseService = supabaseService;
+    constructor(store) {
+        this.store = store;
     }
     ngOnInit() {
-        this.artists$ = this.supabaseService.artists$;
+        this.artists$ = this.store.artists$;
     }
     imgUrl(path) {
-        return (0,_app_shared_utils__WEBPACK_IMPORTED_MODULE_2__.pathToImageUrl)(path);
+        return path ? (0,_app_shared_utils__WEBPACK_IMPORTED_MODULE_2__.pathToImageUrl)(path) : 'assets/distortion_logo.png';
     }
 };
 TabArtistPage.ctorParameters = () => [
-    { type: _app_services_supabase_service__WEBPACK_IMPORTED_MODULE_3__.SupabaseService }
+    { type: _app_store_store_service__WEBPACK_IMPORTED_MODULE_3__.StoreService }
 ];
 TabArtistPage = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-tab-artist',
         template: _tab_artist_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_5__.ChangeDetectionStrategy.OnPush,
         styles: [_tab_artist_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
 ], TabArtistPage);
@@ -144,7 +145,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \******************************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title class=\"ion-text-center\">Artists</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ng-container *ngIf=\"artists$ | async as artists\">\n    <ion-list>\n      <ion-item *ngFor=\"let artist of artists\" [routerLink]=\"['./', artist.id]\">\n        <ion-avatar slot=\"start\">\n          <img [src]=\"imgUrl(artist.storage_path)\" />\n        </ion-avatar>\n        <ion-label>\n          <h2>\n            {{artist.name}}\n          </h2>\n          <p>{{artist.description}}</p>\n        </ion-label>\n        <div slot=\"end\" class=\"actions\">\n          <ion-icon name=\"information\"></ion-icon>\n          <ion-icon name=\"location\"></ion-icon>\n          <ion-icon name=\"heart\"></ion-icon>\n        </div>\n      </ion-item>\n    </ion-list>\n  </ng-container>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-title class=\"ion-text-center\">Artists</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button>\n        <ion-icon name=\"heart\"></ion-icon>\n      </ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ng-container *ngIf=\"artists$ | async as artists\">\n    <ion-list>\n      <ion-item *ngFor=\"let artist of artists\" [routerLink]=\"['./', artist.id]\">\n        <ion-avatar slot=\"start\">\n          <img [src]=\"imgUrl(artist.storage_path)\" />\n        </ion-avatar>\n        <ion-label>\n          <h2>\n            {{artist.name}}\n          </h2>\n          <p>{{artist.timetable[0]?.day.name}}, {{artist.timetable[0]?.start_time | date:'HH:mm'}}, {{artist.timetable[0]?.stage.name}}</p>\n        </ion-label>\n        <div slot=\"end\" class=\"actions\">\n          <ion-icon name=\"heart-outline\"></ion-icon>\n        </div>\n      </ion-item>\n    </ion-list>\n  </ng-container>\n</ion-content>\n";
 
 /***/ })
 

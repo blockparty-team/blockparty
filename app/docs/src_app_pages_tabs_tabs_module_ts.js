@@ -51,7 +51,7 @@ const routes = [
             {
                 path: 'search',
                 title: 'Search',
-                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_pages_search_search_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ../search/search.module */ 281)).then(m => m.SearchPageModule)
+                loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_pages_search_search_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ../search/search.module */ 281)).then(m => m.SearchPageModule)
             },
             {
                 path: '',
@@ -170,7 +170,7 @@ module.exports = "ion-tab-bar ion-tab-button {\n  --color-selected: var(--ion-co
   \******************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\">\n    <ion-tab-button tab=\"map\">\n      <ion-icon name=\"location\"></ion-icon>\n      <ion-label>Map</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"timetable\">\n      <ion-icon name=\"calendar\"></ion-icon>\n      <ion-label>Timetable</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"artist\">\n      <ion-icon name=\"musical-notes\"></ion-icon>\n      <ion-label>Artists</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"search\">\n      <ion-icon name=\"search\"></ion-icon>\n      <ion-label>Search</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n\n</ion-tabs>\n";
+module.exports = "<ion-tabs>\n\n  <ion-tab-bar slot=\"bottom\" color=\"primary\">\n    <ion-tab-button tab=\"map\">\n      <ion-icon name=\"location\"></ion-icon>\n      <ion-label>Map</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"timetable\">\n      <ion-icon name=\"calendar\"></ion-icon>\n      <ion-label>Timetable</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"artist\">\n      <ion-icon name=\"musical-notes\"></ion-icon>\n      <ion-label>Artists</ion-label>\n    </ion-tab-button>\n\n    <ion-tab-button tab=\"search\">\n      <ion-icon name=\"search\"></ion-icon>\n      <ion-label>Search</ion-label>\n    </ion-tab-button>\n  </ion-tab-bar>\n\n</ion-tabs>\n";
 
 /***/ })
 

@@ -1,5 +1,80 @@
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_pages_tab-map_tab-map_module_ts"],{
 
+/***/ 6056:
+/*!*************************************************************************************!*\
+  !*** ./src/app/components/stage-timetable-modal/stage-timetable-modal.component.ts ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "StageTimetableModalComponent": () => (/* binding */ StageTimetableModalComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _stage_timetable_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stage-timetable-modal.component.html?ngResource */ 8872);
+/* harmony import */ var _stage_timetable_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stage-timetable-modal.component.scss?ngResource */ 466);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/router */ 124);
+/* harmony import */ var _app_services_supabase_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/services/supabase.service */ 1829);
+/* harmony import */ var _app_pages_tab_map_state_map_state_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @app/pages/tab-map/state/map-state.service */ 8215);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 9151);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 9095);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 6942);
+
+
+
+
+
+
+
+
+
+let StageTimetableModalComponent = class StageTimetableModalComponent {
+    constructor(mapStateService, supabaseService, modalCtrl, router) {
+        this.mapStateService = mapStateService;
+        this.supabaseService = supabaseService;
+        this.modalCtrl = modalCtrl;
+        this.router = router;
+    }
+    ngOnInit() {
+        this.timetable$ = this.mapStateService.selectedMapFeatures$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.filter)(features => !!features && features[0].layerName === 'stage'), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.switchMap)(stage => this.supabaseService.stageTimeTable(stage[0].id)));
+        this.location$ = this.mapStateService.selectedMapFeatures$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.filter)(features => !!features && features[0].layerName === 'stage'), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.map)(features => [
+            features[0].geometry.coordinates[1],
+            features[0].geometry.coordinates[0]
+        ]));
+    }
+    onDismissModal() {
+        this.modalCtrl.dismiss();
+    }
+    onGoToArtist(artistId) {
+        this.modalCtrl.dismiss();
+        this.router.navigate(['/tabs/', 'artist', artistId]);
+    }
+    onOpenGoogleMapseDirections(coords) {
+        const url = `https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${coords[0]},${coords[1]}`;
+        window.open(url, '_blank');
+    }
+};
+StageTimetableModalComponent.ctorParameters = () => [
+    { type: _app_pages_tab_map_state_map_state_service__WEBPACK_IMPORTED_MODULE_3__.MapStateService },
+    { type: _app_services_supabase_service__WEBPACK_IMPORTED_MODULE_2__.SupabaseService },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_7__.ModalController },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_8__.Router }
+];
+StageTimetableModalComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
+        selector: 'app-stage-timetable-modal',
+        template: _stage_timetable_modal_component_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        styles: [_stage_timetable_modal_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], StageTimetableModalComponent);
+
+
+
+/***/ }),
+
 /***/ 5944:
 /*!****************************************************!*\
   !*** ./src/app/pages/tab-map/map/map.component.ts ***!
@@ -25,7 +100,6 @@ let MapComponent = class MapComponent {
     constructor(mapSerice) {
         this.mapSerice = mapSerice;
     }
-    ngOnInit() { }
     ngAfterViewInit() {
         this.mapSerice.initMap();
     }
@@ -40,6 +114,45 @@ MapComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
         styles: [_map_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
 ], MapComponent);
+
+
+
+/***/ }),
+
+/***/ 8215:
+/*!**********************************************************!*\
+  !*** ./src/app/pages/tab-map/state/map-state.service.ts ***!
+  \**********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "MapStateService": () => (/* binding */ MapStateService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ 4505);
+
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable @typescript-eslint/member-ordering */
+
+
+let MapStateService = class MapStateService {
+    constructor() {
+        this._selectedMapFeatures$ = new rxjs__WEBPACK_IMPORTED_MODULE_0__.BehaviorSubject(null);
+        this.selectedMapFeatures$ = this._selectedMapFeatures$.asObservable();
+    }
+    selectedMapFeatures(features) {
+        this._selectedMapFeatures$.next(features);
+    }
+};
+MapStateService.ctorParameters = () => [];
+MapStateService = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.Injectable)({
+        providedIn: 'root'
+    })
+], MapStateService);
 
 
 
@@ -94,14 +207,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TabMapPageModule": () => (/* binding */ TabMapPageModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 3819);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 4666);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 4666);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 2508);
 /* harmony import */ var _tab_map_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page */ 2407);
 /* harmony import */ var _tab_map_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-map-routing.module */ 8874);
 /* harmony import */ var _map_map_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./map/map.component */ 5944);
+/* harmony import */ var _app_components_stage_timetable_modal_stage_timetable_modal_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @app/components/stage-timetable-modal/stage-timetable-modal.component */ 6056);
+
 
 
 
@@ -112,15 +227,15 @@ __webpack_require__.r(__webpack_exports__);
 
 let TabMapPageModule = class TabMapPageModule {
 };
-TabMapPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
+TabMapPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
         imports: [
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_5__.IonicModule,
-            _angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_6__.IonicModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_7__.CommonModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule,
             _tab_map_routing_module__WEBPACK_IMPORTED_MODULE_1__.TabMapPageRoutingModule
         ],
-        declarations: [_tab_map_page__WEBPACK_IMPORTED_MODULE_0__.TabMapPage, _map_map_component__WEBPACK_IMPORTED_MODULE_2__.MapComponent]
+        declarations: [_tab_map_page__WEBPACK_IMPORTED_MODULE_0__.TabMapPage, _map_map_component__WEBPACK_IMPORTED_MODULE_2__.MapComponent, _app_components_stage_timetable_modal_stage_timetable_modal_component__WEBPACK_IMPORTED_MODULE_3__.StageTimetableModalComponent]
     })
 ], TabMapPageModule);
 
@@ -139,22 +254,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TabMapPage": () => (/* binding */ TabMapPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _tab_map_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./tab-map.page.html?ngResource */ 5279);
 /* harmony import */ var _tab_map_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./tab-map.page.scss?ngResource */ 4222);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _app_components_stage_timetable_modal_stage_timetable_modal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/components/stage-timetable-modal/stage-timetable-modal.component */ 6056);
+/* harmony import */ var _app_pages_tab_map_state_map_state_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @app/pages/tab-map/state/map-state.service */ 8215);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 3819);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 4383);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 9151);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 9095);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 8759);
+/* harmony import */ var _app_store_store_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @app/store/store.service */ 2923);
+
+
+
+
+
+
 
 
 
 
 let TabMapPage = class TabMapPage {
-    constructor() { }
+    constructor(store, mapStateService, modalCtrl) {
+        this.store = store;
+        this.mapStateService = mapStateService;
+        this.modalCtrl = modalCtrl;
+    }
+    ngOnInit() {
+        this.days$ = this.store.daysWithRelations$;
+        this.mapStateService.selectedMapFeatures$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.filter)(features => !!features), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)(features => this.openFeatureInfoModal(features[0]))).subscribe();
+    }
+    openFeatureInfoModal(mapFeature) {
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_7__.from)(this.modalCtrl.create({
+            component: _app_components_stage_timetable_modal_stage_timetable_modal_component__WEBPACK_IMPORTED_MODULE_2__.StageTimetableModalComponent,
+            initialBreakpoint: 0.4,
+            breakpoints: [0.2, 0.4, 0.7, 1]
+        })).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.tap)(modal => modal.present()));
+    }
 };
-TabMapPage.ctorParameters = () => [];
-TabMapPage = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
+TabMapPage.ctorParameters = () => [
+    { type: _app_store_store_service__WEBPACK_IMPORTED_MODULE_4__.StoreService },
+    { type: _app_pages_tab_map_state_map_state_service__WEBPACK_IMPORTED_MODULE_3__.MapStateService },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.ModalController }
+];
+TabMapPage = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Component)({
         selector: 'app-tab-map',
         template: _tab_map_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
+        changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_11__.ChangeDetectionStrategy.OnPush,
         styles: [_tab_map_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
     })
 ], TabMapPage);
@@ -174,17 +323,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "MapService": () => (/* binding */ MapService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 4929);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 2560);
 /* harmony import */ var maplibre_gl__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! maplibre-gl */ 3022);
 /* harmony import */ var maplibre_gl__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(maplibre_gl__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ 2340);
+/* harmony import */ var _supabase_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./supabase.service */ 1829);
+/* harmony import */ var _pages_tab_map_state_map_state_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/tab-map/state/map-state.service */ 8215);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 8759);
+
+
+
 
 
 
 
 let MapService = class MapService {
-    constructor() { }
+    constructor(mapStateService, supabaseService) {
+        this.mapStateService = mapStateService;
+        this.supabaseService = supabaseService;
+    }
     initMap() {
         this.map = new maplibre_gl__WEBPACK_IMPORTED_MODULE_0__.Map({
             container: 'map-container',
@@ -195,57 +353,144 @@ let MapService = class MapService {
         });
         this.map.on('load', () => {
             this.map.resize();
-            this.addIcon([12.547927, 55.667071]);
+            this.addStages();
+            this.addEvents();
+            this.addAssets();
+            this.addClickBehaviourToLayer('stage');
+            this.addClickBehaviourToLayer('asset');
         });
     }
-    addIcon(coords) {
+    addClickBehaviourToLayer(layerName) {
+        this.map.on('click', layerName, e => {
+            if (e.features.length > 0) {
+                const features = e.features.map(feature => ({
+                    id: feature.properties.id,
+                    layerName,
+                    geometry: feature.geometry
+                }));
+                this.mapStateService.selectedMapFeatures(features);
+            }
+        });
+        this.map.on('mouseenter', layerName, () => {
+            this.map.getCanvas().style.cursor = 'pointer';
+        });
+        this.map.on('mouseleave', layerName, () => {
+            this.map.getCanvas().style.cursor = '';
+        });
+    }
+    onClick(event) {
+        const features = this.map.queryRenderedFeatures(event.lngLat);
+        console.log(features);
+        this.map.on('mouseenter', 'praj-point', () => {
+            this.map.getCanvas().style.cursor = 'pointer';
+        });
+        this.map.on('mouseleave', 'praj-point', () => {
+            this.map.getCanvas().style.cursor = '';
+        });
+    }
+    addEvents() {
+        this.supabaseService.tableAsGeojson('event').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.tap)(geojson => {
+            this.map.addSource('event', {
+                type: 'geojson',
+                data: geojson
+            });
+            this.map.addLayer({
+                id: 'event',
+                type: 'fill',
+                source: 'event',
+                layout: {},
+                paint: {
+                    'fill-color': 'white',
+                    'fill-opacity': 0.2,
+                }
+            });
+            this.map.addLayer({
+                id: 'event-outline',
+                type: 'line',
+                source: 'event',
+                layout: {},
+                paint: {
+                    'line-color': 'gray',
+                    'line-width': 5,
+                    'line-dasharray': [4, 1]
+                }
+            });
+        })).subscribe();
+    }
+    addAssets() {
+        this.supabaseService.tableAsGeojson('asset').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.tap)(geojson => {
+            this.map.addSource('asset', {
+                type: 'geojson',
+                data: geojson
+            });
+            this.map.addLayer({
+                id: 'asset',
+                type: 'circle',
+                source: 'asset',
+                layout: {},
+                paint: {
+                    'circle-color': '#088',
+                    'circle-radius': 10
+                }
+            });
+        })).subscribe();
+    }
+    addStages() {
         this.map.loadImage('assets/map-icons/stage.png', (error, img) => {
             if (error) {
                 throw error;
             }
             ;
             this.map.addImage('stage', img);
-            this.map.addSource('stage', {
-                type: 'geojson',
-                data: {
-                    type: 'FeatureCollection',
-                    features: [
-                        {
-                            type: 'Feature',
-                            properties: { name: 'ComaClub' },
-                            geometry: {
-                                type: 'Point',
-                                coordinates: coords
-                            }
-                        }
-                    ]
-                }
-            });
-            this.map.addLayer({
-                id: 'stage',
-                type: 'symbol',
-                source: 'stage',
-                minzoom: 13,
-                layout: {
-                    'icon-image': 'stage',
-                    'icon-size': [
-                        'interpolate', ['linear'], ['zoom'],
-                        13, 0.02,
-                        22, 1.5
-                    ]
-                }
-            });
+            this.supabaseService.tableAsGeojson('stage').pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.tap)(geojson => {
+                this.map.addSource('stage', {
+                    type: 'geojson',
+                    data: geojson
+                });
+                this.map.addLayer({
+                    id: 'stage',
+                    type: 'symbol',
+                    source: 'stage',
+                    minzoom: 13,
+                    layout: {
+                        // 'text-field': ['get', 'name'],
+                        // 'text-offset': [0, 2],
+                        // 'text-justify': 'auto',
+                        'icon-image': 'stage',
+                        'icon-size': [
+                            'interpolate', ['linear'], ['zoom'],
+                            13, 0.02,
+                            22, 1.5
+                        ],
+                        'icon-allow-overlap': true
+                    }
+                });
+            })).subscribe();
         });
     }
 };
-MapService.ctorParameters = () => [];
-MapService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+MapService.ctorParameters = () => [
+    { type: _pages_tab_map_state_map_state_service__WEBPACK_IMPORTED_MODULE_3__.MapStateService },
+    { type: _supabase_service__WEBPACK_IMPORTED_MODULE_2__.SupabaseService }
+];
+MapService = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Injectable)({
         providedIn: 'root'
     })
 ], MapService);
 
 
+
+/***/ }),
+
+/***/ 466:
+/*!**************************************************************************************************!*\
+  !*** ./src/app/components/stage-timetable-modal/stage-timetable-modal.component.scss?ngResource ***!
+  \**************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdGFnZS10aW1ldGFibGUtbW9kYWwuY29tcG9uZW50LnNjc3MifQ== */";
 
 /***/ }),
 
@@ -271,6 +516,17 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
+/***/ 8872:
+/*!**************************************************************************************************!*\
+  !*** ./src/app/components/stage-timetable-modal/stage-timetable-modal.component.html?ngResource ***!
+  \**************************************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "<ng-container *ngIf=\"timetable$ | async as timetable; else loading;\">\n  <ion-header>\n    <ion-toolbar color=\"primary\">\n      <ion-title>{{timetable[0].stage.name}}</ion-title>\n      <ion-buttons slot=\"end\">\n        <ng-container *ngIf=\"location$ | async as location\">\n          <ion-button (click)=\"onOpenGoogleMapseDirections(location)\">\n            directions            \n          </ion-button>\n        </ng-container>\n        <!-- <ion-button (click)=\"onDismissModal()\" [strong]=\"true\">\n          <ion-icon name=\"close\"></ion-icon>\n        </ion-button> -->\n      </ion-buttons>\n    </ion-toolbar>\n  </ion-header>\n  \n  <ion-content class=\"ion-padding\">\n      <ion-item *ngFor=\"let act of timetable\">\n        <span slot=\"start\">\n          {{act?.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}\n        </span>\n        <ion-label (click)=\"onGoToArtist(act.artist.id)\">\n          {{act.artist.name}}\n        </ion-label>\n      </ion-item>\n  </ion-content>\n\n</ng-container>\n\n<ng-template #loading>\n  <ion-header>\n    <ion-toolbar color=\"primary\">\n    </ion-toolbar>\n  </ion-header>\n  <ion-content>\n    <ion-spinner></ion-spinner>\n  </ion-content>\n</ng-template>\n";
+
+/***/ }),
+
 /***/ 2399:
 /*!*****************************************************************!*\
   !*** ./src/app/pages/tab-map/map/map.component.html?ngResource ***!
@@ -278,7 +534,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<div id=\"map-container\"></div>";
+module.exports = "<div id=\"map-container\">\n    <ng-content></ng-content>\n</div>";
 
 /***/ }),
 
@@ -289,7 +545,7 @@ module.exports = "<div id=\"map-container\"></div>";
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-content [fullscreen]=\"true\">\n  <app-map></app-map>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-segment scrollable mode=\"md\">\n      <ion-segment-button *ngFor=\"let day of days$ | async\" [value]=\"day.id\">\n        <ion-label>{{day.name}}</ion-label>\n      </ion-segment-button>\n    </ion-segment>\n\n    <!-- <ion-list>\n      <ion-item>\n        <ion-select interface=\"popover\" placeholder=\"Day\">\n          <ion-select-option *ngFor=\"let day of days$ | async\" [value]=\"day.id\">{{day.name}}</ion-select-option>\n        </ion-select>\n      </ion-item>\n    </ion-list> -->\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <app-map></app-map>\n</ion-content>";
 
 /***/ }),
 

@@ -90,17 +90,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SearchPage": () => (/* binding */ SearchPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 4929);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 4929);
 /* harmony import */ var _search_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./search.page.html?ngResource */ 2671);
 /* harmony import */ var _search_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./search.page.scss?ngResource */ 9541);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ 2508);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 823);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 3298);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 9095);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 6942);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 8759);
-/* harmony import */ var _services_supabase_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/supabase.service */ 1829);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ 2508);
+/* harmony import */ var _app_shared_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/shared/utils */ 2134);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 823);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 3298);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 9095);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 6942);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 8759);
+/* harmony import */ var _services_supabase_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/supabase.service */ 1829);
+
 
 
 
@@ -111,17 +113,20 @@ __webpack_require__.r(__webpack_exports__);
 let SearchPage = class SearchPage {
     constructor(supabaseService) {
         this.supabaseService = supabaseService;
-        this.searchTerm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__.FormControl('');
+        this.searchTerm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('');
     }
     ngOnInit() {
-        this.searchResults$ = this.searchTerm.valueChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.debounceTime)(200), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.distinctUntilChanged)(), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)(term => this.supabaseService.searchArtist(term)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.map)(res => res.data), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.tap)(console.log));
+        this.searchResults$ = this.searchTerm.valueChanges.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.debounceTime)(200), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.distinctUntilChanged)(), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(term => this.supabaseService.searchArtist(term)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.map)(res => res.data), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.tap)(console.log));
+    }
+    imgUrl(path) {
+        return path ? (0,_app_shared_utils__WEBPACK_IMPORTED_MODULE_2__.pathToImageUrl)(path) : 'assets/distortion_logo.png';
     }
 };
 SearchPage.ctorParameters = () => [
-    { type: _services_supabase_service__WEBPACK_IMPORTED_MODULE_2__.SupabaseService }
+    { type: _services_supabase_service__WEBPACK_IMPORTED_MODULE_3__.SupabaseService }
 ];
-SearchPage = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Component)({
+SearchPage = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Component)({
         selector: 'app-search',
         template: _search_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
         styles: [_search_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__]
@@ -129,32 +134,6 @@ SearchPage = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
 ], SearchPage);
 
 
-
-/***/ }),
-
-/***/ 1925:
-/*!**********************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/Scheduler.js ***!
-  \**********************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Scheduler": () => (/* binding */ Scheduler)
-/* harmony export */ });
-class Scheduler {
-  constructor(SchedulerAction, now = Scheduler.now) {
-    this.SchedulerAction = SchedulerAction;
-    this.now = now;
-  }
-
-  schedule(work, delay = 0, state) {
-    return new this.SchedulerAction(this, work).schedule(state, delay);
-  }
-
-}
-
-Scheduler.now = () => Date.now();
 
 /***/ }),
 
@@ -241,209 +220,6 @@ function dispatchNext(subscriber) {
 
 /***/ }),
 
-/***/ 5353:
-/*!*****************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/scheduler/Action.js ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Action": () => (/* binding */ Action)
-/* harmony export */ });
-/* harmony import */ var _Subscription__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Subscription */ 2425);
-
-class Action extends _Subscription__WEBPACK_IMPORTED_MODULE_0__.Subscription {
-  constructor(scheduler, work) {
-    super();
-  }
-
-  schedule(state, delay = 0) {
-    return this;
-  }
-
-}
-
-/***/ }),
-
-/***/ 3670:
-/*!**********************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncAction.js ***!
-  \**********************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AsyncAction": () => (/* binding */ AsyncAction)
-/* harmony export */ });
-/* harmony import */ var _Action__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Action */ 5353);
-
-class AsyncAction extends _Action__WEBPACK_IMPORTED_MODULE_0__.Action {
-  constructor(scheduler, work) {
-    super(scheduler, work);
-    this.scheduler = scheduler;
-    this.work = work;
-    this.pending = false;
-  }
-
-  schedule(state, delay = 0) {
-    if (this.closed) {
-      return this;
-    }
-
-    this.state = state;
-    const id = this.id;
-    const scheduler = this.scheduler;
-
-    if (id != null) {
-      this.id = this.recycleAsyncId(scheduler, id, delay);
-    }
-
-    this.pending = true;
-    this.delay = delay;
-    this.id = this.id || this.requestAsyncId(scheduler, this.id, delay);
-    return this;
-  }
-
-  requestAsyncId(scheduler, id, delay = 0) {
-    return setInterval(scheduler.flush.bind(scheduler, this), delay);
-  }
-
-  recycleAsyncId(scheduler, id, delay = 0) {
-    if (delay !== null && this.delay === delay && this.pending === false) {
-      return id;
-    }
-
-    clearInterval(id);
-    return undefined;
-  }
-
-  execute(state, delay) {
-    if (this.closed) {
-      return new Error('executing a cancelled action');
-    }
-
-    this.pending = false;
-
-    const error = this._execute(state, delay);
-
-    if (error) {
-      return error;
-    } else if (this.pending === false && this.id != null) {
-      this.id = this.recycleAsyncId(this.scheduler, this.id, null);
-    }
-  }
-
-  _execute(state, delay) {
-    let errored = false;
-    let errorValue = undefined;
-
-    try {
-      this.work(state);
-    } catch (e) {
-      errored = true;
-      errorValue = !!e && e || new Error(e);
-    }
-
-    if (errored) {
-      this.unsubscribe();
-      return errorValue;
-    }
-  }
-
-  _unsubscribe() {
-    const id = this.id;
-    const scheduler = this.scheduler;
-    const actions = scheduler.actions;
-    const index = actions.indexOf(this);
-    this.work = null;
-    this.state = null;
-    this.pending = false;
-    this.scheduler = null;
-
-    if (index !== -1) {
-      actions.splice(index, 1);
-    }
-
-    if (id != null) {
-      this.id = this.recycleAsyncId(scheduler, id, null);
-    }
-
-    this.delay = null;
-  }
-
-}
-
-/***/ }),
-
-/***/ 2901:
-/*!*************************************************************************!*\
-  !*** ./node_modules/rxjs/_esm2015/internal/scheduler/AsyncScheduler.js ***!
-  \*************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "AsyncScheduler": () => (/* binding */ AsyncScheduler)
-/* harmony export */ });
-/* harmony import */ var _Scheduler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Scheduler */ 1925);
-
-class AsyncScheduler extends _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler {
-  constructor(SchedulerAction, now = _Scheduler__WEBPACK_IMPORTED_MODULE_0__.Scheduler.now) {
-    super(SchedulerAction, () => {
-      if (AsyncScheduler.delegate && AsyncScheduler.delegate !== this) {
-        return AsyncScheduler.delegate.now();
-      } else {
-        return now();
-      }
-    });
-    this.actions = [];
-    this.active = false;
-    this.scheduled = undefined;
-  }
-
-  schedule(work, delay = 0, state) {
-    if (AsyncScheduler.delegate && AsyncScheduler.delegate !== this) {
-      return AsyncScheduler.delegate.schedule(work, delay, state);
-    } else {
-      return super.schedule(work, delay, state);
-    }
-  }
-
-  flush(action) {
-    const {
-      actions
-    } = this;
-
-    if (this.active) {
-      actions.push(action);
-      return;
-    }
-
-    let error;
-    this.active = true;
-
-    do {
-      if (error = action.execute(action.state, action.delay)) {
-        break;
-      }
-    } while (action = actions.shift());
-
-    this.active = false;
-
-    if (error) {
-      while (action = actions.shift()) {
-        action.unsubscribe();
-      }
-
-      throw error;
-    }
-  }
-
-}
-
-/***/ }),
-
 /***/ 328:
 /*!****************************************************************!*\
   !*** ./node_modules/rxjs/_esm2015/internal/scheduler/async.js ***!
@@ -470,7 +246,7 @@ const async = asyncScheduler;
   \**********************************************************/
 /***/ ((module) => {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzZWFyY2gucGFnZS5zY3NzIn0= */";
+module.exports = ".container {\n  padding: 30px 10px 10px 10px;\n}\n.container .search-mode {\n  display: flex;\n  justify-content: center;\n}\n.container .search-mode ion-segment {\n  width: 200px;\n}\n.container .filter-badges {\n  width: 100%;\n  display: flex;\n  justify-content: center;\n}\n.container .filter-badges ion-badge {\n  margin: 5px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNlYXJjaC5wYWdlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDSSw0QkFBQTtBQUNKO0FBQ0k7RUFDSSxhQUFBO0VBQ0EsdUJBQUE7QUFDUjtBQUNRO0VBQ0ksWUFBQTtBQUNaO0FBR0k7RUFDSSxXQUFBO0VBQ0EsYUFBQTtFQUNBLHVCQUFBO0FBRFI7QUFHUTtFQUNJLFdBQUE7QUFEWiIsImZpbGUiOiJzZWFyY2gucGFnZS5zY3NzIiwic291cmNlc0NvbnRlbnQiOlsiLmNvbnRhaW5lciB7XG4gICAgcGFkZGluZzogMzBweCAxMHB4IDEwcHggMTBweDtcblxuICAgIC5zZWFyY2gtbW9kZSB7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXG4gICAgICAgIGlvbi1zZWdtZW50IHtcbiAgICAgICAgICAgIHdpZHRoOiAyMDBweDtcbiAgICAgICAgfVxuICAgIH1cblxuICAgIC5maWx0ZXItYmFkZ2VzIHtcbiAgICAgICAgd2lkdGg6IDEwMCU7XG4gICAgICAgIGRpc3BsYXk6IGZsZXg7XG4gICAgICAgIGp1c3RpZnktY29udGVudDogY2VudGVyO1xuXG4gICAgICAgIGlvbi1iYWRnZSB7XG4gICAgICAgICAgICBtYXJnaW46IDVweDtcbiAgICAgICAgfVxuICAgIH1cbn0iXX0= */";
 
 /***/ }),
 
@@ -480,7 +256,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
   \**********************************************************/
 /***/ ((module) => {
 
-module.exports = "<ion-header>\n  <ion-toolbar>\n    <ion-title>search</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content>\n  <ion-item>\n    <ion-label position=\"floating\">Search</ion-label>\n    <ion-input [formControl]=\"searchTerm\"></ion-input>\n  </ion-item>\n  <div class=\"search-results\" *ngIf=\"searchResults$ | async as result\">\n    <ion-list>\n      <ion-item *ngFor=\"let artist of result\">\n        <!-- <ion-avatar slot=\"start\">\n          <img src=\"./avatar-finn.png\" />\n        </ion-avatar> -->\n        <ion-label>\n          <h2>{{artist.name}}</h2>\n        </ion-label>\n      </ion-item>\n    </ion-list>\n    <!-- <ng-template #loading></ng-template> -->\n  </div>\n</ion-content>\n";
+module.exports = "<ion-header>\n  <ion-toolbar color=\"primary\">\n    <ion-title>search</ion-title>\n  </ion-toolbar>\n</ion-header>\n\n<ion-content fullscreen=\"\">\n  <div class=\"container\">\n\n    <div class=\"search-mode\">\n      <ion-segment mode=\"ios\" value=\"all\">\n        <ion-segment-button value=\"all\">\n          <ion-label>All</ion-label>\n        </ion-segment-button>\n        <ion-segment-button value=\"near_by\">\n          <ion-label>Near by</ion-label>\n        </ion-segment-button>\n      </ion-segment>\n    </div>\n\n    <ion-searchbar [formControl]=\"searchTerm\"></ion-searchbar>\n\n    <div class=\"filter-badges\">\n      <ion-badge color=\"primary\">artists</ion-badge>\n      <ion-badge color=\"secondary\">stage</ion-badge>\n      <ion-badge color=\"tertiary\">event</ion-badge>\n    </div>\n\n    <div class=\"search-results\" *ngIf=\"searchResults$ | async as result\">\n      <ion-list>\n        <ion-item *ngFor=\"let artist of result\" [routerLink]=\"['/tabs', 'artist', artist.id]\">\n          <ion-avatar slot=\"start\">\n            <img [src]=\"imgUrl(artist.storage_path)\" />\n          </ion-avatar>\n          <ion-label>\n            <h2>{{artist.name}}</h2>\n          </ion-label>\n          <ion-badge slot=\"end\" color=\"primary\">artist</ion-badge>\n        </ion-item>\n      </ion-list>\n    </div>\n  </div>\n</ion-content>\n\n<!-- <ng-template #loading>\n  <ion-spinner></ion-spinner>\n</ng-template> -->";
 
 /***/ })
 
