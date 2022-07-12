@@ -20,18 +20,6 @@ GRANT SELECT ON TABLE public.mask TO anon;
 -------------------------
 -------------------------
 
--- Enums
-create table if not exists public.asset_enum (
-	id uuid not null primary key DEFAULT uuid_generate_v4(),
-	name text not null,
-	description text,
-	inserted_at timestamp with time zone default now() not null,
-	public boolean default false
-);
-
-GRANT SELECT ON TABLE public.asset_enum TO anon;
-
--- Entities
 -------------
 -- ICON
 -------------
@@ -44,6 +32,15 @@ create table if not exists public.icon (
 );
 
 GRANT SELECT ON TABLE public.icon TO anon;
+
+-- Row level security
+ALTER TABLE icon ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_public_icons 
+	ON icon 
+	FOR SELECT
+	TO anon 
+	USING (public);
 
 -------------
 -- DAY
@@ -59,12 +56,22 @@ create table if not exists public.day(
 
 GRANT SELECT ON TABLE public.day TO anon;
 
+-- Row level security
+ALTER TABLE day ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_public_days
+	ON day 
+	FOR SELECT
+	TO anon 
+	USING (public);
+
+
 -------------
 -- EVENT
 -------------
 create table if not exists public.event(
 	id uuid not null primary key DEFAULT uuid_generate_v4(),
-	name text,
+	name text not null,
 	description text,
 	geom geometry(polygon, 4326),
 	style jsonb,
@@ -74,14 +81,24 @@ create table if not exists public.event(
 );
 
 create index on public.event using gist(geom);
+
 GRANT SELECT ON TABLE public.event TO anon;
+
+-- Row level security
+ALTER TABLE event ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_public_events 
+	ON event 
+	FOR SELECT
+	TO anon 
+	USING (public);
 
 -------------
 -- STAGE
 -------------
 create table if not exists public.stage (
 	id uuid not null primary key DEFAULT uuid_generate_v4(),
-	name text,
+	name text not null,
 	description text,
 	icon_id uuid references public.icon,
 	geom geometry(point, 4326),
@@ -91,14 +108,25 @@ create table if not exists public.stage (
 );
 
 create index if not exists on public.stage using gist(geom);
+
 GRANT SELECT ON TABLE public.stage TO anon;
+
+-- Row level security
+ALTER TABLE stage ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_public_stages
+	ON stage 
+	FOR SELECT
+	TO anon 
+	USING (public);
+
 
 -------------
 -- ARTIST
 -------------
 create table if not exists public.artist (
 	id uuid not null primary key DEFAULT uuid_generate_v4(),
-	name text,
+	name text not null,
 	description text,
 	storage_path text,
 	bandcamp text,
@@ -161,6 +189,7 @@ create policy anon_can_read_public_timetable
 	TO anon 
 	USING (public);
 
+
 -------------
 -- ASSET
 -------------
@@ -168,7 +197,7 @@ create table if not exists public.asset (
 	id uuid not null primary key DEFAULT uuid_generate_v4(),
 	description text,
 	geom geometry(point, 4326),
-	asset_id uuid references public.asset_enum not null,
+	asset_type_id uuid references public.asset_type not null,
 	icon_id uuid references public.icon,
 	event_id uuid references public.event not null,
 	inserted_at timestamp with time zone default now() not null,
@@ -178,13 +207,45 @@ create table if not exists public.asset (
 create index on public.asset using gist(geom);
 GRANT SELECT ON TABLE public.asset TO anon;
 
+-- Row level security
+ALTER TABLE asset ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_public_assets
+	ON asset 
+	FOR SELECT
+	TO anon 
+	USING (public);
+
+
+---------------
+-- ASSET TYPE
+---------------
+create table if not exists public.asset_type (
+	id uuid not null primary key DEFAULT uuid_generate_v4(),
+	name text not null,
+	description text,
+	inserted_at timestamp with time zone default now() not null,
+	public boolean default false
+);
+
+GRANT SELECT ON TABLE public.asset_type TO anon;
+
+-- Row level security
+ALTER TABLE asset_type ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_public_asset_types
+	ON asset_type 
+	FOR SELECT
+	TO anon 
+	USING (public);
+
 -----------------------
 -- Buckets
 -----------------------
 -- create bucket for artist photo and icons
 INSERT INTO "storage".buckets (id,"name",public) VALUES
-	('icon','icon',false),
-	('artist','artist',false);
+	('icon','icon',true),
+	('artist','artist',true);
 
 
 -----------------------
@@ -206,10 +267,6 @@ BEGIN
    INTO geojson;
 END
 $func$;
-
-
-select to_tsquery() 
-from artist a 
 
 
 -----------------------
@@ -395,7 +452,7 @@ $$;
 -- Enable audit log for tables
 select audit.enable_tracking('public.artist');
 select audit.enable_tracking('public.asset');
-select audit.enable_tracking('public.asset_enum');
+select audit.enable_tracking('public.asset_type');
 select audit.enable_tracking('public.day');
 select audit.enable_tracking('public.event');
 select audit.enable_tracking('public.icon');
