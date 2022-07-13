@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment';
 import { SupabaseService } from './supabase.service';
 import { MapStateService } from '../pages/tab-map/state/map-state.service';
 import { tap } from 'rxjs/operators';
+import { Geolocation } from '@capacitor/geolocation';
+import { Device } from '@capacitor/device';
 
 @Injectable({
   providedIn: 'root'
@@ -53,16 +55,26 @@ export class MapService {
       'bottom-left'
     );
 
-    this.map.addControl(
-      new GeolocateControl({
-        positionOptions: {
-          enableHighAccuracy: true
-        },
-        trackUserLocation: true,
-        showAccuracyCircle: false
-      }),
-      'bottom-right'
-    );
+    const geolocateControl = new GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true,
+      showAccuracyCircle: false
+    })
+
+    this.map.addControl(geolocateControl, 'bottom-right');
+
+    geolocateControl.on('trackuserlocationstart', () => {
+
+      // Request geolocation permission on IOS and Android
+      Promise.all([Device.getInfo(), Geolocation.checkPermissions()])
+        .then(([device, permission]) => {
+          if (permission.location !== 'granted' && device.platform !== 'web') {
+            Geolocation.requestPermissions();
+          }
+        });
+    })
   }
 
   addClickBehaviourToLayer(layerName: MapLayer): void {
@@ -100,7 +112,7 @@ export class MapService {
   }
 
   fitBounds(bounds: LngLatBoundsLike): void {
-    this.map.fitBounds(bounds, {padding: 10});
+    this.map.fitBounds(bounds, { padding: 10 });
   }
 
   addAerial(): void {
@@ -153,7 +165,7 @@ export class MapService {
           layout: {},
           paint: {
             'fill-color': 'black',
-            'fill-opacity': 0.5,
+            'fill-opacity': 0.3,
           },
           filter: ['==', 'day_id', '']
         });
@@ -202,8 +214,8 @@ export class MapService {
           source: 'event',
           layout: {},
           paint: {
-            'line-color': '#599ae0',
-            'line-width': 5,
+            'line-color': 'white',
+            'line-width': 3,
             // 'line-dasharray': [4, 1]
           }
         });
@@ -220,6 +232,35 @@ export class MapService {
         });
 
         this.map.addLayer({
+          id: 'asset',
+          type: 'circle',
+          source: 'asset',
+          layout: {},
+          paint: {
+            'circle-color': '#c85c67',
+            'circle-radius': [
+              'interpolate', ['linear'], ['zoom'],
+              15, 4,
+              16, 10,
+              17, 0
+            ],
+            'circle-stroke-color': 'white',
+            'circle-stroke-width': [
+              'interpolate', ['linear'], ['zoom'],
+              16, 2,
+              17, 0
+            ],
+            'circle-opacity': [
+              'interpolate',
+              ['linear'],
+              ['zoom'],
+              16, 1,
+              17, 0
+            ]
+          },
+        });
+
+        this.map.addLayer({
           id: 'asset-icon',
           type: 'symbol',
           source: 'asset',
@@ -227,7 +268,7 @@ export class MapService {
           layout: {
             'icon-anchor': 'bottom',
             // 'text-field': ['get', 'name'],
-            'icon-offset': [9, 0],
+            'icon-offset': [9.5, 0],
             // 'text-justify': 'auto',
             'icon-image': 'toilet',
             'icon-size': [
@@ -240,84 +281,63 @@ export class MapService {
         });
 
         // this.map.addLayer({
-        //   id: 'asset',
-        //   type: 'circle',
+        //   id: 'asset-heat',
+        //   type: 'heatmap',
         //   source: 'asset',
+        //   maxzoom: 17,
         //   layout: {},
         //   paint: {
-        //     'circle-color': '#088',
-        //     'circle-radius': 5,
-        //     'circle-opacity': [
+        //     'heatmap-weight': [
         //       'interpolate',
         //       ['linear'],
         //       ['zoom'],
-        //       16,
+        //       12,
+        //       1,
+        //       22,
+        //       5
+        //     ],
+        //     'heatmap-radius': [
+        //       'interpolate',
+        //       ['linear'],
+        //       ['zoom'],
         //       0,
+        //       1,
+        //       9.9,
+        //       1,
+        //       22,
+        //       25
+        //     ],
+        //     'heatmap-color': [
+        //       'interpolate',
+        //       ['linear'],
+        //       ['heatmap-density'],
+        //       0,
+        //       'rgba(0, 0, 255, 0)',
+        //       0.1,
+        //       'hsl(141, 44%, 83%)',
+        //       0.3,
+        //       'hsl(173, 39%, 75%)',
+        //       0.5,
+        //       'hsl(196, 68%, 70%)',
+        //       0.7,
+        //       'hsl(223, 83%, 70%)',
+        //       1,
+        //       'hsl(213, 100%, 50%)'
+        //     ],
+        //     'heatmap-opacity': [
+        //       'interpolate',
+        //       ['linear'],
+        //       ['zoom'],
+        //       0,
+        //       0.6,
+        //       16,
+        //       0.6,
         //       17,
-        //       1
-        //     ]
-        //   },
-        //   minzoom: 16
+        //       0
+        //     ],
+        //     'heatmap-intensity': 2
+        //   }
         // });
-
-        this.map.addLayer({
-          id: 'asset-heat',
-          type: 'heatmap',
-          source: 'asset',
-          maxzoom: 17,
-          layout: {},
-          paint: {
-            'heatmap-weight': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              12,
-              1,
-              22,
-              5
-            ],
-            'heatmap-radius': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              0,
-              1,
-              9.9,
-              1,
-              22,
-              25
-            ],
-            'heatmap-color': [
-              'interpolate',
-              ['linear'],
-              ['heatmap-density'],
-              0,
-              'rgba(0, 0, 255, 0)',
-              0.1,
-              'hsl(141, 44%, 83%)',
-              0.3,
-              'hsl(173, 39%, 75%)',
-              0.5,
-              'hsl(196, 68%, 70%)',
-              0.7,
-              'hsl(223, 83%, 70%)',
-              1,
-              'hsl(213, 100%, 50%)'
-            ],
-            'heatmap-opacity': [
-              'interpolate',
-              ['linear'],
-              ['zoom'],
-              0,
-              0.6,
-              16,
-              0.6,
-              17,
-              0
-            ],
-            'heatmap-intensity': 2
-          }
-        });
 
       })
     ).subscribe();
@@ -350,7 +370,8 @@ export class MapService {
               'icon-image': 'stage',
               'icon-size': [
                 'interpolate', ['linear'], ['zoom'],
-                13, 0.02,
+                13, 0.1,
+                18, 0.6,
                 22, 1.5
               ],
               'icon-allow-overlap': true
