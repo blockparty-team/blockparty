@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-segment scrollable mode="md">
+    <ion-segment scrollable mode="md" (ionChange)="onDayFilterChange($event)">
       <ion-segment-button *ngFor="let day of days$ | async" [value]="day.id">
         <ion-label>{{day.name}}</ion-label>
       </ion-segment-button>

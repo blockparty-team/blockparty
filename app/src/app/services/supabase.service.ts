@@ -41,6 +41,19 @@ export class SupabaseService {
     );
   }
 
+  get dayMaskBounds$(): Observable<definitions['day_event_mask'][]> {
+    return from(
+      this.client
+        .from<definitions['day_event_mask']>('day_event_mask')
+        .select(`
+          day_id,
+          bounds
+        `)
+    ).pipe(
+      map(res => res.data)
+    );
+  }
+
   allEntities(): Observable<DayWithRelations[]> {
     return from(
       this.client
@@ -120,6 +133,8 @@ export class SupabaseService {
       pluck('data')
     );
   }
+
+
 
   downloadPhoto(bucket: string, path: string) {
     return from(

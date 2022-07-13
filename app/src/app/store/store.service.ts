@@ -15,23 +15,16 @@ export class StoreService {
   private _daysWithRelations$ = new BehaviorSubject<DayWithRelations[]>(null);
   daysWithRelations$: Observable<DayWithRelations[]> = this._daysWithRelations$.asObservable();
 
-  // private _artists$ = new BehaviorSubject<definitions['artist'][]>(null);
-  // artists$: Observable<definitions['artist'][]> = this._artists$.asObservable().pipe(
-  //   filter(artists => artists === null),
-  //   switchMap(() => this.supabase.artists$),
-  //   tap(artists => {
-  //     this._artists$.next(artists);
-  //     this.deviceStorageService.set('artists', artists);
-  //   })
-  // );
-
   artists$: Observable<ArtistWithRelations[]> = this.deviceStorageService.get('artists').pipe(
     // map((x: any) => x.map((y: any) => ({...y, name: 'Ole'}))),
     // tap(x => console.log('LS', x)),
     switchMap(() => this.supabase.artists$),
     tap(artists => this.deviceStorageService.set('artists', artists)),
-    shareReplay(1),
-    tap(console.log)
+    shareReplay(1)
+  );
+
+  dayMaskBounds$: Observable<definitions['day_event_mask'][]> = this.supabase.dayMaskBounds$.pipe(
+    shareReplay(1)
   );
 
   constructor(

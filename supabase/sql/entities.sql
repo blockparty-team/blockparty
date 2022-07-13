@@ -245,19 +245,15 @@ create policy anon_can_read_public_asset_types
 --  VIEWS
 -------------------
 -- Day/Event mask
-create view public.day_event_mask as
+create or replace view public.day_event_mask as
 select
 	d.id day_id,
-	st_difference(st_collect(m.geom), st_collect(e.geom)),
+	st_difference(st_collect(m.geom), st_collect(e.geom)) geom,
 	array[
-		array[
-			st_xmin(st_collect(e.geom)),
-			st_ymin(st_collect(e.geom))
-		],
-		array[
-			st_xmax(st_collect(e.geom)),
-			st_ymax(st_collect(e.geom))
-		]
+		st_xmin(st_collect(e.geom)),
+		st_ymin(st_collect(e.geom)),
+		st_xmax(st_collect(e.geom)),
+		st_ymax(st_collect(e.geom))
 	] as bounds
 from
 	mask m

@@ -17,7 +17,7 @@ export interface paths {
       parameters: {
         query: {
           day_id?: parameters["rowFilter.day_event_mask.day_id"];
-          st_difference?: parameters["rowFilter.day_event_mask.st_difference"];
+          geom?: parameters["rowFilter.day_event_mask.geom"];
           bounds?: parameters["rowFilter.day_event_mask.bounds"];
           /** Filtering Columns */
           select?: parameters["select"];
@@ -1013,7 +1013,7 @@ export interface definitions {
      */
     day_id?: string;
     /** Format: extensions.geometry */
-    st_difference?: string;
+    geom?: string;
     /** Format: ARRAY */
     bounds?: unknown[];
   };
@@ -1331,7 +1331,7 @@ export interface parameters {
   /** Format: uuid */
   "rowFilter.day_event_mask.day_id": string;
   /** Format: extensions.geometry */
-  "rowFilter.day_event_mask.st_difference": string;
+  "rowFilter.day_event_mask.geom": string;
   /** Format: ARRAY */
   "rowFilter.day_event_mask.bounds": string;
   /** @description icon */

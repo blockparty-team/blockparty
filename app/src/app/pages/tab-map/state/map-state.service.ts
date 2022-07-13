@@ -12,9 +12,14 @@ export class MapStateService {
   private _selectedMapFeatures$ = new BehaviorSubject<MapClickedFeature[]>(null);
   selectedMapFeatures$: Observable<MapClickedFeature[]> = this._selectedMapFeatures$.asObservable();
 
-  constructor() { }
+  private _selectedDay$ = new BehaviorSubject<string>(null);
+  selectedDay$: Observable<string> = this._selectedDay$.asObservable();
 
-  selectedMapFeatures(features: MapClickedFeature[]) {
+  selectedMapFeatures(features: MapClickedFeature[]): void {
     this._selectedMapFeatures$.next(features);
+  }
+
+  selectedDay(dayId: string): void {
+    this._selectedDay$.next(dayId);
   }
 }

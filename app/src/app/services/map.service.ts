@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
-import { AttributionControl, GeolocateControl, Map, MapMouseEvent } from 'maplibre-gl';
+import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
 import { environment } from 'src/environments/environment';
 import { SupabaseService } from './supabase.service';
 import { MapStateService } from '../pages/tab-map/state/map-state.service';
@@ -40,17 +40,16 @@ export class MapService {
       this.addStages();
       this.addEvents();
       this.addAssets();
-      this.addMask();
+      this.addDayMask();
 
       this.addClickBehaviourToLayer('stage');
       this.addClickBehaviourToLayer('asset');
-
     });
   }
 
   addControls(): void {
     this.map.addControl(
-      new AttributionControl({ compact: false }),
+      new AttributionControl(),
       'bottom-left'
     );
 
@@ -92,14 +91,16 @@ export class MapService {
 
     const features = this.map.queryRenderedFeatures(event.lngLat);
 
-    console.log(features);
-
     this.map.on('mouseenter', 'praj-point', () => {
       this.map.getCanvas().style.cursor = 'pointer';
     });
     this.map.on('mouseleave', 'praj-point', () => {
       this.map.getCanvas().style.cursor = '';
     });
+  }
+
+  fitBounds(bounds: LngLatBoundsLike): void {
+    this.map.fitBounds(bounds, {padding: 10});
   }
 
   addAerial(): void {
@@ -137,12 +138,12 @@ export class MapService {
     }, 'label_road');
   }
 
-  addMask(): void {
+  addDayMask(): void {
     this.supabaseService.tableAsGeojson('day_event_mask').pipe(
       tap(geojson => {
         this.map.addSource('day_event_mask', {
           type: 'geojson',
-          data: {...geojson, features: [geojson.features[0]]}
+          data: geojson
         });
 
         this.map.addLayer({
@@ -153,7 +154,8 @@ export class MapService {
           paint: {
             'fill-color': 'black',
             'fill-opacity': 0.5,
-          }
+          },
+          filter: ['==', 'day_id', '']
         });
 
         // this.map.addLayer({
@@ -169,6 +171,10 @@ export class MapService {
         // });
       })
     ).subscribe();
+  }
+
+  filterDayMask(dayId: string): void {
+    this.map.setFilter('day_event_mask', ['==', 'day_id', dayId])
   }
 
   addEvents(): void {
