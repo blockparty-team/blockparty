@@ -32,3 +32,4 @@ npm-debug.log*
 /www
 
 .envrc
+resources/android/**/*

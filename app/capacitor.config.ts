@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'app',
+  appName: 'Distortion',
   webDir: 'www',
   bundledWebRuntime: false
 };
