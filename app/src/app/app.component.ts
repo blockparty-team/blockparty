@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { StatusBar } from '@capacitor/status-bar'
 import { StoreService } from './store/store.service';
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.updateEntities();
-    // this.store.artists2$.subscribe(console.log);
-    // this.store.updateArtists();
+
+    StatusBar.setBackgroundColor({color: '#c85c67'})
   }
 }
