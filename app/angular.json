@@ -28,7 +28,11 @@
                 "glob": "**/*.svg",
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
-              }
+              },
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest"
             ],
             "styles": ["src/theme/variables.scss", "src/global.scss"],
             "scripts": [],
@@ -38,7 +42,9 @@
             "buildOptimizer": false,
             "sourceMap": true,
             "optimization": false,
-            "namedChunks": true
+            "namedChunks": true,
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -108,7 +114,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets"
-              }
+              },
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest",
+              "src/manifest.webmanifest"
             ]
           },
           "configurations": {
