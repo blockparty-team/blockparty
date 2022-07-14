@@ -46,7 +46,7 @@ export class SupabaseService {
       this.client
         .from<definitions['day_event_mask']>('day_event_mask')
         .select(`
-          day_id,
+          id,
           bounds
         `)
     ).pipe(

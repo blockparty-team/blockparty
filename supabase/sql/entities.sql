@@ -257,7 +257,7 @@ create policy anon_can_read_public_asset_types
 -- Day/Event mask
 create or replace view public.day_event_mask as
 select
-	d.id day_id,
+	d.id id,
 	st_difference(st_collect(m.geom), st_collect(e.geom)) geom,
 	array[
 		st_xmin(st_collect(e.geom)),

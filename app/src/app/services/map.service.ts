@@ -8,6 +8,7 @@ import { MapStateService } from '../pages/tab-map/state/map-state.service';
 import { tap } from 'rxjs/operators';
 import { Geolocation } from '@capacitor/geolocation';
 import { Device } from '@capacitor/device';
+import { color } from '@app/shared/colors';
 
 @Injectable({
   providedIn: 'root'
@@ -44,8 +45,8 @@ export class MapService {
       this.addAssets();
       this.addDayMask();
 
-      this.addClickBehaviourToLayer('stage');
-      this.addClickBehaviourToLayer('asset');
+      this.addClickBehaviourToLayer(MapLayer.Stage);
+      this.addClickBehaviourToLayer(MapLayer.Asset);
     });
   }
 
@@ -151,48 +152,36 @@ export class MapService {
   }
 
   addDayMask(): void {
-    this.supabaseService.tableAsGeojson('day_event_mask').pipe(
+    this.supabaseService.tableAsGeojson(MapLayer.DayEventMask).pipe(
       tap(geojson => {
-        this.map.addSource('day_event_mask', {
+        this.map.addSource(MapLayer.DayEventMask, {
           type: 'geojson',
           data: geojson
         });
 
         this.map.addLayer({
-          id: 'day_event_mask',
+          id: MapLayer.DayEventMask,
           type: 'fill',
-          source: 'day_event_mask',
+          source: MapLayer.DayEventMask,
           layout: {},
           paint: {
             'fill-color': 'black',
             'fill-opacity': 0.3,
           },
-          filter: ['==', 'day_id', '']
+          filter: ['==', 'id', '']
         });
-
-        // this.map.addLayer({
-        //   id: 'event-outline',
-        //   type: 'line',
-        //   source: 'event',
-        //   layout: {},
-        //   paint: {
-        //     'line-color': 'gray',
-        //     'line-width': 5,
-        //     'line-dasharray': [4, 1]
-        //   }
-        // });
       })
     ).subscribe();
   }
 
   filterDayMask(dayId: string): void {
-    this.map.setFilter('day_event_mask', ['==', 'day_id', dayId])
+    this.map.setFilter('day_event_mask', ['==', 'id', dayId])
   }
 
   addEvents(): void {
-    this.supabaseService.tableAsGeojson('event').pipe(
+    this.supabaseService.tableAsGeojson(MapLayer.Event).pipe(
       tap(geojson => {
-        this.map.addSource('event', {
+        this.map.addSource(MapLayer.Event, {
           type: 'geojson',
           data: geojson
         });
@@ -208,33 +197,46 @@ export class MapService {
         //   }
         // });
 
+        // this.map.addLayer({
+        //   id: `${MapLayer.Event}-outline`,
+        //   type: 'line',
+        //   source: 'event',
+        //   layout: {},
+        //   paint: {
+        //     'line-color': 'white',
+        //     'line-width': 3,
+        //     // 'line-dasharray': [4, 1]
+        //   }
+        // });
+
         this.map.addLayer({
-          id: 'event-outline',
+          id: `${MapLayer.Event}-highlight`,
           type: 'line',
           source: 'event',
           layout: {},
           paint: {
-            'line-color': 'white',
-            'line-width': 3,
-            // 'line-dasharray': [4, 1]
-          }
+            'line-color': color('--ion-color-tertiary'),
+            'line-width': 6,
+          },
+          filter: ['==', 'id', '']
         });
+
       })
     ).subscribe();
   }
 
   addAssets(): void {
-    this.supabaseService.tableAsGeojson('asset').pipe(
+    this.supabaseService.tableAsGeojson(MapLayer.Asset).pipe(
       tap(geojson => {
-        this.map.addSource('asset', {
+        this.map.addSource(MapLayer.Asset, {
           type: 'geojson',
           data: geojson
         });
 
         this.map.addLayer({
-          id: 'asset',
+          id: MapLayer.Asset,
           type: 'circle',
-          source: 'asset',
+          source: MapLayer.Asset,
           layout: {},
           paint: {
             'circle-color': '#c85c67',
@@ -261,9 +263,9 @@ export class MapService {
         });
 
         this.map.addLayer({
-          id: 'asset-icon',
+          id: `${MapLayer.Asset}-icon`,
           type: 'symbol',
-          source: 'asset',
+          source: MapLayer.Asset,
           minzoom: 16,
           layout: {
             'icon-anchor': 'bottom',
@@ -351,17 +353,17 @@ export class MapService {
 
       this.map.addImage('stage', img);
 
-      this.supabaseService.tableAsGeojson('stage').pipe(
+      this.supabaseService.tableAsGeojson(MapLayer.Stage).pipe(
         tap(geojson => {
-          this.map.addSource('stage', {
+          this.map.addSource(MapLayer.Stage, {
             type: 'geojson',
             data: geojson
           });
 
           this.map.addLayer({
-            id: 'stage',
+            id: MapLayer.Stage,
             type: 'symbol',
-            source: 'stage',
+            source: MapLayer.Stage,
             minzoom: 13,
             layout: {
               // 'text-field': ['get', 'name'],
@@ -381,6 +383,14 @@ export class MapService {
       ).subscribe();
 
     });
+  }
+
+  highlightFeature(layerName: MapLayer, id: string): void {
+    this.map.setFilter(`${layerName}-highlight`, ['==', 'id', id])
+  }
+
+  removeFeatureHighlight(layerName: MapLayer): void {
+    this.map.setFilter(`${layerName}-highlight`, ['==', 'id', ''])
   }
 
   loadMapIcons(): void {

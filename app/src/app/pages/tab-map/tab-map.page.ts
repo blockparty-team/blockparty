@@ -9,6 +9,7 @@ import { StoreService } from '@app/store/store.service';
 import { MapService } from '@app/services/map.service';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
+import { MapLayer } from '@app/interfaces/map-layer';
 
 @Component({
   selector: 'app-tab-map',
@@ -48,11 +49,11 @@ export class TabMapPage implements OnInit {
 
     this.mapStateService.selectedDay$.pipe(
       withLatestFrom(this.store.dayMaskBounds$),
-      map(([dayId, dayMasks]) => dayMasks.find(day => day.day_id === dayId)),
+      map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
       filter(dayMask => !!dayMask),
       tap((day) => {
           this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
-          this.mapService.filterDayMask(day.day_id)
+          this.mapService.filterDayMask(day.id)
       })
     ).subscribe()
 
@@ -62,6 +63,7 @@ export class TabMapPage implements OnInit {
       filter(event => !!event),
       tap((event) => {
           this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
+          this.mapService.highlightFeature(MapLayer.Event, event.id);
       })
     ).subscribe()
   }

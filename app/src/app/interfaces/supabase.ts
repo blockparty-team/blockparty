@@ -16,7 +16,7 @@ export interface paths {
     get: {
       parameters: {
         query: {
-          day_id?: parameters["rowFilter.day_event_mask.day_id"];
+          id?: parameters["rowFilter.day_event_mask.id"];
           geom?: parameters["rowFilter.day_event_mask.geom"];
           bounds?: parameters["rowFilter.day_event_mask.bounds"];
           /** Filtering Columns */
@@ -1014,7 +1014,7 @@ export interface definitions {
      * @description Note:
      * This is a Primary Key.<pk/>
      */
-    day_id?: string;
+    id?: string;
     /** Format: extensions.geometry */
     geom?: string;
     /** Format: ARRAY */
@@ -1334,7 +1334,7 @@ export interface parameters {
   /** @description day_event_mask */
   "body.day_event_mask": definitions["day_event_mask"];
   /** Format: uuid */
-  "rowFilter.day_event_mask.day_id": string;
+  "rowFilter.day_event_mask.id": string;
   /** Format: extensions.geometry */
   "rowFilter.day_event_mask.geom": string;
   /** Format: ARRAY */
