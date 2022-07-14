@@ -23,6 +23,8 @@ export class TabMapPage implements OnInit {
 
   days$: Observable<DayWithRelations[]>;
   events$: Observable<DayWithRelations['event']>;
+  selectedDay$: Observable<string>;
+  selectedEvent$: Observable<string>;
   hideHeader$: Observable<boolean>;
 
   constructor(
@@ -35,6 +37,8 @@ export class TabMapPage implements OnInit {
   ngOnInit(): void {
 
     this.days$ = this.store.days$;
+    this.selectedDay$ = this.mapStateService.selectedDay$;
+    this.selectedEvent$ = this.mapStateService.selectedEvent$;
 
     this.hideHeader$ = this.mapStateService.mapInteraction$.pipe(
       map(interaction => !interaction),

@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^14.0.5",
     "@angular/platform-browser-dynamic": "^14.0.5",
     "@angular/router": "^14.0.5",
-    "@angular/service-worker": "^14.0.5",
+    "@angular/service-worker": "^14.0.6",
     "@capacitor/android": "3.6.0",
     "@capacitor/app": "1.1.1",
     "@capacitor/core": "3.6.0",
