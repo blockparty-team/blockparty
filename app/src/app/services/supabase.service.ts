@@ -54,7 +54,7 @@ export class SupabaseService {
     );
   }
 
-  allEntities(): Observable<DayWithRelations[]> {
+  get days$(): Observable<DayWithRelations[]> {
     return from(
       this.client
         .from<DayWithRelations>('day')
@@ -67,6 +67,7 @@ export class SupabaseService {
             id,
             name,
             description,
+            bounds,
             stage(
               id,
               name, 

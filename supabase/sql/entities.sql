@@ -93,6 +93,16 @@ create policy anon_can_read_public_events
 	TO anon 
 	USING (public);
 
+-- Generated column for bounds
+ALTER TABLE public.event ADD COLUMN bounds float8[]
+    GENERATED ALWAYS AS
+    (array[
+		st_xmin(geom),
+		st_ymin(geom),
+		st_xmax(geom),
+		st_ymax(geom)
+	]) STORED;
+ 
 
 -------------
 -- STAGE

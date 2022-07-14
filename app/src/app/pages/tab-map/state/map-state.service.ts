@@ -15,11 +15,25 @@ export class MapStateService {
   private _selectedDay$ = new BehaviorSubject<string>(null);
   selectedDay$: Observable<string> = this._selectedDay$.asObservable();
 
-  selectedMapFeatures(features: MapClickedFeature[]): void {
+  private _selectedEvent$ = new BehaviorSubject<string>(null);
+  selectedEvent$: Observable<string> = this._selectedEvent$.asObservable();
+
+  private _mapInteraction$ = new BehaviorSubject<boolean>(false);
+  mapInteraction$: Observable<boolean> = this._mapInteraction$.asObservable();
+
+  selectMapFeatures(features: MapClickedFeature[]): void {
     this._selectedMapFeatures$.next(features);
   }
 
-  selectedDay(dayId: string): void {
+  selectDay(dayId: string): void {
     this._selectedDay$.next(dayId);
+  }
+
+  selectEvent(eventId: string): void {
+    this._selectedEvent$.next(eventId);
+  }
+
+  updateMapInteraction(interacting: boolean): void {
+    this._mapInteraction$.next(interacting);
   }
 }

@@ -4,16 +4,17 @@ import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { definitions } from '@app/interfaces/supabase';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { tap, map, filter, switchMap, startWith, shareReplay, debounceTime, timeout, mergeMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap, switchMap, shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
 
-  private _daysWithRelations$ = new BehaviorSubject<DayWithRelations[]>(null);
-  daysWithRelations$: Observable<DayWithRelations[]> = this._daysWithRelations$.asObservable();
+  days$: Observable<DayWithRelations[]> = this.supabase.days$.pipe(
+    shareReplay(1)
+  );
 
   artists$: Observable<ArtistWithRelations[]> = this.deviceStorageService.get('artists').pipe(
     // map((x: any) => x.map((y: any) => ({...y, name: 'Ole'}))),
@@ -31,17 +32,5 @@ export class StoreService {
     private supabase: SupabaseService,
     private deviceStorageService: DeviceStorageService
   ) { }
-
-  updateEntities(): void {
-    this.supabase.allEntities().pipe(
-      tap(entities => this._daysWithRelations$.next(entities))
-    ).subscribe();
-  }
-
-  // updateArtists(): void {
-  //   this.supabase.artists$.pipe(
-  //     tap(artists => this._artists$.next(artists))
-  //   ).subscribe();
-  // }
 
 }

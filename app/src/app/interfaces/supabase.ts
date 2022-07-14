@@ -500,6 +500,7 @@ export interface paths {
           day_id?: parameters["rowFilter.event.day_id"];
           inserted_at?: parameters["rowFilter.event.inserted_at"];
           public?: parameters["rowFilter.event.public"];
+          bounds?: parameters["rowFilter.event.bounds"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -558,6 +559,7 @@ export interface paths {
           day_id?: parameters["rowFilter.event.day_id"];
           inserted_at?: parameters["rowFilter.event.inserted_at"];
           public?: parameters["rowFilter.event.public"];
+          bounds?: parameters["rowFilter.event.bounds"];
         };
         header: {
           /** Preference */
@@ -580,6 +582,7 @@ export interface paths {
           day_id?: parameters["rowFilter.event.day_id"];
           inserted_at?: parameters["rowFilter.event.inserted_at"];
           public?: parameters["rowFilter.event.public"];
+          bounds?: parameters["rowFilter.event.bounds"];
         };
         body: {
           /** event */
@@ -1183,6 +1186,8 @@ export interface definitions {
      * @default false
      */
     public?: boolean;
+    /** Format: ARRAY */
+    bounds?: unknown[];
   };
   stage: {
     /**
@@ -1430,6 +1435,8 @@ export interface parameters {
   "rowFilter.event.inserted_at": string;
   /** Format: boolean */
   "rowFilter.event.public": string;
+  /** Format: ARRAY */
+  "rowFilter.event.bounds": string;
   /** @description stage */
   "body.stage": definitions["stage"];
   /** Format: uuid */

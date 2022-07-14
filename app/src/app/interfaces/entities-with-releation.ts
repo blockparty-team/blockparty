@@ -19,6 +19,7 @@ export interface EventWithRelations {
     id: definitions['event']['id'];
     name: definitions['event']['name'];
     description: definitions['event']['description'];
+    bounds: definitions['event']['bounds'];
     stage: StageWithRelations[];
 }
 

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
-import { StoreService } from './store/store.service';
+import { Device } from '@capacitor/device';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -9,13 +10,13 @@ import { StoreService } from './store/store.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-    private store: StoreService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.store.updateEntities();
-
-    StatusBar.setBackgroundColor({color: '#c85c67'})
+    Device.getInfo().then(info => {
+      if (info.platform !== 'web') {
+        StatusBar.setBackgroundColor({ color: '#c85c67' })
+      }
+    })
   }
 }

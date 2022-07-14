@@ -3,11 +3,12 @@ import { StageTimetableModalComponent } from '@app/components/stage-timetable-mo
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
-import { from, Observable, of } from 'rxjs';
-import { filter, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { combineLatest, from, Observable, of } from 'rxjs';
+import { filter, map, switchMap, tap, withLatestFrom, pluck } from 'rxjs/operators';
 import { StoreService } from '@app/store/store.service';
 import { MapService } from '@app/services/map.service';
 import { LngLatBoundsLike } from 'maplibre-gl';
+import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 
 @Component({
   selector: 'app-tab-map',
@@ -17,7 +18,9 @@ import { LngLatBoundsLike } from 'maplibre-gl';
 })
 export class TabMapPage implements OnInit {
 
-  days$: Observable<any>;
+  days$: Observable<DayWithRelations[]>;
+  events$: Observable<DayWithRelations['event']>;
+
 
   constructor(
     private store: StoreService,
@@ -27,7 +30,16 @@ export class TabMapPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.days$ = this.store.daysWithRelations$;
+    this.days$ = this.store.days$;
+
+    this.events$ = combineLatest([
+      this.days$,
+      this.mapStateService.selectedDay$
+    ]).pipe(
+      filter(([days, selectedDay]) => !!days && !!selectedDay),
+      map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
+      pluck('event')
+    )
 
     this.mapStateService.selectedMapFeatures$.pipe(
       filter(features => !!features),
@@ -41,6 +53,15 @@ export class TabMapPage implements OnInit {
       tap((day) => {
           this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
           this.mapService.filterDayMask(day.day_id)
+      })
+    ).subscribe()
+
+    this.mapStateService.selectedEvent$.pipe(
+      withLatestFrom(this.events$),
+      map(([eventId, events]) => events.find(event => event.id === eventId)),
+      filter(event => !!event),
+      tap((event) => {
+          this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
       })
     ).subscribe()
   }
@@ -58,7 +79,11 @@ export class TabMapPage implements OnInit {
   }
 
   onDayFilterChange(event: any): void {
-    this.mapStateService.selectedDay(event.detail.value);
+    this.mapStateService.selectDay(event.detail.value);
+  }
+
+  onEventFilterChange(event: any): void {
+    this.mapStateService.selectEvent(event.detail.value);
   }
 
 }

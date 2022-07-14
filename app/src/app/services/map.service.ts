@@ -87,7 +87,7 @@ export class MapService {
           geometry: feature.geometry as any
         }));
 
-        this.mapStateService.selectedMapFeatures(features);
+        this.mapStateService.selectMapFeatures(features);
       }
     });
 
