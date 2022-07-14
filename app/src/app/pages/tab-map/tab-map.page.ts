@@ -3,25 +3,27 @@ import { StageTimetableModalComponent } from '@app/components/stage-timetable-mo
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
-import { combineLatest, from, Observable, of } from 'rxjs';
-import { filter, map, switchMap, tap, withLatestFrom, pluck } from 'rxjs/operators';
+import { combineLatest, from, Observable } from 'rxjs';
+import { filter, map, switchMap, tap, withLatestFrom, pluck, delay } from 'rxjs/operators';
+import { LngLatBoundsLike } from 'maplibre-gl';
 import { StoreService } from '@app/store/store.service';
 import { MapService } from '@app/services/map.service';
-import { LngLatBoundsLike } from 'maplibre-gl';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { MapLayer } from '@app/interfaces/map-layer';
+import { animations } from '@app/shared/animations';
 
 @Component({
   selector: 'app-tab-map',
   templateUrl: 'tab-map.page.html',
   styleUrls: ['tab-map.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: animations.slideInOut
 })
 export class TabMapPage implements OnInit {
 
   days$: Observable<DayWithRelations[]>;
   events$: Observable<DayWithRelations['event']>;
-
+  hideHeader$: Observable<boolean>;
 
   constructor(
     private store: StoreService,
@@ -31,7 +33,13 @@ export class TabMapPage implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
     this.days$ = this.store.days$;
+
+    this.hideHeader$ = this.mapStateService.mapInteraction$.pipe(
+      map(interaction => !interaction),
+      delay(250)
+    )
 
     this.events$ = combineLatest([
       this.days$,
@@ -52,8 +60,8 @@ export class TabMapPage implements OnInit {
       map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
       filter(dayMask => !!dayMask),
       tap((day) => {
-          this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
-          this.mapService.filterDayMask(day.id)
+        this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
+        this.mapService.filterDayMask(day.id)
       })
     ).subscribe()
 
@@ -62,8 +70,8 @@ export class TabMapPage implements OnInit {
       map(([eventId, events]) => events.find(event => event.id === eventId)),
       filter(event => !!event),
       tap((event) => {
-          this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
-          this.mapService.highlightFeature(MapLayer.Event, event.id);
+        this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
+        this.mapService.highlightFeature(MapLayer.Event, event.id);
       })
     ).subscribe()
   }

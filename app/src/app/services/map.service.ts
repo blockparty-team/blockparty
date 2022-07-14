@@ -47,6 +47,9 @@ export class MapService {
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
       this.addClickBehaviourToLayer(MapLayer.Asset);
+
+      this.map.on('dragstart', () => this.mapStateService.updateMapInteraction(true))
+      this.map.on('dragend', () => this.mapStateService.updateMapInteraction(false))
     });
   }
 
