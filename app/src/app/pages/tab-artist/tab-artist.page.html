@@ -24,8 +24,15 @@
           <h2>
             {{art.name}}
           </h2>
-          <p>{{art.timetable[0]?.day.name}}, {{art.timetable[0]?.start_time | date:'HH:mm'}},
-            {{art.timetable[0]?.stage.name}}</p>
+          <p *ngIf="art.timetable[0]">
+            {{art.timetable[0].day.name}} | 
+            {{art.timetable[0].start_time | date:'HH:mm'}} |
+            {{art.timetable[0].stage.name}}
+          </p>
+          <p *ngIf="!art.timetable[0]">
+            -
+            <!-- {{art.description}} -->
+          </p>
         </ion-label>
         <div slot="end" class="actions">
           <ion-icon name="heart-outline"></ion-icon>
