@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
-import { MapLayer } from '@app/interfaces/map-layer';
-import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
-import { environment } from 'src/environments/environment';
-import { SupabaseService } from './supabase.service';
-import { MapStateService } from '../pages/tab-map/state/map-state.service';
+import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
 import { Geolocation } from '@capacitor/geolocation';
 import { Device } from '@capacitor/device';
+import { SupabaseService } from '@app/services/supabase.service';
+import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { color } from '@app/shared/colors';
+import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { MapLayer, MapSource } from '@app/interfaces/map-layer';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -38,18 +39,16 @@ export class MapService {
       this.map.resize();
 
       this.loadMapIcons();
-
       this.addAerial();
-      this.addStages();
-      this.addEvents();
-      this.addAssets();
-      this.addDayMask();
+      this.addLayers();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
       this.addClickBehaviourToLayer(MapLayer.Asset);
+      this.addClickBehaviourToLayer(MapLayer.AssetIcon);
+      
 
-      this.map.on('dragstart', () => this.mapStateService.updateMapInteraction(true))
-      this.map.on('dragend', () => this.mapStateService.updateMapInteraction(false))
+      this.map.on('movestart', () => this.mapStateService.updateMapInteraction(true))
+      this.map.on('moveend', () => this.mapStateService.updateMapInteraction(false))
     });
   }
 
@@ -85,6 +84,7 @@ export class MapService {
     this.map.on('click', layerName, e => {
 
       if (e.features.length > 0) {
+
         const features: MapClickedFeature[] = e.features.map(feature => ({
           id: feature.properties.id,
           layerName,
@@ -154,18 +154,28 @@ export class MapService {
     }, 'label_road');
   }
 
-  addDayMask(): void {
-    this.supabaseService.tableAsGeojson(MapLayer.DayEventMask).pipe(
-      tap(geojson => {
-        this.map.addSource(MapLayer.DayEventMask, {
-          type: 'geojson',
-          data: geojson
-        });
+  addLayers(): void {
+    forkJoin(
+      Object.values(MapSource)
+        .map(layer => this.supabaseService.tableAsGeojson(layer))
+    ).pipe(
+      tap((layers) => {
 
+        // Add map sources based on MapLayer Enum
+        Object.values(MapSource)
+          .map((layerName, i) => [layerName, layers[i]])
+          .forEach(([layerName, geojson]) => {
+            this.map.addSource(layerName as string, {
+              type: 'geojson',
+              data: geojson
+            })
+          })
+
+        // Add layers
         this.map.addLayer({
           id: MapLayer.DayEventMask,
           type: 'fill',
-          source: MapLayer.DayEventMask,
+          source: MapSource.DayEventMask,
           layout: {},
           paint: {
             'fill-color': 'black',
@@ -173,49 +183,11 @@ export class MapService {
           },
           filter: ['==', 'id', '']
         });
-      })
-    ).subscribe();
-  }
-
-  filterDayMask(dayId: string): void {
-    this.map.setFilter('day_event_mask', ['==', 'id', dayId])
-  }
-
-  addEvents(): void {
-    this.supabaseService.tableAsGeojson(MapLayer.Event).pipe(
-      tap(geojson => {
-        this.map.addSource(MapLayer.Event, {
-          type: 'geojson',
-          data: geojson
-        });
-
-        // this.map.addLayer({
-        //   id: 'event',
-        //   type: 'fill',
-        //   source: 'event',
-        //   layout: {},
-        //   paint: {
-        //     'fill-color': 'white',
-        //     'fill-opacity': 0.2,
-        //   }
-        // });
-
-        // this.map.addLayer({
-        //   id: `${MapLayer.Event}-outline`,
-        //   type: 'line',
-        //   source: 'event',
-        //   layout: {},
-        //   paint: {
-        //     'line-color': 'white',
-        //     'line-width': 3,
-        //     // 'line-dasharray': [4, 1]
-        //   }
-        // });
 
         this.map.addLayer({
-          id: `${MapLayer.Event}-highlight`,
+          id: MapLayer.EventHighLight,
           type: 'line',
-          source: 'event',
+          source: MapSource.Event,
           layout: {},
           paint: {
             'line-color': color('--ion-color-tertiary'),
@@ -224,22 +196,56 @@ export class MapService {
           filter: ['==', 'id', '']
         });
 
-      })
-    ).subscribe();
-  }
+        this.map.addLayer({
+          id: MapLayer.StageHighlight,
+          type: 'circle',
+          source: MapSource.Stage,
+          layout: {},
+          paint: {
+            'circle-color': color('--ion-color-tertiary'),
+            'circle-radius': 40,
+          },
+          filter: ['==', 'id', '']
+        });
 
-  addAssets(): void {
-    this.supabaseService.tableAsGeojson(MapLayer.Asset).pipe(
-      tap(geojson => {
-        this.map.addSource(MapLayer.Asset, {
-          type: 'geojson',
-          data: geojson
+        this.map.addLayer({
+          id: MapLayer.Stage,
+          type: 'symbol',
+          source: MapSource.Stage,
+          minzoom: 13,
+          layout: {
+            'text-field': ['get', 'name'],
+            'text-offset': [0, 0.4],
+            'text-justify': 'auto',
+            'text-transform': 'uppercase',
+            'icon-image': 'stage',
+            'icon-anchor': 'bottom',
+            'icon-size': [
+              'interpolate', ['linear'], ['zoom'],
+              13, 0.1,
+              18, 0.6,
+              22, 1.5
+            ],
+            'icon-allow-overlap': true,
+            'text-allow-overlap': true,
+          },
+          paint: {
+            "text-color": color('--ion-color-light'),
+            "text-halo-color": color('--ion-color-medium'),
+            "text-halo-width": 3,
+            'icon-halo-blur': 10,
+            'text-opacity': [
+              'interpolate', ['linear'], ['zoom'],
+              16.4, 0,
+              16.5, 1
+            ]
+          }
         });
 
         this.map.addLayer({
           id: MapLayer.Asset,
           type: 'circle',
-          source: MapLayer.Asset,
+          source: MapSource.Asset,
           layout: {},
           paint: {
             'circle-color': '#c85c67',
@@ -266,9 +272,9 @@ export class MapService {
         });
 
         this.map.addLayer({
-          id: `${MapLayer.Asset}-icon`,
+          id: MapLayer.AssetIcon,
           type: 'symbol',
-          source: MapLayer.Asset,
+          source: MapSource.Asset,
           minzoom: 16,
           layout: {
             'icon-anchor': 'bottom',
@@ -285,115 +291,8 @@ export class MapService {
           }
         });
 
-        // this.map.addLayer({
-        //   id: 'asset-heat',
-        //   type: 'heatmap',
-        //   source: 'asset',
-        //   maxzoom: 17,
-        //   layout: {},
-        //   paint: {
-        //     'heatmap-weight': [
-        //       'interpolate',
-        //       ['linear'],
-        //       ['zoom'],
-        //       12,
-        //       1,
-        //       22,
-        //       5
-        //     ],
-        //     'heatmap-radius': [
-        //       'interpolate',
-        //       ['linear'],
-        //       ['zoom'],
-        //       0,
-        //       1,
-        //       9.9,
-        //       1,
-        //       22,
-        //       25
-        //     ],
-        //     'heatmap-color': [
-        //       'interpolate',
-        //       ['linear'],
-        //       ['heatmap-density'],
-        //       0,
-        //       'rgba(0, 0, 255, 0)',
-        //       0.1,
-        //       'hsl(141, 44%, 83%)',
-        //       0.3,
-        //       'hsl(173, 39%, 75%)',
-        //       0.5,
-        //       'hsl(196, 68%, 70%)',
-        //       0.7,
-        //       'hsl(223, 83%, 70%)',
-        //       1,
-        //       'hsl(213, 100%, 50%)'
-        //     ],
-        //     'heatmap-opacity': [
-        //       'interpolate',
-        //       ['linear'],
-        //       ['zoom'],
-        //       0,
-        //       0.6,
-        //       16,
-        //       0.6,
-        //       17,
-        //       0
-        //     ],
-        //     'heatmap-intensity': 2
-        //   }
-        // });
-
       })
     ).subscribe();
-  }
-
-  addStages(): void {
-    this.map.loadImage('assets/map-icons/stage.png', (error, img) => {
-      if (error) {
-        throw error;
-      };
-
-      this.map.addImage('stage', img);
-
-      this.supabaseService.tableAsGeojson(MapLayer.Stage).pipe(
-        tap(geojson => {
-          this.map.addSource(MapLayer.Stage, {
-            type: 'geojson',
-            data: geojson
-          });
-
-          this.map.addLayer({
-            id: MapLayer.Stage,
-            type: 'symbol',
-            source: MapLayer.Stage,
-            minzoom: 13,
-            layout: {
-              // 'text-field': ['get', 'name'],
-              // 'text-offset': [0, 2],
-              // 'text-justify': 'auto',
-              'icon-image': 'stage',
-              'icon-size': [
-                'interpolate', ['linear'], ['zoom'],
-                13, 0.1,
-                18, 0.6,
-                22, 1.5
-              ],
-              'icon-allow-overlap': true
-            }
-          });
-        })
-      ).subscribe();
-
-    });
-  }
-
-  highlightFeature(layerName: MapLayer, id: string): void {
-    this.map.setFilter(`${layerName}-highlight`, ['==', 'id', id])
-  }
-
-  removeFeatureHighlight(layerName: MapLayer): void {
-    this.map.setFilter(`${layerName}-highlight`, ['==', 'id', ''])
   }
 
   loadMapIcons(): void {
@@ -402,7 +301,8 @@ export class MapService {
       'cocktail',
       'restaurant',
       'toilet',
-      'theater'
+      'theater',
+      'stage'
     ]
 
     icons.forEach(icon => {
@@ -415,4 +315,13 @@ export class MapService {
       })
     })
   }
+
+  highlightFeature(layerName: MapLayer, id: string): void {
+    this.map.setFilter(layerName, ['==', 'id', id]);
+  }
+
+  removeFeatureHighlight(layerName: MapLayer): void {
+    this.map.setFilter(layerName, ['==', 'id', '']);
+  }
+
 }

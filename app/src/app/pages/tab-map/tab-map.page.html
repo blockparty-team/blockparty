@@ -1,4 +1,5 @@
-<ion-header *ngIf="hideHeader$ | async" [@slideInOut]>
+<!-- <ion-header *ngIf="hideHeader$ | async" [@slideInOut]> -->
+<ion-header>
   <ng-container *ngIf="days$ | async as days">
     <ion-toolbar color="primary">
       <ion-segment scrollable mode="md" (ionChange)="onDayFilterChange($event)" [value]="selectedDay$ | async">

@@ -42,7 +42,7 @@ export class TabMapPage implements OnInit {
 
     this.hideHeader$ = this.mapStateService.mapInteraction$.pipe(
       map(interaction => !interaction),
-      delay(250)
+      delay(200)
     )
 
     this.events$ = combineLatest([
@@ -65,7 +65,7 @@ export class TabMapPage implements OnInit {
       filter(dayMask => !!dayMask),
       tap((day) => {
         this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
-        this.mapService.filterDayMask(day.id)
+        this.mapService.highlightFeature(MapLayer.DayEventMask, day.id)
       })
     ).subscribe()
 
@@ -75,7 +75,7 @@ export class TabMapPage implements OnInit {
       filter(event => !!event),
       tap((event) => {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
-        this.mapService.highlightFeature(MapLayer.Event, event.id);
+        this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
       })
     ).subscribe()
   }
