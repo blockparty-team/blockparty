@@ -10,22 +10,27 @@
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="artists$ | async as artists">
-    <ion-list>
-      <ion-item *ngFor="let artist of artists" [routerLink]="['./', artist.id]">
+  <ng-container *ngIf="groupedArtists$ | async as artists">
+    <ion-item-group *ngFor="let artist of artists">
+      <ion-item-divider sticky="true" color="light">
+        <ion-label>{{artist.letter}}</ion-label>
+      </ion-item-divider>
+
+      <ion-item *ngFor="let art of artist.artists" [routerLink]="['./', art.id]">
         <ion-avatar slot="start">
-          <img [src]="imgUrl(artist.storage_path)" />
+          <img [src]="imgUrl(art.storage_path)" />
         </ion-avatar>
         <ion-label>
           <h2>
-            {{artist.name}}
+            {{art.name}}
           </h2>
-          <p>{{artist.timetable[0]?.day.name}}, {{artist.timetable[0]?.start_time | date:'HH:mm'}}, {{artist.timetable[0]?.stage.name}}</p>
+          <p>{{art.timetable[0]?.day.name}}, {{art.timetable[0]?.start_time | date:'HH:mm'}},
+            {{art.timetable[0]?.stage.name}}</p>
         </ion-label>
         <div slot="end" class="actions">
           <ion-icon name="heart-outline"></ion-icon>
         </div>
       </ion-item>
-    </ion-list>
+    </ion-item-group>
   </ng-container>
 </ion-content>
