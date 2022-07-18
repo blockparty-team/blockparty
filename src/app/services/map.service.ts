@@ -43,8 +43,8 @@ export class MapService {
       this.addLayers();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
-      this.addClickBehaviourToLayer(MapLayer.Asset);      
-      this.addClickBehaviourToLayer(MapLayer.AssetIcon);      
+      this.addClickBehaviourToLayer(MapLayer.Asset);
+      this.addClickBehaviourToLayer(MapLayer.AssetIcon);
 
       this.map.on('movestart', () => this.mapStateService.updateMapInteraction(true))
       this.map.on('moveend', () => this.mapStateService.updateMapInteraction(false))
@@ -209,41 +209,6 @@ export class MapService {
         });
 
         this.map.addLayer({
-          id: MapLayer.Stage,
-          type: 'symbol',
-          source: MapSource.Stage,
-          minzoom: 13,
-          layout: {
-            'text-field': ['get', 'name'],
-            // 'text-offset': [0, 0.1],
-            'text-justify': 'auto',
-            'text-transform': 'uppercase',
-            'icon-image': 'stage',
-            'icon-anchor': 'bottom',
-            'icon-size': [
-              'interpolate', ['linear'], ['zoom'],
-              13, 0.1,
-              18, 0.6,
-              22, 1.5
-            ],
-            'icon-allow-overlap': true,
-            'text-allow-overlap': true,
-            'text-anchor': 'top'
-          },
-          paint: {
-            "text-color": color('--ion-color-light'),
-            "text-halo-color": color('--ion-color-medium'),
-            "text-halo-width": 3,
-            'icon-halo-blur': 10,
-            'text-opacity': [
-              'interpolate', ['linear'], ['zoom'],
-              16.4, 0,
-              16.5, 1
-            ]
-          }
-        });
-
-        this.map.addLayer({
           id: MapLayer.Asset,
           type: 'circle',
           source: MapSource.Asset,
@@ -279,16 +244,49 @@ export class MapService {
           minzoom: 15,
           layout: {
             'icon-anchor': 'bottom',
-            // 'text-field': ['get', 'name'],
             'icon-offset': [9.5, 0],
-            // 'text-justify': 'auto',
             'icon-image': ['get', 'icon'],
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
               15, 0,
-              15.5, 0.8
+              15.5, 0.6
             ],
             'icon-allow-overlap': true
+          }
+        });
+
+        this.map.addLayer({
+          id: MapLayer.Stage,
+          type: 'symbol',
+          source: MapSource.Stage,
+          minzoom: 13,
+          layout: {
+            'text-field': ['get', 'name'],
+            'text-offset': [0, -0.5],
+            'text-justify': 'auto',
+            'text-transform': 'uppercase',
+            'icon-image': 'stage',
+            'icon-anchor': 'bottom',
+            'icon-size': [
+              'interpolate', ['linear'], ['zoom'],
+              13, 0.1,
+              18, 0.6,
+              22, 1.5
+            ],
+            'icon-allow-overlap': true,
+            'text-allow-overlap': true,
+            'text-anchor': 'top'
+          },
+          paint: {
+            "text-color": color('--ion-color-light'),
+            "text-halo-color": color('--ion-color-medium'),
+            "text-halo-width": 3,
+            'icon-halo-blur': 10,
+            'text-opacity': [
+              'interpolate', ['linear'], ['zoom'],
+              16.4, 0,
+              16.5, 1
+            ]
           }
         });
 
