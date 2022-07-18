@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, concat, Observable } from 'rxjs';
+import { map, pairwise, tap } from 'rxjs/operators'
 import { Favorites } from '@app/interfaces/favorites';
+import { DeviceStorageService } from '@app/services/device-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +16,33 @@ export class ArtistStateService {
   }
 
   private _favorites$ = new BehaviorSubject<Favorites>(this.initialFavorites);
-  favorites$: Observable<Favorites> = this._favorites$.asObservable();
+  favorites$: Observable<Favorites> = concat(
+    this.deviceStorageService.get('favorites').pipe(tap(f => this._favorites$.next(f))),
+    this._favorites$.asObservable(),
+  )
 
-  constructor() { }
+  constructor(
+    private deviceStorageService: DeviceStorageService
+  ) { }
 
   toggleArtistsFavorites(id: string) {
     if (this._favorites$.value.artists.includes(id)) {
-      this._favorites$.next({
+
+      const update = {
         ...this._favorites$.value,
         artists: this._favorites$.value.artists.filter(artistId => artistId !== id)
-      });
+      }
+
+      this._favorites$.next(update);
+      this.deviceStorageService.set('favorites', update);
     } else {
-      this._favorites$.next({
+      const update = {
         ...this._favorites$.value,
         artists: [...this._favorites$.value.artists, id]
-      });
+      }
+
+      this._favorites$.next(update);
+      this.deviceStorageService.set('favorites', update);
     }
   }
 }

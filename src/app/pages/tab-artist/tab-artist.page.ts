@@ -95,4 +95,8 @@ export class TabArtistPage implements OnInit {
     return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
+  trackItems(index: number, item: GroupedArtists) {
+    return item.letter;
+  }
+
 }

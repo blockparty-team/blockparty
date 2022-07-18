@@ -14,14 +14,14 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar *ngIf="showSearch$ | async" color="medium">
-    <ion-searchbar [formControl]="searchTerm" animated="true"></ion-searchbar>
+    <ion-searchbar mode="ios" [formControl]="searchTerm" animated="true"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ng-container *ngIf="groupedArtists$ | async as artists">
     <ng-container *ngIf="favorites$ | async as favorites">
-      <ion-item-group *ngFor="let artist of artists">
+      <ion-item-group *ngFor="let artist of artists; trackBy:trackItems">
         <ion-item-divider sticky="true" color="light">
           <ion-label>{{artist.letter}}</ion-label>
         </ion-item-divider>
