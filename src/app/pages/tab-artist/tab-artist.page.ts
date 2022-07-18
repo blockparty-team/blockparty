@@ -6,6 +6,7 @@ import { debounceTime, filter, map, startWith, tap } from 'rxjs/operators';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { FormControl } from '@angular/forms';
 import { ArtistStateService } from './state/artist-state.service';
+import { Favorites } from '@app/interfaces/favorites';
 
 interface GroupedArtists {
   letter: string;
@@ -21,6 +22,7 @@ interface GroupedArtists {
 export class TabArtistPage implements OnInit {
 
   groupedArtists$: Observable<GroupedArtists[]>;
+  favorites$: Observable<Favorites>;
   showSearch$ = new BehaviorSubject(false);
   showFavorites$ = new BehaviorSubject(false);
 
@@ -33,14 +35,19 @@ export class TabArtistPage implements OnInit {
 
   ngOnInit() {
 
-    const searchTerm$ = this.searchTerm.valueChanges.pipe(startWith(''))
-    const favorites$ = this.artistStateService.favourites$
+    this.favorites$ = this.artistStateService.favorites$
+
     const filteredArtists$ = combineLatest([
       this.store.artists$,
-      searchTerm$
+      this.searchTerm.valueChanges.pipe(startWith('')),
+      this.showFavorites$,
+      this.artistStateService.favorites$
     ]).pipe(
       debounceTime(100),
-      map(([artists, term]) => {
+      map(([artists, term, showFavorites, favorites]) => {
+        if (showFavorites) {
+          return artists.filter(artist => favorites.artists.includes(artist.id))
+        }
         return artists.filter(artist => artist.name.toLowerCase().includes(term.toLowerCase()))
       }),
     );
@@ -65,10 +72,23 @@ export class TabArtistPage implements OnInit {
 
   toggleSearch(): void {
     this.showSearch$.next(!this.showSearch$.value)
+
+    // reset filter when search is removed
+    if (!this.showSearch$.value) {
+      this.searchTerm.setValue('')
+    }
+  }
+
+  addRemoveFavorites(id: string): void {
+    this.artistStateService.toggleArtistsFavorites(id);
   }
 
   toggleFavorites(): void {
     this.showFavorites$.next(!this.showFavorites$.value)
+  }
+
+  isFavorite(id: string, favorites: string[]): boolean {
+    return favorites.includes(id);
   }
 
   imgUrl(path: string): string {

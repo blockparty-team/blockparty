@@ -7,8 +7,28 @@ import { Favorites } from '@app/interfaces/favorites';
 })
 export class ArtistStateService {
 
-  private _favourites$ = new BehaviorSubject<Favorites>(null);
-  favourites$: Observable<Favorites> = this._favourites$.asObservable();
+  private initialFavorites: Favorites = {
+    artists: [],
+    stages: [],
+    assets: []
+  }
+
+  private _favorites$ = new BehaviorSubject<Favorites>(this.initialFavorites);
+  favorites$: Observable<Favorites> = this._favorites$.asObservable();
 
   constructor() { }
+
+  toggleArtistsFavorites(id: string) {
+    if (this._favorites$.value.artists.includes(id)) {
+      this._favorites$.next({
+        ...this._favorites$.value,
+        artists: this._favorites$.value.artists.filter(artistId => artistId !== id)
+      });
+    } else {
+      this._favorites$.next({
+        ...this._favorites$.value,
+        artists: [...this._favorites$.value.artists, id]
+      });
+    }
+  }
 }

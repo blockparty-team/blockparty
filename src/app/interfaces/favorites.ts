@@ -1,5 +1,5 @@
 export interface Favorites {
-    'artist': string[];
-    'stage': string[];
-    'asset': string[];
+    'artists': string[];
+    'stages': string[];
+    'assets': string[];
   }
