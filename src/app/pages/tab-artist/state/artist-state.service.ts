@@ -17,7 +17,11 @@ export class ArtistStateService {
 
   private _favorites$ = new BehaviorSubject<Favorites>(this.initialFavorites);
   favorites$: Observable<Favorites> = concat(
-    this.deviceStorageService.get('favorites').pipe(tap(f => this._favorites$.next(f))),
+    this.deviceStorageService.get('favorites').pipe(
+      tap(favorites => {
+        if (favorites) this._favorites$.next(favorites);
+      })
+    ),
     this._favorites$.asObservable(),
   )
 
