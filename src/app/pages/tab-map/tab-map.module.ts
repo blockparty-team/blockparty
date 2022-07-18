@@ -6,7 +6,9 @@ import { TabMapPage } from './tab-map.page';
 
 import { TabMapPageRoutingModule } from './tab-map-routing.module';
 import { MapComponent } from './map/map.component';
-import { StageTimetableModalComponent } from '@app/components/stage-timetable-modal/stage-timetable-modal.component';
+import { StageTimetableComponent } from '@app/pages/tab-map/feature-info-modal/stage-timetable/stage-timetable.component';
+import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
+import { AssetComponent } from './feature-info-modal/asset/asset.component';
 
 @NgModule({
   imports: [
@@ -15,6 +17,6 @@ import { StageTimetableModalComponent } from '@app/components/stage-timetable-mo
     FormsModule,
     TabMapPageRoutingModule
   ],
-  declarations: [TabMapPage, MapComponent, StageTimetableModalComponent]
+  declarations: [TabMapPage, MapComponent, FeatureInfoModalComponent, StageTimetableComponent, AssetComponent]
 })
 export class TabMapPageModule {}

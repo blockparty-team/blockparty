@@ -1,8 +1,10 @@
 import { Feature, Geometry, LineString, Point, Polygon } from 'geojson';
 import { MapLayer } from './map-layer';
+import { definitions } from './supabase';
 
 export interface MapClickedFeature {
     id: string;
-    layerName: MapLayer;
+    properties: Partial<definitions['asset_geojson'] | definitions['stage']>
+    mapLayer: MapLayer;
     geometry: Point | Polygon | LineString;
 };

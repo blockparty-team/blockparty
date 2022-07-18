@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
+import { MapSource } from '@app/interfaces/map-layer';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { from, Observable } from 'rxjs';
@@ -89,6 +90,23 @@ export class SupabaseService {
     );
   }
 
+  get assets$(): Observable<definitions['asset'][]> {
+    return from(
+      this.client
+        .from<definitions['asset']>('asset')
+        .select(`
+          id,
+          name,
+          description,
+          asset_type(
+            name
+          )
+        `)
+    ).pipe(
+      map(res => res.data)
+    )
+  } 
+
   artist(id: string): Observable<definitions['artist']> {
     return from(
       this.client
@@ -135,8 +153,6 @@ export class SupabaseService {
     );
   }
 
-
-
   downloadPhoto(bucket: string, path: string) {
     return from(
       this.client
@@ -147,7 +163,7 @@ export class SupabaseService {
   }
 
   //RPC
-  tableAsGeojson(table: keyof definitions): Observable<FeatureCollection<Point | LineString | Polygon>> {
+  tableAsGeojson(table: MapSource): Observable<FeatureCollection<Point | LineString | Polygon>> {
     return from(
       this.client.rpc('table_as_geojson', { _tbl: table })
     ).pipe(

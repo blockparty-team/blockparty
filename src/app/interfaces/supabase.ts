@@ -806,6 +806,42 @@ export interface paths {
       };
     };
   };
+  "/asset_geojson": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.asset_geojson.id"];
+          name?: parameters["rowFilter.asset_geojson.name"];
+          description?: parameters["rowFilter.asset_geojson.description"];
+          geom?: parameters["rowFilter.asset_geojson.geom"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["asset_geojson"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/mask": {
     get: {
       parameters: {
@@ -1249,6 +1285,20 @@ export interface definitions {
      */
     public?: boolean;
   };
+  asset_geojson: {
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: string;
+    /** Format: text */
+    name?: string;
+    /** Format: text */
+    description?: string;
+    /** Format: extensions.geometry(Point,4326) */
+    geom?: string;
+  };
   mask: {
     /** Format: bigint */
     id?: number;
@@ -1467,6 +1517,16 @@ export interface parameters {
   "rowFilter.asset_type.inserted_at": string;
   /** Format: boolean */
   "rowFilter.asset_type.public": string;
+  /** @description asset_geojson */
+  "body.asset_geojson": definitions["asset_geojson"];
+  /** Format: uuid */
+  "rowFilter.asset_geojson.id": string;
+  /** Format: text */
+  "rowFilter.asset_geojson.name": string;
+  /** Format: text */
+  "rowFilter.asset_geojson.description": string;
+  /** Format: extensions.geometry(Point,4326) */
+  "rowFilter.asset_geojson.geom": string;
   /** @description mask */
   "body.mask": definitions["mask"];
   /** Format: bigint */

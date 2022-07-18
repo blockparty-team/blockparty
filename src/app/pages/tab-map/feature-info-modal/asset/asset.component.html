@@ -1,0 +1,19 @@
+<ng-container *ngIf="asset$ | async as asset; else loading;">
+
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>
+        {{asset.properties.name}}
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content class="ion-padding">
+    {{asset.properties.description}}
+  </ion-content>
+
+</ng-container>
+
+<ng-template #loading>
+
+</ng-template>

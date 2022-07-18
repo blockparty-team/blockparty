@@ -8,7 +8,7 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { color } from '@app/shared/colors';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
-import { MapLayer, MapSource } from '@app/interfaces/map-layer';
+import { MapLayer, MapSource, mapSourceLayer } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 
 @Injectable({
@@ -43,9 +43,8 @@ export class MapService {
       this.addLayers();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
-      this.addClickBehaviourToLayer(MapLayer.Asset);
-      this.addClickBehaviourToLayer(MapLayer.AssetIcon);
-      
+      this.addClickBehaviourToLayer(MapLayer.Asset);      
+      this.addClickBehaviourToLayer(MapLayer.AssetIcon);      
 
       this.map.on('movestart', () => this.mapStateService.updateMapInteraction(true))
       this.map.on('moveend', () => this.mapStateService.updateMapInteraction(false))
@@ -80,14 +79,15 @@ export class MapService {
     })
   }
 
-  addClickBehaviourToLayer(layerName: MapLayer): void {
-    this.map.on('click', layerName, e => {
+  addClickBehaviourToLayer(mapLayer: MapLayer): void {
+    this.map.on('click', mapLayer, e => {
 
       if (e.features.length > 0) {
 
         const features: MapClickedFeature[] = e.features.map(feature => ({
           id: feature.properties.id,
-          layerName,
+          mapLayer,
+          properties: feature.properties,
           geometry: feature.geometry as any
         }));
 
@@ -95,10 +95,10 @@ export class MapService {
       }
     });
 
-    this.map.on('mouseenter', layerName, () => {
+    this.map.on('mouseenter', mapLayer, () => {
       this.map.getCanvas().style.cursor = 'pointer';
     });
-    this.map.on('mouseleave', layerName, () => {
+    this.map.on('mouseleave', mapLayer, () => {
       this.map.getCanvas().style.cursor = '';
     });
   }
@@ -215,7 +215,7 @@ export class MapService {
           minzoom: 13,
           layout: {
             'text-field': ['get', 'name'],
-            'text-offset': [0, 0.4],
+            // 'text-offset': [0, 0.1],
             'text-justify': 'auto',
             'text-transform': 'uppercase',
             'icon-image': 'stage',
@@ -228,6 +228,7 @@ export class MapService {
             ],
             'icon-allow-overlap': true,
             'text-allow-overlap': true,
+            'text-anchor': 'top'
           },
           paint: {
             "text-color": color('--ion-color-light'),
@@ -251,22 +252,22 @@ export class MapService {
             'circle-color': '#c85c67',
             'circle-radius': [
               'interpolate', ['linear'], ['zoom'],
+              10, 2,
               15, 4,
-              16, 10,
-              17, 0
+              15.5, 0
             ],
             'circle-stroke-color': 'white',
             'circle-stroke-width': [
               'interpolate', ['linear'], ['zoom'],
-              16, 2,
-              17, 0
+              15, 2,
+              15.5, 0
             ],
             'circle-opacity': [
               'interpolate',
               ['linear'],
               ['zoom'],
-              16, 1,
-              17, 0
+              15, 1,
+              15.5, 0
             ]
           },
         });
@@ -275,17 +276,17 @@ export class MapService {
           id: MapLayer.AssetIcon,
           type: 'symbol',
           source: MapSource.Asset,
-          minzoom: 16,
+          minzoom: 15,
           layout: {
             'icon-anchor': 'bottom',
             // 'text-field': ['get', 'name'],
             'icon-offset': [9.5, 0],
             // 'text-justify': 'auto',
-            'icon-image': 'toilet',
+            'icon-image': ['get', 'icon'],
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
-              16, 0,
-              17, 0.8
+              15, 0,
+              15.5, 0.8
             ],
             'icon-allow-overlap': true
           }

@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { StageTimetableModalComponent } from '@app/components/stage-timetable-modal/stage-timetable-modal.component';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
 import { combineLatest, from, Observable } from 'rxjs';
@@ -11,6 +9,8 @@ import { MapService } from '@app/services/map.service';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { animations } from '@app/shared/animations';
+import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
+
 
 @Component({
   selector: 'app-tab-map',
@@ -26,6 +26,7 @@ export class TabMapPage implements OnInit {
   selectedDay$: Observable<string>;
   selectedEvent$: Observable<string>;
   hideHeader$: Observable<boolean>;
+  modalIsOpen$: Observable<boolean>;
 
   constructor(
     private store: StoreService,
@@ -54,9 +55,19 @@ export class TabMapPage implements OnInit {
       pluck('event')
     )
 
+    // Open modal based on clicked map feature
     this.mapStateService.selectedMapFeatures$.pipe(
       filter(features => !!features),
-      switchMap(features => this.openFeatureInfoModal(features[0]))
+      map(features => features[0]),
+      switchMap(feature => {
+        if (feature.mapLayer === MapLayer.Stage) {
+          return this.openFeatureInfoModal(0.4, [0, 0.4, 1])
+        }
+
+        if (feature.mapLayer === MapLayer.Asset || feature.mapLayer === MapLayer.AssetIcon) {
+          return this.openFeatureInfoModal(0.2, [0, 0.2, 1])
+        }
+      })
     ).subscribe();
 
     this.mapStateService.selectedDay$.pipe(
@@ -80,12 +91,15 @@ export class TabMapPage implements OnInit {
     ).subscribe()
   }
 
-  openFeatureInfoModal(mapFeature: MapClickedFeature) {
+  openFeatureInfoModal(
+    initialBreakpoint: number = 0.4,
+    breakpoints: number[] = [0.2, 0.4, 0.7, 1]
+  ) {
     return from(
       this.modalCtrl.create({
-        component: StageTimetableModalComponent,
-        initialBreakpoint: 0.4,
-        breakpoints: [0.2, 0.4, 0.7, 1]
+        component: FeatureInfoModalComponent,
+        initialBreakpoint,
+        breakpoints
       })
     ).pipe(
       tap(modal => modal.present())

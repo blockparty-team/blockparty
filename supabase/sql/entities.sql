@@ -277,6 +277,22 @@ group by
 
 GRANT SELECT ON TABLE public.day_event_mask TO anon;
 
+
+-- Asset with type for geojson
+create or replace view asset_geojson as
+select
+	a.id, 
+	at.name,
+	a.description,
+	i."name" icon, 
+	a.geom
+from asset a
+join asset_type at on a.asset_type_id = at.id
+join icon i on a.icon_id = i.id;
+
+GRANT SELECT ON table asset_geojson TO anon;
+
+
 -----------------------
 -- Buckets
 -----------------------
@@ -305,6 +321,8 @@ BEGIN
    INTO geojson;
 END
 $func$;
+
+
 
 
 -----------------------
