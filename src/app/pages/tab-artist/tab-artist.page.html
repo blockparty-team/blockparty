@@ -14,7 +14,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar *ngIf="showSearch$ | async" color="medium">
-    <ion-searchbar mode="ios" [formControl]="searchTerm" animated="true"></ion-searchbar>
+    <ion-searchbar mode="ios" debounce="0" [formControl]="searchTerm" animated="true"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
