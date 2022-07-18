@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
+import { color } from './shared/colors';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     Device.getInfo().then(info => {
       if (info.platform !== 'web') {
-        StatusBar.setBackgroundColor({ color: '#c85c67' })
+        StatusBar.setBackgroundColor({ color: '#546980' })
       }
     })
   }

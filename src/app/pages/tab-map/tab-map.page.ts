@@ -65,7 +65,7 @@ export class TabMapPage implements OnInit {
         }
 
         if (feature.mapLayer === MapLayer.Asset || feature.mapLayer === MapLayer.AssetIcon) {
-          return this.openFeatureInfoModal(0.2, [0, 0.2, 1])
+          return this.openFeatureInfoModal(0.1, [0, 0.1, 0.5, 1])
         }
       })
     ).subscribe();
