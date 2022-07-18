@@ -1,11 +1,19 @@
 <ion-header>
   <ion-toolbar color="medium">
-    <ion-title class="ion-text-center">Artists</ion-title>
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="heart"></ion-icon>
+    <ion-buttons slot="start">
+      <ion-button (click)="toggleSearch()">
+        <ion-icon name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
+    <ion-title class="ion-text-center">Artists</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleFavorites()">
+        <ion-icon [color]="(showFavorites$ | async) ? 'primary' : ''" [name]="(showFavorites$ | async) ? 'heart' : 'heart-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="showSearch$ | async" color="medium">
+    <ion-searchbar [formControl]="searchTerm" animated="true"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 

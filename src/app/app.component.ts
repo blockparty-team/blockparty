@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
-import { color } from './shared/colors';
 
 @Component({
   selector: 'app-root',
