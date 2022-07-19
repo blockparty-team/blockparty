@@ -56,9 +56,16 @@
       </ion-fab-list>
     </ion-fab>
 
-    <ion-img [src]="imgUrl(artist.storage_path)"></ion-img>
+    <ion-img [src]="imgUrl(artist.storage_path)">
+      heij
+    </ion-img>
     <div class="artist-info">
-      <h1>{{artist.name}}</h1>
+      <h1>
+        {{artist.name}}
+        <ng-container *ngIf="favorites$ | async as favorites">
+          <ion-icon slot="icon-only" [color]="isFavorite(artist.id, favorites.artists) ? 'primary' : ''" [name]="isFavorite(artist.id, favorites.artists) ? 'heart' : 'heart-outline'" (click)="addRemoveFavorites(artist.id)"></ion-icon>
+        </ng-container>
+      </h1>
       <div class="acts">
         <p *ngFor="let act of artist.timetable">
           {{act.day.name}} |

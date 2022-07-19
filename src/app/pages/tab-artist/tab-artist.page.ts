@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { pathToImageUrl } from '@app/shared/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { StoreService } from '@app/store/store.service';
@@ -27,6 +27,7 @@ export class TabArtistPage implements OnInit {
   showFavorites$ = new BehaviorSubject(false);
 
   searchTerm = new FormControl('');
+  @ViewChild('search') searchElement: any;
 
   constructor(
     private store: StoreService,
@@ -73,18 +74,22 @@ export class TabArtistPage implements OnInit {
   toggleSearch(): void {
     this.showSearch$.next(!this.showSearch$.value)
 
-    // reset filter when search is removed
+    // reset filter when search is removed and focus if shown
     if (!this.showSearch$.value) {
-      this.searchTerm.setValue('')
+      this.searchTerm.setValue('');
+    } else {
+      setTimeout(() => {
+        this.searchElement.setFocus();
+      }, 150);
     }
-  }
-
-  addRemoveFavorites(id: string): void {
-    this.artistStateService.toggleArtistsFavorites(id);
   }
 
   toggleFavorites(): void {
     this.showFavorites$.next(!this.showFavorites$.value)
+  }
+
+  addRemoveFavorites(id: string): void {
+    this.artistStateService.toggleArtistsFavorites(id);
   }
 
   isFavorite(id: string, favorites: string[]): boolean {
