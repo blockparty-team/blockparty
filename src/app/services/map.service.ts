@@ -181,7 +181,18 @@ export class MapService {
             'fill-color': 'black',
             'fill-opacity': 0.3,
           },
-          filter: ['==', 'id', '']
+          filter: ['==', 'id', '52c29de2-fdd7-4b2b-bad9-9c8e68cdf7a4'] // TODO: don't use hardcoded value
+        });
+
+        this.map.addLayer({
+          id: MapLayer.Event,
+          type: 'line',
+          source: MapSource.Event,
+          layout: {},
+          paint: {
+            'line-color': 'white',
+            'line-width': 3,
+          },
         });
 
         this.map.addLayer({
@@ -289,6 +300,9 @@ export class MapService {
             ]
           }
         });
+
+        // TODO: First  Find better way to fit bounds
+        this.fitBounds(layers[0].features[0].properties.bounds)
 
       })
     ).subscribe();
