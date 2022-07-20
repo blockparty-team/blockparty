@@ -36,6 +36,8 @@ export class MapService {
 
     this.map.on('load', () => {
 
+      this.mapStateService.updateMapLoaded(true);
+
       this.map.resize();
 
       this.loadMapIcons();
@@ -327,6 +329,10 @@ export class MapService {
         this.map.addImage(icon, img);
       })
     })
+  }
+
+  resize(): void {
+    this.map.resize();
   }
 
   highlightFeature(layerName: MapLayer, id: string): void {

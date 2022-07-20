@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController, SegmentChangeEventDetail } from '@ionic/angular';
 import { combineLatest, from, Observable } from 'rxjs';
-import { filter, map, switchMap, tap, withLatestFrom, pluck, delay } from 'rxjs/operators';
+import { filter, map, switchMap, tap, withLatestFrom, pluck, delay, distinctUntilChanged } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { StoreService } from '@app/store/store.service';
 import { MapService } from '@app/services/map.service';
@@ -10,6 +10,8 @@ import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { animations } from '@app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
+import { TabsStateService } from '../tabs/state/tabs-state.service';
+import { Tab } from '@app/interfaces/tab';
 
 interface SegmentCustomEvent extends CustomEvent {
   target: HTMLIonSegmentElement;
@@ -36,19 +38,13 @@ export class TabMapPage implements OnInit {
     private store: StoreService,
     private mapService: MapService,
     private mapStateService: MapStateService,
-    private modalCtrl: ModalController
+    private tabStateService: TabsStateService,
+    private modalCtrl: ModalController,
   ) { }
 
   ngOnInit(): void {
 
     this.days$ = this.store.days$;
-    this.selectedDay$ = this.mapStateService.selectedDay$;
-    this.selectedEvent$ = this.mapStateService.selectedEvent$;
-
-    this.hideHeader$ = this.mapStateService.mapInteraction$.pipe(
-      map(interaction => !interaction),
-      delay(200)
-    )
 
     this.events$ = combineLatest([
       this.days$,
@@ -57,7 +53,34 @@ export class TabMapPage implements OnInit {
       filter(([days, selectedDay]) => !!days && !!selectedDay),
       map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
       pluck('event')
-    )
+    );
+
+    this.selectedDay$ = this.mapStateService.selectedDay$.pipe(
+      withLatestFrom(this.store.dayMaskBounds$),
+      map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
+      filter(dayMask => !!dayMask),
+      tap((day) => {
+        this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
+        this.mapService.highlightFeature(MapLayer.DayEventMask, day.id)
+      }),
+      map(day => day.id)
+    );
+
+    this.selectedEvent$ = this.mapStateService.selectedEvent$.pipe(
+      withLatestFrom(this.events$),
+      map(([eventId, events]) => events.find(event => event.id === eventId)),
+      filter(event => !!event),
+      tap((event) => {
+        this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
+        this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
+      }),
+      map(event => event.id)
+    );
+
+    this.hideHeader$ = this.mapStateService.mapInteraction$.pipe(
+      map(interaction => !interaction),
+      delay(200)
+    );
 
     // Open modal based on clicked map feature
     this.mapStateService.selectedMapFeatures$.pipe(
@@ -74,24 +97,13 @@ export class TabMapPage implements OnInit {
       })
     ).subscribe();
 
-    this.mapStateService.selectedDay$.pipe(
-      withLatestFrom(this.store.dayMaskBounds$),
-      map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
-      filter(dayMask => !!dayMask),
-      tap((day) => {
-        this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
-        this.mapService.highlightFeature(MapLayer.DayEventMask, day.id)
-      })
-    ).subscribe()
-
-    this.mapStateService.selectedEvent$.pipe(
-      withLatestFrom(this.events$),
-      map(([eventId, events]) => events.find(event => event.id === eventId)),
-      filter(event => !!event),
-      tap((event) => {
-        this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
-        this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
-      })
+    // Resize map when navigating to map page, to prevent map not fitting container
+    this.tabStateService.currentTab$.pipe(
+      distinctUntilChanged(),
+      filter(tab => tab === Tab.Map),
+      withLatestFrom(this.mapStateService.mapLoaded$),
+      filter(([, mapLoaded]) => mapLoaded),
+      tap(() =>  this.mapService.resize())
     ).subscribe()
   }
 

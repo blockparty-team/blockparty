@@ -9,6 +9,9 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class MapStateService {
 
+  private _mapLoaded$ = new BehaviorSubject<boolean>(false);
+  mapLoaded$: Observable<boolean> = this._mapLoaded$.asObservable();
+
   private _selectedMapFeatures$ = new BehaviorSubject<MapClickedFeature[]>(null);
   selectedMapFeatures$: Observable<MapClickedFeature[]> = this._selectedMapFeatures$.asObservable();
 
@@ -36,4 +39,9 @@ export class MapStateService {
   updateMapInteraction(interacting: boolean): void {
     this._mapInteraction$.next(interacting);
   }
+
+  updateMapLoaded(loadded): void {
+    this._mapLoaded$.next(loadded);
+  }
+
 }
