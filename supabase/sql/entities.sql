@@ -7,9 +7,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS postgis;
 create extension if not exists PG_TRGM;
 
--- Create mask 
+-- Create mask
 create materialized view public.mask as
-select row_number() over() id, ST_MakeEnvelope(9, 54, 15, 57, 4326) geom;
+select row_number() over() id, ST_MakeEnvelope(-180, -90, 180, 90, 4326) geom;
 
 create index on public.mask using gist(geom);
 GRANT SELECT ON TABLE public.mask TO anon;
