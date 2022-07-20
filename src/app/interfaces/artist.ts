@@ -9,6 +9,7 @@ interface Timetable {
     end_time: definitions['timetable']['end_time'];
     stage: {
         name: definitions['stage']['name'];
+        geom: definitions['stage']['geom'];
     };
 }
 

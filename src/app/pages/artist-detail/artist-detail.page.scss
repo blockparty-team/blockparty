@@ -7,12 +7,13 @@ ion-toolbar, ion- {
     padding: 10px;
 
     .acts {
-        p {
-            color: var(--ion-color-medium);
+        ion-badge {
+            // color: var(--ion-color-medium);
             overflow: hidden;
             white-space: nowrap; 
             text-overflow: ellipsis;
-            margin: 8px 0; 
+            padding: 10px;
+            // margin: 8px 0; 
         }
     }
 }

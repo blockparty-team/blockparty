@@ -1,13 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { Favorites } from '@app/interfaces/favorites';
-import { definitions } from '@app/interfaces/supabase';
-import { SupabaseService } from '@app/services/supabase.service';
+import { MapService } from '@app/services/map.service';
 import { pathToImageUrl } from '@app/shared/utils';
 import { StoreService } from '@app/store/store.service';
 import { Observable } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../tab-artist/state/artist-state.service';
 
 @Component({
@@ -29,9 +28,11 @@ export class ArtistDetailPage implements OnInit {
 
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private store: StoreService,
-    private artistStateService: ArtistStateService
+    private artistStateService: ArtistStateService,
+    private mapService: MapService
   ) { }
 
   ngOnInit() {
@@ -43,12 +44,16 @@ export class ArtistDetailPage implements OnInit {
   }
 
   addRemoveFavorites(id: string): void {
-    console.log('OI', id)
     this.artistStateService.toggleArtistsFavorites(id);
   }
 
   isFavorite(id: string, favorites: string[]): boolean {
     return favorites.includes(id);
+  }
+
+  goToStageOnMap(geom: any): void {
+    this.router.navigate(['tabs', 'map']);
+    this.mapService.flyTo(geom.coordinates);
   }
 
 }

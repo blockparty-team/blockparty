@@ -32,7 +32,8 @@ export class SupabaseService {
               name
             ),
             stage(
-              name
+              name,
+              geom
             )
           )
         `)

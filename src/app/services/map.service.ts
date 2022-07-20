@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
+import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, MapMouseEvent } from 'maplibre-gl';
 import { Geolocation } from '@capacitor/geolocation';
 import { Device } from '@capacitor/device';
 import { SupabaseService } from '@app/services/supabase.service';
@@ -117,8 +117,27 @@ export class MapService {
     });
   }
 
+  flyTo(center: [number, number]): void {
+    this.map.flyTo({
+      center,
+      zoom: 18
+    })
+  }
+
   fitBounds(bounds: LngLatBoundsLike): void {
     this.map.fitBounds(bounds, { padding: 10 });
+  }
+
+  resize(): void {
+    this.map.resize();
+  }
+
+  highlightFeature(layerName: MapLayer, id: string): void {
+    this.map.setFilter(layerName, ['==', 'id', id]);
+  }
+
+  removeFeatureHighlight(layerName: MapLayer): void {
+    this.map.setFilter(layerName, ['==', 'id', '']);
   }
 
   addAerial(): void {
@@ -329,18 +348,6 @@ export class MapService {
         this.map.addImage(icon, img);
       })
     })
-  }
-
-  resize(): void {
-    this.map.resize();
-  }
-
-  highlightFeature(layerName: MapLayer, id: string): void {
-    this.map.setFilter(layerName, ['==', 'id', id]);
-  }
-
-  removeFeatureHighlight(layerName: MapLayer): void {
-    this.map.setFilter(layerName, ['==', 'id', '']);
   }
 
 }
