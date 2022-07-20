@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Tab } from '@app/interfaces/tab';
 import { TabsStateService } from './state/tabs-state.service';
 
@@ -9,7 +9,8 @@ interface TabsChanged {
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  styleUrls: ['tabs.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsPage {
 

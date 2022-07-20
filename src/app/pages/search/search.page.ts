@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { pathToImageUrl } from '@app/shared/utils';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { SupabaseService } from '../../services/supabase.service';
   selector: 'app-search',
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchPage implements OnInit {
 
