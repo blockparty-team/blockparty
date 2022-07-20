@@ -1,15 +1,14 @@
 <ion-header>
   <ion-toolbar color="medium">
     <ion-buttons slot="start">
-      <ion-button (click)="toggleSearch()" *ngIf="!(showFavorites$ | async)">
+      <ion-button (click)="toggleSearch()">
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="ion-text-center">Artists</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleFavorites()">
-        <ion-icon slot="icon-only" [color]="(showFavorites$ | async) ? 'primary' : ''"
-          [name]="(showFavorites$ | async) ? 'heart' : 'heart-outline'"></ion-icon>
+        <ion-icon slot="icon-only" name="heart"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -18,37 +17,59 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content id="main">
   <ng-container *ngIf="groupedArtists$ | async as artists">
-    <ng-container *ngIf="favorites$ | async as favorites">
-      <ion-item-group *ngFor="let artist of artists; trackBy:trackItems">
-        <ion-item-divider sticky="true" color="light">
-          <ion-label>{{artist.letter}}</ion-label>
-        </ion-item-divider>
+    <ion-item-group *ngFor="let artist of artists; trackBy:trackItems">
+      <ion-item-divider sticky="true" color="light">
+        <ion-label>{{artist.letter}}</ion-label>
+      </ion-item-divider>
 
-        <ion-item *ngFor="let art of artist.artists">
-          <ion-avatar slot="start">
-            <img [src]="imgUrl(art.storage_path)" />
-          </ion-avatar>
-          <ion-label [routerLink]="['./', art.id]">
-            <h2>
-              {{art.name}}
-            </h2>
-            <p *ngIf="art.timetable[0]">
-              {{art.timetable[0].day.name}} |
-              {{art.timetable[0].start_time | date:'HH:mm'}} |
-              {{art.timetable[0].stage.name}}
-            </p>
-            <p *ngIf="!art.timetable[0]">
-              -
-              <!-- {{art.description}} -->
-            </p>
-          </ion-label>
-          <div slot="end" class="actions">
-            <ion-icon slot="icon-only" [color]="isFavorite(art.id, favorites.artists) ? 'primary' : ''" [name]="isFavorite(art.id, favorites.artists) ? 'heart' : 'heart-outline'" (click)="addRemoveFavorites(art.id)"></ion-icon>
-          </div>
-        </ion-item>
-      </ion-item-group>
-    </ng-container>
+      <ion-item *ngFor="let art of artist.artists">
+        <ion-avatar slot="start">
+          <img [src]="imgUrl(art.storage_path)" />
+        </ion-avatar>
+        <ion-label [routerLink]="['./', art.id]">
+          <h2>
+            {{art.name}}
+          </h2>
+          <p *ngIf="art.timetable[0]">
+            {{art.timetable[0].day.name}} |
+            {{art.timetable[0].start_time | date:'HH:mm'}} |
+            {{art.timetable[0].stage.name}}
+          </p>
+          <p *ngIf="!art.timetable[0]">
+            -
+            <!-- {{art.description}} -->
+          </p>
+        </ion-label>
+        <div slot="end" class="actions">
+          <ion-icon slot="icon-only" [color]="isFavorite(art.id) ? 'primary' : ''"
+            [name]="isFavorite(art.id) ? 'heart' : 'heart-outline'" (click)="addRemoveFavorites(art.id)"></ion-icon>
+        </div>
+      </ion-item>
+    </ion-item-group>
   </ng-container>
 </ion-content>
+
+<ion-menu side="end" type="overlay" contentId="main">
+  <ion-header>
+    <ion-toolbar color="secondary">
+      <ion-buttons slot="start">
+        <ion-button (click)="toggleFavorites()">
+          <ion-icon slot="icon-only" name="chevron-forward"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-title>Favorites</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item *ngFor="let artist of favoriteArtists$ | async">
+        <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
+        <div slot="end" (click)="addRemoveFavorites(artist.id)">
+          <ion-icon slot="icon-only" name="close"></ion-icon>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

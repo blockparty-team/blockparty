@@ -49,4 +49,8 @@ export class ArtistStateService {
       this.deviceStorageService.set('favorites', update);
     }
   }
+
+  isFavorite(id: string): boolean {
+    return this._favorites$.value.artists.includes(id);
+  }
 }

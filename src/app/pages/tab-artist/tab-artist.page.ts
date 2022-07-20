@@ -7,6 +7,7 @@ import { ArtistWithRelations } from '@app/interfaces/artist';
 import { FormControl } from '@angular/forms';
 import { ArtistStateService } from './state/artist-state.service';
 import { Favorites } from '@app/interfaces/favorites';
+import { MenuController } from '@ionic/angular';
 
 interface GroupedArtists {
   letter: string;
@@ -15,41 +16,44 @@ interface GroupedArtists {
 
 @Component({
   selector: 'app-tab-artist',
-  templateUrl: './tab-artist.page.html',
   styleUrls: ['./tab-artist.page.scss'],
+  templateUrl: './tab-artist.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabArtistPage implements OnInit {
 
   groupedArtists$: Observable<GroupedArtists[]>;
+  favoriteArtists$: Observable<ArtistWithRelations[]>;
   favorites$: Observable<Favorites>;
   showSearch$ = new BehaviorSubject(false);
-  showFavorites$ = new BehaviorSubject(false);
 
   searchTerm = new FormControl('');
   @ViewChild('search') searchElement: any;
 
   constructor(
     private store: StoreService,
-    private artistStateService: ArtistStateService
+    private artistStateService: ArtistStateService,
+    private menu: MenuController
   ) { }
 
   ngOnInit() {
 
-    this.favorites$ = this.artistStateService.favorites$
+    this.favorites$ = this.artistStateService.favorites$;
+
+    this.favoriteArtists$ = combineLatest([
+      this.store.artists$,
+      this.artistStateService.favorites$,
+    ]).pipe(
+      map(([artists, favorites]) => artists.filter(artist => favorites.artists.includes(artist.id)))
+    )
 
     const filteredArtists$ = combineLatest([
       this.store.artists$,
-      this.searchTerm.valueChanges.pipe(startWith('')),
-      this.showFavorites$,
-      this.artistStateService.favorites$
+      this.searchTerm.valueChanges.pipe(startWith(''))
     ]).pipe(
       debounceTime(100),
-      filter(([artists, , ,]) => !!artists),
-      map(([artists, term, showFavorites, favorites]) => {
-        if (showFavorites) {
-          return artists.filter(artist => favorites.artists.includes(artist.id))
-        }
+      filter(([artists, ]) => !!artists),
+      map(([artists, term]) => {
         return artists.filter(artist => artist.name.toLowerCase().includes(term.toLowerCase()))
       }),
     );
@@ -86,15 +90,15 @@ export class TabArtistPage implements OnInit {
   }
 
   toggleFavorites(): void {
-    this.showFavorites$.next(!this.showFavorites$.value)
+    this.menu.toggle('end');
   }
 
   addRemoveFavorites(id: string): void {
     this.artistStateService.toggleArtistsFavorites(id);
   }
 
-  isFavorite(id: string, favorites: string[]): boolean {
-    return favorites.includes(id);
+  isFavorite(id: string): boolean {
+    return this.artistStateService.isFavorite(id);
   }
 
   imgUrl(path: string): string {
@@ -104,5 +108,4 @@ export class TabArtistPage implements OnInit {
   trackItems(index: number, item: GroupedArtists) {
     return item.letter;
   }
-
 }

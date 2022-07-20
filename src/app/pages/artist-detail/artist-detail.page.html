@@ -8,18 +8,19 @@
   </ion-header>
 
   <ion-content>
-  
+
     <ion-img [src]="imgUrl(artist.storage_path)"></ion-img>
 
     <div class="artist-info">
       <h1>
         {{artist.name}}
-        <ng-container *ngIf="favorites$ | async as favorites">
-          <ion-icon slot="icon-only" [color]="isFavorite(artist.id, favorites.artists) ? 'primary' : ''" [name]="isFavorite(artist.id, favorites.artists) ? 'heart' : 'heart-outline'" (click)="addRemoveFavorites(artist.id)"></ion-icon>
-        </ng-container>
+        <ion-icon slot="icon-only" [color]="isFavorite(artist.id) ? 'primary' : ''"
+          [name]="isFavorite(artist.id) ? 'heart' : 'heart-outline'"
+          (click)="addRemoveFavorites(artist.id)"></ion-icon>
       </h1>
       <div class="acts">
-        <ion-badge mode="ios" color="light" *ngFor="let act of artist.timetable" (click)="goToStageOnMap(act.stage.geom)">
+        <ion-badge mode="ios" color="light" *ngFor="let act of artist.timetable"
+          (click)="goToStageOnMap(act.stage.geom)">
           <ion-icon name="location"></ion-icon>
           {{act.day.name}} |
           {{act.start_time | date:'HH:mm'}} -

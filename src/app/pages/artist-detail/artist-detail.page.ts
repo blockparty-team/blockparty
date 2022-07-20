@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtistWithRelations } from '@app/interfaces/artist';
-import { Favorites } from '@app/interfaces/favorites';
 import { MapService } from '@app/services/map.service';
 import { pathToImageUrl } from '@app/shared/utils';
 import { StoreService } from '@app/store/store.service';
@@ -24,9 +23,6 @@ export class ArtistDetailPage implements OnInit {
     ))
   );
 
-  favorites$: Observable<Favorites>;
-
-
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -35,9 +31,7 @@ export class ArtistDetailPage implements OnInit {
     private mapService: MapService
   ) { }
 
-  ngOnInit() {
-    this.favorites$ = this.artistStateService.favorites$
-  }
+  ngOnInit() { }
 
   imgUrl(path: string): string {
     return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
@@ -47,8 +41,8 @@ export class ArtistDetailPage implements OnInit {
     this.artistStateService.toggleArtistsFavorites(id);
   }
 
-  isFavorite(id: string, favorites: string[]): boolean {
-    return favorites.includes(id);
+  isFavorite(id: string): boolean {
+    return this.artistStateService.isFavorite(id);
   }
 
   goToStageOnMap(geom: any): void {
