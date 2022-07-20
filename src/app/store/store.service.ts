@@ -5,7 +5,7 @@ import { definitions } from '@app/interfaces/supabase';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { concat, Observable } from 'rxjs';
-import { tap, switchMap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
+import { tap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
