@@ -45,6 +45,7 @@ export class TabArtistPage implements OnInit {
       this.artistStateService.favorites$
     ]).pipe(
       debounceTime(100),
+      filter(([artists, , ,]) => !!artists),
       map(([artists, term, showFavorites, favorites]) => {
         if (showFavorites) {
           return artists.filter(artist => favorites.artists.includes(artist.id))

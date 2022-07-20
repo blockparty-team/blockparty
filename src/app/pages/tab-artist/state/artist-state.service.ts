@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, combineLatest, concat, Observable } from 'rxjs';
-import { map, pairwise, tap } from 'rxjs/operators'
+import { BehaviorSubject, concat, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators'
 import { Favorites } from '@app/interfaces/favorites';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 
