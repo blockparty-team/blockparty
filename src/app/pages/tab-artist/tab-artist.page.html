@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar color="medium">
     <ion-buttons slot="start">
-      <ion-button (click)="toggleSearch()">
+      <ion-button (click)="toggleSearch()" *ngIf="!(showFavorites$ | async)">
         <ion-icon slot="icon-only" name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
