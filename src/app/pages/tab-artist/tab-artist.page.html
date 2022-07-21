@@ -8,7 +8,7 @@
     <ion-title class="ion-text-center">Artists</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="toggleFavorites()">
-        <ion-icon slot="icon-only" name="heart"></ion-icon>
+        favorites
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -63,13 +63,19 @@
     </ion-toolbar>
   </ion-header>
   <ion-content>
-    <ion-list>
-      <ion-item *ngFor="let artist of favoriteArtists$ | async; let i = index" [style.--animation-order]="i">
-        <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
-        <div slot="end" (click)="addRemoveFavorites(artist.id)">
-          <ion-icon slot="icon-only" name="close"></ion-icon>
-        </div>
-      </ion-item>
-    </ion-list>
+    <ng-container *ngIf="favoriteArtists$ | async as favoriteArtists">
+      <ion-list >
+        <ion-item *ngFor="let artist of favoriteArtists; let i = index" [style.--animation-order]="i">
+          <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
+          <div slot="end" (click)="addRemoveFavorites(artist.id)">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </div>
+        </ion-item>
+      </ion-list>
+  
+      <p *ngIf="favoriteArtists.length === 0" class="ion-text-center">
+        No favorites added
+      </p>
+    </ng-container>
   </ion-content>
 </ion-menu>
