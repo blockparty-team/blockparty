@@ -19,7 +19,7 @@
 
 <ion-content id="main">
   <ng-container *ngIf="groupedArtists$ | async as artists">
-    <ion-item-group *ngFor="let artist of artists; trackBy:trackItems">
+    <ion-item-group *ngFor="let artist of artists; trackBy:trackItems; let i = index" [style.--animation-order]="i">
       <ion-item-divider sticky="true" color="light">
         <ion-label>{{artist.letter}}</ion-label>
       </ion-item-divider>
@@ -64,7 +64,7 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item *ngFor="let artist of favoriteArtists$ | async">
+      <ion-item *ngFor="let artist of favoriteArtists$ | async; let i = index" [style.--animation-order]="i">
         <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
         <div slot="end" (click)="addRemoveFavorites(artist.id)">
           <ion-icon slot="icon-only" name="close"></ion-icon>
