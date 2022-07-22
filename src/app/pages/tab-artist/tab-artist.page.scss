@@ -1,9 +1,13 @@
 ion-item {
     animation: popIn .2s calc(var(--animation-order) * 70ms) both ease-in;
-    
+
     ion-label {
         outline: none;
     }
+}
+
+app-artist-card {
+    animation: popIn .2s calc(var(--animation-order) * 70ms) both ease-in;
 }
 
 @keyframes popIn {

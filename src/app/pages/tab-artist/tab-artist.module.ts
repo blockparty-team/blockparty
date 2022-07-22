@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { TabArtistPageRoutingModule } from './tab-artist-routing.module';
 
 import { TabArtistPage } from './tab-artist.page';
+import { ArtistCardComponent } from './artist-card/artist-card.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { TabArtistPage } from './tab-artist.page';
     IonicModule,
     TabArtistPageRoutingModule
   ],
-  declarations: [TabArtistPage]
+  declarations: [TabArtistPage, ArtistCardComponent]
 })
 export class TabArtistPageModule { }

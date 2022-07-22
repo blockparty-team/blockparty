@@ -22,6 +22,7 @@ interface GroupedArtists {
 })
 export class TabArtistPage implements OnInit {
 
+  filteredArtists$: Observable<ArtistWithRelations[]>;
   groupedArtists$: Observable<GroupedArtists[]>;
   favoriteArtists$: Observable<ArtistWithRelations[]>;
   favorites$: Observable<Favorites>;
@@ -44,21 +45,22 @@ export class TabArtistPage implements OnInit {
       this.store.artists$,
       this.artistStateService.favorites$,
     ]).pipe(
+      filter(([artists, favorites]) => !!artists && !!favorites),
       map(([artists, favorites]) => artists.filter(artist => favorites.artists.includes(artist.id)))
     )
 
-    const filteredArtists$ = combineLatest([
+    this.filteredArtists$ = combineLatest([
       this.store.artists$,
       this.searchTerm.valueChanges.pipe(startWith(''))
     ]).pipe(
       debounceTime(100),
-      filter(([artists, ]) => !!artists),
+      filter(([artists,]) => !!artists),
       map(([artists, term]) => {
         return artists.filter(artist => artist.name.toLowerCase().includes(term.toLowerCase()))
       }),
     );
 
-    this.groupedArtists$ = filteredArtists$.pipe(
+    this.groupedArtists$ = this.filteredArtists$.pipe(
       map(artists => {
         return artists.reduce((acc: GroupedArtists[], artist) => {
 
@@ -105,7 +107,11 @@ export class TabArtistPage implements OnInit {
     return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
-  trackItems(index: number, item: GroupedArtists) {
+  trackArtist(index: number, item: ArtistWithRelations) {
+    return item.id;
+  }
+
+  trackGroupedArtist(index: number, item: GroupedArtists) {
     return item.letter;
   }
 }

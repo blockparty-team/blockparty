@@ -18,37 +18,25 @@
 </ion-header>
 
 <ion-content id="main">
-  <ng-container *ngIf="groupedArtists$ | async as artists">
-    <ion-item-group *ngFor="let artist of artists; trackBy:trackItems">
+  <!-- <ng-container *ngIf="groupedArtists$ | async as groupedArtists">
+    <ion-item-group *ngFor="let group of groupedArtists; trackBy:trackGroupedArtist">
       <ion-item-divider sticky="true" color="light">
-        <ion-label>{{artist.letter}}</ion-label>
+        <ion-label>{{group.letter}}</ion-label>
       </ion-item-divider>
-
-      <ion-item *ngFor="let art of artist.artists">
-        <ion-avatar slot="start">
-          <img [src]="imgUrl(art.storage_path)" />
-        </ion-avatar>
-        <ion-label [routerLink]="['./', art.id]">
-          <h2>
-            {{art.name}}
-          </h2>
-          <p *ngIf="art.timetable[0]">
-            {{art.timetable[0].day.name}} |
-            {{art.timetable[0].start_time | date:'HH:mm'}} |
-            {{art.timetable[0].stage.name}}
-          </p>
-          <p *ngIf="!art.timetable[0]">
-            -
-            <!-- {{art.description}} -->
-          </p>
-        </ion-label>
-        <div slot="end" class="actions">
-          <ion-icon slot="icon-only" [color]="isFavorite(art.id) ? 'primary' : ''"
-            [name]="isFavorite(art.id) ? 'heart' : 'heart-outline'" (click)="addRemoveFavorites(art.id)"></ion-icon>
-        </div>
-      </ion-item>
+      <app-artist-card *ngFor="let artist of group.artists; let i = index" [style.--animation-order]="i"
+        [artist]="artist">
+      </app-artist-card>
     </ion-item-group>
+  </ng-container> -->
+
+  <ng-container *ngIf="filteredArtists$ | async as artists; else loading">
+    <app-artist-card *ngFor="let artist of artists; trackBy:trackArtist; let i = index" [style.--animation-order]="i"
+      [artist]="artist"></app-artist-card>
   </ng-container>
+
+  <ng-template #loading>
+    <ion-spinner></ion-spinner>
+  </ng-template>
 </ion-content>
 
 <ion-menu side="end" type="overlay" contentId="main">
@@ -64,7 +52,7 @@
   </ion-header>
   <ion-content>
     <ng-container *ngIf="favoriteArtists$ | async as favoriteArtists">
-      <ion-list >
+      <ion-list>
         <ion-item *ngFor="let artist of favoriteArtists; let i = index" [style.--animation-order]="i">
           <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
           <div slot="end" (click)="addRemoveFavorites(artist.id)">
@@ -72,7 +60,7 @@
           </div>
         </ion-item>
       </ion-list>
-  
+
       <p *ngIf="favoriteArtists.length === 0" class="ion-text-center">
         No favorites added
       </p>
