@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -13,23 +13,23 @@ const routes: Routes = [
         loadChildren: () => import('../tab-map/tab-map.module').then(m => m.TabMapPageModule)
       },
       {
-        path: 'timetable',
-        title: 'Timetable',
-        loadChildren: () => import('../tab-timetable/tab-timetable.module').then(m => m.TabTimetablePageModule)
-      },
-      {
         path: 'artist',
         title: 'Artist',
         children: [
           {
             path: '',
-            loadChildren: () => import('../tab-artist/tab-artist.module').then( m => m.TabArtistPageModule)
+            loadChildren: () => import('../tab-artist/tab-artist.module').then(m => m.TabArtistPageModule)
           },
           {
             path: ':id',
-            loadChildren: () => import('../artist-detail/artist-detail.module').then( m => m.ArtistDetailPageModule)
+            loadChildren: () => import('../artist-detail/artist-detail.module').then(m => m.ArtistDetailPageModule)
           }
         ]
+      },
+      {
+        path: 'timetable',
+        title: 'Timetable',
+        loadChildren: () => import('../tab-timetable/tab-timetable.module').then(m => m.TabTimetablePageModule)
       },
       {
         path: 'search',
@@ -53,4 +53,4 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

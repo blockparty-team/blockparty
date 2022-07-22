@@ -1,19 +1,20 @@
 <ion-tabs (ionTabsDidChange)="onTabChange($event)">
 
   <ion-tab-bar slot="bottom" color="medium">
+
     <ion-tab-button tab="map">
       <ion-icon name="location"></ion-icon>
       <ion-label>Map</ion-label>
     </ion-tab-button>
 
-    <!-- <ion-tab-button tab="timetable">
-      <ion-icon name="calendar"></ion-icon>
-      <ion-label>Timetable</ion-label>
-    </ion-tab-button> -->
-
     <ion-tab-button tab="artist">
       <ion-icon name="musical-notes"></ion-icon>
       <ion-label>Artists</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="timetable">
+      <ion-icon name="calendar"></ion-icon>
+      <ion-label>Timetable</ion-label>
     </ion-tab-button>
 
     <ion-tab-button tab="search">

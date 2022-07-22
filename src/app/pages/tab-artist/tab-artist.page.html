@@ -19,7 +19,7 @@
 
 <ion-content id="main">
   <ng-container *ngIf="groupedArtists$ | async as artists">
-    <ion-item-group *ngFor="let artist of artists; trackBy:trackItems; let i = index" [style.--animation-order]="i">
+    <ion-item-group *ngFor="let artist of artists; trackBy:trackItems">
       <ion-item-divider sticky="true" color="light">
         <ion-label>{{artist.letter}}</ion-label>
       </ion-item-divider>
