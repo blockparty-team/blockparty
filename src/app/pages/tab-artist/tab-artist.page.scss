@@ -1,3 +1,8 @@
+ion-content#main {
+    --background: rgb(219, 190, 82);
+    --background: linear-gradient(137deg, rgba(219, 190, 82, 1) 42%, rgba(147, 126, 47, 1) 100%);
+}
+
 ion-item {
     animation: popIn .2s calc(var(--animation-order) * 70ms) both ease-in;
 
@@ -20,4 +25,12 @@ app-artist-card {
         opacity: 1;
         transform: none;
     }
+}
+
+.loading {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
