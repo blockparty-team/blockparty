@@ -488,6 +488,44 @@ export interface paths {
       };
     };
   };
+  "/stage_geojson": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.stage_geojson.id"];
+          name?: parameters["rowFilter.stage_geojson.name"];
+          description?: parameters["rowFilter.stage_geojson.description"];
+          icon?: parameters["rowFilter.stage_geojson.icon"];
+          timetable?: parameters["rowFilter.stage_geojson.timetable"];
+          geom?: parameters["rowFilter.stage_geojson.geom"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["stage_geojson"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/day_event": {
     get: {
       parameters: {
@@ -1280,6 +1318,24 @@ export interface definitions {
     /** Format: text */
     description?: string;
   };
+  stage_geojson: {
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: string;
+    /** Format: text */
+    name?: string;
+    /** Format: text */
+    description?: string;
+    /** Format: text */
+    icon?: string;
+    /** Format: jsonb */
+    timetable?: unknown;
+    /** Format: extensions.geometry(Point,4326) */
+    geom?: string;
+  };
   day_event: {
     /**
      * Format: uuid
@@ -1579,6 +1635,20 @@ export interface parameters {
   "rowFilter.day.name": string;
   /** Format: text */
   "rowFilter.day.description": string;
+  /** @description stage_geojson */
+  "body.stage_geojson": definitions["stage_geojson"];
+  /** Format: uuid */
+  "rowFilter.stage_geojson.id": string;
+  /** Format: text */
+  "rowFilter.stage_geojson.name": string;
+  /** Format: text */
+  "rowFilter.stage_geojson.description": string;
+  /** Format: text */
+  "rowFilter.stage_geojson.icon": string;
+  /** Format: jsonb */
+  "rowFilter.stage_geojson.timetable": string;
+  /** Format: extensions.geometry(Point,4326) */
+  "rowFilter.stage_geojson.geom": string;
   /** @description day_event */
   "body.day_event": definitions["day_event"];
   /** Format: uuid */

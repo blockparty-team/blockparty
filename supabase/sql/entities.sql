@@ -327,6 +327,30 @@ join icon i on a.icon_id = i.id;
 GRANT SELECT ON table asset_geojson TO anon;
 
 
+-- Stage with timetable geojson
+drop view stage_geojson;
+
+create or replace view stage_geojson as
+with tt as (
+	select day_id, start_time, end_time, a."name", artist_id, stage_id
+	from timetable t
+	join artist a on t.artist_id = a.id 
+)
+select 
+	s.id,
+	s."name",
+	s.description,
+	i."name" icon,
+	jsonb_agg(row_to_json(t.*)::jsonb - 'stage_id') timetable,
+	s.geom
+from stage s 
+join tt t on s.id = t.stage_id
+join icon i on s.icon_id = i.id
+group by 1, 2, 3, 4
+
+GRANT SELECT ON table stage_geojson TO anon;
+
+
 -----------------------
 -- Buckets
 -----------------------

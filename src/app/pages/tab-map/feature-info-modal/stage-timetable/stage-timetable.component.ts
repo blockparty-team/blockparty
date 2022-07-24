@@ -4,7 +4,7 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { filter, switchMap, map } from 'rxjs/operators';
+import { filter, switchMap, map, withLatestFrom, tap } from 'rxjs/operators';
 import { MapLayer } from '@app/interfaces/map-layer';
 
 @Component({
@@ -15,27 +15,37 @@ import { MapLayer } from '@app/interfaces/map-layer';
 })
 export class StageTimetableComponent implements OnInit {
 
+  stageName$: Observable<string>;
   timetable$: Observable<any>;
   location$: Observable<[number, number]>;
 
   constructor(
     private mapStateService: MapStateService,
-    private supabaseService: SupabaseService,
     private modalCtrl: ModalController,
     private router: Router
   ) { }
 
   ngOnInit() {
-    this.timetable$ = this.mapStateService.selectedMapFeatures$.pipe(
+
+    const stage$ = this.mapStateService.selectedMapFeatures$.pipe(
       filter(features => !!features && features[0].mapLayer === MapLayer.Stage),
-      switchMap(stage => this.supabaseService.stageTimeTable(stage[0].id))
+      map(stages => stages[0])
     );
 
-    this.location$ = this.mapStateService.selectedMapFeatures$.pipe(
-      filter(features => !!features && features[0].mapLayer === MapLayer.Stage),
-      map(features => [
-        features[0].geometry.coordinates[1],
-        features[0].geometry.coordinates[0]
+    this.stageName$ = stage$.pipe(
+      map(stage => stage.properties.name)
+    );
+
+    this.timetable$ = stage$.pipe(
+      withLatestFrom(this.mapStateService.selectedDay$),
+      // JSON.parse is used since Maplibre stringifies nested properties
+      map(([stage, dayId]) => JSON.parse((stage.properties as any).timetable)),
+    );
+
+    this.location$ = stage$.pipe(
+      map(stage => [
+        stage.geometry.coordinates[1],
+        stage.geometry.coordinates[0]
       ] as [number, number])
     );
   }

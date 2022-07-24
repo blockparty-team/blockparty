@@ -1,7 +1,7 @@
 <ng-container *ngIf="timetable$ | async as timetable; else loading;">
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-title>{{timetable[0].stage.name}}</ion-title>
+      <ion-title>{{stageName$ | async}}</ion-title>
       <ion-buttons slot="end">
         <ng-container *ngIf="location$ | async as location">
           <ion-button (click)="onOpenGoogleMapseDirections(location)">
@@ -20,8 +20,8 @@
         <span slot="start">
           {{act?.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
         </span>
-        <ion-label (click)="onGoToArtist(act.artist.id)">
-          {{act.artist.name}}
+        <ion-label (click)="onGoToArtist(act.artist_id)">
+          {{act.name}}
         </ion-label>
       </ion-item>
   </ion-content>

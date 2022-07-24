@@ -4,7 +4,7 @@ import { definitions } from './supabase';
 
 export interface MapClickedFeature {
     id: string;
-    properties: Partial<definitions['asset_geojson'] | definitions['stage']>
+    properties: Partial<definitions['asset_geojson'] | definitions['stage_geojson']>
     mapLayer: MapLayer;
     geometry: Point | Polygon | LineString;
 };

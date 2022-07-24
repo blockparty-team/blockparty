@@ -2,7 +2,7 @@
 export enum MapSource {
     DayEventMask = 'day_event_mask',
     Event = 'event',
-    Stage = 'stage',
+    Stage = 'stage_geojson',
     Asset = 'asset_geojson',
 }
 
