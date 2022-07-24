@@ -75,7 +75,6 @@ create table if not exists public.event(
 	description text,
 	geom geometry(polygon, 4326),
 	style jsonb,
-	day_id uuid references public.day not null,
 	inserted_at timestamp with time zone default now() not null,
 	public boolean default false
 );
@@ -102,6 +101,27 @@ ALTER TABLE public.event ADD COLUMN bounds float8[]
 		st_xmax(geom),
 		st_ymax(geom)
 	]) STORED;
+
+
+-------------------------------------
+-- DAY EVENT (many-to-many relation)
+-------------------------------------
+create table if not exists public.day_event(
+	id uuid not null primary key DEFAULT uuid_generate_v4(),
+	day_id uuid references public.day not null,
+	event_id uuid references public.event not null,
+	inserted_at timestamp with time zone default now() not null
+);
+
+-- Permissions
+GRANT SELECT ON TABLE public.day_event TO anon;
+
+ALTER TABLE event ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_day_event 
+	ON event 
+	FOR SELECT
+	TO anon;
  
 
 -------------
@@ -267,8 +287,8 @@ select
 		st_xmax(st_collect(e.geom)),
 		st_ymax(st_collect(e.geom))
 	] as bounds
-from mask m
-join "event" e on st_intersects(m.geom, e.geom)
+from mask m, "event" e
+join day_event de on e.id = de.event_id
 union all
 select
 	d.id id,
@@ -284,8 +304,8 @@ from
 join "event" e on
 	st_intersects(m.geom,
 	e.geom)
-join "day" d on
-	e.day_id = d.id
+join day_event de on e.id = de.event_id
+join "day" d on de.day_id = d.id
 group by
 	d.id;
 
@@ -525,6 +545,7 @@ select audit.enable_tracking('public.asset');
 select audit.enable_tracking('public.asset_type');
 select audit.enable_tracking('public.day');
 select audit.enable_tracking('public.event');
+select audit.enable_tracking('public.day_event');
 select audit.enable_tracking('public.icon');
 select audit.enable_tracking('public.stage');
 select audit.enable_tracking('public.timetable');

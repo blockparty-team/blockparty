@@ -488,6 +488,102 @@ export interface paths {
       };
     };
   };
+  "/day_event": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.day_event.id"];
+          day_id?: parameters["rowFilter.day_event.day_id"];
+          event_id?: parameters["rowFilter.day_event.event_id"];
+          inserted_at?: parameters["rowFilter.day_event.inserted_at"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["day_event"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+    post: {
+      parameters: {
+        body: {
+          /** day_event */
+          day_event?: definitions["day_event"];
+        };
+        query: {
+          /** Filtering Columns */
+          select?: parameters["select"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** Created */
+        201: unknown;
+      };
+    };
+    delete: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.day_event.id"];
+          day_id?: parameters["rowFilter.day_event.day_id"];
+          event_id?: parameters["rowFilter.day_event.event_id"];
+          inserted_at?: parameters["rowFilter.day_event.inserted_at"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+    patch: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.day_event.id"];
+          day_id?: parameters["rowFilter.day_event.day_id"];
+          event_id?: parameters["rowFilter.day_event.event_id"];
+          inserted_at?: parameters["rowFilter.day_event.inserted_at"];
+        };
+        body: {
+          /** day_event */
+          day_event?: definitions["day_event"];
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferReturn"];
+        };
+      };
+      responses: {
+        /** No Content */
+        204: never;
+      };
+    };
+  };
   "/event": {
     get: {
       parameters: {
@@ -497,7 +593,6 @@ export interface paths {
           description?: parameters["rowFilter.event.description"];
           geom?: parameters["rowFilter.event.geom"];
           style?: parameters["rowFilter.event.style"];
-          day_id?: parameters["rowFilter.event.day_id"];
           inserted_at?: parameters["rowFilter.event.inserted_at"];
           public?: parameters["rowFilter.event.public"];
           bounds?: parameters["rowFilter.event.bounds"];
@@ -556,7 +651,6 @@ export interface paths {
           description?: parameters["rowFilter.event.description"];
           geom?: parameters["rowFilter.event.geom"];
           style?: parameters["rowFilter.event.style"];
-          day_id?: parameters["rowFilter.event.day_id"];
           inserted_at?: parameters["rowFilter.event.inserted_at"];
           public?: parameters["rowFilter.event.public"];
           bounds?: parameters["rowFilter.event.bounds"];
@@ -579,7 +673,6 @@ export interface paths {
           description?: parameters["rowFilter.event.description"];
           geom?: parameters["rowFilter.event.geom"];
           style?: parameters["rowFilter.event.style"];
-          day_id?: parameters["rowFilter.event.day_id"];
           inserted_at?: parameters["rowFilter.event.inserted_at"];
           public?: parameters["rowFilter.event.public"];
           bounds?: parameters["rowFilter.event.bounds"];
@@ -813,6 +906,7 @@ export interface paths {
           id?: parameters["rowFilter.asset_geojson.id"];
           name?: parameters["rowFilter.asset_geojson.name"];
           description?: parameters["rowFilter.asset_geojson.description"];
+          icon?: parameters["rowFilter.asset_geojson.icon"];
           geom?: parameters["rowFilter.asset_geojson.geom"];
           /** Filtering Columns */
           select?: parameters["select"];
@@ -1045,11 +1139,7 @@ export interface paths {
 
 export interface definitions {
   day_event_mask: {
-    /**
-     * Format: uuid
-     * @description Note:
-     * This is a Primary Key.<pk/>
-     */
+    /** Format: uuid */
     id?: string;
     /** Format: extensions.geometry */
     geom?: string;
@@ -1190,6 +1280,32 @@ export interface definitions {
     /** Format: text */
     description?: string;
   };
+  day_event: {
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     * @default extensions.uuid_generate_v4()
+     */
+    id: string;
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Foreign Key to `day.id`.<fk table='day' column='id'/>
+     */
+    day_id: string;
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Foreign Key to `event.id`.<fk table='event' column='id'/>
+     */
+    event_id: string;
+    /**
+     * Format: timestamp with time zone
+     * @default now()
+     */
+    inserted_at: string;
+  };
   event: {
     /**
      * Format: uuid
@@ -1206,12 +1322,6 @@ export interface definitions {
     geom?: string;
     /** Format: jsonb */
     style?: unknown;
-    /**
-     * Format: uuid
-     * @description Note:
-     * This is a Foreign Key to `day.id`.<fk table='day' column='id'/>
-     */
-    day_id: string;
     /**
      * Format: timestamp with time zone
      * @default timezone('utc'::text, now())
@@ -1296,6 +1406,8 @@ export interface definitions {
     name?: string;
     /** Format: text */
     description?: string;
+    /** Format: text */
+    icon?: string;
     /** Format: extensions.geometry(Point,4326) */
     geom?: string;
   };
@@ -1467,6 +1579,16 @@ export interface parameters {
   "rowFilter.day.name": string;
   /** Format: text */
   "rowFilter.day.description": string;
+  /** @description day_event */
+  "body.day_event": definitions["day_event"];
+  /** Format: uuid */
+  "rowFilter.day_event.id": string;
+  /** Format: uuid */
+  "rowFilter.day_event.day_id": string;
+  /** Format: uuid */
+  "rowFilter.day_event.event_id": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.day_event.inserted_at": string;
   /** @description event */
   "body.event": definitions["event"];
   /** Format: uuid */
@@ -1479,8 +1601,6 @@ export interface parameters {
   "rowFilter.event.geom": string;
   /** Format: jsonb */
   "rowFilter.event.style": string;
-  /** Format: uuid */
-  "rowFilter.event.day_id": string;
   /** Format: timestamp with time zone */
   "rowFilter.event.inserted_at": string;
   /** Format: boolean */
@@ -1525,6 +1645,8 @@ export interface parameters {
   "rowFilter.asset_geojson.name": string;
   /** Format: text */
   "rowFilter.asset_geojson.description": string;
+  /** Format: text */
+  "rowFilter.asset_geojson.icon": string;
   /** Format: extensions.geometry(Point,4326) */
   "rowFilter.asset_geojson.geom": string;
   /** @description mask */

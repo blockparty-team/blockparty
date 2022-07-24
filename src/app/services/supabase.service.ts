@@ -59,35 +59,44 @@ export class SupabaseService {
   get days$(): Observable<DayWithRelations[]> {
     return from(
       this.client
-        .from<DayWithRelations>('day')
+        .from('day')
         .select(`
           id,
           day,
           name,
           description,
-          event(
-            id,
-            name,
-            description,
-            bounds,
-            stage(
+          day_event(
+            event(
               id,
-              name, 
+              name,
               description,
-              timetable(
+              bounds,
+              stage(
                 id,
-                start_time,
-                end_time,
-                artist(
-                  *
+                name, 
+                description,
+                timetable(
+                  id,
+                  start_time,
+                  end_time,
+                  artist(
+                    *
+                  )
                 )
-
               )
             )
           )
-        `)
+      `)
     ).pipe(
-      pluck('data')
+      pluck('data'),
+      map(days => {
+        return days.map(({ day_event, ...rest }) => {
+          return {
+            ...rest,
+            event: day_event.map(events => events.event)
+          }
+        })
+      })
     );
   }
 
@@ -106,7 +115,7 @@ export class SupabaseService {
     ).pipe(
       map(res => res.data)
     )
-  } 
+  }
 
   artist(id: string): Observable<definitions['artist']> {
     return from(
