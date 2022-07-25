@@ -1,3 +1,5 @@
+
+
 ion-content#main {
     --background: rgb(219, 190, 82);
     --background: linear-gradient(137deg, rgba(219, 190, 82, 1) 42%, rgba(147, 126, 47, 1) 100%);
@@ -13,6 +15,19 @@ ion-item {
 
 app-artist-card {
     animation: popIn .2s calc(var(--animation-order) * 70ms) both ease-in;
+}
+
+.time {
+    margin-left: 10px;
+    color: var(--ion-color-medium);
+}
+
+ion-menu {
+    ion-header {
+        ion-fab-button {
+            --box-shadow: none;
+        }
+    }
 }
 
 @keyframes popIn {

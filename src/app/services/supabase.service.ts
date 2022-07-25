@@ -29,7 +29,8 @@ export class SupabaseService {
             start_time,
             end_time,
             day(
-              name
+              name,
+              day
             ),
             stage(
               name,

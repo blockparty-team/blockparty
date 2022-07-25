@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { pathToImageUrl } from '@app/shared/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { StoreService } from '@app/store/store.service';
@@ -9,8 +9,9 @@ import { ArtistStateService } from './state/artist-state.service';
 import { Favorites } from '@app/interfaces/favorites';
 import { MenuController } from '@ionic/angular';
 
-interface GroupedArtists {
-  letter: string;
+
+interface DayGroupedFavorites {
+  day: { name: string, day: string };
   artists: ArtistWithRelations[];
 }
 
@@ -23,10 +24,13 @@ interface GroupedArtists {
 export class TabArtistPage implements OnInit {
 
   filteredArtists$: Observable<ArtistWithRelations[]>;
-  groupedArtists$: Observable<GroupedArtists[]>;
-  favoriteArtists$: Observable<ArtistWithRelations[]>;
   favorites$: Observable<Favorites>;
+  favoriteArtists$: Observable<ArtistWithRelations[]>;
+  dayGroupedFavorites$: Observable<DayGroupedFavorites[]>;
   showSearch$ = new BehaviorSubject(false);
+
+  private _showDayGroupedFavorites$ = new BehaviorSubject<boolean>(false);
+  showDayGroupedFavorites$: Observable<boolean> = this._showDayGroupedFavorites$.asObservable();
 
   searchTerm = new FormControl('');
   @ViewChild('search') searchElement: any;
@@ -47,7 +51,7 @@ export class TabArtistPage implements OnInit {
     ]).pipe(
       filter(([artists, favorites]) => !!artists && !!favorites),
       map(([artists, favorites]) => artists.filter(artist => favorites.artists.includes(artist.id)))
-    )
+    );
 
     this.filteredArtists$ = combineLatest([
       this.store.artists$,
@@ -60,22 +64,29 @@ export class TabArtistPage implements OnInit {
       }),
     );
 
-    this.groupedArtists$ = this.filteredArtists$.pipe(
+    this.dayGroupedFavorites$ = this.favoriteArtists$.pipe(
       map(artists => {
-        return artists.reduce((acc: GroupedArtists[], artist) => {
+        return artists
+          .reduce((acc: DayGroupedFavorites[], artist) => {
 
-          const letter = artist.name[0].toUpperCase();
+            // TODO: 
+            const day = artist.timetable[0]?.day ?
+              artist.timetable[0].day :
+              { name: 'TBA', day: '2070-01-01' };
 
-          if (acc.find(group => group.letter === letter) === undefined) {
-            acc.push({ letter, artists: [] })
-          };
+            if (acc.find(group => group.day.name === day.name) === undefined) {
+              acc.push({ day, artists: [] })
+            };
 
-          acc.find(group => group.letter == letter).artists.push(artist);
+            acc.find(group => group.day.name == day.name).artists.push(artist);
 
-          return acc;
-        }, [])
-      })
+            return acc;
+          }, [])
+          .sort((a, b) => new Date(a.day.day).getTime() - new Date(b.day.day).getTime())
+      }),
+      tap(console.log)
     );
+
   }
 
   toggleSearch(): void {
@@ -103,6 +114,10 @@ export class TabArtistPage implements OnInit {
     return this.artistStateService.isFavorite(id);
   }
 
+  toggleDayGroupedFavorites(): void {
+    this._showDayGroupedFavorites$.next(!this._showDayGroupedFavorites$.value);
+  }
+
   imgUrl(path: string): string {
     return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
@@ -111,7 +126,7 @@ export class TabArtistPage implements OnInit {
     return item.id;
   }
 
-  trackGroupedArtist(index: number, item: GroupedArtists) {
-    return item.letter;
+  trackDay(index: number, item: DayGroupedFavorites) {
+    return item.day.day;
   }
 }

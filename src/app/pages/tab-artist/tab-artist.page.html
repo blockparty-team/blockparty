@@ -18,17 +18,6 @@
 </ion-header>
 
 <ion-content id="main">
-  <!-- <ng-container *ngIf="groupedArtists$ | async as groupedArtists">
-    <ion-item-group *ngFor="let group of groupedArtists; trackBy:trackGroupedArtist">
-      <ion-item-divider sticky="true" color="light">
-        <ion-label>{{group.letter}}</ion-label>
-      </ion-item-divider>
-      <app-artist-card *ngFor="let artist of group.artists; let i = index" [style.--animation-order]="i"
-        [artist]="artist">
-      </app-artist-card>
-    </ion-item-group>
-  </ng-container> -->
-
   <ng-container *ngIf="filteredArtists$ | async as artists; else loading">
     <app-artist-card *ngFor="let artist of artists; trackBy:trackArtist; let i = index" [style.--animation-order]="i"
       [artist]="artist"></app-artist-card>
@@ -50,22 +39,59 @@
         </ion-button>
       </ion-buttons>
       <ion-title>Favorites</ion-title>
+      <ion-buttons slot="end">
+        <ion-fab-button size="small" (click)="toggleDayGroupedFavorites()"
+          [color]="(showDayGroupedFavorites$ | async) ? 'primary': 'secondary'">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
+
   <ion-content>
     <ng-container *ngIf="favoriteArtists$ | async as favoriteArtists">
-      <ion-list>
-        <ion-item *ngFor="let artist of favoriteArtists; let i = index" [style.--animation-order]="i">
-          <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
-          <div slot="end" (click)="addRemoveFavorites(artist.id)">
-            <ion-icon slot="icon-only" name="close"></ion-icon>
-          </div>
-        </ion-item>
-      </ion-list>
+      <ng-container *ngIf="(showDayGroupedFavorites$ | async) === false">
+        <ion-list>
+          <ion-item *ngFor="let artist of favoriteArtists; let i = index ; trackBy:trackArtist"
+            [style.--animation-order]="i">
+            <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
+            <div slot="end" (click)="addRemoveFavorites(artist.id)">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </div>
+          </ion-item>
+        </ion-list>
 
-      <p *ngIf="favoriteArtists.length === 0" class="ion-text-center">
-        No favorites added
-      </p>
+        <p *ngIf="favoriteArtists.length === 0" class="ion-text-center">
+          No favorites added
+        </p>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="dayGroupedFavorites$ | async as dayGroupedFavorites">
+      <ng-container *ngIf="showDayGroupedFavorites$ | async">
+        <ion-item-group *ngFor="let group of dayGroupedFavorites; let i = index; trackBy:trackDay"
+          [style.--animation-order]="i">
+          <ion-item-divider sticky="true" color="medium">
+            <ion-label>{{group.day.name}}</ion-label>
+          </ion-item-divider>
+          <ion-item *ngFor="let artist of group.artists">
+            <ion-label [routerLink]="['./', artist.id]">
+              <span class="artist-name">{{artist.name}}</span>
+              <span class="time">
+                {{artist.timetable[0]?.start_time | date:'HH:mm'}} -
+                {{artist.timetable[0]?.end_time | date:'HH:mm'}}
+              </span>
+            </ion-label>
+            <div slot="end" (click)="addRemoveFavorites(artist.id)">
+              <ion-icon slot="icon-only" name="close"></ion-icon>
+            </div>
+          </ion-item>
+        </ion-item-group>
+
+        <p *ngIf="dayGroupedFavorites.length === 0" class="ion-text-center">
+          No favorites added
+        </p>
+      </ng-container>
     </ng-container>
   </ion-content>
 </ion-menu>
