@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
+import { definitions } from '@app/interfaces/supabase';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MapStateService } from '../../state/map-state.service';
@@ -13,7 +14,7 @@ import { MapStateService } from '../../state/map-state.service';
 })
 export class AssetComponent implements OnInit {
 
-  asset$: Observable<MapClickedFeature>
+  asset$: Observable<MapClickedFeature<definitions['asset_geojson']>>
 
   constructor(
     private mapStateService: MapStateService

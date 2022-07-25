@@ -1,39 +1,36 @@
-<ng-container *ngIf="timetable$ | async as timetable; else loading;">
-  <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>{{stageName$ | async}}</ion-title>
-      <ion-buttons slot="end">
-        <ng-container *ngIf="location$ | async as location">
-          <ion-button (click)="onOpenGoogleMapseDirections(location)">
-            directions            
-          </ion-button>
-        </ng-container>
-        <!-- <ion-button (click)="onDismissModal()" [strong]="true">
-          <ion-icon name="close"></ion-icon>
-        </ion-button> -->
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>{{stageName$ | async}}</ion-title>
+    <ion-buttons slot="end">
+      <ng-container *ngIf="location$ | async as location">
+        <ion-button (click)="onOpenGoogleMapseDirections(location)">
+          DIRECTIONS
+        </ion-button>
+      </ng-container>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content class="ion-padding">
-      <ion-item *ngFor="let act of timetable">
+<ion-content>
+  <ng-container *ngIf="days$ | async as days; else loading;">
+    <ion-segment scrollable mode="md" (ionChange)="onSelectDay($event)" [value]="days[0].id">
+      <ion-segment-button color="light" *ngFor="let day of days" [value]="day.id">
+        <ion-label>{{day.name}}</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+    <ng-container *ngIf="timetable$ | async as timetable">
+      <ion-item *ngFor="let act of timetable; let i = index" [style.--animation-order]="i">
         <span slot="start">
-          {{act?.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
+          {{act.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
         </span>
-        <ion-label (click)="onGoToArtist(act.artist_id)">
-          {{act.name}}
+        <ion-label (click)="onGoToArtist(act?.artist_id)">
+          {{act?.name}}
         </ion-label>
       </ion-item>
-  </ion-content>
+    </ng-container>
+  </ng-container>
 
-</ng-container>
-
-<ng-template #loading>
-  <ion-header>
-    <ion-toolbar color="primary">
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
+  <ng-template #loading>
     <ion-spinner></ion-spinner>
-  </ion-content>
-</ng-template>
+  </ng-template>

@@ -331,24 +331,54 @@ GRANT SELECT ON table asset_geojson TO anon;
 drop view stage_geojson;
 
 create or replace view stage_geojson as
-with tt as (
-	select day_id, start_time, end_time, a."name", artist_id, stage_id
+with cte_day as (
+	select 
+		id,
+		json_build_object(
+			'id', id,
+			'date', "day",
+			'name', "name" 
+		) "day"
+	from "day"
+), cte_timetable as (
+	select 
+		stage_id, 
+		d.id day_id,
+		jsonb_agg(
+			json_build_object(
+					'start_time', start_time, 
+					'end_time', end_time, 
+					'name', a."name", 
+					'artist_id', artist_id
+			) 
+		) as timetable
 	from timetable t
-	join artist a on t.artist_id = a.id 
+	join artist a on t.artist_id = a.id
+	join day d on t.day_id = d.id 
+	group by 1, 2, d."day"
+	order by d."day" 
+), tt as (
+	select 
+		t.stage_id,
+		d."day",
+		t.timetable
+	from cte_timetable t
+	join cte_day d on t.day_id = d.id
 )
 select 
 	s.id,
 	s."name",
-	s.description,
 	i."name" icon,
-	jsonb_agg(row_to_json(t.*)::jsonb - 'stage_id') timetable,
+	jsonb_agg(row_to_json(t.*)::jsonb - 'stage_id') timetables,
 	s.geom
 from stage s 
-join tt t on s.id = t.stage_id
-join icon i on s.icon_id = i.id
-group by 1, 2, 3, 4
+left join tt t on s.id = t.stage_id
+left join icon i on s.icon_id = i.id
+group by 1, 2, 3;
 
 GRANT SELECT ON table stage_geojson TO anon;
+
+select table_as_geojson('stage_geojson')
 
 
 -----------------------

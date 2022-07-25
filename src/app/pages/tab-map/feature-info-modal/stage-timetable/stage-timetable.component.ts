@@ -1,11 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
-import { Observable } from 'rxjs';
-import { filter, switchMap, map, withLatestFrom, tap } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
 import { MapLayer } from '@app/interfaces/map-layer';
+import { Day, StageGeojsonProperties, Timetable, TimetableDay } from '@app/interfaces/stage-geojson-properties';
+import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 
 @Component({
   selector: 'app-stage-timetable',
@@ -16,8 +17,12 @@ import { MapLayer } from '@app/interfaces/map-layer';
 export class StageTimetableComponent implements OnInit {
 
   stageName$: Observable<string>;
-  timetable$: Observable<any>;
+  days$: Observable<Day[]>;
+  timetable$: Observable<Timetable[]>;
   location$: Observable<[number, number]>;
+
+  private _selectedDay$ = new BehaviorSubject<string>(null);
+  selectedDay$: Observable<string> = this._selectedDay$.asObservable();
 
   constructor(
     private mapStateService: MapStateService,
@@ -29,18 +34,39 @@ export class StageTimetableComponent implements OnInit {
 
     const stage$ = this.mapStateService.selectedMapFeatures$.pipe(
       filter(features => !!features && features[0].mapLayer === MapLayer.Stage),
-      map(stages => stages[0])
+      map(stages => (stages[0] as MapClickedFeature<StageGeojsonProperties>)),
+      map(stage => ({
+        ...stage,
+        properties: {
+          ...stage.properties,
+          // JSON.parse is used since Maplibre stringifies nested properties in GeoJSON maplayers
+          timetables: JSON.parse(stage.properties.timetables as any) as TimetableDay[]
+        }
+      }))
     );
 
     this.stageName$ = stage$.pipe(
       map(stage => stage.properties.name)
     );
 
-    this.timetable$ = stage$.pipe(
-      withLatestFrom(this.mapStateService.selectedDay$),
-      // JSON.parse is used since Maplibre stringifies nested properties
-      map(([stage, dayId]) => JSON.parse((stage.properties as any).timetable)),
-    );
+    this.days$ = stage$.pipe(
+      map(stage => stage.properties.timetables
+        .map(t => t.day)
+        .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
+      ),
+      tap(days => this._selectedDay$.next(days[0].id))
+    )
+
+    this.timetable$ = combineLatest([
+      stage$,
+      this.selectedDay$
+    ]).pipe(
+      filter(([stage, day]) => !!stage && !!day),
+      map(([stage, day]) => (
+        stage.properties.timetables
+          .find(timetable => timetable.day.id === day).timetable
+      ))
+    )
 
     this.location$ = stage$.pipe(
       map(stage => [
@@ -50,8 +76,8 @@ export class StageTimetableComponent implements OnInit {
     );
   }
 
-  onDismissModal() {
-    this.modalCtrl.dismiss();
+  onSelectDay(event): void {
+    this._selectedDay$.next(event.detail.value);
   }
 
   onGoToArtist(artistId: string): void {

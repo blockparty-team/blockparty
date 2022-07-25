@@ -7,7 +7,7 @@ import { Device } from '@capacitor/device';
 import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { color } from '@app/shared/colors';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 
@@ -86,7 +86,7 @@ export class MapService {
 
       if (e.features.length > 0) {
 
-        const features: MapClickedFeature[] = e.features.map(feature => ({
+        const features: MapClickedFeature<GeojsonProperties>[] = e.features.map(feature => ({
           id: feature.properties.id,
           mapLayer,
           properties: feature.properties,
