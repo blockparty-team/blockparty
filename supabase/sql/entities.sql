@@ -328,8 +328,6 @@ GRANT SELECT ON table asset_geojson TO anon;
 
 
 -- Stage with timetable geojson
-drop view stage_geojson;
-
 create or replace view stage_geojson as
 with cte_day as (
 	select 
@@ -377,8 +375,6 @@ left join icon i on s.icon_id = i.id
 group by 1, 2, 3;
 
 GRANT SELECT ON table stage_geojson TO anon;
-
-select table_as_geojson('stage_geojson')
 
 
 -----------------------
