@@ -1,0 +1,6 @@
+ion-content {
+    .timetable {
+        display: grid;
+        grid-template-columns: repeat(24, 200px);
+    }
+}

@@ -1,11 +1,33 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="medium">
-    <ion-title>
+  <!-- <ion-toolbar color="medium">
+    <ion-title class="ion-text-center">
       Timetable
     </ion-title>
-  </ion-toolbar>
+  </ion-toolbar> -->
+  <ng-container *ngIf="days$ | async as days">
+    <ion-toolbar color="medium">
+      <ion-segment scrollable mode="md" (ionChange)="onDayFilterChange($event)" [value]="selectedDayId$ | async">
+        <ion-segment-button *ngFor="let day of days" [value]="day.id">
+          <ion-label>{{day.name}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container>
+
+  <ng-container *ngIf="events$ | async as events">
+    <ion-toolbar color="secondary">
+      <ion-segment scrollable mode="md" (ionChange)="onEventFilterChange($event)" [value]="selectedEventId$ | async">
+        <ion-segment-button *ngFor="let event of events" [value]="event.id">
+          <ion-label>{{event.name}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  Her comes timetable
+<ion-content>
+  <div class="timetable">
+    <div class="time-labels"></div>
+
+  </div>
 </ion-content>
