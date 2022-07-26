@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, throwIfEmpty } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
 import { Geolocation } from '@capacitor/geolocation';
 import { Device } from '@capacitor/device';
@@ -29,6 +29,7 @@ export class MapService {
       style: environment.maptilerStyleJson,
       center: [12.547927, 55.667071],
       zoom: 15,
+      pitch: 40,
       attributionControl: false
     });
 
@@ -41,7 +42,8 @@ export class MapService {
       this.map.resize();
 
       this.loadMapIcons();
-      this.addAerial();
+      // this.addAerial();
+      this.add3dBuildings();
       this.addLayers();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
@@ -83,6 +85,8 @@ export class MapService {
 
   addClickBehaviourToLayer(mapLayer: MapLayer): void {
     this.map.on('click', mapLayer, e => {
+
+      console.log(e.features)
 
       if (e.features.length > 0) {
 
@@ -327,6 +331,40 @@ export class MapService {
 
       })
     ).subscribe();
+  }
+
+  add3dBuildings(): void {
+    this.map.addLayer({
+      'id': '3d-buildings',
+      'source': 'openmaptiles',
+      'source-layer': 'building',
+      'type': 'fill-extrusion',
+      'minzoom': 16,
+      'paint': {
+        'fill-extrusion-color': 'hsl(47, 66%, 59%)',
+        'fill-extrusion-height': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          16,
+          0,
+          16.5,
+          ['get', 'render_height']
+        ],
+        'fill-extrusion-base': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          16,
+          0,
+          16.5,
+          ['get', 'render_min_height']
+        ],
+        'fill-extrusion-opacity': 0.4
+      }
+    });
+
+    console.log(this.map.getStyle().layers)
   }
 
   loadMapIcons(): void {
