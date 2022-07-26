@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
-import { ModalController, SegmentChangeEventDetail } from '@ionic/angular';
+import { ModalController, SegmentChangeEventDetail, SegmentCustomEvent } from '@ionic/angular';
 import { combineLatest, from, Observable } from 'rxjs';
 import { filter, map, switchMap, tap, withLatestFrom, pluck, delay, distinctUntilChanged } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
@@ -12,11 +12,6 @@ import { animations } from '@app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
-
-interface SegmentCustomEvent extends CustomEvent {
-  target: HTMLIonSegmentElement;
-  detail: SegmentChangeEventDetail;
-}
 
 @Component({
   selector: 'app-tab-map',
@@ -103,7 +98,7 @@ export class TabMapPage implements OnInit {
       filter(tab => tab === Tab.Map),
       withLatestFrom(this.mapStateService.mapLoaded$),
       filter(([, mapLoaded]) => mapLoaded),
-      tap(() =>  this.mapService.resize())
+      tap(() => this.mapService.resize())
     ).subscribe()
   }
 
