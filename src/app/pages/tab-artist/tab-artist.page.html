@@ -40,10 +40,9 @@
       </ion-buttons>
       <ion-title>Favorites</ion-title>
       <ion-buttons slot="end">
-        <ion-fab-button size="small" (click)="toggleDayGroupedFavorites()"
-          [color]="(showDayGroupedFavorites$ | async) ? 'primary': 'secondary'">
-          <ion-icon name="calendar-outline"></ion-icon>
-        </ion-fab-button>
+        <ion-button (click)="toggleDayGroupedFavorites()">
+          <ion-icon slot="icon-only" [name]="(showDayGroupedFavorites$ | async) ? 'list-outline' : 'calendar-outline'"></ion-icon>
+        </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
