@@ -52,7 +52,7 @@ export class StageTimetableComponent implements OnInit {
     this.days$ = stage$.pipe(
       map(stage => stage.properties.timetables
         .map(t => t.day)
-        .sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
+        .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
       ),
       tap(days => this._selectedDay$.next(days[0].id))
     )

@@ -2,11 +2,10 @@ import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/
 import { pathToImageUrl } from '@app/shared/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { StoreService } from '@app/store/store.service';
-import { debounceTime, filter, map, startWith, tap } from 'rxjs/operators';
+import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { FormControl } from '@angular/forms';
 import { ArtistStateService } from './state/artist-state.service';
-import { Favorites } from '@app/interfaces/favorites';
 import { MenuController } from '@ionic/angular';
 
 
@@ -24,7 +23,6 @@ interface DayGroupedFavorites {
 export class TabArtistPage implements OnInit {
 
   filteredArtists$: Observable<ArtistWithRelations[]>;
-  favorites$: Observable<Favorites>;
   favoriteArtists$: Observable<ArtistWithRelations[]>;
   dayGroupedFavorites$: Observable<DayGroupedFavorites[]>;
   showSearch$ = new BehaviorSubject(false);
@@ -43,16 +41,6 @@ export class TabArtistPage implements OnInit {
 
   ngOnInit() {
 
-    this.favorites$ = this.artistStateService.favorites$;
-
-    this.favoriteArtists$ = combineLatest([
-      this.store.artists$,
-      this.artistStateService.favorites$,
-    ]).pipe(
-      filter(([artists, favorites]) => !!artists && !!favorites),
-      map(([artists, favorites]) => artists.filter(artist => favorites.artists.includes(artist.id)))
-    );
-
     this.filteredArtists$ = combineLatest([
       this.store.artists$,
       this.searchTerm.valueChanges.pipe(startWith(''))
@@ -64,12 +52,21 @@ export class TabArtistPage implements OnInit {
       }),
     );
 
+    this.favoriteArtists$ = combineLatest([
+      this.store.artists$,
+      this.artistStateService.favorites$,
+    ]).pipe(
+      filter(([artists, favorites]) => !!artists && !!favorites),
+      map(([artists, favorites]) => artists.filter(artist => favorites.artists.includes(artist.id)))
+    );
+
     this.dayGroupedFavorites$ = this.favoriteArtists$.pipe(
       map(artists => {
         return artists
           .reduce((acc: DayGroupedFavorites[], artist) => {
 
-            // TODO: 
+            // TODO: Artists playing multible days will only appear once
+            // If artist is not assigned to timetable show TBA - future day is for sorting last
             const day = artist.timetable[0]?.day ?
               artist.timetable[0].day :
               { name: 'TBA', day: '2070-01-01' };
@@ -80,11 +77,18 @@ export class TabArtistPage implements OnInit {
 
             acc.find(group => group.day.name == day.name).artists.push(artist);
 
+            acc.forEach(group => {
+              group.artists
+                .sort((a, b) => (
+                  new Date(a.timetable[0]?.start_time).getTime() -
+                  new Date(b.timetable[0]?.start_time).getTime()
+                ))
+            })
+
             return acc;
           }, [])
           .sort((a, b) => new Date(a.day.day).getTime() - new Date(b.day.day).getTime())
-      }),
-      tap(console.log)
+      })
     );
 
   }
