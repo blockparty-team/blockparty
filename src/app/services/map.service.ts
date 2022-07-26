@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, throwIfEmpty } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
 import { Geolocation } from '@capacitor/geolocation';
 import { Device } from '@capacitor/device';
