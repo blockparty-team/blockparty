@@ -39,6 +39,8 @@ export class TabTimetablePage implements OnInit {
 
   timeLabels: { time: string, min: number }[] = [...Array(24).keys()].map(x => ({ time: `${x}:00`, min: x * 60 }));
 
+
+
   stageTimetables: StageTimetables[] = [
     {
       stage: 'Main',
@@ -96,6 +98,8 @@ export class TabTimetablePage implements OnInit {
       .sort((a, b) => b - a)[0];
 
     const intervalInHours = Math.ceil((maxEndTime - minStartTime) / (1000 * 60 * 60))
+
+    
 
     return {
       minStartTime,
