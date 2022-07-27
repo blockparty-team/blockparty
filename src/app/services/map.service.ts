@@ -29,7 +29,7 @@ export class MapService {
       style: environment.maptilerStyleJson,
       center: [12.547927, 55.667071],
       zoom: 15,
-      pitch: 40,
+      // pitch: 40,
       attributionControl: false
     });
 
@@ -42,8 +42,8 @@ export class MapService {
       this.map.resize();
 
       this.loadMapIcons();
-      // this.addAerial();
-      this.add3dBuildings();
+      this.addAerial();
+      // this.add3dBuildings();
       this.addLayers();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
@@ -85,8 +85,6 @@ export class MapService {
 
   addClickBehaviourToLayer(mapLayer: MapLayer): void {
     this.map.on('click', mapLayer, e => {
-
-      console.log(e.features)
 
       if (e.features.length > 0) {
 
@@ -363,8 +361,6 @@ export class MapService {
         'fill-extrusion-opacity': 0.4
       }
     });
-
-    console.log(this.map.getStyle().layers)
   }
 
   loadMapIcons(): void {

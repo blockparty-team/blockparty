@@ -26,12 +26,25 @@
 </ion-header>
 
 <ion-content>
-  <div class="timetable">
-    <div class="time-label" *ngFor="let label of timeLabels" [style.grid-column]="(label.min === 0 ? 1 : label.min) + ' / ' + (label.min + 60)">
-      {{label.time}}
+  <ng-container *ngIf="timetable"></ng-container>
+  <div class="timetable" [style.--template-columns]="timetable.gridTemplate.columns"
+    [style.--template-rows]="timetable.gridTemplate.rows">
+    <div class="time-label" *ngFor="let item of timetable.timeLabels" [style.--time-label-column]="item.column">
+      {{item.label | date:'HH:mm'}}
     </div>
 
-    <div class="stage main">
+    <ng-container *ngFor="let stage of timetable.timetable">
+      <div class="stage">
+        <span>{{stage.name}}</span>
+      </div>
+      <div class="act" *ngFor="let act of stage.acts" [style.--act-column-start]="act.columnStart"
+        [style.--act-column-end]="act.columnEnd">
+        {{act.name}}
+      </div>
+    </ng-container>
+
+
+    <!-- <div class="stage main">
       <span>main</span>
     </div>
     <div class="act a">
@@ -55,7 +68,7 @@
       <p>
         DJ Typhooon
       </p>
-    </div>
+    </div> -->
 
 
 
