@@ -27,7 +27,37 @@
 
 <ion-content>
   <div class="timetable">
-    <div class="time-labels"></div>
+    <div class="time-label" *ngFor="let label of timeLabels" [style.grid-column]="(label.min === 0 ? 1 : label.min) + ' / ' + (label.min + 60)">
+      {{label.time}}
+    </div>
+
+    <div class="stage main">
+      <span>main</span>
+    </div>
+    <div class="act a">
+      <span>
+          DJ Alligator
+      </span>
+    </div>
+    <div class="stage minor">
+      <hr/>
+      <span>minor</span>
+    </div>
+    <div class="act b">
+      <p>
+        DJ Bone
+      </p>
+    </div>
+    <div class="stage sharp">
+      <span>sharp</span>
+    </div>
+    <div class="act c">
+      <p>
+        DJ Typhooon
+      </p>
+    </div>
+
+
 
   </div>
 </ion-content>

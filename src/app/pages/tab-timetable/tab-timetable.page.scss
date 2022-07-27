@@ -1,6 +1,75 @@
 ion-content {
     .timetable {
+        height: 100%;
+        background-color: white;
+        overflow: scroll;
         display: grid;
-        grid-template-columns: repeat(24, 200px);
+        grid-template-columns: repeat(calc(24 * 60), 2px);
+        grid-template-rows: [time-labels] 40px repeat(10, 20px);
+        grid-gap: 5px 0;
+
+        .time-label {
+            grid-row: time-labels;
+            background-color: rgb(244, 244, 244);
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            display: flex;
+            justify-content: left;
+            align-items: center;
+        }
+
+        .act {
+            background-color: var(--ion-color-primary);
+            color: white;
+            border-radius: 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stage {
+            grid-column: 1 / -1;
+            align-self: end;
+            // height: 40px;
+
+            span {
+                padding: 5px;
+                border-radius: 3px;
+                position: sticky;
+                left: 0;
+                background-color: var(--ion-color-secondary);
+            }
+        }
+
+        .main {
+            grid-row: 2 / 3,
+        }
+
+        .minor {
+            grid-row: 5 / 6;
+    
+        }
+
+        .sharp {
+            grid-row: 8 / 9;
+        }
+
+        .a {
+            grid-column: 1 / 60;
+            grid-row: 3 / 5;
+        }        
+        
+        .b {
+            grid-column: 60 / 120;
+            grid-row: 6 / 8;
+        }        
+        
+        .c {
+            grid-column: 120 / 210;
+            grid-row: 9 / 11;
+        }
     }
+
+
 }
