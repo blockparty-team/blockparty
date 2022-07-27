@@ -34,6 +34,7 @@
     "@capacitor/storage": "^1.2.5",
     "@ionic/angular": "^6.2.0",
     "@supabase/supabase-js": "^1.35.4",
+    "date-fns": "^2.29.1",
     "geojson": "^0.5.0",
     "maplibre-gl": "^2.1.9",
     "rxjs": "~6.6.0",
