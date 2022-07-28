@@ -27,7 +27,7 @@ export class TabArtistPage implements OnInit {
   dayGroupedFavorites$: Observable<DayGroupedFavorites[]>;
   showSearch$ = new BehaviorSubject(false);
 
-  private _showDayGroupedFavorites$ = new BehaviorSubject<boolean>(false);
+  private _showDayGroupedFavorites$ = new BehaviorSubject<boolean>(true);
   showDayGroupedFavorites$: Observable<boolean> = this._showDayGroupedFavorites$.asObservable();
 
   searchTerm = new FormControl('');
