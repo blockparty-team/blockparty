@@ -10,13 +10,9 @@ import { TimetableStateService } from './state/timetable-state.service';
 import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
 import { definitions } from '@app/interfaces/supabase';
 
-interface StageTimetables {
-  stage: string;
-  timetables: {
-    name: string;
-    start_time: string;
-    end_time: string;
-  }[];
+interface TimeLabel {
+  column: number,
+  label: Date
 }
 
 interface GridTranformedStageTimetable {
@@ -32,14 +28,8 @@ interface GridTranformedStageTimetable {
   }[];
 }
 
-interface TimeLabel {
-  column: number,
-  label: Date
-}
-
 interface TimetableConfig {
   gridTemplate: {
-    rows: number;
     columns: number;
   }
   timeLabels: TimeLabel[];
@@ -139,33 +129,35 @@ export class TabTimetablePage implements OnInit {
       label: t
     }));
 
-    // Transform acts start and end time into grid columns
-    const timetable = stageTimetables.map(x => {
+    const stageNames = stageTimetables.filter(s => s.timetable.length > 0).map(stage => stage.name)
 
+    // Transform acts start and end time into grid columns
+    const timetable = stageTimetables.map(stage => {
+      
       const offset = (minStartTime - timeLabels[0].label.getTime()) / (1000 * 60);
 
-      if (x.timetable.filter(t => t.day_id === dayId).length > 0) {
+      if (stage.timetable.filter(t => t.day_id === dayId).length > 0) {
 
-        const acts = x.timetable
+        const acts = stage.timetable
           .filter(t => t.day_id === dayId)
-          .map((x, i) => {
-            const relativeStart = ((roundToNearestMinutes(new Date(x.start_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
-            const relativeEnd = ((roundToNearestMinutes(new Date(x.end_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
-
+          .map(act => {
+            const relativeStart = ((roundToNearestMinutes(new Date(act.start_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
+            const relativeEnd = ((roundToNearestMinutes(new Date(act.end_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
+            
             return {
-              name: x.artist.name,
-              id: x.artist.id,
-              startTime: x.start_time,
-              endTime: x.end_time,
+              name: act.artist.name,
+              id: act.artist.id,
+              startTime: act.start_time,
+              endTime: act.end_time,
               columnStart: relativeStart === 0 ? 1 : relativeStart,
               columnEnd: relativeEnd,
-              rowStart: i + 2
+              rowStart: stageNames.indexOf(stage.name) === 0 ? 3 : (stageNames.indexOf(stage.name) + 1) * 3
             }
           })
           .sort((a, b) => a.columnStart - b.columnStart)
 
         return {
-          name: x.name,
+          name: stage.name,
           acts
         }
       }
@@ -174,12 +166,10 @@ export class TabTimetablePage implements OnInit {
 
     // Calculate number of grid template rows and columns
     const columns = Math.ceil((maxEndTime - minStartTime) / (1000 * 60 * 60));
-    const rows = stageTimetables.length * 3;
 
     return {
       gridTemplate: {
-        columns,
-        rows
+        columns
       },
       timeLabels,
       timetable
@@ -202,6 +192,5 @@ export class TabTimetablePage implements OnInit {
   isFavorite(id: string): boolean {
     return this.artistStateService.isFavorite(id);
   }
-
 
 }
