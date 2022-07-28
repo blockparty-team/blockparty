@@ -7,6 +7,7 @@ import { catchError, filter, map, pluck, tap } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import roundToNearestMinutes from 'date-fns/roundToNearestMinutes';
 import { TimetableStateService } from './state/timetable-state.service';
+import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
 import { definitions } from '@app/interfaces/supabase';
 
 interface StageTimetables {
@@ -23,6 +24,8 @@ interface GridTranformedStageTimetable {
   acts: {
     name: definitions['artist']['name'];
     id: definitions['artist']['id'];
+    startTime: definitions['timetable']['start_time'];
+    endTime: definitions['timetable']['end_time'];
     columnStart: number;
     columnEnd: number;
     rowStart: number;
@@ -63,7 +66,8 @@ export class TabTimetablePage implements OnInit {
 
   constructor(
     private store: StoreService,
-    private timetableStateService: TimetableStateService
+    private timetableStateService: TimetableStateService,
+    private artistStateService: ArtistStateService,
   ) { }
 
   ngOnInit(): void {
@@ -151,6 +155,8 @@ export class TabTimetablePage implements OnInit {
             return {
               name: x.artist.name,
               id: x.artist.id,
+              startTime: x.start_time,
+              endTime: x.end_time,
               columnStart: relativeStart === 0 ? 1 : relativeStart,
               columnEnd: relativeEnd,
               rowStart: i + 2
@@ -187,6 +193,14 @@ export class TabTimetablePage implements OnInit {
 
   onEventFilterChange(event: Event): void {
     this.timetableStateService.selectEvent((event as SegmentCustomEvent).detail.value);
+  }
+
+  addRemoveFavorites(id: string): void {
+    this.artistStateService.toggleArtistsFavorites(id);
+  }
+
+  isFavorite(id: string): boolean {
+    return this.artistStateService.isFavorite(id);
   }
 
 

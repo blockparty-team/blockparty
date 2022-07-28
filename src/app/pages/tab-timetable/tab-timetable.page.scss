@@ -1,13 +1,12 @@
 ion-content {
     --background: var(--ion-color-secondary);
-    --background: linear-gradient(180deg, rgb(247, 225, 147) 51%, rgb(236, 203, 82) 100%);
-    
+    --background: linear-gradient(180deg, rgba(var(--ion-color-secondary-rgb), 0.6) 51%, var(--ion-color-secondary) 100%);
+
     .timetable {
         height: 100%;
-        // background-color: white;
         overflow: scroll;
         display: grid;
-        grid-template-columns: repeat(calc(var(--template-columns) * 60), 2px);
+        grid-template-columns: repeat(calc(var(--template-columns) * 60), 2.5px);
         grid-template-rows: [time-labels] 40px repeat(var(--template-rows), 30px);
         grid-gap: 5px 0;
 
@@ -49,11 +48,40 @@ ion-content {
             background-color: var(--ion-color-primary);
             color: white;
             border-radius: 25px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             grid-column: var(--act-column-start) / var(--act-column-end);
             grid-row: span 2;
+
+            .act-content {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                
+                .act-sticky {
+                    position: sticky;
+                    left: 10px;
+                    margin-left: 20px;
+                    display: flex;
+                    align-items: center;
+
+                    p,
+                    h6 {
+                        margin: 0;
+                    }
+
+                    p {
+                        color: rgb(205, 205, 205);
+                        font-size: small;
+                    }
+
+                    ion-icon {
+                        font-size: x-large;
+                        margin: 0 10px;
+                    }
+                }
+
+
+            }
+
         }
     }
 }

@@ -21,16 +21,11 @@
 </ion-header>
 
 <ion-content>
-  <!-- <ng-container *ngIf="timetableConfig$ | async as config">
-    <p>
-      {{config.gridTemplate.columns}}
-    </p>
-  </ng-container> -->
-
 
   <ng-container *ngIf="timetableConfig$ | async as config; else noTimeTable">
     <div class="timetable" [style.--template-columns]="config.gridTemplate.columns"
       [style.--template-rows]="config.gridTemplate.rows">
+      
       <div class="time-label" *ngFor="let item of config.timeLabels" [style.--time-label-column]="item.column">
         {{item.label | date:'HH:mm'}}
       </div>
@@ -41,9 +36,22 @@
         <div class="stage">
           <span>{{stage.name}}</span>
         </div>
-        <div class="act" *ngFor="let artist of stage.acts" [routerLink]="['/tabs', 'artist', artist.id]"
+        <div class="act" *ngFor="let artist of stage.acts"
           [style.--act-column-start]="artist.columnStart" [style.--act-column-end]="artist.columnEnd">
-          {{artist.name}}
+          <div class="act-content">
+            <div class="act-sticky">
+              <div [routerLink]="['/tabs', 'artist', artist.id]">
+                <h6>
+                  {{artist.name}}
+                </h6>
+                <p>{{artist.startTime | date:'HH:mm'}}-{{artist.endTime | date:'HH:mm'}}</p>
+              </div>
+
+              <ion-icon slot="icon-only" [name]="isFavorite(artist.id) ? 'heart' : 'heart-outline'"
+                (click)="addRemoveFavorites(artist.id)"></ion-icon>
+            </div>
+
+          </div>
         </div>
       </ng-container>
     </div>
