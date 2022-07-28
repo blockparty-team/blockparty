@@ -1,9 +1,4 @@
 <ion-header [translucent]="true">
-  <!-- <ion-toolbar color="medium">
-    <ion-title class="ion-text-center">
-      Timetable
-    </ion-title>
-  </ion-toolbar> -->
   <ng-container *ngIf="days$ | async as days">
     <ion-toolbar color="medium">
       <ion-segment scrollable mode="md" (ionChange)="onDayFilterChange($event)" [value]="selectedDayId$ | async">
@@ -14,7 +9,7 @@
     </ion-toolbar>
   </ng-container>
 
-  <ng-container *ngIf="events$ | async as events">
+  <!-- <ng-container *ngIf="events$ | async as events">
     <ion-toolbar color="secondary">
       <ion-segment scrollable mode="md" (ionChange)="onEventFilterChange($event)" [value]="selectedEventId$ | async">
         <ion-segment-button *ngFor="let event of events" [value]="event.id">
@@ -22,55 +17,41 @@
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
-  </ng-container>
+  </ng-container> -->
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="timetable"></ng-container>
-  <div class="timetable" [style.--template-columns]="timetable.gridTemplate.columns"
-    [style.--template-rows]="timetable.gridTemplate.rows">
-    <div class="time-label" *ngFor="let item of timetable.timeLabels" [style.--time-label-column]="item.column">
-      {{item.label | date:'HH:mm'}}
-    </div>
+  <!-- <ng-container *ngIf="timetableConfig$ | async as config">
+    <p>
+      {{config.gridTemplate.columns}}
+    </p>
+  </ng-container> -->
 
-    <ng-container *ngFor="let stage of timetable.timetable">
-      <div class="stage">
-        <span>{{stage.name}}</span>
+
+  <ng-container *ngIf="timetableConfig$ | async as config; else noTimeTable">
+    <div class="timetable" [style.--template-columns]="config.gridTemplate.columns"
+      [style.--template-rows]="config.gridTemplate.rows">
+      <div class="time-label" *ngFor="let item of config.timeLabels" [style.--time-label-column]="item.column">
+        {{item.label | date:'HH:mm'}}
       </div>
-      <div class="act" *ngFor="let act of stage.acts" [style.--act-column-start]="act.columnStart"
-        [style.--act-column-end]="act.columnEnd">
-        {{act.name}}
-      </div>
-    </ng-container>
+
+      <!-- <div class="time-grid-line"></div> -->
+
+      <ng-container *ngFor="let stage of config.timetable">
+        <div class="stage">
+          <span>{{stage.name}}</span>
+        </div>
+        <div class="act" *ngFor="let artist of stage.acts" [routerLink]="['/tabs', 'artist', artist.id]"
+          [style.--act-column-start]="artist.columnStart" [style.--act-column-end]="artist.columnEnd">
+          {{artist.name}}
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+
+  <ng-template #noTimeTable>
+    <p class="ion-text-center">No timetable for this day</p>
+  </ng-template>
 
 
-    <!-- <div class="stage main">
-      <span>main</span>
-    </div>
-    <div class="act a">
-      <span>
-          DJ Alligator
-      </span>
-    </div>
-    <div class="stage minor">
-      <hr/>
-      <span>minor</span>
-    </div>
-    <div class="act b">
-      <p>
-        DJ Bone
-      </p>
-    </div>
-    <div class="stage sharp">
-      <span>sharp</span>
-    </div>
-    <div class="act c">
-      <p>
-        DJ Typhooon
-      </p>
-    </div> -->
-
-
-
-  </div>
 </ion-content>

@@ -15,11 +15,11 @@ export class MapStateService {
   private _selectedMapFeatures$ = new BehaviorSubject<MapClickedFeature<GeojsonProperties>[]>(null);
   selectedMapFeatures$: Observable<MapClickedFeature<GeojsonProperties>[]> = this._selectedMapFeatures$.asObservable();
 
-  private _selectedDay$ = new BehaviorSubject<string>(null);
-  selectedDay$: Observable<string> = this._selectedDay$.asObservable();
+  private _selectedDayId$ = new BehaviorSubject<string>(null);
+  selectedDayId$: Observable<string> = this._selectedDayId$.asObservable();
 
-  private _selectedEvent$ = new BehaviorSubject<string>(null);
-  selectedEvent$: Observable<string> = this._selectedEvent$.asObservable();
+  private _selectedEventId$ = new BehaviorSubject<string>(null);
+  selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
 
   private _mapInteraction$ = new BehaviorSubject<boolean>(false);
   mapInteraction$: Observable<boolean> = this._mapInteraction$.asObservable();
@@ -29,11 +29,11 @@ export class MapStateService {
   }
 
   selectDay(dayId: string): void {
-    this._selectedDay$.next(dayId);
+    this._selectedDayId$.next(dayId);
   }
 
   selectEvent(eventId: string): void {
-    this._selectedEvent$.next(eventId);
+    this._selectedEventId$.next(eventId);
   }
 
   updateMapInteraction(interacting: boolean): void {

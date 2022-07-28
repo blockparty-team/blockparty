@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { DayWithRelations } from '@app/interfaces/entities-with-releation';
+import { DayWithRelations, StageWithRelations } from '@app/interfaces/entities-with-releation';
 import { StoreService } from '@app/store/store.service';
 import { SegmentCustomEvent } from '@ionic/angular';
-import { combineLatest, Observable } from 'rxjs';
-import { filter, map, pluck, tap } from 'rxjs/operators';
-import eachHourOfInterval from 'date-fns/eachHourOfInterval'
+import { combineLatest, EMPTY, Observable } from 'rxjs';
+import { catchError, filter, map, pluck, tap } from 'rxjs/operators';
+import eachHourOfInterval from 'date-fns/eachHourOfInterval';
+import roundToNearestMinutes from 'date-fns/roundToNearestMinutes';
 import { TimetableStateService } from './state/timetable-state.service';
 import { definitions } from '@app/interfaces/supabase';
 
@@ -24,6 +25,7 @@ interface GridTranformedStageTimetable {
     id: definitions['artist']['id'];
     columnStart: number;
     columnEnd: number;
+    rowStart: number;
   }[];
 }
 
@@ -56,46 +58,8 @@ export class TabTimetablePage implements OnInit {
   events$: Observable<DayWithRelations['event']>;
   selectedDayId$: Observable<string>;
   selectedEventId$: Observable<string>;
+  timetableConfig$: Observable<TimetableConfig>;
 
-  timeLabels: { time: string, min: number }[] = [...Array(24).keys()].map(x => ({ time: `${x}:00`, min: x * 60 }));
-
-  timetable: TimetableConfig;
-
-  stageTimetables: StageTimetables[] = [
-    {
-      stage: 'Main',
-      timetables: [
-        { name: 'DJ Aligator', start_time: '2023-06-02 21:00', end_time: '2023-06-02 23:00' },
-        { name: 'DJ Er du DUM ELLER HVAD', start_time: '2023-06-02 14:00', end_time: '2023-06-02 18:00' },
-        { name: 'The Whitest Boy Alive', start_time: '2023-06-02 23:00', end_time: '2023-06-03 01:00' },
-        { name: 'Jeff Mills', start_time: '2023-06-03 01:00', end_time: '2023-06-03 04:00' },
-      ]
-    },
-    {
-      stage: 'Woods',
-      timetables: [
-        { name: 'Snoop Dog', start_time: '2023-06-02 20:30', end_time: '2023-06-02 21:30' },
-        { name: 'Cran Berries', start_time: '2023-06-02 22:00', end_time: '2023-06-02 23:30' },
-        { name: 'Kelly Family', start_time: '2023-06-03 0:00', end_time: '2023-06-03 05:35' },
-      ]
-    },
-    {
-      stage: 'Jail House',
-      timetables: [
-        { name: 'Snoop Dog', start_time: '2023-06-02 20:30', end_time: '2023-06-02 21:30' },
-        { name: 'Cran Berries', start_time: '2023-06-02 22:00', end_time: '2023-06-02 23:30' },
-        { name: 'Kelly Family', start_time: '2023-06-03 0:00', end_time: '2023-06-03 05:35' },
-      ]
-    },
-    {
-      stage: 'Decks',
-      timetables: [
-        { name: 'Snoop Dog', start_time: '2023-06-02 20:30', end_time: '2023-06-02 21:30' },
-        { name: 'Cran Berries', start_time: '2023-06-02 22:00', end_time: '2023-06-02 23:30' },
-        { name: 'Kelly Family', start_time: '2023-06-03 0:00', end_time: '2023-06-03 05:35' },
-      ]
-    },
-  ]
 
   constructor(
     private store: StoreService,
@@ -104,20 +68,35 @@ export class TabTimetablePage implements OnInit {
 
   ngOnInit(): void {
 
-    this.timetable = this.transformToGrid(this.stageTimetables);
-
-    console.log(this.timetable)
-
-
     this.days$ = this.store.days$.pipe(
-      // tap(console.log)
+      tap(days => this.timetableStateService.selectDay(days[0].id))
     );
 
-    this.selectedDayId$ = this.timetableStateService.selectedDay$
+    this.timetableConfig$ = combineLatest([
+      this.timetableStateService.selectedDayId$,
+      this.store.days$,
+    ]).pipe(
+      filter(([dayId, days]) => !!dayId && !!days),
+      map(([dayId, days]) => (
+        {
+          dayId,
+          stages: days
+            .find(day => day.id === dayId).event
+            .map(event => event.stage)[0]
+        }
+      )),
+      map(x => this.transformToGrid(x.stages, x.dayId)),
+      catchError(err => {
+        console.log(err);
+        return EMPTY;
+      })
+    )
+
+    this.selectedDayId$ = this.timetableStateService.selectedDayId$
 
     this.events$ = combineLatest([
       this.days$,
-      this.timetableStateService.selectedDay$
+      this.timetableStateService.selectedDayId$
     ]).pipe(
       filter(([days, selectedDay]) => !!days && !!selectedDay),
       map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
@@ -126,24 +105,33 @@ export class TabTimetablePage implements OnInit {
 
   }
 
+  transformToGrid(stageTimetables: StageWithRelations[], dayId: string): TimetableConfig {
 
-  transformToGrid(stageTimetables: StageTimetables[]): TimetableConfig {
     // Find time for first act
     const minStartTime = stageTimetables
-      .flatMap(x => x.timetables.map(x => new Date(x.start_time).getTime()))
+      .flatMap(stage => stage.timetable
+        .filter(x => x.day_id === dayId)
+        .map(act => roundToNearestMinutes(new Date(act.start_time)).getTime())
+      )
       .sort()[0];
 
     // Find time for last act
     const maxEndTime = stageTimetables
-      .flatMap(x => x.timetables.map(x => new Date(x.end_time).getTime()))
+      .flatMap(x => x.timetable
+        .filter(x => x.day_id === dayId)
+        .map(act => roundToNearestMinutes(new Date(act.end_time)).getTime())
+      )
       .sort((a, b) => b - a)[0];
+
+    // Handle when no timetables are assigned to day
+    if (!maxEndTime && !minStartTime) return null;
 
     // Create labels based on the time span between first and last act
     const timeLabels: TimeLabel[] = eachHourOfInterval({
       start: minStartTime,
       end: maxEndTime
     }).map((t, i) => ({
-      column: i * 60 === 0 ? 1 : i * 60,
+      column: i * 60 === 0 ? 1 : i * 60, // column index starts at 1
       label: t
     }));
 
@@ -152,25 +140,31 @@ export class TabTimetablePage implements OnInit {
 
       const offset = (minStartTime - timeLabels[0].label.getTime()) / (1000 * 60);
 
-      const acts = x.timetables
-        .map(x => {
-          const relativeStart = ((new Date(x.start_time).getTime() - minStartTime) / (1000 * 60)) + offset;
-          const relativeEnd = ((new Date(x.end_time).getTime() - minStartTime) / (1000 * 60)) + offset;
+      if (x.timetable.filter(t => t.day_id === dayId).length > 0) {
 
-          return {
-            name: x.name,
-            id: 'xyz',
-            columnStart: relativeStart === 0 ? 1 : relativeStart,
-            columnEnd: relativeEnd
-          }
-        })
-        .sort((a, b) => a.columnStart - b.columnStart)
+        const acts = x.timetable
+          .filter(t => t.day_id === dayId)
+          .map((x, i) => {
+            const relativeStart = ((roundToNearestMinutes(new Date(x.start_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
+            const relativeEnd = ((roundToNearestMinutes(new Date(x.end_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
 
-      return {
-        name: x.stage,
-        acts
+            return {
+              name: x.artist.name,
+              id: x.artist.id,
+              columnStart: relativeStart === 0 ? 1 : relativeStart,
+              columnEnd: relativeEnd,
+              rowStart: i + 2
+            }
+          })
+          .sort((a, b) => a.columnStart - b.columnStart)
+
+        return {
+          name: x.name,
+          acts
+        }
       }
-    })
+
+    }).filter(t => t !== undefined);
 
     // Calculate number of grid template rows and columns
     const columns = Math.ceil((maxEndTime - minStartTime) / (1000 * 60 * 60));

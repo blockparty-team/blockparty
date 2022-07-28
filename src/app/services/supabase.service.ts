@@ -78,6 +78,7 @@ export class SupabaseService {
                 description,
                 timetable(
                   id,
+                  day_id,
                   start_time,
                   end_time,
                   artist(

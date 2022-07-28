@@ -43,14 +43,14 @@ export class TabMapPage implements OnInit {
 
     this.events$ = combineLatest([
       this.days$,
-      this.mapStateService.selectedDay$
+      this.mapStateService.selectedDayId$
     ]).pipe(
       filter(([days, selectedDay]) => !!days && !!selectedDay),
       map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
       pluck('event')
     );
 
-    this.selectedDay$ = this.mapStateService.selectedDay$.pipe(
+    this.selectedDay$ = this.mapStateService.selectedDayId$.pipe(
       withLatestFrom(this.store.dayMaskBounds$),
       map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
       filter(dayMask => !!dayMask),
@@ -61,7 +61,7 @@ export class TabMapPage implements OnInit {
       map(day => day.id)
     );
 
-    this.selectedEvent$ = this.mapStateService.selectedEvent$.pipe(
+    this.selectedEvent$ = this.mapStateService.selectedEventId$.pipe(
       withLatestFrom(this.events$),
       map(([eventId, events]) => events.find(event => event.id === eventId)),
       filter(event => !!event),

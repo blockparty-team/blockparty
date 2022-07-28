@@ -8,17 +8,17 @@ import { Observable, BehaviorSubject } from 'rxjs';
 })
 export class TimetableStateService {
 
-  private _selectedDay$ = new BehaviorSubject<string>(null);
-  selectedDay$: Observable<string> = this._selectedDay$.asObservable();
+  private _selectedDayId$ = new BehaviorSubject<string>(null);
+  selectedDayId$: Observable<string> = this._selectedDayId$.asObservable();
 
-  private _selectedEvent$ = new BehaviorSubject<string>(null);
-  selectedEvent$: Observable<string> = this._selectedEvent$.asObservable();
+  private _selectedEventId$ = new BehaviorSubject<string>(null);
+  selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
 
   selectDay(dayId: string): void {
-    this._selectedDay$.next(dayId);
+    this._selectedDayId$.next(dayId);
   }
 
   selectEvent(eventId: string): void {
-    this._selectedEvent$.next(eventId);
+    this._selectedEventId$.next(eventId);
   }
 }

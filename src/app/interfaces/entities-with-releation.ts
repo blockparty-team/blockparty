@@ -3,6 +3,7 @@ import { definitions } from './supabase';
 
 export interface TimetableWithRelations {
     id: definitions['timetable']['id'];
+    day_id: definitions['timetable']['day_id'];
     start_time: definitions['timetable']['start_time'];
     end_time: definitions['timetable']['end_time'];
     artist: definitions['artist'];
