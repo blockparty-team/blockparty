@@ -2,7 +2,8 @@
   <ion-toolbar color="medium">
     <ion-buttons slot="start">
       <ion-button (click)="toggleSearch()">
-        <ion-icon slot="icon-only" name="search"></ion-icon>
+        <ion-icon slot="icon-only"
+                  name="search"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title class="ion-text-center">Artists</ion-title>
@@ -12,15 +13,25 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar *ngIf="showSearch$ | async" color="medium">
-    <ion-searchbar #search mode="ios" debounce="0" [formControl]="searchTerm" animated="true"></ion-searchbar>
+  <ion-toolbar *ngIf="showSearch$ | async"
+               color="medium">
+    <ion-searchbar #search
+                   mode="ios"
+                   debounce="0"
+                   [formControl]="searchTerm"
+                   animated="true"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content id="main">
   <ng-container *ngIf="filteredArtists$ | async as artists; else loading">
-    <app-artist-card *ngFor="let artist of artists; trackBy:trackArtist; let i = index" [style.--animation-order]="i"
-      [artist]="artist"></app-artist-card>
+    <cdk-virtual-scroll-viewport itemSize="150"
+                                 minBufferPx="900"
+                                 maxBufferPx="1350">
+      <app-artist-card *cdkVirtualFor="let artist of artists; trackBy:trackArtist; let i = index"
+                       [style.--animation-order]="i"
+                       [artist]="artist"></app-artist-card>
+    </cdk-virtual-scroll-viewport>
   </ng-container>
 
   <ng-template #loading>
@@ -30,18 +41,22 @@
   </ng-template>
 </ion-content>
 
-<ion-menu side="end" type="overlay" contentId="main">
+<ion-menu side="end"
+          type="overlay"
+          contentId="main">
   <ion-header>
     <ion-toolbar color="secondary">
       <ion-buttons slot="start">
         <ion-button (click)="toggleFavorites()">
-          <ion-icon slot="icon-only" name="chevron-forward"></ion-icon>
+          <ion-icon slot="icon-only"
+                    name="chevron-forward"></ion-icon>
         </ion-button>
       </ion-buttons>
       <ion-title>Favorites</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="toggleDayGroupedFavorites()">
-          <ion-icon slot="icon-only" [name]="(showDayGroupedFavorites$ | async) ? 'list-outline' : 'calendar-outline'"></ion-icon>
+          <ion-icon slot="icon-only"
+                    [name]="(showDayGroupedFavorites$ | async) ? 'list-outline' : 'calendar-outline'"></ion-icon>
         </ion-button>
       </ion-buttons>
     </ion-toolbar>
@@ -52,15 +67,18 @@
       <ng-container *ngIf="(showDayGroupedFavorites$ | async) === false">
         <ion-list>
           <ion-item *ngFor="let artist of favoriteArtists; let i = index ; trackBy:trackArtist"
-            [style.--animation-order]="i">
+                    [style.--animation-order]="i">
             <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
-            <div slot="end" (click)="addRemoveFavorites(artist.id)">
-              <ion-icon slot="icon-only" name="close"></ion-icon>
+            <div slot="end"
+                 (click)="addRemoveFavorites(artist.id)">
+              <ion-icon slot="icon-only"
+                        name="close"></ion-icon>
             </div>
           </ion-item>
         </ion-list>
 
-        <p *ngIf="favoriteArtists.length === 0" class="ion-text-center">
+        <p *ngIf="favoriteArtists.length === 0"
+           class="ion-text-center">
           No favorites added
         </p>
       </ng-container>
@@ -69,8 +87,9 @@
     <ng-container *ngIf="dayGroupedFavorites$ | async as dayGroupedFavorites">
       <ng-container *ngIf="showDayGroupedFavorites$ | async">
         <ion-item-group *ngFor="let group of dayGroupedFavorites; let i = index; trackBy:trackDay"
-          [style.--animation-order]="i">
-          <ion-item-divider sticky="true" color="medium">
+                        [style.--animation-order]="i">
+          <ion-item-divider sticky="true"
+                            color="medium">
             <ion-label>{{group.day.name}}</ion-label>
           </ion-item-divider>
           <ion-item *ngFor="let artist of group.artists">
@@ -81,13 +100,16 @@
                 {{artist.timetable[0]?.end_time | date:'HH:mm'}}
               </span>
             </ion-label>
-            <div slot="end" (click)="addRemoveFavorites(artist.id)">
-              <ion-icon slot="icon-only" name="close"></ion-icon>
+            <div slot="end"
+                 (click)="addRemoveFavorites(artist.id)">
+              <ion-icon slot="icon-only"
+                        name="close"></ion-icon>
             </div>
           </ion-item>
         </ion-item-group>
 
-        <p *ngIf="dayGroupedFavorites.length === 0" class="ion-text-center">
+        <p *ngIf="dayGroupedFavorites.length === 0"
+           class="ion-text-center">
           No favorites added
         </p>
       </ng-container>
