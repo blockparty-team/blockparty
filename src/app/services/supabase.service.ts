@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { MapSource } from '@app/interfaces/map-layer';
+import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { from, Observable } from 'rxjs';
@@ -100,6 +101,16 @@ export class SupabaseService {
         })
       })
     );
+  }
+
+  get timetables$(): Observable<DayEventStageTimetable[]> {
+    return from(
+      this.client
+        .from<DayEventStageTimetable>('day_event_stage_timetable')
+        .select()
+    ).pipe(
+      map(res => res.data)
+    )
   }
 
   get assets$(): Observable<definitions['asset'][]> {

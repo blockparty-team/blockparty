@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { definitions } from '@app/interfaces/supabase';
+import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { concat, Observable } from 'rxjs';
@@ -13,6 +14,10 @@ import { tap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
 export class StoreService {
 
   days$: Observable<DayWithRelations[]> = this.supabase.days$.pipe(
+    shareReplay(1)
+  );
+
+  timetables$: Observable<DayEventStageTimetable[]> = this.supabase.timetables$.pipe(
     shareReplay(1)
   );
 

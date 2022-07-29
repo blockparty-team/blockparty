@@ -9,6 +9,7 @@ import roundToNearestMinutes from 'date-fns/roundToNearestMinutes';
 import { TimetableStateService } from './state/timetable-state.service';
 import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
 import { definitions } from '@app/interfaces/supabase';
+import { DayEventStageTimetable, EventTimetables, StageTimetables } from '@app/interfaces/day-event-stage-timetable';
 
 interface TimeLabel {
   column: number,
@@ -62,6 +63,20 @@ export class TabTimetablePage implements OnInit {
 
   ngOnInit(): void {
 
+    combineLatest([
+      this.store.timetables$,
+      this.timetableStateService.selectedDayId$
+    ]).pipe(
+      filter(([days, dayId]) => !!dayId && !!days),
+      map(([days, dayId]) => days.find(day => day.id === dayId)),
+      map(day => this.trans(day)),
+      tap(console.log),
+      catchError(err => {
+        console.log(err);
+        return EMPTY;
+      })
+    ).subscribe();
+
     this.days$ = this.store.days$.pipe(
       tap(days => this.timetableStateService.selectDay(days[0].id))
     );
@@ -99,6 +114,29 @@ export class TabTimetablePage implements OnInit {
 
   }
 
+  trans(day: DayEventStageTimetable): any {
+    console.log(day)
+
+    const firstStartTime = new Date(day.first_start_time).getTime();
+    const lastEndTime = new Date(day.last_end_time).getTime();
+
+    // Calculate number of grid template rows and columns
+    const gridTemplateColumns = Math.ceil((lastEndTime - firstStartTime) / (1000 * 60 * 60));
+
+    const timeLabels: TimeLabel[] = eachHourOfInterval({
+      start: firstStartTime,
+      end: lastEndTime
+    }).map((t, i) => ({
+      column: i * 60 === 0 ? 1 : i * 60, // column index starts at 1
+      label: t
+    }));
+
+    return {
+      gridTemplateColumns,
+      timeLabels
+    }
+  }
+
   transformToGrid(stageTimetables: StageWithRelations[], dayId: string): TimetableConfig {
 
     // Find time for first act
@@ -133,7 +171,7 @@ export class TabTimetablePage implements OnInit {
 
     // Transform acts start and end time into grid columns
     const timetable = stageTimetables.map(stage => {
-      
+
       const offset = (minStartTime - timeLabels[0].label.getTime()) / (1000 * 60);
 
       if (stage.timetable.filter(t => t.day_id === dayId).length > 0) {
@@ -143,7 +181,7 @@ export class TabTimetablePage implements OnInit {
           .map(act => {
             const relativeStart = ((roundToNearestMinutes(new Date(act.start_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
             const relativeEnd = ((roundToNearestMinutes(new Date(act.end_time)).getTime() - minStartTime) / (1000 * 60)) + offset;
-            
+
             return {
               name: act.artist.name,
               id: act.artist.id,

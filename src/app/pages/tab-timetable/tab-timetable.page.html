@@ -13,7 +13,7 @@
     </ion-toolbar>
   </ng-container>
 
-  <!-- <ng-container *ngIf="events$ | async as events">
+  <ng-container *ngIf="events$ | async as events">
     <ion-toolbar color="secondary">
       <ion-segment scrollable mode="md" (ionChange)="onEventFilterChange($event)" [value]="selectedEventId$ | async">
         <ion-segment-button *ngFor="let event of events" [value]="event.id">
@@ -21,7 +21,7 @@
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
-  </ng-container> -->
+  </ng-container>
 </ion-header>
 
 <ion-content>

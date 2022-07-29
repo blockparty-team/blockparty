@@ -494,9 +494,8 @@ export interface paths {
         query: {
           id?: parameters["rowFilter.stage_geojson.id"];
           name?: parameters["rowFilter.stage_geojson.name"];
-          description?: parameters["rowFilter.stage_geojson.description"];
           icon?: parameters["rowFilter.stage_geojson.icon"];
-          timetable?: parameters["rowFilter.stage_geojson.timetable"];
+          timetables?: parameters["rowFilter.stage_geojson.timetables"];
           geom?: parameters["rowFilter.stage_geojson.geom"];
           /** Filtering Columns */
           select?: parameters["select"];
@@ -1008,6 +1007,43 @@ export interface paths {
       };
     };
   };
+  "/day_event_stage_timetable": {
+    get: {
+      parameters: {
+        query: {
+          id?: parameters["rowFilter.day_event_stage_timetable.id"];
+          name?: parameters["rowFilter.day_event_stage_timetable.name"];
+          first_start_time?: parameters["rowFilter.day_event_stage_timetable.first_start_time"];
+          last_end_time?: parameters["rowFilter.day_event_stage_timetable.last_end_time"];
+          events?: parameters["rowFilter.day_event_stage_timetable.events"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["day_event_stage_timetable"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/timetable": {
     get: {
       parameters: {
@@ -1328,11 +1364,9 @@ export interface definitions {
     /** Format: text */
     name?: string;
     /** Format: text */
-    description?: string;
-    /** Format: text */
     icon?: string;
     /** Format: jsonb */
-    timetable?: unknown;
+    timetables?: unknown;
     /** Format: extensions.geometry(Point,4326) */
     geom?: string;
   };
@@ -1472,6 +1506,22 @@ export interface definitions {
     id?: number;
     /** Format: extensions.geometry */
     geom?: string;
+  };
+  day_event_stage_timetable: {
+    /**
+     * Format: uuid
+     * @description Note:
+     * This is a Primary Key.<pk/>
+     */
+    id?: string;
+    /** Format: text */
+    name?: string;
+    /** Format: timestamp with time zone */
+    first_start_time?: string;
+    /** Format: timestamp with time zone */
+    last_end_time?: string;
+    /** Format: jsonb */
+    events?: unknown;
   };
   timetable: {
     /**
@@ -1642,11 +1692,9 @@ export interface parameters {
   /** Format: text */
   "rowFilter.stage_geojson.name": string;
   /** Format: text */
-  "rowFilter.stage_geojson.description": string;
-  /** Format: text */
   "rowFilter.stage_geojson.icon": string;
   /** Format: jsonb */
-  "rowFilter.stage_geojson.timetable": string;
+  "rowFilter.stage_geojson.timetables": string;
   /** Format: extensions.geometry(Point,4326) */
   "rowFilter.stage_geojson.geom": string;
   /** @description day_event */
@@ -1725,6 +1773,18 @@ export interface parameters {
   "rowFilter.mask.id": string;
   /** Format: extensions.geometry */
   "rowFilter.mask.geom": string;
+  /** @description day_event_stage_timetable */
+  "body.day_event_stage_timetable": definitions["day_event_stage_timetable"];
+  /** Format: uuid */
+  "rowFilter.day_event_stage_timetable.id": string;
+  /** Format: text */
+  "rowFilter.day_event_stage_timetable.name": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.day_event_stage_timetable.first_start_time": string;
+  /** Format: timestamp with time zone */
+  "rowFilter.day_event_stage_timetable.last_end_time": string;
+  /** Format: jsonb */
+  "rowFilter.day_event_stage_timetable.events": string;
   /** @description timetable */
   "body.timetable": definitions["timetable"];
   /** Format: uuid */
