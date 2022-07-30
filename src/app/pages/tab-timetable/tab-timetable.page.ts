@@ -3,7 +3,7 @@ import { DayWithRelations, StageWithRelations } from '@app/interfaces/entities-w
 import { StoreService } from '@app/store/store.service';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, map, pluck, tap } from 'rxjs/operators';
+import { catchError, filter, map, pluck, tap } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import roundToNearestMinutes from 'date-fns/roundToNearestMinutes';
 import { TimetableStateService } from './state/timetable-state.service';
@@ -115,7 +115,6 @@ export class TabTimetablePage implements OnInit {
             .map(stage => this.stageTimetableToGrid(
               stage, 
               firtStartTime,
-              lastEndTime, 
               labels
             ))
           )
@@ -145,7 +144,6 @@ export class TabTimetablePage implements OnInit {
   stageTimetableToGrid(
     stage: StageTimetable,
     firstStartTime: Date,
-    lastEndTime: Date,
     timeLabels: TimeLabel[]
   ): StageTimetableViewModel {
 
@@ -153,8 +151,9 @@ export class TabTimetablePage implements OnInit {
 
     const timetable: TimetbaleViewModel[] = stage.timetable
       .map(timetable => {
+
         const relativeStartTime = (new Date(timetable.start_time).getTime() - firstStartTime.getTime()) / (1000 * 60) + offset;
-        const relativeEndTime = (new Date(timetable.end_time).getTime() - lastEndTime.getTime()) / (1000 * 60) + offset;
+        const relativeEndTime = (new Date(timetable.end_time).getTime() - firstStartTime.getTime()) / (1000 * 60) + offset;
 
         return {
           ...timetable,
