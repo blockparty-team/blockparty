@@ -392,7 +392,7 @@ with timetables as (
 				'start_time', date_trunc('minute', t.start_time),
 				'end_time', date_trunc('minute', t.end_time)
 			) 
-		) timetables 
+		) timetable 
 	from
 		(select * from timetable order by start_time) t
 	join day d on
@@ -412,7 +412,7 @@ with timetables as (
 		jsonb_agg(
 			json_build_object(
 				'stage_name', s.name,
-				'timetables', t.timetables,
+				'timetable', t.timetable,
 				'first_start_time', t.first_start_time,
 				'last_end_time', t.last_end_time
 			) 

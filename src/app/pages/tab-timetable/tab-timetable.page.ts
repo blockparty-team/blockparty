@@ -3,13 +3,13 @@ import { DayWithRelations, StageWithRelations } from '@app/interfaces/entities-w
 import { StoreService } from '@app/store/store.service';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, map, pluck, tap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, map, pluck, tap } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import roundToNearestMinutes from 'date-fns/roundToNearestMinutes';
 import { TimetableStateService } from './state/timetable-state.service';
 import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
 import { definitions } from '@app/interfaces/supabase';
-import { DayEventStageTimetable, EventTimetables, StageTimetables } from '@app/interfaces/day-event-stage-timetable';
+import { DayEventStageTimetable, StageTimetable, StageTimetableViewModel, TimetbaleViewModel } from '@app/interfaces/day-event-stage-timetable';
 
 interface TimeLabel {
   column: number,
@@ -63,20 +63,6 @@ export class TabTimetablePage implements OnInit {
 
   ngOnInit(): void {
 
-    combineLatest([
-      this.store.timetables$,
-      this.timetableStateService.selectedDayId$
-    ]).pipe(
-      filter(([days, dayId]) => !!dayId && !!days),
-      map(([days, dayId]) => days.find(day => day.id === dayId)),
-      map(day => this.trans(day)),
-      tap(console.log),
-      catchError(err => {
-        console.log(err);
-        return EMPTY;
-      })
-    ).subscribe();
-
     this.days$ = this.store.days$.pipe(
       tap(days => this.timetableStateService.selectDay(days[0].id))
     );
@@ -112,7 +98,78 @@ export class TabTimetablePage implements OnInit {
       pluck('event')
     );
 
+    combineLatest([
+      this.store.timetables$,
+      this.timetableStateService.selectedDayId$
+    ]).pipe(
+      filter(([days, dayId]) => !!dayId && !!days),
+      map(([days, dayId]) => days.find(day => day.id === dayId)),
+      tap(d => console.log(d)),
+      map(day => {
+        const firtStartTime = new Date(day.first_start_time)
+        const lastEndTime = new Date(day.last_end_time)
+        const labels = this.timeLables(firtStartTime, lastEndTime)
+        
+        const timetable = day.events
+          .map(event => event.stages
+            .map(stage => this.stageTimetableToGrid(
+              stage, 
+              firtStartTime,
+              lastEndTime, 
+              labels
+            ))
+          )
+
+        return {labels, timetable}
+
+      }),
+      tap(console.log),
+      catchError(err => {
+        console.log(err);
+        return EMPTY;
+      })
+    ).subscribe();
+
   }
+
+  timeLables(firstStartTime: Date, lastEndTime: Date): TimeLabel[] {
+    return eachHourOfInterval({
+      start: firstStartTime.getTime(),
+      end: lastEndTime.getTime()
+    }).map((t, i) => ({
+      column: i * 60 === 0 ? 1 : i * 60, // Grid column index starts at 1
+      label: t
+    }));
+  }
+
+  stageTimetableToGrid(
+    stage: StageTimetable,
+    firstStartTime: Date,
+    lastEndTime: Date,
+    timeLabels: TimeLabel[]
+  ): StageTimetableViewModel {
+
+    const offset = (firstStartTime.getTime() - timeLabels[0].label.getTime()) / (1000 * 60);
+
+    const timetable: TimetbaleViewModel[] = stage.timetable
+      .map(timetable => {
+        const relativeStartTime = (new Date(timetable.start_time).getTime() - firstStartTime.getTime()) / (1000 * 60) + offset;
+        const relativeEndTime = (new Date(timetable.end_time).getTime() - lastEndTime.getTime()) / (1000 * 60) + offset;
+
+        return {
+          ...timetable,
+          columnStart: relativeStartTime === 0 ? 1 : relativeStartTime,
+          columnEnd: relativeEndTime
+        }
+      });
+
+    return {
+      stageName: stage.stage_name,
+      timetable
+    }
+  }
+
+
 
   trans(day: DayEventStageTimetable): any {
     console.log(day)
@@ -127,7 +184,7 @@ export class TabTimetablePage implements OnInit {
       start: firstStartTime,
       end: lastEndTime
     }).map((t, i) => ({
-      column: i * 60 === 0 ? 1 : i * 60, // column index starts at 1
+      column: i * 60 === 0 ? 1 : i * 60, // Grid column index starts at 1
       label: t
     }));
 

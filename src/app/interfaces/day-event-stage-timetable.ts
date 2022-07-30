@@ -5,15 +5,15 @@ export interface Timetable {
     artist_name: string;
 }
 
-export interface StageTimetables {
+export interface StageTimetable {
     stage_name: string;
-    timetables: Timetable[];
+    timetable: Timetable[];
     last_end_time: Date;
     first_start_time: Date;
 }
 
-export interface EventTimetables {
-    stages: StageTimetables[];
+export interface EventTimetable {
+    stages: StageTimetable[];
     event_id: string;
     event_name: string;
     last_end_time: Date;
@@ -25,5 +25,29 @@ export interface DayEventStageTimetable {
     name: string;
     first_start_time: Date;
     last_end_time: Date;
-    events: EventTimetables[];
+    events: EventTimetable[];
+}
+
+// View Models for Timetable grid
+export interface TimetbaleViewModel extends Timetable  {
+    columnStart: number;
+    columnEnd: number;
+    // rowStart: number;
+}
+
+export interface StageTimetableViewModel  {
+    stageName: StageTimetable['stage_name'];
+    timetable: TimetbaleViewModel[];
+}
+
+export interface EventTimetableViewModel  {
+    eventId: EventTimetable['event_id'];
+    eventName: EventTimetable['event_name'];
+    stages: StageTimetableViewModel[];
+}
+
+export interface DayTimetableViewModel  {
+    dayId: DayEventStageTimetable['id'];
+    dayName: DayEventStageTimetable['name'];
+    events: EventTimetableViewModel[];
 }
