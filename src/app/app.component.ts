@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     Device.getInfo().then(info => {
       if (info.platform !== 'web') {
-        StatusBar.setBackgroundColor({ color: '#546980' })
+        StatusBar.setBackgroundColor({ color: '#443f3f' })
       }
     })
   }
