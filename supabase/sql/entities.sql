@@ -554,7 +554,7 @@ $func$;
 -- Distance to entities
 DROP FUNCTION distance_to(double precision,double precision,integer);
 
-CREATE OR REPLACE FUNCTION distance_to(lng float, lat float, search_distance int)
+CREATE OR REPLACE FUNCTION distance_to(lng float, lat float, distance int)
  RETURNS table (entity text, id uuid, name text, geom geometry, distance int) as $$ 
  	SELECT 
  		*, 
@@ -562,7 +562,7 @@ CREATE OR REPLACE FUNCTION distance_to(lng float, lat float, search_distance int
 	FROM 
 		entity_distance_search e
 	where 
-		st_dwithin(st_setsrid(st_point(lng, lat), 4326), geom, search_distance)
+		st_dwithin(st_setsrid(st_point(lng, lat), 4326), geom, distance)
 	order by 
 		st_distance(st_setsrid(st_point(lng, lat), 4326), geom);
  $$ language sql;
