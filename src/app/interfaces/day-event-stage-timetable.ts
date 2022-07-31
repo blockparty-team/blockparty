@@ -30,7 +30,8 @@ export interface DayEventStageTimetable {
 
 // View Models for Timetable grid
 export interface TimeLabel {
-    column: number,
+    columnStart: number,
+    columnEnd: number,
     label: Date
 }
 export interface TimetbaleViewModel extends Timetable {

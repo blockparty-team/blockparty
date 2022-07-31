@@ -40,11 +40,12 @@
       <!-- TIME LABELS -->
       <ng-container *ngFor="let item of config.timeLabels">
         <div class="time-label"
-             [style.--time-label-column]="item.column">
+             [style.--time-label-column-start]="item.columnStart"
+             [style.--time-label-column-end]="item.columnEnd">
           {{item.label | date:'HH:mm'}}
         </div>
         <div class="vertical-time-line"
-             [style.--time-label-column]="item.column">
+             [style.--time-label-column-start]="item.columnStart">
         </div>
       </ng-container>
 

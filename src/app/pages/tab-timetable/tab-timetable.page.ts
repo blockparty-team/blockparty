@@ -86,7 +86,8 @@ export class TabTimetablePage implements OnInit {
       start: firstStartTime.getTime(),
       end: lastEndTime.getTime()
     }).map((t, i) => ({
-      column: i * 60 === 0 ? 1 : i * 60, // Grid column index starts at 1
+      columnStart: i * 60 === 0 ? 1 : i * 60, // Grid column index starts at 1
+      columnEnd: i * 60 === 0 ? 60 : (i * 60) + 60,
       label: t
     }));
   }
@@ -109,7 +110,7 @@ export class TabTimetablePage implements OnInit {
         return {
           ...timetable,
           columnStart: relativeStartTime === 0 ? 1 : relativeStartTime,
-          columnEnd: relativeEndTime + 1,
+          columnEnd: relativeEndTime,
           rowStart: rowStart + this.ACT_ROW_SPAN + this.STAGE_ROW_SPAN
         }
       });
