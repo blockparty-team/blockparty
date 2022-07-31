@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { definitions } from '@app/interfaces/supabase';
+import { SearchService } from '@app/services/search.service';
 import { pathToImageUrl } from '@app/shared/utils';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, switchMap, tap } from 'rxjs/operators';
@@ -16,9 +18,11 @@ export class SearchPage implements OnInit {
   searchTerm = new FormControl('');
 
   searchResults$: Observable<any>;
+  nearBy$: Observable<any[]>;
 
   constructor(
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private searchService: SearchService
   ) { }
 
   ngOnInit() {
@@ -29,6 +33,8 @@ export class SearchPage implements OnInit {
       map(res => res.data),
       tap(console.log)
     );
+
+    this.nearBy$ = this.searchService.nearBy$;
   }
 
   imgUrl(path: string): string {

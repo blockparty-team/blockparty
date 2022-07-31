@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
-import { Geolocation } from '@capacitor/geolocation';
 import { Device } from '@capacitor/device';
 import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
@@ -10,6 +9,7 @@ import { color } from '@app/shared/colors';
 import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
+import { GeolocationService } from './geolocation.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,7 @@ export class MapService {
 
   constructor(
     private mapStateService: MapStateService,
+    private geolocationService: GeolocationService,
     private supabaseService: SupabaseService
   ) { }
 
@@ -74,10 +75,11 @@ export class MapService {
     geolocateControl.on('trackuserlocationstart', () => {
 
       // Request geolocation permission on IOS and Android
-      Promise.all([Device.getInfo(), Geolocation.checkPermissions()])
+      // TODO clean up mix of promise and observable
+      Promise.all([Device.getInfo(), this.geolocationService.checkPermissions().toPromise()])
         .then(([device, permission]) => {
           if (permission.location !== 'granted' && device.platform !== 'web') {
-            Geolocation.requestPermissions();
+            this.geolocationService.requestPermissions().toPromise();
           }
         });
     })

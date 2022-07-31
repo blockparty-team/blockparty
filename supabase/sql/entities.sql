@@ -138,6 +138,14 @@ create table if not exists public.stage (
 	public boolean default false
 );
 
+-- Full text search as generated column
+ALTER TABLE public.stage  ADD COLUMN ts tsvector
+    GENERATED ALWAYS AS
+     (setweight(to_tsvector('english', coalesce(name, '')), 'A') ||
+     setweight(to_tsvector('english', coalesce(description, '')), 'B')) STORED;
+
+CREATE INDEX ON public.artist USING GIN (ts);
+
 create index if not exists on public.stage using gist(geom);
 
 GRANT SELECT ON TABLE public.stage TO anon;
@@ -235,7 +243,11 @@ create table if not exists public.asset (
 	public boolean default false
 );
 
+--Indicies
+CREATE INDEX ON public.artist USING GIN (ts);
 create index on public.asset using gist(geom);
+
+--Permission
 GRANT SELECT ON TABLE public.asset TO anon;
 
 -- Row level security
@@ -447,10 +459,67 @@ GRANT SELECT ON table day_event_stage_timetable TO anon;
 
 
 -- Search
+create or replace view entity_text_search as
+select
+	'artist' entity,
+	id,
+	name,
+	description,
+	ts
+from
+	artist
+union all
+select
+	'stage' entity,
+	id,
+	name,
+	description,
+	ts
+from
+	stage
+union all
+select
+	'asset' entity,
+	a.id,
+	at.name,
+	a.description,
+	(setweight(to_tsvector('english', coalesce(at.name, '')), 'A') ||
+     setweight(to_tsvector('english', coalesce(a.description, '')), 'B')) ts
+from
+	asset a
+join asset_type at on
+	a.asset_type_id = at.id;
 
-select name, description
-from artist a 
+GRANT SELECT ON table entity_text_search TO anon;
 
+-- location distance (near me)
+create or replace view entity_distance_search as
+select
+	'artist' entity,
+	a.id,
+	a.name,
+	s.geom
+from
+	artist a
+	join timetable t on a.id = t.artist_id 
+	join stage s on s.id = t.stage_id 
+union all
+select
+	'stage' entity,
+	id,
+	"name", 
+	geom
+from
+	stage
+union all
+select
+	'asset' entity,
+	a.id,
+	at.name,
+	a.geom
+from
+	asset a
+join asset_type at on at.id = a.asset_type_id;
 
 -----------------------
 -- Buckets
@@ -482,6 +551,23 @@ END
 $func$;
 
 
+-- Distance to entities
+DROP FUNCTION distance_to(double precision,double precision,integer);
+
+CREATE OR REPLACE FUNCTION distance_to(lng float, lat float, search_distance int)
+ RETURNS table (entity text, id uuid, name text, geom geometry, distance int) as $$ 
+ 	SELECT 
+ 		*, 
+ 		round(st_distance(st_transform(st_setsrid(st_point(lng, lat), 4326), 25832), st_transform(geom, 25832))) distance
+	FROM 
+		entity_distance_search e
+	where 
+		st_dwithin(st_setsrid(st_point(lng, lat), 4326), geom, search_distance)
+	order by 
+		st_distance(st_setsrid(st_point(lng, lat), 4326), geom);
+ $$ language sql;
+
+select * from distance_to(12, 55, 100000);
 
 
 -----------------------

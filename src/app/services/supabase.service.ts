@@ -194,4 +194,13 @@ export class SupabaseService {
     );
   }
 
+  distanceTo(coords: [number, number], withinDistance: number) {
+    return from(
+      this.client.rpc('distance_to', { lng: coords[0], lat: coords[1], distance: withinDistance })
+    ).pipe(
+      pluck('data')
+    );
+
+  }
+
 }

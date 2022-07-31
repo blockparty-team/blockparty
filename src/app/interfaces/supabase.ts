@@ -12,6 +12,43 @@ export interface paths {
       };
     };
   };
+  "/entity_text_search": {
+    get: {
+      parameters: {
+        query: {
+          entity?: parameters["rowFilter.entity_text_search.entity"];
+          id?: parameters["rowFilter.entity_text_search.id"];
+          name?: parameters["rowFilter.entity_text_search.name"];
+          description?: parameters["rowFilter.entity_text_search.description"];
+          ts?: parameters["rowFilter.entity_text_search.ts"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["entity_text_search"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/day_event_mask": {
     get: {
       parameters: {
@@ -741,6 +778,7 @@ export interface paths {
           event_id?: parameters["rowFilter.stage.event_id"];
           inserted_at?: parameters["rowFilter.stage.inserted_at"];
           public?: parameters["rowFilter.stage.public"];
+          ts?: parameters["rowFilter.stage.ts"];
           /** Filtering Columns */
           select?: parameters["select"];
           /** Ordering */
@@ -799,6 +837,7 @@ export interface paths {
           event_id?: parameters["rowFilter.stage.event_id"];
           inserted_at?: parameters["rowFilter.stage.inserted_at"];
           public?: parameters["rowFilter.stage.public"];
+          ts?: parameters["rowFilter.stage.ts"];
         };
         header: {
           /** Preference */
@@ -821,6 +860,7 @@ export interface paths {
           event_id?: parameters["rowFilter.stage.event_id"];
           inserted_at?: parameters["rowFilter.stage.inserted_at"];
           public?: parameters["rowFilter.stage.public"];
+          ts?: parameters["rowFilter.stage.ts"];
         };
         body: {
           /** stage */
@@ -1152,6 +1192,42 @@ export interface paths {
       };
     };
   };
+  "/entity_distance_search": {
+    get: {
+      parameters: {
+        query: {
+          entity?: parameters["rowFilter.entity_distance_search.entity"];
+          id?: parameters["rowFilter.entity_distance_search.id"];
+          name?: parameters["rowFilter.entity_distance_search.name"];
+          geom?: parameters["rowFilter.entity_distance_search.geom"];
+          /** Filtering Columns */
+          select?: parameters["select"];
+          /** Ordering */
+          order?: parameters["order"];
+          /** Limiting and Pagination */
+          offset?: parameters["offset"];
+          /** Limiting and Pagination */
+          limit?: parameters["limit"];
+        };
+        header: {
+          /** Limiting and Pagination */
+          Range?: parameters["range"];
+          /** Limiting and Pagination */
+          "Range-Unit"?: parameters["rangeUnit"];
+          /** Preference */
+          Prefer?: parameters["preferCount"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: {
+          schema: definitions["entity_distance_search"][];
+        };
+        /** Partial Content */
+        206: unknown;
+      };
+    };
+  };
   "/rpc/show_limit": {
     post: {
       parameters: {
@@ -1189,6 +1265,30 @@ export interface paths {
       };
     };
   };
+  "/rpc/distance_to": {
+    post: {
+      parameters: {
+        body: {
+          args: {
+            /** Format: double precision */
+            lat: number;
+            /** Format: double precision */
+            lng: number;
+            /** Format: integer */
+            search_distance: number;
+          };
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferParams"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: unknown;
+      };
+    };
+  };
   "/rpc/table_as_geojson": {
     post: {
       parameters: {
@@ -1212,6 +1312,18 @@ export interface paths {
 }
 
 export interface definitions {
+  entity_text_search: {
+    /** Format: text */
+    entity?: string;
+    /** Format: uuid */
+    id?: string;
+    /** Format: text */
+    name?: string;
+    /** Format: text */
+    description?: string;
+    /** Format: tsvector */
+    ts?: string;
+  };
   day_event_mask: {
     /** Format: uuid */
     id?: string;
@@ -1461,6 +1573,8 @@ export interface definitions {
      * @default false
      */
     public?: boolean;
+    /** Format: tsvector */
+    ts?: string;
   };
   asset_type: {
     /**
@@ -1564,6 +1678,16 @@ export interface definitions {
      */
     public?: boolean;
   };
+  entity_distance_search: {
+    /** Format: text */
+    entity?: string;
+    /** Format: uuid */
+    id?: string;
+    /** Format: text */
+    name?: string;
+    /** Format: extensions.geometry(Point,4326) */
+    geom?: string;
+  };
 }
 
 export interface parameters {
@@ -1599,6 +1723,18 @@ export interface parameters {
   offset: string;
   /** @description Limiting and Pagination */
   limit: string;
+  /** @description entity_text_search */
+  "body.entity_text_search": definitions["entity_text_search"];
+  /** Format: text */
+  "rowFilter.entity_text_search.entity": string;
+  /** Format: uuid */
+  "rowFilter.entity_text_search.id": string;
+  /** Format: text */
+  "rowFilter.entity_text_search.name": string;
+  /** Format: text */
+  "rowFilter.entity_text_search.description": string;
+  /** Format: tsvector */
+  "rowFilter.entity_text_search.ts": string;
   /** @description day_event_mask */
   "body.day_event_mask": definitions["day_event_mask"];
   /** Format: uuid */
@@ -1743,6 +1879,8 @@ export interface parameters {
   "rowFilter.stage.inserted_at": string;
   /** Format: boolean */
   "rowFilter.stage.public": string;
+  /** Format: tsvector */
+  "rowFilter.stage.ts": string;
   /** @description asset_type */
   "body.asset_type": definitions["asset_type"];
   /** Format: uuid */
@@ -1803,6 +1941,16 @@ export interface parameters {
   "rowFilter.timetable.inserted_at": string;
   /** Format: boolean */
   "rowFilter.timetable.public": string;
+  /** @description entity_distance_search */
+  "body.entity_distance_search": definitions["entity_distance_search"];
+  /** Format: text */
+  "rowFilter.entity_distance_search.entity": string;
+  /** Format: uuid */
+  "rowFilter.entity_distance_search.id": string;
+  /** Format: text */
+  "rowFilter.entity_distance_search.name": string;
+  /** Format: extensions.geometry(Point,4326) */
+  "rowFilter.entity_distance_search.geom": string;
 }
 
 export interface operations {}
