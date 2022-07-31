@@ -28,7 +28,6 @@ ion-content {
             grid-column: var(--time-label-column) / span 1;
             grid-row: 2 / -1;
             border-left: 1px solid rgb(174, 174, 174);
-            // background-color: red;
         }
 
         .event-label {
@@ -48,7 +47,6 @@ ion-content {
         .event {
             grid-column: 1 / -1;
             grid-row: var(--event-row-start) / var(--event-row-end);
-            // background-color: rgba(30, 30, 30, 0.1);
         }
 
         .stage {
