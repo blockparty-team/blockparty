@@ -37,15 +37,15 @@
     <div class="timetable"
          [style.--template-columns]="config.gridTemplateColumns">
 
-      <!-- LABELS -->
+      <!-- TIME LABELS -->
       <ng-container *ngFor="let item of config.timeLabels">
         <div class="time-label"
-             *ngFor="let item of config.timeLabels"
              [style.--time-label-column]="item.column">
           {{item.label | date:'HH:mm'}}
         </div>
         <div class="vertical-time-line"
-             [style.--time-label-column]="item.column"></div>
+             [style.--time-label-column]="item.column">
+        </div>
       </ng-container>
 
       <!-- EVENTS -->

@@ -15,7 +15,7 @@ ion-content {
             grid-row: time-labels;
             grid-column: var(--time-label-column) / span 60;
             color: gray;
-            background-color: rgba(var(--ion-color-medium-contrast-rgb), 0.1);
+            background-color: rgba(var(--ion-color-medium-contrast-rgb), 0.3);
             position: sticky;
             top: 0;
             z-index: 1;
