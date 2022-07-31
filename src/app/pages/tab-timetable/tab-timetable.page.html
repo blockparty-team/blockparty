@@ -19,9 +19,13 @@
                    mode="md"
                    (ionChange)="onEventFilterChange($event)"
                    [value]="selectedEventId$ | async">
+        <ion-segment-button [value]="null"
+                            *ngIf="events.length > 1">
+          <ion-label>All events</ion-label>
+        </ion-segment-button>
         <ion-segment-button *ngFor="let event of events"
-                            [value]="event.id">
-          <ion-label>{{event.name}}</ion-label>
+                            [value]="event.event_id">
+          <ion-label>{{event.event_name}}</ion-label>
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>

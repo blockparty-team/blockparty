@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { StoreService } from '@app/store/store.service';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { combineLatest, EMPTY, Observable } from 'rxjs';
@@ -7,7 +6,7 @@ import { catchError, filter, map, pluck, tap } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import { TimetableStateService } from './state/timetable-state.service';
 import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
-import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetbaleViewModel, TimeLabel } from '@app/interfaces/day-event-stage-timetable';
+import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetbaleViewModel, TimeLabel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
 
 @Component({
   selector: 'app-tab-timetable',
@@ -18,7 +17,7 @@ import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel,
 export class TabTimetablePage implements OnInit {
 
   days$: Observable<DayEventStageTimetable[]>;
-  events$: Observable<DayWithRelations['event']>;
+  events$: Observable<EventTimetable[]>;
   selectedDayId$: Observable<string>;
   selectedEventId$: Observable<string>;
   timetableConfig$: Observable<DayTimetableViewModel>;
@@ -35,11 +34,12 @@ export class TabTimetablePage implements OnInit {
 
   ngOnInit(): void {
 
+    this.selectedDayId$ = this.timetableStateService.selectedDayId$;
+    this.selectedEventId$ = this.timetableStateService.selectedEventId$;
+
     this.days$ = this.store.timetables$.pipe(
       tap(days => this.timetableStateService.selectDay(days[0].id))
     );
-
-    this.selectedDayId$ = this.timetableStateService.selectedDayId$
 
     this.events$ = combineLatest([
       this.days$,
@@ -47,17 +47,32 @@ export class TabTimetablePage implements OnInit {
     ]).pipe(
       filter(([days, selectedDay]) => !!days && !!selectedDay),
       map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
-      pluck('event')
+      pluck('events')
     );
 
     this.timetableConfig$ = combineLatest([
       this.store.timetables$,
       this.timetableStateService.selectedDayId$,
+      this.timetableStateService.selectedEventId$,
     ]).pipe(
-      filter(([days, dayId]) => !!dayId && !!days),
-      map(([days, dayId]) => days.find(day => day.id === dayId)),
+      filter(([days, dayId,]) => !!dayId && !!days),
+      map(([days, dayId, eventId]) => {
+        const day: DayEventStageTimetable = days.find(day => day.id === dayId);
+        const event: EventTimetable = day.events.find(event => event.event_id === eventId);
+
+        if (event) {
+          return { 
+            ...day, 
+            events: [event],
+            first_start_time: event.first_start_time,
+            last_end_time: event.last_end_time
+          };
+        } 
+
+        return day;
+
+      }),
       map(day => this.timetableGridConfig(day)),
-      tap(d => console.log(d)),
       catchError(err => {
         console.log(err);
         return EMPTY;
@@ -146,6 +161,7 @@ export class TabTimetablePage implements OnInit {
 
   onDayFilterChange(event: Event): void {
     this.timetableStateService.selectDay((event as SegmentCustomEvent).detail.value);
+    this.timetableStateService.selectEvent(null);
   }
 
   onEventFilterChange(event: Event): void {
