@@ -22,7 +22,7 @@ export class TabTimetablePage implements OnInit {
   selectedEventId$: Observable<string>;
   timetableConfig$: Observable<DayTimetableViewModel>;
 
-  EVENT_ROW_GAP = 4;
+  EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1
 
