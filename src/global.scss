@@ -28,6 +28,13 @@
 // Maplibre
 @import "~maplibre-gl/dist/maplibre-gl.css";
 
+// Font
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+* {
+  font-family: 'Roboto Slab', serif;
+}
+
 .mapboxgl-ctrl-group button, .maplibregl-ctrl-group button {
     height: 56px;
     width: 56px;
