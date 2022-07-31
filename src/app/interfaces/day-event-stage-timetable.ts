@@ -29,25 +29,34 @@ export interface DayEventStageTimetable {
 }
 
 // View Models for Timetable grid
-export interface TimetbaleViewModel extends Timetable  {
+export interface TimeLabel {
+    column: number,
+    label: Date
+}
+export interface TimetbaleViewModel extends Timetable {
     columnStart: number;
     columnEnd: number;
-    // rowStart: number;
+    rowStart: number;
 }
 
-export interface StageTimetableViewModel  {
+export interface StageTimetableViewModel {
+    rowStart: number;
     stageName: StageTimetable['stage_name'];
     timetable: TimetbaleViewModel[];
 }
 
-export interface EventTimetableViewModel  {
+export interface EventTimetableViewModel {
+    rowStart: number;
+    rowEnd: number;
     eventId: EventTimetable['event_id'];
     eventName: EventTimetable['event_name'];
     stages: StageTimetableViewModel[];
 }
 
-export interface DayTimetableViewModel  {
+export interface DayTimetableViewModel {
     dayId: DayEventStageTimetable['id'];
     dayName: DayEventStageTimetable['name'];
     events: EventTimetableViewModel[];
+    gridTemplateColumns: number;
+    timeLabels: TimeLabel[];
 }

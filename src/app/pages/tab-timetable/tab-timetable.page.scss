@@ -8,13 +8,14 @@ ion-content {
         display: grid;
         grid-template-columns: repeat(calc(var(--template-columns) * 60), 2.5px);
         grid-template-rows: [time-labels] 40px repeat(auto-fit, 27px);
+        grid-auto-rows: 27px;
         grid-gap: 5px 0;
 
         .time-label {
             grid-row: time-labels;
             grid-column: var(--time-label-column) / span 60;
             color: gray;
-            background-color: rgba(244, 244, 244, 0.2);
+            background-color: rgba(var(--ion-color-medium-contrast-rgb), 0.1);
             position: sticky;
             top: 0;
             z-index: 1;
@@ -23,16 +24,36 @@ ion-content {
             align-items: center;
         }
 
-        .time-grid-line {
+        .vertical-time-line {
             grid-column: var(--time-label-column) / span 1;
             grid-row: 2 / -1;
             border-left: 1px solid rgb(174, 174, 174);
             // background-color: red;
         }
 
+        .event-label {
+            grid-column: 2 / -1;
+            grid-row: var(--event-label-row-start) / span 2;
+            background-color: rgba(var(--ion-color-medium-rgb), 0.5);
+            display: flex;
+            align-items: center;
+
+            span {
+                position: sticky;
+                left: 35%;
+                color: white
+            }
+        }
+
+        .event {
+            grid-column: 1 / -1;
+            grid-row: var(--event-row-start) / var(--event-row-end);
+            // background-color: rgba(30, 30, 30, 0.1);
+        }
+
         .stage {
             grid-column: 5 / -1;
-            grid-row: var(--stage-row-start) / span 1;
+            grid-row: calc(var(--stage-row-start) + 2) / span 1;
             align-self: end;
 
             span {
@@ -78,10 +99,7 @@ ion-content {
                         margin: 0 10px;
                     }
                 }
-
-
             }
-
         }
     }
 }

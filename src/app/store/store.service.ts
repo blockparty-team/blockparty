@@ -6,7 +6,7 @@ import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetabl
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { concat, Observable } from 'rxjs';
-import { tap, shareReplay, distinctUntilChanged } from 'rxjs/operators';
+import { tap, shareReplay, distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,13 @@ export class StoreService {
     shareReplay(1)
   );
 
-  timetables$: Observable<DayEventStageTimetable[]> = this.supabase.timetables$.pipe(
+  timetables$: Observable<DayEventStageTimetable[]> = concat(
+    this.deviceStorageService.get('timetable').pipe(filter(days => !!days)),
+    this.supabase.timetables$.pipe(
+      tap(timetable => this.deviceStorageService.set('timetable', timetable))
+    )
+  ).pipe(
+    distinctUntilChanged(),
     shareReplay(1)
   );
 

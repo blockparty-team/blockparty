@@ -15,8 +15,12 @@
 
   <ng-container *ngIf="events$ | async as events">
     <ion-toolbar color="secondary">
-      <ion-segment scrollable mode="md" (ionChange)="onEventFilterChange($event)" [value]="selectedEventId$ | async">
-        <ion-segment-button *ngFor="let event of events" [value]="event.id">
+      <ion-segment scrollable
+                   mode="md"
+                   (ionChange)="onEventFilterChange($event)"
+                   [value]="selectedEventId$ | async">
+        <ion-segment-button *ngFor="let event of events"
+                            [value]="event.id">
           <ion-label>{{event.name}}</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -25,54 +29,73 @@
 </ion-header>
 
 <ion-content>
-
-  <ng-container *ngIf="timetableConfig$ | async as config; else noTimeTable">
+  <ng-container *ngIf="timetableConfig$ | async as config; else loading">
     <div class="timetable"
-         [style.--template-columns]="config.gridTemplate.columns">
+         [style.--template-columns]="config.gridTemplateColumns">
 
+      <!-- LABELS -->
       <ng-container *ngFor="let item of config.timeLabels">
         <div class="time-label"
+             *ngFor="let item of config.timeLabels"
              [style.--time-label-column]="item.column">
           {{item.label | date:'HH:mm'}}
         </div>
-        <div class="time-grid-line"
+        <div class="vertical-time-line"
              [style.--time-label-column]="item.column"></div>
       </ng-container>
 
+      <!-- EVENTS -->
+      <div class="event-label"
+           *ngFor="let event of config.events"
+           [style.--event-label-row-start]="event.rowStart">
+        <span>
+          {{event.eventName}}
+        </span>
+      </div>
 
-      <ng-container *ngFor="let stage of config.timetable; let i = index">
-        <div class="stage"
-             [style.--stage-row-start]="((i === 0 ? 1 : i + 1 ) * 3) - 1">
-          <span>{{stage.name}}</span>
-        </div>
-        <div class="act"
-             *ngFor="let artist of stage.acts"
-             [style.--act-column-start]="artist.columnStart"
-             [style.--act-column-end]="artist.columnEnd"
-             [style.--act-row-start]="artist.rowStart">
-          <div class="act-content">
-            <div class="act-sticky">
-              <div [routerLink]="['/tabs', 'artist', artist.id]">
-                <h6>
-                  {{artist.name}}
-                </h6>
-                <p>{{artist.startTime | date:'HH:mm'}}-{{artist.endTime | date:'HH:mm'}}</p>
-              </div>
+      <div class="event"
+           *ngFor="let event of config.events"
+           [style.--event-row-start]="event.rowStart"
+           [style.--event-row-end]="event.rowEnd">
+      </div>
 
-              <ion-icon slot="icon-only"
-                        [name]="isFavorite(artist.id) ? 'heart' : 'heart-outline'"
-                        (click)="addRemoveFavorites(artist.id)"></ion-icon>
-            </div>
-
+      <!-- TIMETABLE -->
+      <ng-container *ngFor="let event of config.events">
+        <ng-container *ngFor="let stage of event.stages">
+          <div class="stage"
+               [style.--stage-row-start]="stage.rowStart">
+            <span>{{stage.stageName}}</span>
           </div>
-        </div>
+
+          <div class="act"
+               *ngFor="let timetable of stage.timetable"
+               [style.--act-column-start]="timetable.columnStart"
+               [style.--act-column-end]="timetable.columnEnd"
+               [style.--act-row-start]="timetable.rowStart">
+            <div class="act-content">
+              <div class="act-sticky">
+                <div [routerLink]="['/tabs', 'artist', timetable.artist_id]">
+                  <h6>
+                    {{timetable.artist_name}}
+                  </h6>
+                  <p>{{timetable.start_time | date:'HH:mm'}}-{{timetable.end_time | date:'HH:mm'}}</p>
+                </div>
+
+                <ion-icon slot="icon-only"
+                          [name]="isFavorite(timetable.artist_id) ? 'heart' : 'heart-outline'"
+                          (click)="addRemoveFavorites(timetable.artist_id)"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </ng-container>
     </div>
   </ng-container>
 
-  <ng-template #noTimeTable>
-    <p class="ion-text-center">No timetable for this day</p>
+  <ng-template #loading>
+    <p class="ion-text-center ion-text-padding">
+      Loading...
+    </p>
   </ng-template>
-
 
 </ion-content>
