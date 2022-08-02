@@ -8,7 +8,7 @@ ion-content {
         overflow: scroll;
         display: grid;
         grid-template-columns: repeat(calc(var(--template-columns) * 60), 2.5px);
-        grid-template-rows: [time-labels] 40px repeat(auto-fit, 27px);
+        grid-template-rows: [time-labels] 40px repeat(var(--template-rows), 27px);
         grid-auto-rows: 27px;
         grid-gap: 5px 0;
 
@@ -68,7 +68,7 @@ ion-content {
 
         .act {
             background-color: var(--ion-color-primary);
-            color: white;
+            color:  var(--ion-color-primary-contrast);
             border-radius: 25px;
             grid-column: var(--act-column-start) / var(--act-column-end);
             grid-row: var(--act-row-start) / span 2;

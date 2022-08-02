@@ -35,7 +35,8 @@
 <ion-content>
   <ng-container *ngIf="timetableConfig$ | async as config; else loading">
     <div class="timetable"
-         [style.--template-columns]="config.gridTemplateColumns">
+         [style.--template-columns]="config.gridTemplateColumns"
+         [style.--template-rows]="config.gridTemplateRows">
 
       <!-- TIME LABELS -->
       <ng-container *ngFor="let item of config.timeLabels">

@@ -154,6 +154,7 @@ export class TabTimetablePage implements OnInit {
       dayId: day.id,
       dayName: day.name,
       gridTemplateColumns,
+      gridTemplateRows: row - 2,
       timeLabels,
       events
     }

@@ -59,5 +59,6 @@ export interface DayTimetableViewModel {
     dayName: DayEventStageTimetable['name'];
     events: EventTimetableViewModel[];
     gridTemplateColumns: number;
+    gridTemplateRows: number;
     timeLabels: TimeLabel[];
 }
