@@ -7,7 +7,7 @@ import { StoreService } from '@app/store/store.service';
 import { IonSearchbar } from '@ionic/angular';
 import { SegmentCustomEvent } from '@ionic/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { SupabaseService } from '../../services/supabase.service';
 
 enum Entity {
@@ -42,7 +42,7 @@ export class SearchPage implements OnInit {
   searchMode = SearchMode;
   badgeColor = EntityBadgeColor;
 
-  private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(SearchMode.NearBy);
+  private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(SearchMode.FreeText);
   selectedSearchMode$: Observable<SearchMode> = this._selectedSearchMode$.asObservable();
 
   searchResults$: Observable<EntitySearchResult[]>;
