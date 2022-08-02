@@ -43,11 +43,12 @@ export class TabTimetablePage implements OnInit {
 
     this.events$ = combineLatest([
       this.days$,
-      this.timetableStateService.selectedDayId$
+      this.timetableStateService.selectedDayId$,
     ]).pipe(
-      filter(([days, selectedDay]) => !!days && !!selectedDay),
-      map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
-      pluck('events')
+      filter(([days, selectedDayId]) => !!days && !!selectedDayId),
+      map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
+      pluck('events'),
+      tap(events => this.timetableStateService.selectEvent(events[0].event_id))
     );
 
     this.timetableConfig$ = combineLatest([
@@ -124,7 +125,7 @@ export class TabTimetablePage implements OnInit {
 
   timetableGridConfig(day: DayEventStageTimetable): DayTimetableViewModel {
 
-    let row = 2; // First row is time labels
+    let row = 1; // First row is time labels
 
     const firstStartTime = new Date(day.first_start_time);
     const lastEndTime = new Date(day.last_end_time);
@@ -163,7 +164,6 @@ export class TabTimetablePage implements OnInit {
 
   onDayFilterChange(event: Event): void {
     this.timetableStateService.selectDay((event as SegmentCustomEvent).detail.value);
-    this.timetableStateService.selectEvent(null);
   }
 
   onEventFilterChange(event: Event): void {

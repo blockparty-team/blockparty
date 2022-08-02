@@ -19,10 +19,6 @@
                    mode="md"
                    (ionChange)="onEventFilterChange($event)"
                    [value]="selectedEventId$ | async">
-        <ion-segment-button [value]="null"
-                            *ngIf="events.length > 1">
-          <ion-label>All events</ion-label>
-        </ion-segment-button>
         <ion-segment-button *ngFor="let event of events"
                             [value]="event.event_id">
           <ion-label>{{event.event_name}}</ion-label>
@@ -51,13 +47,15 @@
       </ng-container>
 
       <!-- EVENTS -->
-      <div class="event-label"
-           *ngFor="let event of config.events"
-           [style.--event-label-row-start]="event.rowStart">
-        <span>
-          {{event.eventName}}
-        </span>
-      </div>
+      <!-- <ng-container *ngIf="(selectedEventId$ | async) === null"> -->
+      <!-- <div class="event-label"
+             *ngFor="let event of config.events"
+             [style.--event-label-row-start]="event.rowStart">
+          <span>
+            {{event.eventName}}
+          </span>
+        </div> -->
+      <!-- </ng-container> -->
 
       <div class="event"
            *ngFor="let event of config.events"
