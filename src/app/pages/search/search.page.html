@@ -58,7 +58,7 @@
             </ion-avatar>
             <ion-label>
               <h2>{{result.name}}</h2>
-              <p>{{result.artist.timetable[0].day.name}} | {{result.artist.timetable[0].start_time | date:'HH:mm'}}</p>
+              <p>{{result.artist.timetable[0]?.day.name}} | {{result.artist.timetable[0]?.start_time | date:'HH:mm'}}</p>
             </ion-label>
             <ion-badge slot="end"
                        [color]="badgeColor[result.entity]">{{result.entity}}</ion-badge>
