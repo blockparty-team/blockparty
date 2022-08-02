@@ -9,6 +9,7 @@ import { from, Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { definitions } from '../interfaces/supabase';
+import { EntitySearchResult } from '@app/interfaces/entity-search-result';
 
 @Injectable({
   providedIn: 'root'
@@ -196,11 +197,24 @@ export class SupabaseService {
 
   distanceTo(coords: [number, number], withinDistance: number) {
     return from(
-      this.client.rpc('distance_to', { lng: coords[0], lat: coords[1], distance: withinDistance })
+      this.client.rpc('distance_to', { lng: coords[0], lat: coords[1], search_radius: withinDistance })
     ).pipe(
       pluck('data')
     );
 
+  }
+
+  textSearch(searchTerm: string): Observable<EntitySearchResult[]> {
+    return from(
+      this.client
+        .rpc<EntitySearchResult>('text_search', { 'search_term': searchTerm })
+        .or(
+          'rank.gt.0,similarity.gt.0.1'
+        )
+        .limit(10)
+    ).pipe(
+      pluck('data')
+    );
   }
 
 }

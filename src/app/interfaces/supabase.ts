@@ -1270,12 +1270,12 @@ export interface paths {
       parameters: {
         body: {
           args: {
+            /** Format: integer */
+            distance: number;
             /** Format: double precision */
             lat: number;
             /** Format: double precision */
             lng: number;
-            /** Format: integer */
-            search_distance: number;
           };
         };
         header: {
@@ -1296,6 +1296,26 @@ export interface paths {
           args: {
             /** Format: regclass */
             _tbl: string;
+          };
+        };
+        header: {
+          /** Preference */
+          Prefer?: parameters["preferParams"];
+        };
+      };
+      responses: {
+        /** OK */
+        200: unknown;
+      };
+    };
+  };
+  "/rpc/text_search": {
+    post: {
+      parameters: {
+        body: {
+          args: {
+            /** Format: text */
+            search_term: string;
           };
         };
         header: {

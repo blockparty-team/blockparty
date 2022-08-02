@@ -1,12 +1,12 @@
-.container {
-    padding: 30px 10px 10px 10px;
+ion-content {
+    --background: var(--ion-color-secondary);
+    --background: linear-gradient(180deg, rgba(var(--ion-color-secondary-rgb), 0.6) 51%, var(--ion-color-secondary) 100%);
 
-    .search-mode {
-        display: flex;
-        justify-content: center;
+    ion-list {
+        background: none;
 
-        ion-segment {
-            width: 200px;
+        ion-item {
+            --background: none;
         }
     }
 

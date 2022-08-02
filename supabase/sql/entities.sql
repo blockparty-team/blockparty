@@ -6,6 +6,7 @@ SELECT pg_reload_conf();
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS postgis;
 create extension if not exists PG_TRGM;
+CREATE EXTENSION unaccent;
 
 -- Create mask
 create materialized view public.mask as
@@ -144,7 +145,7 @@ ALTER TABLE public.stage  ADD COLUMN ts tsvector
      (setweight(to_tsvector('english', coalesce(name, '')), 'A') ||
      setweight(to_tsvector('english', coalesce(description, '')), 'B')) STORED;
 
-CREATE INDEX ON public.artist USING GIN (ts);
+CREATE INDEX ON public.stage USING GIN (ts);
 
 create index if not exists on public.stage using gist(geom);
 
@@ -492,6 +493,18 @@ join asset_type at on
 
 GRANT SELECT ON table entity_text_search TO anon;
 
+--unaccant
+select unaccent('bríösh'); 
+
+select 
+	ts_rank(ts, to_tsquery('rune:*')) rank, 
+	similarity(name, 'rune'),
+	entity,
+	name, 
+	description
+from entity_text_search
+order by 1 desc, 2 desc;
+
 -- location distance (near me)
 create or replace view entity_distance_search as
 select
@@ -554,7 +567,7 @@ $func$;
 -- Distance to entities
 DROP FUNCTION distance_to(double precision,double precision,integer);
 
-CREATE OR REPLACE FUNCTION distance_to(lng float, lat float, distance int)
+CREATE OR REPLACE FUNCTION distance_to(lng float, lat float, search_radius int)
  RETURNS table (entity text, id uuid, name text, geom geometry, distance int) as $$ 
  	SELECT 
  		*, 
@@ -562,12 +575,29 @@ CREATE OR REPLACE FUNCTION distance_to(lng float, lat float, distance int)
 	FROM 
 		entity_distance_search e
 	where 
-		st_dwithin(st_setsrid(st_point(lng, lat), 4326), geom, distance)
+		st_dwithin(st_setsrid(st_point(lng, lat), 4326), geom, search_radius)
 	order by 
 		st_distance(st_setsrid(st_point(lng, lat), 4326), geom);
  $$ language sql;
 
-select * from distance_to(12, 55, 100000);
+-- Full text search
+CREATE OR REPLACE FUNCTION text_search(search_term text)
+ RETURNS table (rank float, similarity float, entity text, id uuid, name text, description text) as $$ 
+ 	with ts_search_term as (
+ 		select array_to_string(array_agg(term || ':*'), ' & ')
+		from unnest(string_to_array(search_term, ' ')) as term
+		where nullif(term, '') is not null -- Remove multible whitespaces
+ 	)
+	select 
+		ts_rank(ts, to_tsquery((select * from ts_search_term))) rank, 
+		similarity(name, search_term),
+		entity,
+		id,
+		name, 
+		description
+	from entity_text_search
+	order by 1 desc, 2 desc;
+ $$ language sql;
 
 
 -----------------------

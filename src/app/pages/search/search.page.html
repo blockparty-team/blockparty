@@ -1,55 +1,114 @@
 <ion-header>
-  <ion-toolbar color="medium">
-    <ion-title>search</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content fullscreen="">
-  <div class="container">
-
-    <div class="search-mode">
-      <ion-segment mode="ios" value="all">
-        <ion-segment-button value="all">
+  <ion-toolbar color="medium"
+               class="ion-text-center">
+    <div class="search-mode ion-padding">
+      <ion-segment mode="ios"
+                   [value]="selectedSearchMode$ | async"
+                   (ionChange)="onSearchModeChange($event)">
+        <ion-segment-button color="secodary"
+                            [value]="searchMode.FreeText">
           <ion-label>All</ion-label>
         </ion-segment-button>
-        <ion-segment-button value="near_by">
+        <ion-segment-button [value]="searchMode.NearBy">
           <ion-label>Near by</ion-label>
         </ion-segment-button>
       </ion-segment>
     </div>
+  </ion-toolbar>
 
-    <ion-searchbar [formControl]="searchTerm"></ion-searchbar>
+  <ion-toolbar color="medium">
+    <ion-searchbar #search
+                   mode="ios"
+                   debounce="0"
+                   [formControl]="searchTerm"
+                   animated="true"></ion-searchbar>
+  </ion-toolbar>
+</ion-header>
 
-    <div class="filter-badges">
-      <ion-badge color="primary">artists</ion-badge>
-      <ion-badge color="secondary">stage</ion-badge>
-      <ion-badge color="tertiary">event</ion-badge>
-    </div>
+<ion-content fullscreen="">
 
+  <ng-container *ngIf="(selectedSearchMode$ | async) === searchMode.NearBy">
     <ng-container *ngIf="nearBy$ | async as nearBy">
-      <p *ngFor="let entity of nearBy" style="margin: 0;">
-        {{entity.entity}} | 
-        {{entity.name}} | 
-        {{entity.distance}} m
-      </p>
-    </ng-container>
 
-    <div class="search-results" *ngIf="searchResults$ | async as result">
       <ion-list>
-        <ion-item *ngFor="let artist of result" [routerLink]="['/tabs', 'artist', artist.id]">
-          <ion-avatar slot="start">
-            <img [src]="imgUrl(artist.storage_path)" />
-          </ion-avatar>
+        <ion-item *ngFor="let result of nearBy">
+          <span slot="start">{{result.distance}} m</span>
+          <ion-badge slot="end"
+                     [color]="badgeColor[result.entity]">{{result.entity}}</ion-badge>
           <ion-label>
-            <h2>{{artist.name}}</h2>
+            <h2>{{result.name}}</h2>
           </ion-label>
-          <ion-badge slot="end" color="primary">artist</ion-badge>
         </ion-item>
       </ion-list>
-    </div>
-  </div>
-</ion-content>
 
-<!-- <ng-template #loading>
-  <ion-spinner></ion-spinner>
-</ng-template> -->
+      <!-- <p *ngFor="let entity of nearBy"
+         style="margin: 0;">
+        {{entity.entity}} |
+        {{entity.name}} |
+        {{entity.distance}} m
+      </p> -->
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="(selectedSearchMode$ | async) === searchMode.FreeText">
+    <ng-container *ngIf="searchResults$ | async as results; else intro">
+      <ion-list>
+
+        <ng-container *ngFor="let result of results"
+                      [ngSwitch]="entity[result.entity]">
+
+          <ion-item *ngSwitchCase="entity.artist"
+                    [routerLink]="['/tabs', 'artist', result.id]">
+            <ion-avatar slot="start">
+              <img [src]="imgUrl(result.artist.storage_path)" />
+            </ion-avatar>
+            <ion-label>
+              <h2>{{result.name}}</h2>
+              <p>{{result.artist.timetable[0].day.name}} | {{result.artist.timetable[0].start_time | date:'HH:mm'}}</p>
+            </ion-label>
+            <ion-badge slot="end"
+                       [color]="badgeColor[result.entity]">{{result.entity}}</ion-badge>
+          </ion-item>
+
+          <ion-item *ngSwitchCase="entity.stage">
+            <ion-icon slot="start"
+                      name="map"></ion-icon>
+            <ion-label>
+              <h2>{{result.name}}</h2>
+            </ion-label>
+            <ion-badge slot="end"
+                       [color]="badgeColor[result.entity]">{{result.entity}}
+            </ion-badge>
+          </ion-item>
+
+          <ion-item *ngSwitchCase="entity.asset">
+            <ion-badge slot="end"
+                       [color]="badgeColor[result.entity]">{{result.entity}}
+            </ion-badge>
+            <ion-label>
+              <h2>{{result.name}}</h2>
+            </ion-label>
+          </ion-item>
+
+        </ng-container>
+
+      </ion-list>
+    </ng-container>
+  </ng-container>
+
+  <ng-template #intro>
+    <div class="ion-padding ion-text-center">
+      <p>Search</p>
+      <ion-badge color="primary"
+                 class="ion-margin">artists</ion-badge>
+      <ion-badge color="secondary"
+                 class="ion-margin">stages</ion-badge>
+      <ion-badge color="tertiary"
+                 class="ion-margin">bars</ion-badge>
+      <ion-badge color="medium"
+                 class="ion-margin">events</ion-badge>
+      <p>and other stuff</p>
+
+    </div>
+  </ng-template>
+</ion-content>
