@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { EntitySearchResult } from '@app/interfaces/entity-search-result';
+import { Router } from '@angular/router';
+import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
+import { MapService } from '@app/services/map.service';
 import { SearchService } from '@app/services/search.service';
 import { pathToImageUrl } from '@app/shared/utils';
 import { StoreService } from '@app/store/store.service';
 import { IonSearchbar } from '@ionic/angular';
 import { SegmentCustomEvent } from '@ionic/core';
+import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { SupabaseService } from '../../services/supabase.service';
@@ -45,12 +48,14 @@ export class SearchPage implements OnInit {
   private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(SearchMode.FreeText);
   selectedSearchMode$: Observable<SearchMode> = this._selectedSearchMode$.asObservable();
 
-  searchResults$: Observable<EntitySearchResult[]>;
-  nearBy$: Observable<any[]>;
+  searchResults$: Observable<EntityFreeTextSearchResult[]>;
+  nearBy$: Observable<EntityDistanceSearchResult[]>;
 
   constructor(
+    private router: Router,
     private supabaseService: SupabaseService,
     private searchService: SearchService,
+    private mapService: MapService,
     private store: StoreService
   ) { }
 
@@ -91,5 +96,10 @@ export class SearchPage implements OnInit {
     this._selectedSearchMode$.next(
       (ev as SegmentCustomEvent).detail.value as SearchMode
     )
+  }
+
+  onShowOnMap(geom: Point) {
+    this.router.navigate(['tabs', 'map']);
+    this.mapService.flyTo(geom.coordinates as [number, number]);
   }
 }

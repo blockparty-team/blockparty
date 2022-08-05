@@ -31,7 +31,7 @@
     <ng-container *ngIf="nearBy$ | async as nearBy">
 
       <ion-list>
-        <ion-item *ngFor="let result of nearBy">
+        <ion-item *ngFor="let result of nearBy" (click)="onShowOnMap(result.geom)">
           <span slot="start">{{result.distance}} m</span>
           <ion-badge slot="end"
                      [color]="badgeColor[result.entity]">{{result.entity}}</ion-badge>
@@ -92,7 +92,7 @@
 
   <ng-template #intro>
     <div class="ion-padding ion-text-center">
-      <p>Search</p>
+      <p>Search or find things near by you</p>
       <ion-badge color="primary"
                  class="ion-margin">artists</ion-badge>
       <ion-badge color="secondary"

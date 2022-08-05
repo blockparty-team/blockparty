@@ -9,7 +9,7 @@ import { from, Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { definitions } from '../interfaces/supabase';
-import { EntitySearchResult } from '@app/interfaces/entity-search-result';
+import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 
 @Injectable({
   providedIn: 'root'
@@ -195,19 +195,18 @@ export class SupabaseService {
     );
   }
 
-  distanceTo(coords: [number, number], withinDistance: number) {
+  distanceTo(coords: [number, number], withinDistance: number): Observable<EntityDistanceSearchResult[]> {
     return from(
-      this.client.rpc('distance_to', { lng: coords[0], lat: coords[1], search_radius: withinDistance })
+      this.client.rpc<EntityDistanceSearchResult>('distance_to', { lng: coords[0], lat: coords[1], search_radius: withinDistance })
     ).pipe(
       pluck('data')
     );
-
   }
 
-  textSearch(searchTerm: string): Observable<EntitySearchResult[]> {
+  textSearch(searchTerm: string): Observable<EntityFreeTextSearchResult[]> {
     return from(
       this.client
-        .rpc<EntitySearchResult>('text_search', { 'search_term': searchTerm })
+        .rpc<EntityFreeTextSearchResult>('text_search', { 'search_term': searchTerm })
         .or(
           'rank.gt.0,similarity.gt.0.1'
         )
