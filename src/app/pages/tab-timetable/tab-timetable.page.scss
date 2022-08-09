@@ -26,6 +26,12 @@ ion-content {
             align-items: center;
         }
 
+        .current-time {
+            grid-column: var(--current-time-column-start) / span 1;
+            grid-row: 1 / -1;
+            background-color: whitesmoke;
+        }
+
         .vertical-time-line {
             grid-column: var(--time-label-column-start) / span 1;
             grid-row: 1 / -1;

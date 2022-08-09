@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { StoreService } from '@app/store/store.service';
 import { SegmentCustomEvent } from '@ionic/angular';
-import { combineLatest, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, map, pluck, tap } from 'rxjs/operators';
+import { combineLatest, EMPTY, interval, Observable } from 'rxjs';
+import { catchError, filter, map, pluck, shareReplay, startWith, take, takeWhile, tap, withLatestFrom } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
+import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { TimetableStateService } from './state/timetable-state.service';
 import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
 import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetbaleViewModel, TimeLabel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab-timetable',
@@ -16,29 +18,43 @@ import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel,
 })
 export class TabTimetablePage implements OnInit {
 
+  @ViewChild('timetable') timetableElement: ElementRef;
+
   days$: Observable<DayEventStageTimetable[]>;
   events$: Observable<EventTimetable[]>;
   selectedDayId$: Observable<string>;
   selectedEventId$: Observable<string>;
   timetableConfig$: Observable<DayTimetableViewModel>;
+  currentTimeColumn$: Observable<number>;
 
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1
+  COLUMN_SIZE = 2.5 // 1min = COLUMN_SIZE - Defined i CSS
 
   constructor(
     private store: StoreService,
     private timetableStateService: TimetableStateService,
     private artistStateService: ArtistStateService,
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-
     this.selectedDayId$ = this.timetableStateService.selectedDayId$;
     this.selectedEventId$ = this.timetableStateService.selectedEventId$;
 
     this.days$ = this.store.timetables$.pipe(
-      tap(days => this.timetableStateService.selectDay(days[0].id))
+      withLatestFrom(this.route.queryParamMap),
+      // Handle url query params if exists
+      tap(([days, param]) => {
+        if (!!param.get('day') && days.some(day => day.id === param.get('day'))) {
+          this.timetableStateService.selectDayId(param.get('day'))
+        } else {
+          this.timetableStateService.selectDayId(days[0].id)
+        }
+      }),
+      map(([days,]) => days)
     );
 
     this.events$ = combineLatest([
@@ -48,7 +64,16 @@ export class TabTimetablePage implements OnInit {
       filter(([days, selectedDayId]) => !!days && !!selectedDayId),
       map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
       pluck('events'),
-      tap(events => this.timetableStateService.selectEvent(events[0].event_id))
+      withLatestFrom(this.route.queryParamMap),
+      // Handle url query params if exists
+      tap(([events, param]) => {
+        if (!!param.get('event') && events?.some(event => event.event_id === param.get('event'))) {
+          this.timetableStateService.selectEventId(param.get('event'))
+        } else {
+          this.timetableStateService.selectEventId(events[0].event_id)
+        }
+      }),
+      map(([events,]) => events)
     );
 
     this.timetableConfig$ = combineLatest([
@@ -62,13 +87,13 @@ export class TabTimetablePage implements OnInit {
         const event: EventTimetable = day.events.find(event => event.event_id === eventId);
 
         if (event) {
-          return { 
-            ...day, 
+          return {
+            ...day,
             events: [event],
             first_start_time: event.first_start_time,
             last_end_time: event.last_end_time
           };
-        } 
+        }
 
         return day;
 
@@ -79,6 +104,34 @@ export class TabTimetablePage implements OnInit {
         return EMPTY;
       })
     );
+
+    this.currentTimeColumn$ = combineLatest([
+      interval(1000 * 1).pipe(startWith(0)),
+      this.timetableConfig$
+    ]).pipe(
+      filter(([, config]) => !!config),
+      map(([, config]) => {
+        const now = new Date();
+        const firstActStart = config.timeLabels[0].label;
+        const lastActEnd = config.timeLabels.slice(-1)[0].label;
+
+        if (now >= firstActStart && now <= lastActEnd) {
+          return differenceInMinutes(now, firstActStart);
+        }
+      }),
+      // tap(currentTimeCol => {
+      //   // Scroll to current time
+      //   console.log(currentTimeCol)
+      //   if (!!currentTimeCol && this.timetableElement) {
+      //     this.timetableElement.nativeElement.scrollTo({
+      //       top: 0,
+      //       left: (currentTimeCol * this.COLUMN_SIZE) - (window.innerWidth / 2),
+      //       behavior: 'smooth'
+      //     })
+      //   }
+      // }),
+      shareReplay()
+    )
 
   }
 
@@ -163,11 +216,33 @@ export class TabTimetablePage implements OnInit {
   }
 
   onDayFilterChange(event: Event): void {
-    this.timetableStateService.selectDay((event as SegmentCustomEvent).detail.value);
+    const dayId = (event as SegmentCustomEvent).detail.value
+    this.timetableStateService.selectDayId(dayId);
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { 
+          day: dayId 
+        },
+        queryParamsHandling: 'merge'
+      }
+    );
   }
 
   onEventFilterChange(event: Event): void {
-    this.timetableStateService.selectEvent((event as SegmentCustomEvent).detail.value);
+    const eventId = (event as SegmentCustomEvent).detail.value;
+    this.timetableStateService.selectEventId(eventId);
+    this.router.navigate(
+      [],
+      {
+        relativeTo: this.route,
+        queryParams: { 
+          event: eventId 
+        },
+        queryParamsHandling: 'merge'
+      }
+    );
   }
 
   addRemoveFavorites(id: string): void {
@@ -176,6 +251,10 @@ export class TabTimetablePage implements OnInit {
 
   isFavorite(id: string): boolean {
     return this.artistStateService.isFavorite(id);
+  }
+
+  onToggleTimetableView(): void {
+
   }
 
 }

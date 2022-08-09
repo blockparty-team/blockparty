@@ -28,21 +28,26 @@
   </ng-container>
 </ion-header>
 
-<ion-content>
+<ion-content #content>
   <ng-container *ngIf="timetableConfig$ | async as config; else loading">
     <div class="timetable"
+         #timetable
          [style.--template-columns]="config.gridTemplateColumns"
          [style.--template-rows]="config.gridTemplateRows">
 
       <!-- TIME LABELS -->
-      <ng-container *ngFor="let item of config.timeLabels">
+      <ng-container *ngFor="let label of config.timeLabels">
         <div class="time-label"
-             [style.--time-label-column-start]="item.columnStart"
-             [style.--time-label-column-end]="item.columnEnd">
-          {{item.label | date:'HH:mm'}}
+             [style.--time-label-column-start]="label.columnStart"
+             [style.--time-label-column-end]="label.columnEnd">
+          {{label.label | date:'HH:mm'}}
         </div>
         <div class="vertical-time-line"
-             [style.--time-label-column-start]="item.columnStart">
+             [style.--time-label-column-start]="label.columnStart">
+        </div>
+
+        <div class="current-time"
+             [style.--current-time-column-start]="currentTimeColumn$ | async">
         </div>
       </ng-container>
 
@@ -57,11 +62,11 @@
         </div> -->
       <!-- </ng-container> -->
 
-      <div class="event"
+      <!-- <div class="event"
            *ngFor="let event of config.events"
            [style.--event-row-start]="event.rowStart"
            [style.--event-row-end]="event.rowEnd">
-      </div>
+      </div> -->
 
       <!-- TIMETABLE -->
       <ng-container *ngFor="let event of config.events">
@@ -102,8 +107,10 @@
     </p>
   </ng-template>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
+  <ion-fab vertical="bottom"
+           horizontal="end"
+           slot="fixed">
+    <ion-fab-button (click)="onToggleTimetableView()">
       <ion-icon name="list"></ion-icon>
     </ion-fab-button>
   </ion-fab>

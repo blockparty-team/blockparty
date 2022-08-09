@@ -14,11 +14,11 @@ export class TimetableStateService {
   private _selectedEventId$ = new BehaviorSubject<string>(null);
   selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
 
-  selectDay(dayId: string): void {
+  selectDayId(dayId: string): void {
     this._selectedDayId$.next(dayId);
   }
 
-  selectEvent(eventId: string): void {
+  selectEventId(eventId: string): void {
     this._selectedEventId$.next(eventId);
   }
 }
