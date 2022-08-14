@@ -24,13 +24,12 @@ export class TabMapPage implements OnInit {
 
   days$: Observable<DayWithRelations[]>;
   events$: Observable<DayWithRelations['event']>;
-  selectedDay$: Observable<string>;
-  selectedEvent$: Observable<string>;
+  selectedDayId$: Observable<string>;
+  selectedEventId$: Observable<string>;
   hideHeader$: Observable<boolean>;
   modalIsOpen$: Observable<boolean>;
 
   constructor(
-    private store: StoreService,
     private mapService: MapService,
     private mapStateService: MapStateService,
     private tabStateService: TabsStateService,
@@ -39,21 +38,10 @@ export class TabMapPage implements OnInit {
 
   ngOnInit(): void {
 
-    this.days$ = this.store.days$;
+    this.days$ = this.mapStateService.days$;
+    this.events$ = this.mapStateService.events$
 
-    this.events$ = combineLatest([
-      this.days$,
-      this.mapStateService.selectedDayId$
-    ]).pipe(
-      filter(([days, selectedDay]) => !!days && !!selectedDay),
-      map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
-      pluck('event')
-    );
-
-    this.selectedDay$ = this.mapStateService.selectedDayId$.pipe(
-      withLatestFrom(this.store.dayMaskBounds$),
-      map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
-      filter(dayMask => !!dayMask),
+    this.selectedDayId$ = this.mapStateService.selectedDay$.pipe(
       tap((day) => {
         this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
         this.mapService.highlightFeature(MapLayer.DayEventMask, day.id)
@@ -61,10 +49,7 @@ export class TabMapPage implements OnInit {
       map(day => day.id)
     );
 
-    this.selectedEvent$ = this.mapStateService.selectedEventId$.pipe(
-      withLatestFrom(this.events$),
-      map(([eventId, events]) => events.find(event => event.id === eventId)),
-      filter(event => !!event),
+    this.selectedEventId$ = this.mapStateService.selectedEvent$.pipe(
       tap((event) => {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
