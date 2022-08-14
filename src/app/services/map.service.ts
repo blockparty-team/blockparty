@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { AttributionControl, GeolocateControl, LngLatBoundsLike, Map, MapMouseEvent } from 'maplibre-gl';
+import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, MapMouseEvent } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
@@ -28,9 +28,9 @@ export class MapService {
     this.map = new Map({
       container: 'map-container',
       style: environment.maptilerStyleJson,
-      center: [12.547927, 55.667071],
-      zoom: 15,
-      // pitch: 40,
+      center: environment.mapView.center as LngLatLike,
+      zoom: environment.mapView.zoom,
+      pitch: environment.mapView.pitch,
       attributionControl: false
     });
 
