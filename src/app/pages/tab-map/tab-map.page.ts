@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
-import { ModalController, SegmentChangeEventDetail, SegmentCustomEvent } from '@ionic/angular';
+import { ModalController, SegmentCustomEvent } from '@ionic/angular';
 import { combineLatest, from, Observable } from 'rxjs';
 import { filter, map, switchMap, tap, withLatestFrom, pluck, delay, distinctUntilChanged } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';

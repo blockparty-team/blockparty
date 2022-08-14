@@ -1,0 +1,19 @@
+<ng-container *ngIf="stages$ | async as stages">
+  <ion-list>
+    <ion-item-group *ngFor="let stage of stages">
+      <ion-item-divider sticky="true"
+                        color="primary">
+        <ion-label>{{stage.stage_name}}</ion-label>
+      </ion-item-divider>
+      <ion-item *ngFor="let artist of stage.timetable">
+        <ion-label>
+          <span class="artist-name">{{artist.artist_name}}</span>
+          <span class="time">
+            {{artist.start_time | date:'HH:mm'}} -
+            {{artist.end_time | date:'HH:mm'}}
+          </span>
+        </ion-label>
+      </ion-item>
+    </ion-item-group>
+  </ion-list>
+</ng-container>

@@ -1,0 +1,71 @@
+<ng-container *ngIf="timetableConfig$ | async as config">
+  <div class="timetable"
+       #timetable
+       [style.--template-columns]="config.gridTemplateColumns"
+       [style.--template-rows]="config.gridTemplateRows">
+
+    <!-- TIME LABELS -->
+    <ng-container *ngFor="let label of config.timeLabels">
+      <div class="time-label"
+           [style.--time-label-column-start]="label.columnStart"
+           [style.--time-label-column-end]="label.columnEnd">
+        {{label.label | date:'HH:mm'}}
+      </div>
+      <div class="vertical-time-line"
+           [style.--time-label-column-start]="label.columnStart">
+      </div>
+
+      <div class="current-time"
+           [style.--current-time-column-start]="currentTimeColumn$ | async">
+      </div>
+    </ng-container>
+
+    <!-- EVENTS -->
+    <!-- <ng-container *ngIf="(selectedEventId$ | async) === null"> -->
+    <!-- <div class="event-label"
+           *ngFor="let event of config.events"
+           [style.--event-label-row-start]="event.rowStart">
+        <span>
+          {{event.eventName}}
+        </span>
+      </div> -->
+    <!-- </ng-container> -->
+
+    <!-- <div class="event"
+         *ngFor="let event of config.events"
+         [style.--event-row-start]="event.rowStart"
+         [style.--event-row-end]="event.rowEnd">
+    </div> -->
+
+    <!-- TIMETABLE -->
+    <ng-container *ngFor="let event of config.events">
+      <ng-container *ngFor="let stage of event.stages">
+        <div class="stage"
+             [style.--stage-row-start]="stage.rowStart">
+          <span>{{stage.stageName}}</span>
+        </div>
+
+        <div class="act"
+             *ngFor="let timetable of stage.timetable"
+             [style.--act-column-start]="timetable.columnStart"
+             [style.--act-column-end]="timetable.columnEnd"
+             [style.--act-row-start]="timetable.rowStart">
+          <div class="act-content">
+            <div class="act-sticky">
+              <div [routerLink]="['/tabs', 'artist', timetable.artist_id]">
+                <h6>
+                  {{timetable.artist_name}}
+                </h6>
+                <p>{{timetable.start_time | date:'HH:mm'}}-{{timetable.end_time | date:'HH:mm'}}</p>
+              </div>
+
+              <ion-icon slot="icon-only"
+                        [name]="isFavorite(timetable.artist_id) ? 'heart' : 'heart-outline'"
+                        (click)="toggleArtistFavorite(timetable.artist_id)"></ion-icon>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-container>
