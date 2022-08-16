@@ -301,6 +301,7 @@ export class MapService {
             'text-offset': [0, -0.5],
             'text-justify': 'auto',
             'text-transform': 'uppercase',
+            "text-size": 13,
             'icon-image': 'stage',
             'icon-anchor': 'bottom',
             'icon-size': [
