@@ -22,6 +22,20 @@ export class TimetableStateService {
     shareReplay()
   );
 
+  // byTime$ = this.days$.pipe(
+  //   map(days => days
+  //     .map(day => ({
+  //       id: day.id,
+  //       events: day.events.map(event => ({
+  //         id: event.event_id,
+  //         timetables: event.stages.flatMap(stage => stage.timetable.map(t => ({...t, stage: stage.stage_name})))
+  //       })
+  //       )
+  //     })
+  //     )
+  //   )
+  // ).subscribe(console.log)
+
   events$: Observable<EventTimetable[]> = combineLatest([
     this.days$,
     this.selectedDayId$,
