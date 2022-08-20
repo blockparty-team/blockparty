@@ -290,7 +290,6 @@ create policy anon_can_read_public_assets
 --  VIEWS
 -------------------
 
-
 -- Day/Event mask
 create or replace view public.day_event_mask as
 select
