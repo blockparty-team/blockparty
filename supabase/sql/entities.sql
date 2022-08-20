@@ -3,10 +3,12 @@ ALTER DATABASE postgres SET timezone TO 'Europe/Copenhagen';
 SELECT pg_reload_conf();
 
 -- Extensions
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION IF NOT EXISTS postgis;
-create extension if not exists PG_TRGM;
-CREATE EXTENSION unaccent;
+CREATE SCHEMA IF NOT EXISTS extensions;
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp" SCHEMA extensions;
+CREATE EXTENSION IF NOT EXISTS postgis SCHEMA extensions;
+create EXTENSION IF NOT EXISTS PG_TRGM SCHEMA extensions;
+CREATE EXTENSION IF NOT EXISTS unaccent SCHEMA extensions;
 
 -- Create mask
 create materialized view public.mask as
@@ -140,14 +142,14 @@ create table if not exists public.stage (
 );
 
 -- Full text search as generated column
-ALTER TABLE public.stage  ADD COLUMN ts tsvector
+ALTER TABLE public.stage ADD COLUMN ts tsvector
     GENERATED ALWAYS AS
      (setweight(to_tsvector('english', coalesce(name, '')), 'A') ||
      setweight(to_tsvector('english', coalesce(description, '')), 'B')) STORED;
 
-CREATE INDEX ON public.stage USING GIN (ts);
+CREATE INDEX ON public.stage USING GIN(ts);
 
-create index if not exists on public.stage using gist(geom);
+create index on public.stage using gist(geom);
 
 GRANT SELECT ON TABLE public.stage TO anon;
 
@@ -230,6 +232,29 @@ create policy anon_can_read_public_timetable
 	USING (public);
 
 
+---------------
+-- ASSET TYPE
+---------------
+create table if not exists public.asset_type (
+	id uuid not null primary key DEFAULT uuid_generate_v4(),
+	name text not null,
+	description text,
+	inserted_at timestamp with time zone default now() not null,
+	public boolean default false
+);
+
+GRANT SELECT ON TABLE public.asset_type TO anon;
+
+-- Row level security
+ALTER TABLE asset_type ENABLE ROW LEVEL SECURITY;
+
+create policy anon_can_read_public_asset_types
+	ON asset_type 
+	FOR SELECT
+	TO anon 
+	USING (public);
+
+
 -------------
 -- ASSET
 -------------
@@ -256,29 +281,6 @@ ALTER TABLE asset ENABLE ROW LEVEL SECURITY;
 
 create policy anon_can_read_public_assets
 	ON asset 
-	FOR SELECT
-	TO anon 
-	USING (public);
-
-
----------------
--- ASSET TYPE
----------------
-create table if not exists public.asset_type (
-	id uuid not null primary key DEFAULT uuid_generate_v4(),
-	name text not null,
-	description text,
-	inserted_at timestamp with time zone default now() not null,
-	public boolean default false
-);
-
-GRANT SELECT ON TABLE public.asset_type TO anon;
-
--- Row level security
-ALTER TABLE asset_type ENABLE ROW LEVEL SECURITY;
-
-create policy anon_can_read_public_asset_types
-	ON asset_type 
 	FOR SELECT
 	TO anon 
 	USING (public);
@@ -493,17 +495,6 @@ join asset_type at on
 
 GRANT SELECT ON table entity_text_search TO anon;
 
---unaccant
-select unaccent('bríösh'); 
-
-select 
-	ts_rank(ts, to_tsquery('rune:*')) rank, 
-	similarity(name, 'rune'),
-	entity,
-	name, 
-	description
-from entity_text_search
-order by 1 desc, 2 desc;
 
 -- location distance (near me)
 create or replace view entity_distance_search as
