@@ -274,24 +274,6 @@ export class MapService {
         });
 
         this.map.addLayer({
-          id: MapLayer.AssetIcon,
-          type: 'symbol',
-          source: MapSource.Asset,
-          minzoom: 15,
-          layout: {
-            'icon-anchor': 'bottom',
-            'icon-offset': [9.5, 0],
-            'icon-image': ['get', 'icon'],
-            'icon-size': [
-              'interpolate', ['linear'], ['zoom'],
-              15, 0,
-              15.5, 0.6
-            ],
-            'icon-allow-overlap': true
-          }
-        });
-
-        this.map.addLayer({
           id: MapLayer.Stage,
           type: 'symbol',
           source: MapSource.Stage,
@@ -324,6 +306,24 @@ export class MapService {
               16.4, 0,
               16.5, 1
             ]
+          }
+        });
+
+        this.map.addLayer({
+          id: MapLayer.AssetIcon,
+          type: 'symbol',
+          source: MapSource.Asset,
+          minzoom: 15,
+          layout: {
+            'icon-anchor': 'bottom',
+            'icon-offset': [9.5, 0],
+            'icon-image': ['get', 'icon'],
+            'icon-size': [
+              'interpolate', ['linear'], ['zoom'],
+              15, 0,
+              15.5, 0.6
+            ],
+            'icon-allow-overlap': true
           }
         });
 

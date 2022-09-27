@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
 import { pathToImageUrl } from '@app/shared/utils';
@@ -26,6 +27,7 @@ export class ArtistDetailPage implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private sanitizer: DomSanitizer,
     private store: StoreService,
     private artistStateService: ArtistStateService,
     private mapService: MapService
@@ -48,6 +50,10 @@ export class ArtistDetailPage implements OnInit {
   goToStageOnMap(geom: any): void {
     this.router.navigate(['tabs', 'map']);
     this.mapService.flyTo(geom.coordinates);
+  }
+
+  safeUrl(url: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
 }

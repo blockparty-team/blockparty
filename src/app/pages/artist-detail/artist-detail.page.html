@@ -12,15 +12,18 @@
     <ion-img [src]="imgUrl(artist.storage_path)"></ion-img>
 
     <div class="artist-info">
-      <h1>
+      <h1 class="ion-text-center">
         {{artist.name}}
-        <ion-icon slot="icon-only" [color]="isFavorite(artist.id) ? 'primary' : ''"
-          [name]="isFavorite(artist.id) ? 'heart' : 'heart-outline'"
-          (click)="addRemoveFavorites(artist.id)"></ion-icon>
+        <ion-icon slot="icon-only"
+                  [color]="isFavorite(artist.id) ? 'primary' : ''"
+                  [name]="isFavorite(artist.id) ? 'heart' : 'heart-outline'"
+                  (click)="addRemoveFavorites(artist.id)"></ion-icon>
       </h1>
-      <div class="acts">
-        <ion-badge mode="ios" color="light" *ngFor="let act of artist.timetable"
-          (click)="goToStageOnMap(act.stage.geom)">
+      <div class="acts ion-text-center">
+        <ion-badge mode="ios"
+                   color="light"
+                   *ngFor="let act of artist.timetable"
+                   (click)="goToStageOnMap(act.stage.geom)">
           <ion-icon name="location"></ion-icon>
           {{act.day.name}} |
           {{act.start_time | date:'HH:mm'}} -
@@ -30,13 +33,19 @@
       </div>
       <p>{{artist.description}}</p>
 
-      <iframe style="border: 0; width: 100%; height: 42px;"
-        src="https://bandcamp.com/EmbeddedPlayer/album=827433845/size=small/bgcol=ffffff/linkcol=0687f5/transparent=true/"
-        seamless><a href="https://djkoze.bandcamp.com/album/knock-knock-pampacd013">knock knock - (PAMPACD013) by DJ
-          Koze</a></iframe>
+      <ng-container *ngIf="artist.bandcamp_iframe as bandcampIframe">
+        <iframe style="border: 0; width: 100%; height: 42px;"
+                [src]="safeUrl(bandcampIframe)"
+                seamless>
+        </iframe>
+      </ng-container>
+      
     </div>
 
-    <ion-fab vertical="top" horizontal="end" edge slot="fixed">
+    <ion-fab vertical="top"
+             horizontal="end"
+             edge
+             slot="fixed">
       <ion-fab-button color="secondary">
         <ion-icon name="open-outline"></ion-icon>
       </ion-fab-button>
@@ -48,37 +57,58 @@
       </ion-fab-list>
 
       <ion-fab-list side="bottom">
-        <a *ngIf="artist.instagram" [href]="artist.instagram" target="_blank">
+        <a *ngIf="artist.instagram"
+           [href]="artist.instagram"
+           target="_blank">
           <ion-fab-button size="small">
-            <ion-icon size="large" name="logo-instagram"></ion-icon>
+            <ion-icon size="large"
+                      name="logo-instagram"></ion-icon>
           </ion-fab-button>
         </a>
-        <a *ngIf="artist.soundcloud" [href]="artist.soundcloud" target="_blank">
+        <a *ngIf="artist.soundcloud"
+           [href]="artist.soundcloud"
+           target="_blank">
           <ion-fab-button size="small">
-            <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+            <ion-icon size="large"
+                      name="logo-soundcloud"></ion-icon>
           </ion-fab-button>
         </a>
-        <a *ngIf="artist.spotify" [href]="artist.spotify" target="_blank">
+        <a *ngIf="artist.spotify"
+           [href]="artist.spotify"
+           target="_blank">
           <ion-fab-button size="small">
-            <ion-icon size="large" src="assets/so-me-icons/spotify.svg"></ion-icon>
+            <ion-icon size="large"
+                      src="assets/so-me-icons/spotify.svg"></ion-icon>
           </ion-fab-button>
         </a>
-        <a *ngIf="artist.bandcamp" [href]="artist.bandcamp" target="_blank">
+        <a *ngIf="artist.bandcamp"
+           [href]="artist.bandcamp"
+           target="_blank">
           <ion-fab-button size="small">
-            <ion-icon size="large" src="assets/so-me-icons/bandcamp.svg"></ion-icon>
+            <ion-icon size="large"
+                      src="assets/so-me-icons/bandcamp.svg"></ion-icon>
           </ion-fab-button>
         </a>
-        <a *ngIf="artist.apple_music" [href]="artist.apple_music" target="_blank">
-          <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+        <a *ngIf="artist.apple_music"
+           [href]="artist.apple_music"
+           target="_blank">
+          <ion-icon size="large"
+                    name="logo-soundcloud"></ion-icon>
         </a>
-        <a *ngIf="artist.tidal" [href]="artist.tidal" target="_blank">
+        <a *ngIf="artist.tidal"
+           [href]="artist.tidal"
+           target="_blank">
           <ion-fab-button size="small">
-            <ion-icon size="large" name="logo-soundcloud"></ion-icon>
+            <ion-icon size="large"
+                      name="logo-soundcloud"></ion-icon>
           </ion-fab-button>
         </a>
-        <a *ngIf="artist.youtube" [href]="artist.youtube" target="_blank">
+        <a *ngIf="artist.youtube"
+           [href]="artist.youtube"
+           target="_blank">
           <ion-fab-button size="small">
-            <ion-icon size="large" name="logo-youtube"></ion-icon>
+            <ion-icon size="large"
+                      name="logo-youtube"></ion-icon>
           </ion-fab-button>
         </a>
       </ion-fab-list>

@@ -180,6 +180,7 @@ create table if not exists public.artist (
 	instagram text,
 	facebook text,
 	webpage text,
+	bandcamp_iframe text,
 	inserted_at timestamp with time zone default now() not null,
 	public boolean default false
 );
