@@ -373,7 +373,8 @@ export class MapService {
       'restaurant',
       'toilet',
       'theater',
-      'stage'
+      'stage',
+      'tuborg'
     ]
 
     icons.forEach(icon => {
