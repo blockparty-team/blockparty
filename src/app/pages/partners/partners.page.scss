@@ -1,3 +1,10 @@
+video {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    filter: brightness(75%);
+}
+
 .container {
     height: 100%;
     width: 100%;
@@ -5,4 +12,37 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
+
+
+
+    h1 {
+        margin-top: 50px;
+        z-index: 1;
+        color: white;
+        font-size: xx-large;
+    }
+
+    .partners {
+        flex-grow: 1;
+        overflow: auto;
+        
+
+        ion-col {
+            align-self: center;
+
+            img {
+                padding: 20px;
+            }
+        }
+
+    }
+
+    ion-button {
+        margin: 0;
+        padding: 10px;
+        height: 100px;
+        width: 100%;
+        --background: var(--ion-color-medium);
+        --border-radius: 50px;
+    }
 }
