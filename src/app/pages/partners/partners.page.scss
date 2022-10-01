@@ -26,12 +26,12 @@ video {
         flex-grow: 1;
         overflow: auto;
         
-
         ion-col {
             align-self: center;
 
             img {
                 padding: 20px;
+                filter: drop-shadow(1px 1px 5px rgba(255, 255, 255, 0.3));
             }
         }
 
