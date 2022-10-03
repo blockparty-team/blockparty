@@ -2,23 +2,44 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8"/>
+  <meta charset="utf-8" />
   <title>Distortion</title>
 
-  <base href="/"/>
+  <base href="/" />
 
-  <meta name="color-scheme" content="light dark"/>
-  <meta name="theme-color" content="#443f3f"/>
-  <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="format-detection" content="telephone=no"/>
-  <meta name="msapplication-tap-highlight" content="no"/>
+  <meta name="color-scheme"
+        content="light dark" />
+  <meta name="theme-color"
+        content="#443f3f" />
+  <meta name="viewport"
+        content="viewport-fit=cover, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="format-detection"
+        content="telephone=no" />
+  <meta name="msapplication-tap-highlight"
+        content="no" />
 
-  <link rel="icon" type="image/png" href="assets/icon/favicon.png"/>
+  <link rel="icon"
+        type="image/png"
+        href="assets/icon/favicon.png" />
 
   <!-- add to homescreen for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable"
+        content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style"
+        content="black" />
+  <link rel="manifest"
+        href="manifest.webmanifest">
+
+  <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+          async=""></script>
+  <script>
+    window.OneSignal = window.OneSignal || [];
+    OneSignal.push(function () {
+      OneSignal.init({
+        appId: "9f8bb8bb-f954-402b-9ab6-76b38314faeb",
+      });
+    });
+  </script>
 </head>
 
 <body>
