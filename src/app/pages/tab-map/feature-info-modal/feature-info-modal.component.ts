@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
-import { definitions } from '@app/interfaces/supabase';
+import { definitions } from '@app/interfaces/supabase-old';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MapStateService } from '../state/map-state.service';

@@ -8,23 +8,24 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { from, Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { definitions } from '../interfaces/supabase';
+import { definitions } from '../interfaces/supabase-old';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
+import { Database } from '@app/interfaces/database-definitions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SupabaseService {
-  private client: SupabaseClient;
+  private supabase: SupabaseClient;
 
   constructor() {
-    this.client = createClient(environment.supabaseUrl, environment.supabaseKey);
+    this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseAnonKey);
   }
 
   get artists$(): Observable<ArtistWithRelations[]> {
     return from(
-      this.client
-        .from<ArtistWithRelations>('artist')
+      this.supabase
+        .from('artist')
         .select(`
           *,
           timetable(
@@ -48,8 +49,8 @@ export class SupabaseService {
 
   get dayMaskBounds$(): Observable<definitions['day_event_mask'][]> {
     return from(
-      this.client
-        .from<definitions['day_event_mask']>('day_event_mask')
+      this.supabase
+        .from('day_event_mask')
         .select(`
           id,
           bounds
@@ -61,7 +62,7 @@ export class SupabaseService {
 
   get days$(): Observable<DayWithRelations[]> {
     return from(
-      this.client
+      this.supabase
         .from('day')
         .select(`
           id,
@@ -97,7 +98,7 @@ export class SupabaseService {
         return days.map(({ day_event, ...rest }) => {
           return {
             ...rest,
-            event: day_event.map(events => events.event)
+            event: (day_event as any[]).map(events => events.event)
           }
         })
       })
@@ -106,18 +107,18 @@ export class SupabaseService {
 
   get timetables$(): Observable<DayEventStageTimetable[]> {
     return from(
-      this.client
-        .from<DayEventStageTimetable>('day_event_stage_timetable')
+      this.supabase
+        .from('day_event_stage_timetable')
         .select()
     ).pipe(
-      map(res => res.data)
+      pluck('data')
     )
   }
 
   get assets$(): Observable<definitions['asset'][]> {
-    return from(
-      this.client
-        .from<definitions['asset']>('asset')
+    return from<any>(
+      this.supabase
+        .from('asset')
         .select(`
           id,
           name,
@@ -127,25 +128,25 @@ export class SupabaseService {
           )
         `)
     ).pipe(
-      map(res => res.data)
+      pluck('data')
     )
   }
 
   artist(id: string): Observable<definitions['artist']> {
     return from(
-      this.client
-        .from<definitions['artist']>('artist')
+      this.supabase
+        .from('artist')
         .select()
         .filter('id', 'eq', id)
         .single()
     ).pipe(
-      map(res => res.data)
-    );;
+      pluck('data')
+    );
   }
 
   searchArtist(searchTerm: string) {
     return from(
-      this.client
+      this.supabase
         .from('artist')
         .select()
         .textSearch('ts', searchTerm, {
@@ -157,8 +158,8 @@ export class SupabaseService {
 
   stageTimeTable(stageId: string) {
     return from(
-      this.client
-        .from<definitions['timetable']>('timetable')
+      this.supabase
+        .from('timetable')
         .select(`
           start_time,
           end_time,
@@ -179,7 +180,7 @@ export class SupabaseService {
 
   downloadPhoto(bucket: string, path: string) {
     return from(
-      this.client
+      this.supabase
         .storage
         .from(bucket)
         .download(path)
@@ -189,7 +190,7 @@ export class SupabaseService {
   //RPC
   tableAsGeojson(table: MapSource): Observable<FeatureCollection<Point | LineString | Polygon>> {
     return from(
-      this.client.rpc('table_as_geojson', { _tbl: table })
+      this.supabase.rpc('table_as_geojson', { _tbl: table })
     ).pipe(
       pluck('data', 'geojson')
     );
@@ -197,7 +198,7 @@ export class SupabaseService {
 
   distanceTo(coords: [number, number], withinDistance: number): Observable<EntityDistanceSearchResult[]> {
     return from(
-      this.client.rpc<EntityDistanceSearchResult>('distance_to', { lng: coords[0], lat: coords[1], search_radius: withinDistance })
+      this.supabase.rpc('distance_to', { lng: coords[0], lat: coords[1], search_radius: withinDistance })
     ).pipe(
       pluck('data')
     );
@@ -205,8 +206,8 @@ export class SupabaseService {
 
   textSearch(searchTerm: string): Observable<EntityFreeTextSearchResult[]> {
     return from(
-      this.client
-        .rpc<EntityFreeTextSearchResult>('text_search', { 'search_term': searchTerm })
+      this.supabase
+        .rpc('text_search', { 'search_term': searchTerm })
         .or(
           'rank.gt.0,similarity.gt.0.1'
         )

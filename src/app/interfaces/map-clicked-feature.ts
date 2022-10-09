@@ -1,7 +1,7 @@
 import { Point, Polygon } from 'geojson';
 import { MapLayer } from './map-layer';
 import { StageGeojsonProperties } from './stage-geojson-properties';
-import { definitions } from './supabase';
+import { definitions } from './supabase-old';
 
 export type GeojsonProperties =  StageGeojsonProperties | definitions['asset_geojson'];
 

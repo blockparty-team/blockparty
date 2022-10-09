@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { definitions } from './supabase';
+import { definitions } from './supabase-old';
 
 export interface TimetableWithRelations {
     id: definitions['timetable']['id'];

@@ -1,4 +1,4 @@
-import { definitions } from "./supabase";
+import { definitions } from "./supabase-old";
 
 export interface Day {
     id: definitions['day']['id'];

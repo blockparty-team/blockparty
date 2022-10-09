@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
-import { definitions } from '@app/interfaces/supabase';
+import { definitions } from '@app/interfaces/supabase-old';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
