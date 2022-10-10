@@ -1,33 +1,32 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { definitions } from './supabase-old';
+import { Day, Artist, Stage, Timetable, Event } from './database-entities';
 
 export interface TimetableWithRelations {
-    id: definitions['timetable']['id'];
-    day_id: definitions['timetable']['day_id'];
-    start_time: definitions['timetable']['start_time'];
-    end_time: definitions['timetable']['end_time'];
-    artist: definitions['artist'];
+    id: Timetable['id'];
+    day_id: Timetable['day_id'];
+    start_time: Timetable['start_time'];
+    end_time: Timetable['end_time'];
+    artist: Artist;
 }
 
 export interface StageWithRelations {
-    id: definitions['stage']['id'];
-    name: definitions['stage']['name'];
-    description: definitions['stage']['description'];
+    id: Stage['id'];
+    name: Stage['name'];
+    description: Stage['description'];
     timetable: TimetableWithRelations[];
 }
 
 export interface EventWithRelations {
-    id: definitions['event']['id'];
-    name: definitions['event']['name'];
-    description: definitions['event']['description'];
-    bounds: definitions['event']['bounds'];
+    id: Event['id'];
+    name: Event['name'];
+    description: Event['description'];
+    bounds: Event['bounds'];
     stage: StageWithRelations[];
 }
 
 export interface DayWithRelations {
-    id: definitions['day']['id'];
-    day: definitions['day']['day'];
-    name: definitions['day']['name'];
-    description: definitions['day']['description'];
+    id: Day['id'];
+    day: Day['day'];
+    name: Day['name'];
+    description: Day['description'];
     event: EventWithRelations[];
 }

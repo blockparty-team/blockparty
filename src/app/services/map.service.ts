@@ -90,7 +90,7 @@ export class MapService {
 
       if (e.features.length > 0) {
 
-        const features: MapClickedFeature<GeojsonProperties>[] = e.features.map(feature => ({
+        const features: MapClickedFeature<any>[] = e.features.map(feature => ({
           id: feature.properties.id,
           mapLayer,
           properties: feature.properties,

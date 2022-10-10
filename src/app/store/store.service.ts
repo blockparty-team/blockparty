@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
-import { definitions } from '@app/interfaces/supabase-old';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { concat, Observable } from 'rxjs';
 import { tap, shareReplay, distinctUntilChanged, filter } from 'rxjs/operators';
+import { DayEventMask } from '@app/interfaces/database-entities';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class StoreService {
     shareReplay(1)
   );
   
-  dayMaskBounds$: Observable<definitions['day_event_mask'][]> = this.supabase.dayMaskBounds$.pipe(
+  dayMaskBounds$: Observable<DayEventMask[]> = this.supabase.dayMaskBounds$.pipe(
     shareReplay(1)
   );
 

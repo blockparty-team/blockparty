@@ -8,9 +8,9 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { from, Observable } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { definitions } from '../interfaces/supabase-old';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Database } from '@app/interfaces/database-definitions';
+import { Artist, Asset } from '@app/interfaces/database-entities';
 
 @Injectable({
   providedIn: 'root'
@@ -47,7 +47,7 @@ export class SupabaseService {
     );
   }
 
-  get dayMaskBounds$(): Observable<definitions['day_event_mask'][]> {
+  get dayMaskBounds$(): Observable<any[]> {
     return from(
       this.supabase
         .from('day_event_mask')
@@ -115,7 +115,7 @@ export class SupabaseService {
     )
   }
 
-  get assets$(): Observable<definitions['asset'][]> {
+  get assets$(): Observable<Asset[]> {
     return from<any>(
       this.supabase
         .from('asset')
@@ -132,7 +132,7 @@ export class SupabaseService {
     )
   }
 
-  artist(id: string): Observable<definitions['artist']> {
+  artist(id: string): Observable<Artist> {
     return from(
       this.supabase
         .from('artist')

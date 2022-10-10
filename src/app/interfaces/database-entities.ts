@@ -15,6 +15,6 @@ export type Asset = Database['public']['Tables']['asset']['Row'];
 export type AssetGeojson = Database['public']['Views']['asset_geojson']['Row'];
 export type StageGeojson = Database['public']['Views']['stage_geojson']['Row'];
 export type DayEventMask = Database['public']['Views']['day_event_mask']['Row'];
-export type EntitySearchSearch = Database['public']['Views']['entity_text_search']['Row'];
+export type EntityTextSearch = Database['public']['Views']['entity_text_search']['Row'];
 export type EntityDistanceSearch = Database['public']['Views']['entity_distance_search']['Row'];
 export type DayEventStageTimetable = Database['public']['Views']['day_event_stage_timetable']['Row'];

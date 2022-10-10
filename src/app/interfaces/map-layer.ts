@@ -41,9 +41,3 @@ export const mapSourceLayer = {
     'event': Event,
     'asset_geojson': AssetLayer
 }
-
-// export type MapSource = keyof typeof mapSourceLayer
-
-// export type MapLayer = typeof mapSourceLayer[keyof typeof mapSourceLayer];
-
-// const ts = 
