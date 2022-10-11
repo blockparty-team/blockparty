@@ -1,16 +1,16 @@
-import { definitions } from "./supabase";
+import { Artist, Day as DayType, Icon, Stage, Timetable as TimetableType } from "./database-entities";
 
 export interface Day {
-    id: definitions['day']['id'];
-    name: definitions['day']['name'];
-    date: definitions['day']['day'];
+    id: DayType['id'];
+    name: DayType['name'];
+    date: DayType['day'];
 }
 
 export interface Timetable {
-    start_time: definitions['timetable']['start_time'];
-    end_time: definitions['timetable']['end_time'];
-    name: definitions['artist']['name'];
-    artist_id: definitions['artist']['id'];
+    start_time: TimetableType['start_time'];
+    end_time: TimetableType['end_time'];
+    name: Artist['name'];
+    artist_id: Artist['id'];
 }
 
 export interface TimetableDay {
@@ -19,10 +19,9 @@ export interface TimetableDay {
 }
 
 export interface StageGeojsonProperties {
-    id: definitions['stage']['id'];
-    name: definitions['stage']['name'];
-    icon: definitions['icon']['name'];
+    id: Stage['id'];
+    name: Stage['name'];
+    icon: Icon['name'];
     timetables: TimetableDay[];
-
 }
 

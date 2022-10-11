@@ -1,19 +1,18 @@
-/* eslint-disable @typescript-eslint/naming-convention */
-import { definitions } from './supabase';
+import { Artist, Day, Stage, Timetable as TimetableType } from './database-entities'
 
 interface Timetable {
     day: {
-        name: definitions['day']['name'];
-        day: definitions['day']['day']
+        name: Day['name'];
+        day: Day['day']
     };
-    start_time: definitions['timetable']['start_time'];
-    end_time: definitions['timetable']['end_time'];
+    start_time: TimetableType['start_time'];
+    end_time: TimetableType['end_time'];
     stage: {
-        name: definitions['stage']['name'];
-        geom: definitions['stage']['geom'];
+        name: Stage['name'];
+        geom: Stage['geom'];
     };
 }
 
-export interface ArtistWithRelations extends Partial<definitions['artist']> {
+export interface ArtistWithRelations extends Partial<Artist> {
     timetable: Timetable[];
 };

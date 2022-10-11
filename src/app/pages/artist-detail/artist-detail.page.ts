@@ -8,6 +8,7 @@ import { StoreService } from '@app/store/store.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../tab-artist/state/artist-state.service';
+import { Point } from 'geojson';
 
 @Component({
   selector: 'app-artist-detail',
@@ -47,9 +48,9 @@ export class ArtistDetailPage implements OnInit {
     return this.artistStateService.isFavorite(id);
   }
 
-  goToStageOnMap(geom: any): void {
+  goToStageOnMap(geom: Point): void {
     this.router.navigate(['tabs', 'map']);
-    this.mapService.flyTo(geom.coordinates);
+    this.mapService.flyTo(geom.coordinates as [number, number]);
   }
 
   safeUrl(url: string) {

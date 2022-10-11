@@ -10,7 +10,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "update-types": "npx openapi-typescript \"${SUPABASE_URL}/rest/v1/?apikey=${SUPABASE_ANON_KEY}\" --version=2 --output src/app/interfaces/supabase.ts"
+    "update-types": "supabase gen types typescript --local > ${PWD}/src/app/interfaces/database-definitions.ts"
   },
   "private": true,
   "dependencies": {
@@ -34,7 +34,7 @@
     "@capacitor/preferences": "^4.0.1",
     "@capacitor/status-bar": "^4.0.0",
     "@ionic/angular": "^6.2.0",
-    "@supabase/supabase-js": "^1.35.4",
+    "@supabase/supabase-js": "^2.0.0-rc.10",
     "date-fns": "^2.29.1",
     "geojson": "^0.5.0",
     "maplibre-gl": "^2.1.9",
