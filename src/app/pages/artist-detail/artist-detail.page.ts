@@ -48,9 +48,9 @@ export class ArtistDetailPage implements OnInit {
     return this.artistStateService.isFavorite(id);
   }
 
-  goToStageOnMap(geom: Point): void {
+  goToStageOnMap(geom: any): void {
     this.router.navigate(['tabs', 'map']);
-    this.mapService.flyTo(geom.coordinates as [number, number]);
+    this.mapService.flyTo(geom.coordinates);
   }
 
   safeUrl(url: string) {
