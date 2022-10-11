@@ -10,11 +10,11 @@ import { MapService } from 'src/app/services/map.service';
 export class MapComponent implements AfterViewInit {
 
   constructor(
-    private mapSerice: MapService,
+    private mapService: MapService,
   ) { }
 
   ngAfterViewInit(): void {
-    this.mapSerice.initMap();
+    this.mapService.initMap();
   }
 
 }
