@@ -178,7 +178,7 @@ export class SupabaseService {
     );
   }
 
-  downloadPhoto(bucket: string, path: string) {
+  downloadImage(bucket: string, path: string) {
     return from(
       this.supabase
         .storage
