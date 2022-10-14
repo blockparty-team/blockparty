@@ -18,3 +18,4 @@ export type DayEventMask = Database['public']['Views']['day_event_mask']['Row'];
 export type EntityTextSearch = Database['public']['Views']['entity_text_search']['Row'];
 export type EntityDistanceSearch = Database['public']['Views']['entity_distance_search']['Row'];
 export type DayEventStageTimetable = Database['public']['Views']['day_event_stage_timetable']['Row'];
+export type MapIcon = Database['public']['Views']['map_icon']['Row'];

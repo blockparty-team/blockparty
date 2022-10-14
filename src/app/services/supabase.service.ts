@@ -10,7 +10,7 @@ import { map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Database } from '@app/interfaces/database-definitions';
-import { Artist, Asset } from '@app/interfaces/database-entities';
+import { Artist, Asset, MapIcon } from '@app/interfaces/database-entities';
 
 @Injectable({
   providedIn: 'root'
@@ -178,13 +178,34 @@ export class SupabaseService {
     );
   }
 
-  downloadImage(bucket: string, path: string) {
+  downloadFile(bucket: string, path: string) {
     return from(
       this.supabase
         .storage
         .from(bucket)
         .download(path)
+    ).pipe(
+      pluck('data')
     );
+  }
+
+  listBucketFiles(bucket: string) {
+    return from(
+      this.supabase
+        .storage
+        .from(bucket)
+        .list()
+    )
+  }
+
+  get mapIcons$(): Observable<MapIcon[]> {
+    return from(
+      this.supabase
+        .from('map_icon')
+        .select()
+    ).pipe(
+      pluck('data')
+    )
   }
 
   //RPC
