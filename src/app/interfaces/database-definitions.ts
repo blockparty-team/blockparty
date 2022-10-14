@@ -11,31 +11,31 @@ export interface Database {
     Tables: {
       event: {
         Row: {
+          id: string;
           name: string;
           description: string | null;
           geom: unknown | null;
           style: Json | null;
-          id: string;
           inserted_at: string;
           public: boolean | null;
           bounds: number[] | null;
         };
         Insert: {
+          id?: string;
           name: string;
           description?: string | null;
           geom?: unknown | null;
           style?: Json | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
           bounds?: number[] | null;
         };
         Update: {
+          id?: string;
           name?: string;
           description?: string | null;
           geom?: unknown | null;
           style?: Json | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
           bounds?: number[] | null;
@@ -43,103 +43,103 @@ export interface Database {
       };
       day: {
         Row: {
+          id: string;
           day: string;
           name: string | null;
           description: string | null;
-          id: string;
           inserted_at: string;
           public: boolean | null;
         };
         Insert: {
+          id?: string;
           day: string;
           name?: string | null;
           description?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
         Update: {
+          id?: string;
           day?: string;
           name?: string | null;
           description?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
       };
       day_event: {
         Row: {
+          id: string;
           day_id: string;
           event_id: string;
-          id: string;
           inserted_at: string;
         };
         Insert: {
+          id?: string;
           day_id: string;
           event_id: string;
-          id?: string;
           inserted_at?: string;
         };
         Update: {
+          id?: string;
           day_id?: string;
           event_id?: string;
-          id?: string;
           inserted_at?: string;
         };
       };
       icon: {
         Row: {
+          id: string;
           name: string;
           storage_path: string | null;
-          id: string;
           inserted_at: string;
           public: boolean | null;
         };
         Insert: {
+          id?: string;
           name: string;
           storage_path?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
         Update: {
+          id?: string;
           name?: string;
           storage_path?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
       };
       stage: {
         Row: {
+          id: string;
           name: string;
           description: string | null;
           icon_id: string | null;
           geom: unknown | null;
           event_id: string;
-          id: string;
           inserted_at: string;
           public: boolean | null;
           ts: unknown | null;
         };
         Insert: {
+          id?: string;
           name: string;
           description?: string | null;
           icon_id?: string | null;
           geom?: unknown | null;
           event_id: string;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
           ts?: unknown | null;
         };
         Update: {
+          id?: string;
           name?: string;
           description?: string | null;
           icon_id?: string | null;
           geom?: unknown | null;
           event_id?: string;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
           ts?: unknown | null;
@@ -147,6 +147,7 @@ export interface Database {
       };
       artist: {
         Row: {
+          id: string;
           name: string;
           description: string | null;
           storage_path: string | null;
@@ -160,12 +161,12 @@ export interface Database {
           facebook: string | null;
           webpage: string | null;
           bandcamp_iframe: string | null;
-          id: string;
           inserted_at: string;
           public: boolean | null;
           ts: unknown | null;
         };
         Insert: {
+          id?: string;
           name: string;
           description?: string | null;
           storage_path?: string | null;
@@ -179,12 +180,12 @@ export interface Database {
           facebook?: string | null;
           webpage?: string | null;
           bandcamp_iframe?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
           ts?: unknown | null;
         };
         Update: {
+          id?: string;
           name?: string;
           description?: string | null;
           storage_path?: string | null;
@@ -198,7 +199,6 @@ export interface Database {
           facebook?: string | null;
           webpage?: string | null;
           bandcamp_iframe?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
           ts?: unknown | null;
@@ -206,93 +206,99 @@ export interface Database {
       };
       timetable: {
         Row: {
+          id: string;
           day_id: string;
           start_time: string;
           end_time: string;
           artist_id: string;
           stage_id: string;
-          id: string;
           inserted_at: string;
           public: boolean | null;
         };
         Insert: {
+          id?: string;
           day_id: string;
           start_time: string;
           end_time: string;
           artist_id: string;
           stage_id: string;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
         Update: {
+          id?: string;
           day_id?: string;
           start_time?: string;
           end_time?: string;
           artist_id?: string;
           stage_id?: string;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
       };
       asset_type: {
         Row: {
+          id: string;
           name: string;
           description: string | null;
-          id: string;
           inserted_at: string;
           public: boolean | null;
         };
         Insert: {
+          id?: string;
           name: string;
           description?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
         Update: {
+          id?: string;
           name?: string;
           description?: string | null;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
       };
       asset: {
         Row: {
+          id: string;
           description: string | null;
           geom: unknown | null;
           asset_type_id: string;
           icon_id: string | null;
           event_id: string;
-          id: string;
           inserted_at: string;
           public: boolean | null;
         };
         Insert: {
+          id?: string;
           description?: string | null;
           geom?: unknown | null;
           asset_type_id: string;
           icon_id?: string | null;
           event_id: string;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
         Update: {
+          id?: string;
           description?: string | null;
           geom?: unknown | null;
           asset_type_id?: string;
           icon_id?: string | null;
           event_id?: string;
-          id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
       };
     };
     Views: {
+      map_icon: {
+        Row: {
+          name: string | null;
+          storage_path: string | null;
+        };
+      };
       asset_geojson: {
         Row: {
           id: string | null;

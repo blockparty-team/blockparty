@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { concat, EMPTY, forkJoin, Observable, of } from 'rxjs';
+import { first, map, tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, MapMouseEvent } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { SupabaseService } from '@app/services/supabase.service';
@@ -10,6 +10,7 @@ import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicke
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { GeolocationService } from './geolocation.service';
+import { FileService } from './file.service';
 
 @Injectable({
   providedIn: 'root'
@@ -21,10 +22,15 @@ export class MapService {
   constructor(
     private mapStateService: MapStateService,
     private geolocationService: GeolocationService,
-    private supabaseService: SupabaseService
-  ) { }
+    private supabaseService: SupabaseService,
+    private fileService: FileService
+  ) {
+    //this.fileService.mapIconBlobs$.subscribe(console.log)
+    // this.supabaseService.mapIcons$.subscribe(console.log)
+    //this.supabaseService.downloadFile('icon', 'water.png').subscribe(console.log)
+  }
 
-  initMap(): void {
+  public initMap(): void {
     this.map = new Map({
       container: 'map-container',
       style: environment.maptilerStyleJson,
@@ -42,10 +48,8 @@ export class MapService {
 
       this.map.resize();
 
-      this.loadMapIcons();
       this.addAerial();
-      // this.add3dBuildings();
-      this.addLayers();
+      this.addMapData();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
       this.addClickBehaviourToLayer(MapLayer.Asset);
@@ -56,7 +60,7 @@ export class MapService {
     });
   }
 
-  addControls(): void {
+  private addControls(): void {
     this.map.addControl(
       new AttributionControl(),
       'bottom-left'
@@ -85,7 +89,7 @@ export class MapService {
     })
   }
 
-  addClickBehaviourToLayer(mapLayer: MapLayer): void {
+  private addClickBehaviourToLayer(mapLayer: MapLayer): void {
     this.map.on('click', mapLayer, e => {
 
       if (e.features.length > 0) {
@@ -109,42 +113,30 @@ export class MapService {
     });
   }
 
-  onClick(event: MapMouseEvent): void {
-
-    const features = this.map.queryRenderedFeatures(event.lngLat);
-
-    this.map.on('mouseenter', 'praj-point', () => {
-      this.map.getCanvas().style.cursor = 'pointer';
-    });
-    this.map.on('mouseleave', 'praj-point', () => {
-      this.map.getCanvas().style.cursor = '';
-    });
-  }
-
-  flyTo(center: [number, number]): void {
+  public flyTo(center: [number, number]): void {
     this.map.flyTo({
       center,
       zoom: 18
     })
   }
 
-  fitBounds(bounds: LngLatBoundsLike): void {
+  public fitBounds(bounds: LngLatBoundsLike): void {
     this.map.fitBounds(bounds, { padding: 10 });
   }
 
-  resize(): void {
+  public resize(): void {
     this.map.resize();
   }
 
-  highlightFeature(layerName: MapLayer, id: string): void {
+  public highlightFeature(layerName: MapLayer, id: string): void {
     this.map.setFilter(layerName, ['==', 'id', id]);
   }
 
-  removeFeatureHighlight(layerName: MapLayer): void {
+  public removeFeatureHighlight(layerName: MapLayer): void {
     this.map.setFilter(layerName, ['==', 'id', '']);
   }
 
-  addAerial(): void {
+  private addAerial(): void {
     this.map.addSource('aerial', {
       "type": "raster",
       "tiles": [
@@ -179,8 +171,8 @@ export class MapService {
     }, 'label_road');
   }
 
-  addLayers(): void {
-    forkJoin(
+  private get addLayers$(): Observable<any> {
+    return forkJoin(
       Object.values(MapSource)
         .map(layer => this.supabaseService.tableAsGeojson(layer))
     ).pipe(
@@ -327,11 +319,8 @@ export class MapService {
           }
         });
 
-        // TODO: First  Find better way to fit bounds
-        this.fitBounds(layers[0].features[0].properties.bounds)
-
       })
-    ).subscribe();
+    );
   }
 
   add3dBuildings(): void {
@@ -366,26 +355,26 @@ export class MapService {
     });
   }
 
-  loadMapIcons(): void {
-    const icons = [
-      'bar',
-      'cocktail',
-      'restaurant',
-      'toilet',
-      'theater',
-      'stage',
-      'tuborg'
-    ]
+  private get loadMapIcons$(): Observable<any> {
+    return this.fileService.mapIconUrls$.pipe(
+      tap(mapIcons => mapIcons.forEach(icon => {
+        this.map.loadImage(icon.fileUrl, (error, img) => {
 
-    icons.forEach(icon => {
-      this.map.loadImage(`assets/map-icons/${icon}.png`, (error, img) => {
-        if (error) {
-          throw error;
-        };
+          if (error) {
+            throw error;
+          };
 
-        this.map.addImage(icon, img);
-      })
-    })
+          this.map.addImage(icon.name, img);
+        })
+      }))
+    )
+  }
+
+  private addMapData(): void {
+    concat(
+      this.loadMapIcons$,
+      this.addLayers$
+    ).subscribe();
   }
 
 }
