@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/member-ordering */
 import { Injectable } from '@angular/core';
-import { DayEventStageTimetable, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
+import { DayEventStageTimetable, EventTimetable, Timetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
 import { StoreService } from '@app/store/store.service';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { filter, map, pluck, shareReplay } from 'rxjs/operators'
@@ -22,20 +22,6 @@ export class TimetableStateService {
     shareReplay()
   );
 
-  // byTime$ = this.days$.pipe(
-  //   map(days => days
-  //     .map(day => ({
-  //       id: day.id,
-  //       events: day.events.map(event => ({
-  //         id: event.event_id,
-  //         timetables: event.stages.flatMap(stage => stage.timetable.map(t => ({...t, stage: stage.stage_name})))
-  //       })
-  //       )
-  //     })
-  //     )
-  //   )
-  // ).subscribe(console.log)
-
   events$: Observable<EventTimetable[]> = combineLatest([
     this.days$,
     this.selectedDayId$,
@@ -54,6 +40,16 @@ export class TimetableStateService {
     map(([events, selectedEventId]) => events.find(event => event.event_id === selectedEventId)),
     shareReplay()
   )
+
+  eventTimetableByTime$: Observable<TimetableWithStageName[]> = this.selectedEvent$.pipe(
+    filter(event => !!event),
+    map(event => event.stages
+      .flatMap(stage => stage.timetable
+        .flatMap(timeTable => ({ stageName: stage.stage_name, ...timeTable }))
+      )
+      .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
+    )
+  );
 
   constructor(
     private store: StoreService

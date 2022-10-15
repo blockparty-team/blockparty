@@ -5,6 +5,10 @@ export interface Timetable {
     artist_name: string;
 }
 
+export interface TimetableWithStageName extends Timetable {
+    stageName: string;
+  }
+
 export interface StageTimetable {
     stage_name: string;
     timetable: Timetable[];
@@ -34,7 +38,7 @@ export interface TimeLabel {
     columnEnd: number,
     label: Date
 }
-export interface TimetbaleViewModel extends Timetable {
+export interface TimetableViewModel extends Timetable {
     columnStart: number;
     columnEnd: number;
     rowStart: number;
@@ -43,7 +47,7 @@ export interface TimetbaleViewModel extends Timetable {
 export interface StageTimetableViewModel {
     rowStart: number;
     stageName: StageTimetable['stage_name'];
-    timetable: TimetbaleViewModel[];
+    timetable: TimetableViewModel[];
 }
 
 export interface EventTimetableViewModel {

@@ -5,7 +5,7 @@ import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { TimetableStateService } from '../state/timetable-state.service';
 import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
-import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetbaleViewModel, TimeLabel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
+import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -128,7 +128,7 @@ export class TimetableGanttComponent implements OnInit {
 
     const offset = (firstStartTime.getTime() - timeLabels[0].label.getTime()) / (1000 * 60);
 
-    const timetable: TimetbaleViewModel[] = stage.timetable
+    const timetable: TimetableViewModel[] = stage.timetable
       .map(timetable => {
 
         const relativeStartTime = (new Date(timetable.start_time).getTime() - firstStartTime.getTime()) / (1000 * 60) + offset;
