@@ -6,14 +6,15 @@
                           color="primary">
           <ion-label>{{stage.stage_name}}</ion-label>
         </ion-item-divider>
-        <ion-item *ngFor="let artist of stage.timetable" [routerLink]="['/tabs', 'artist', artist.artist_id]">
+        <ion-item *ngFor="let artist of stage.timetable">
           <ion-label>
             <div class="timeslot">
               <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
               <span class="end-time">{{artist.end_time | date:'HH:mm'}}</span>
             </div>
             <div class="artist-stage">
-              <span class="artist-name">{{artist.artist_name}}</span>
+              <span class="artist-name"
+                    [routerLink]="['/tabs', 'artist', artist.artist_id]">{{artist.artist_name}}</span>
             </div>
             <div class="favorite">
               <ion-icon slot="icon-only"
@@ -30,17 +31,19 @@
 
 <ng-container *ngIf="(listViewMode$ | async) === 'byTime'">
   <ion-list>
-    <ion-item *ngFor="let artist of timetableByTime$ | async" [routerLink]="['/tabs', 'artist', artist.artist_id]">
+    <ion-item *ngFor="let artist of timetableByTime$ | async">
       <ion-label>
         <div class="timeslot">
           <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
           <span class="end-time">{{artist.end_time | date:'HH:mm'}}</span>
         </div>
         <div class="artist-stage">
-          <span class="artist-name">
+          <span class="artist-name"
+                [routerLink]="['/tabs', 'artist', artist.artist_id]">
             {{artist.artist_name}}
           </span>
           <span class="stage-name">
+            <ion-icon name="pin-outline"></ion-icon>
             {{artist.stageName}}
           </span>
         </div>

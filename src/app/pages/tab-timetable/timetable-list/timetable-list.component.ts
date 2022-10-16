@@ -35,8 +35,6 @@ export class TimetableListComponent implements OnInit {
     );
 
     this.timetableByTime$ = this.timetableStateService.eventTimetableByTime$
-
-    this.timetableStateService.eventTimetableByTime$.subscribe(console.log);
   }
 
   onChangeListViewMode(event: Event): void {
