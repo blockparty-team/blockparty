@@ -7,6 +7,8 @@ import { TimetableStateService } from './state/timetable-state.service';
 import { DayEventStageTimetable, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ActivatedRoute, Router } from '@angular/router';
 
+type TimeTableViewMode = 'gantt' | 'list'
+
 @Component({
   selector: 'app-tab-timetable',
   templateUrl: 'tab-timetable.page.html',
@@ -17,8 +19,8 @@ export class TabTimetablePage implements OnInit {
 
   @ViewChild('timetable') timetableElement: ElementRef;
 
-  private _timetableViewMode$ = new BehaviorSubject<'gantt' | 'list'>('list');
-  timetableViewMode$: Observable<'gantt' | 'list'> = this._timetableViewMode$.asObservable();
+  private _timetableViewMode$ = new BehaviorSubject<TimeTableViewMode>('list');
+  timetableViewMode$: Observable<TimeTableViewMode> = this._timetableViewMode$.asObservable();
 
   days$: Observable<DayEventStageTimetable[]>;
   events$: Observable<EventTimetable[]>;

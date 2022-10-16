@@ -11,5 +11,13 @@ export const animations = {
                 animate('200ms ease-in', style({ transform: 'translateY(-100%)' }))
             ])
         ])
+    ],
+    slideLeft: [
+        trigger('slideLeft', [
+            transition(':enter', [
+                style({ transform: 'translateX(0%)' }),
+                animate('200ms ease-in', style({ transform: 'translateX(-50%)' }))
+            ])
+        ])
     ]
 }

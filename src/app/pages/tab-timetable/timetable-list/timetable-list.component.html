@@ -1,19 +1,74 @@
-<ng-container *ngIf="stages$ | async as stages">
+<ng-container *ngIf="(listViewMode$ | async) === 'byStage'">
+  <ng-container *ngIf="timetableByStage$ | async as stages">
+    <ion-list>
+      <ion-item-group *ngFor="let stage of stages">
+        <ion-item-divider sticky="true"
+                          color="primary">
+          <ion-label>{{stage.stage_name}}</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let artist of stage.timetable">
+          <ion-label>
+            <div class="timeslot">
+              <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
+              <span class="end-time">{{artist.end_time | date:'HH:mm'}}</span>
+            </div>
+            <div class="artist-stage">
+              <span class="artist-name"
+                    [routerLink]="['/tabs', 'artist', artist.artist_id]">{{artist.artist_name}}</span>
+            </div>
+            <div class="favorite">
+              <ion-icon slot="icon-only"
+                        [color]="isFavorite(artist.artist_id) ? 'primary' : ''"
+                        [name]="isFavorite(artist.artist_id) ? 'heart' : 'heart-outline'"
+                        (click)="addRemoveFavorites(artist.artist_id)"></ion-icon>
+            </div>
+          </ion-label>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="(listViewMode$ | async) === 'byTime'">
   <ion-list>
-    <ion-item-group *ngFor="let stage of stages">
-      <ion-item-divider sticky="true"
-                        color="primary">
-        <ion-label>{{stage.stage_name}}</ion-label>
-      </ion-item-divider>
-      <ion-item *ngFor="let artist of stage.timetable">
-        <ion-label>
-          <span class="artist-name">{{artist.artist_name}}</span>
-          <span class="time">
-            {{artist.start_time | date:'HH:mm'}} -
-            {{artist.end_time | date:'HH:mm'}}
+    <ion-item *ngFor="let artist of timetableByTime$ | async">
+      <ion-label>
+        <div class="timeslot">
+          <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
+          <span class="end-time">{{artist.end_time | date:'HH:mm'}}</span>
+        </div>
+        <div class="artist-stage">
+          <span class="artist-name"
+                [routerLink]="['/tabs', 'artist', artist.artist_id]">
+            {{artist.artist_name}}
           </span>
-        </ion-label>
-      </ion-item>
-    </ion-item-group>
+          <span class="stage-name">
+            <ion-icon name="pin-outline"></ion-icon>
+            {{artist.stageName}}
+          </span>
+        </div>
+
+        <div class="favorite">
+          <ion-icon slot="icon-only"
+                    [color]="isFavorite(artist.artist_id) ? 'primary' : ''"
+                    [name]="isFavorite(artist.artist_id) ? 'heart' : 'heart-outline'"
+                    (click)="addRemoveFavorites(artist.artist_id)"></ion-icon>
+        </div>
+
+      </ion-label>
+    </ion-item>
   </ion-list>
 </ng-container>
+
+<ion-segment mode="ios"
+             class="list-view-mode-segment"
+             (ionChange)="onChangeListViewMode($event)"
+             [value]="listViewMode$ | async"
+             [@slideLeft]>
+  <ion-segment-button value="byStage">
+    <ion-label>By stage</ion-label>
+  </ion-segment-button>
+  <ion-segment-button value="byTime">
+    <ion-label>By time</ion-label>
+  </ion-segment-button>
+</ion-segment>

@@ -1,7 +1,56 @@
+ion-list {
+    // Make room for fixed controls in bottom 
+    margin-bottom: 65px;
 
-.time {
-    margin-left: 10px;
-    color: var(--ion-color-medium);
+    ion-label {
+        display: flex;
+        align-items: center;
+    
+        .timeslot {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: small;
+    
+            .end-time {
+                color: gray
+            }
+        }
+    
+        .artist-stage {
+            flex-grow: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    
+        .artist-name {
+            margin-left: 15px;
+        }
+    
+        .stage-name {
+            margin-left: 10px;
+            color: gray;
+        }
+    
+        .favorite {
+            font-size: x-large;
+        }
+    }
 }
 
 
+.list-view-mode-segment {
+    position: fixed;
+    width: fit-content;
+    bottom: 23px;
+    left: 50%;
+    transform: translateX(-50%);
+    --background: var(--ion-color-medium);
+
+    ion-segment-button {
+        --color: rgb(179, 179, 179);
+        --color-checked: black;
+    }
+}
