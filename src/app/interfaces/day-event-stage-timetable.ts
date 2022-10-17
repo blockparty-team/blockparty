@@ -3,6 +3,7 @@ export interface Timetable {
     artist_id: string;
     start_time: Date;
     artist_name: string;
+    isFavorite?: boolean; 
 }
 
 export interface TimetableWithStageName extends Timetable {
