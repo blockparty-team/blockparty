@@ -18,9 +18,9 @@
             </div>
             <div class="favorite">
               <ion-icon slot="icon-only"
-                        [color]="isFavorite(artist.artist_id) ? 'primary' : ''"
-                        [name]="isFavorite(artist.artist_id) ? 'heart' : 'heart-outline'"
-                        (click)="addRemoveFavorites(artist.artist_id)"></ion-icon>
+                        [color]="artist.isFavorite ? 'primary' : ''"
+                        [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
+                        (click)="onToggleFavorite(artist.artist_id)"></ion-icon>
             </div>
           </ion-label>
         </ion-item>
@@ -50,9 +50,9 @@
 
         <div class="favorite">
           <ion-icon slot="icon-only"
-                    [color]="isFavorite(artist.artist_id) ? 'primary' : ''"
-                    [name]="isFavorite(artist.artist_id) ? 'heart' : 'heart-outline'"
-                    (click)="addRemoveFavorites(artist.artist_id)"></ion-icon>
+                    [color]="artist.isFavorite ? 'primary' : ''"
+                    [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
+                    (click)="onToggleFavorite(artist.artist_id)"></ion-icon>
         </div>
 
       </ion-label>

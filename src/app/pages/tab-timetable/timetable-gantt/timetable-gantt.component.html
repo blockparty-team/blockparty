@@ -20,23 +20,6 @@
       </div>
     </ng-container>
 
-    <!-- EVENTS -->
-    <!-- <ng-container *ngIf="(selectedEventId$ | async) === null"> -->
-    <!-- <div class="event-label"
-           *ngFor="let event of config.events"
-           [style.--event-label-row-start]="event.rowStart">
-        <span>
-          {{event.eventName}}
-        </span>
-      </div> -->
-    <!-- </ng-container> -->
-
-    <!-- <div class="event"
-         *ngFor="let event of config.events"
-         [style.--event-row-start]="event.rowStart"
-         [style.--event-row-end]="event.rowEnd">
-    </div> -->
-
     <!-- TIMETABLE -->
     <ng-container *ngFor="let event of config.events">
       <ng-container *ngFor="let stage of event.stages">
@@ -60,8 +43,9 @@
               </div>
 
               <ion-icon slot="icon-only"
-                        [name]="isFavorite(timetable.artist_id) ? 'heart' : 'heart-outline'"
-                        (click)="toggleArtistFavorite(timetable.artist_id)"></ion-icon>
+                        [name]="timetable.isFavorite ? 'heart' : 'heart-outline'"
+                        (click)="toggleArtistFavorite(timetable.artist_id)">
+              </ion-icon>
             </div>
           </div>
         </div>

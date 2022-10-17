@@ -18,7 +18,9 @@ export class StoreService {
   );
 
   timetables$: Observable<DayEventStageTimetable[]> = concat(
-    this.deviceStorageService.get('timetable').pipe(filter(days => !!days)),
+    this.deviceStorageService.get('timetable').pipe(
+      filter(days => !!days)
+    ),
     this.supabase.timetables$.pipe(
       tap(timetable => this.deviceStorageService.set('timetable', timetable))
     )
@@ -33,10 +35,11 @@ export class StoreService {
       tap(artists => this.deviceStorageService.set('artists', artists))
     )
   ).pipe(
+    filter(artists => !!artists),
     distinctUntilChanged(),
     shareReplay(1)
   );
-  
+
   dayMaskBounds$: Observable<DayEventMask[]> = this.supabase.dayMaskBounds$.pipe(
     shareReplay(1)
   );

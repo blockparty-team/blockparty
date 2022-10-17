@@ -4,11 +4,10 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
 import { pathToImageUrl } from '@app/shared/utils';
-import { StoreService } from '@app/store/store.service';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { ArtistStateService } from '../tab-artist/state/artist-state.service';
-import { Point } from 'geojson';
+import { TapRecognizer } from 'maplibre-gl';
 
 @Component({
   selector: 'app-artist-detail',
@@ -18,34 +17,31 @@ import { Point } from 'geojson';
 })
 export class ArtistDetailPage implements OnInit {
 
-  artist$: Observable<ArtistWithRelations> = this.activatedRoute.paramMap.pipe(
-    map(paramMap => paramMap.get('id')),
-    switchMap(id => this.store.artists$.pipe(
-      map(artists => artists.find(artist => artist.id === id))
-    ))
-  );
+  artist$: Observable<ArtistWithRelations>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
-    private store: StoreService,
     private artistStateService: ArtistStateService,
     private mapService: MapService
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.artist$ = this.activatedRoute.paramMap.pipe(
+      map(paramMap => paramMap.get('id')),
+      switchMap(id => this.artistStateService.artistsWithFavorites$.pipe(
+        map(artists => artists.find(artist => artist.id === id))
+      ))
+    );
+  }
 
   imgUrl(path: string): string {
     return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
-  addRemoveFavorites(id: string): void {
-    this.artistStateService.toggleArtistsFavorites(id);
-  }
-
-  isFavorite(id: string): boolean {
-    return this.artistStateService.isFavorite(id);
+  toggleFavorite(id: string): void {
+    this.artistStateService.toggleArtistFavorite(id);
   }
 
   goToStageOnMap(geom: any): void {

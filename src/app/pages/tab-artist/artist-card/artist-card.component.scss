@@ -8,7 +8,7 @@ ion-card {
         display: flex;
         align-items: stretch;
         color: white;
-        background-color: rgba(0,0,0,0.4);
+        background-color: rgba(0, 0, 0, 0.4);
         padding: 10px;
 
         .card-text {
@@ -18,12 +18,7 @@ ion-card {
 
         .card-actions {
             align-self: center;
-            font-size: x-large;
+            font-size: xx-large;
         }
     }
-
-
-
-
-
 }

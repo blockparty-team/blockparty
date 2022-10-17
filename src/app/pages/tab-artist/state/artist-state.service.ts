@@ -1,56 +1,33 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, concat, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators'
-import { Favorites } from '@app/interfaces/favorites';
-import { DeviceStorageService } from '@app/services/device-storage.service';
+import { combineLatest, Observable } from 'rxjs';
+import { distinctUntilChanged, map, shareReplay } from 'rxjs/operators';
+import { ArtistWithRelations } from '@app/interfaces/artist';
+import { StoreService } from '@app/store/store.service';
+import { FavoritesService } from '@app/services/favorites.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtistStateService {
 
-  private initialFavorites: Favorites = {
-    artists: [],
-    stages: [],
-    assets: []
-  }
-
-  private _favorites$ = new BehaviorSubject<Favorites>(this.initialFavorites);
-  favorites$: Observable<Favorites> = concat(
-    this.deviceStorageService.get('favorites').pipe(
-      tap(favorites => {
-        if (favorites) this._favorites$.next(favorites);
-      })
-    ),
-    this._favorites$.asObservable(),
+  artistsWithFavorites$: Observable<ArtistWithRelations[]> = combineLatest([
+    this.store.artists$,
+    this.favoritesService.favorites$
+  ]).pipe(
+    map(([artists, favorites]) => artists.map(artist => ({
+      ...artist,
+      isFavorite: favorites.artists.includes(artist.id)
+    }))),
+    distinctUntilChanged(),
+    shareReplay()
   )
 
   constructor(
-    private deviceStorageService: DeviceStorageService
+    private store: StoreService,
+    private favoritesService: FavoritesService,
   ) { }
 
-  toggleArtistsFavorites(id: string) {
-    if (this._favorites$.value.artists.includes(id)) {
-
-      const update = {
-        ...this._favorites$.value,
-        artists: this._favorites$.value.artists.filter(artistId => artistId !== id)
-      }
-
-      this._favorites$.next(update);
-      this.deviceStorageService.set('favorites', update);
-    } else {
-      const update = {
-        ...this._favorites$.value,
-        artists: [...this._favorites$.value.artists, id]
-      }
-
-      this._favorites$.next(update);
-      this.deviceStorageService.set('favorites', update);
-    }
-  }
-
-  isFavorite(id: string): boolean {
-    return this._favorites$.value.artists.includes(id);
+  public toggleArtistFavorite(id: string): void {
+    this.favoritesService.toggleFavorite('artists', id);
   }
 }

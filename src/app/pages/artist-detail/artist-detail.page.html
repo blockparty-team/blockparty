@@ -15,9 +15,10 @@
       <h1 class="ion-text-center">
         {{artist.name}}
         <ion-icon slot="icon-only"
-                  [color]="isFavorite(artist.id) ? 'primary' : ''"
-                  [name]="isFavorite(artist.id) ? 'heart' : 'heart-outline'"
-                  (click)="addRemoveFavorites(artist.id)"></ion-icon>
+                  [color]="artist.isFavorite ? 'primary' : ''"
+                  [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
+                  (click)="toggleFavorite(artist.id)">
+        </ion-icon>
       </h1>
       <div class="acts ion-text-center">
         <ion-badge mode="ios"
@@ -39,7 +40,7 @@
                 seamless>
         </iframe>
       </ng-container>
-      
+
     </div>
 
     <ion-fab vertical="top"
