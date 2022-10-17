@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { pathToImageUrl } from '@app/shared/utils';
 import { ArtistStateService } from '../state/artist-state.service';
@@ -7,6 +7,7 @@ import { ArtistStateService } from '../state/artist-state.service';
   selector: 'app-artist-card',
   templateUrl: './artist-card.component.html',
   styleUrls: ['./artist-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistCardComponent implements OnInit {
   @Input() artist: ArtistWithRelations
@@ -21,12 +22,7 @@ export class ArtistCardComponent implements OnInit {
     return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
-  addRemoveFavorites(id: string): void {
-    this.artistStateService.toggleArtistsFavorites(id);
+  toggleFavorite(id: string): void {
+    this.artistStateService.toggleArtistFavorite(id);
   }
-
-  isFavorite(id: string): boolean {
-    return this.artistStateService.isFavorite(id);
-  }
-
 }

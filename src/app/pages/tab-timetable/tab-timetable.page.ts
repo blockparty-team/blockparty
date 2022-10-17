@@ -19,7 +19,7 @@ export class TabTimetablePage implements OnInit {
 
   @ViewChild('timetable') timetableElement: ElementRef;
 
-  private _timetableViewMode$ = new BehaviorSubject<TimeTableViewMode>('list');
+  private _timetableViewMode$ = new BehaviorSubject<TimeTableViewMode>('gantt');
   timetableViewMode$: Observable<TimeTableViewMode> = this._timetableViewMode$.asObservable();
 
   days$: Observable<DayEventStageTimetable[]>;

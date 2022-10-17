@@ -5,7 +5,7 @@ import { TimetableStateService } from '../state/timetable-state.service';
 import { pluck } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { animations } from '@app/shared/animations';
-import { ArtistStateService } from '@app/pages/tab-artist/state/artist-state.service';
+import { FavoritesService } from '@app/services/favorites.service';
 
 type ListViewMode = 'byTime' | 'byStage';
 
@@ -26,7 +26,7 @@ export class TimetableListComponent implements OnInit {
 
   constructor(
     private timetableStateService: TimetableStateService,
-    private artistStateService: ArtistStateService
+    private favoritesSerive: FavoritesService
   ) { }
 
   ngOnInit() {
@@ -42,12 +42,8 @@ export class TimetableListComponent implements OnInit {
       this._listViewMode$.next(mode);
   }
 
-  addRemoveFavorites(id: string): void {
-    this.artistStateService.toggleArtistsFavorites(id);
-  }
-
-  isFavorite(id: string): boolean {
-    return this.artistStateService.isFavorite(id);
+  onToggleFavorite(id: string): void {
+    this.favoritesSerive.toggleFavorite('artists', id);
   }
 
 }

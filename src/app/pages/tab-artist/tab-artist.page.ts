@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { pathToImageUrl } from '@app/shared/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { StoreService } from '@app/store/store.service';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { FormControl } from '@angular/forms';
@@ -34,30 +33,26 @@ export class TabArtistPage implements OnInit {
   @ViewChild('search') searchElement: any;
 
   constructor(
-    private store: StoreService,
     private artistStateService: ArtistStateService,
     private menu: MenuController
   ) { }
 
   ngOnInit() {
-
     this.filteredArtists$ = combineLatest([
-      this.store.artists$,
-      this.searchTerm.valueChanges.pipe(startWith(''))
+      this.artistStateService.artistsWithFavorites$,
+      this.searchTerm.valueChanges.pipe(startWith('')),
     ]).pipe(
       debounceTime(100),
-      filter(([artists,]) => !!artists),
-      map(([artists, term]) => {
-        return artists.filter(artist => artist.name.toLowerCase().includes(term.toLowerCase()))
-      }),
+      filter(([artists, ,]) => !!artists),
+      map(([artists, term]) => artists
+        .filter(artist => artist.name.toLowerCase()
+          .includes(term.toLowerCase())
+        )
+      )
     );
 
-    this.favoriteArtists$ = combineLatest([
-      this.store.artists$,
-      this.artistStateService.favorites$,
-    ]).pipe(
-      filter(([artists, favorites]) => !!artists && !!favorites),
-      map(([artists, favorites]) => artists.filter(artist => favorites.artists.includes(artist.id)))
+    this.favoriteArtists$ = this.artistStateService.artistsWithFavorites$.pipe(
+      map(artists => artists.filter(artist => artist.isFavorite))
     );
 
     this.dayGroupedFavorites$ = this.favoriteArtists$.pipe(
@@ -106,16 +101,12 @@ export class TabArtistPage implements OnInit {
     }
   }
 
-  toggleFavorites(): void {
+  toggleFavoritesSideBar(): void {
     this.menu.toggle('end');
   }
 
-  addRemoveFavorites(id: string): void {
-    this.artistStateService.toggleArtistsFavorites(id);
-  }
-
-  isFavorite(id: string): boolean {
-    return this.artistStateService.isFavorite(id);
+  toggleFavorite(id: string): void {
+    this.artistStateService.toggleArtistFavorite(id);
   }
 
   toggleDayGroupedFavorites(): void {

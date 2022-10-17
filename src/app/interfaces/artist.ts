@@ -15,4 +15,5 @@ interface Timetable {
 
 export interface ArtistWithRelations extends Partial<Artist> {
     timetable: Timetable[];
+    isFavorite?: boolean;
 };
