@@ -13,17 +13,17 @@ export class AppComponent implements OnInit {
 
   constructor(
     private oneSignal: OneSignal
-  ) { }
+  ) {
+    this.oneSignal.init({
+      appId: '0ac7afcb-7e95-4642-8d66-f149d173cc5b'
+    })
+  }
 
   ngOnInit(): void {
     Device.getInfo().then(info => {
       if (info.platform !== 'web') {
         StatusBar.setBackgroundColor({ color: '#443f3f' })
       }
-    })
-
-    this.oneSignal.init({
-      appId: '0ac7afcb-7e95-4642-8d66-f149d173cc5b'
     })
   }
 }
