@@ -29,7 +29,8 @@
                 "input": "node_modules/ionicons/dist/ionicons/svg",
                 "output": "./svg"
               },
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/OneSignalSDKWorker.js"
             ],
             "styles": ["src/theme/variables.scss", "src/global.scss"],
             "scripts": [],
@@ -112,7 +113,8 @@
                 "input": "src/assets",
                 "output": "/assets"
               },
-              "src/manifest.webmanifest"
+              "src/manifest.webmanifest",
+              "src/OneSignalSDKWorker.js"
             ]
           },
           "configurations": {
