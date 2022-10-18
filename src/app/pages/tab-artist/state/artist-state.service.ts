@@ -16,7 +16,8 @@ export class ArtistStateService {
   ]).pipe(
     map(([artists, favorites]) => artists.map(artist => ({
       ...artist,
-      isFavorite: favorites.artists.includes(artist.id)
+      // Favorites only exists if user added artists to favorites
+      isFavorite: favorites?.artists.includes(artist.id)
     }))),
     distinctUntilChanged(),
     shareReplay()
