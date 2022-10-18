@@ -3,10 +3,17 @@ import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import {
+  AuthChangeEvent,
+  AuthSession,
+  createClient,
+  Session,
+  SupabaseClient,
+  User
+} from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
-import { from, Observable } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
+import { catchError, map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Database } from '@app/interfaces/database-definitions';
@@ -18,8 +25,79 @@ import { Artist, Asset, MapIcon } from '@app/interfaces/database-entities';
 export class SupabaseService {
   private supabase: SupabaseClient;
 
+  private _session$ = new BehaviorSubject<AuthSession | null>(null);
+  session$: Observable<AuthSession | null> = this._session$.asObservable();
+
   constructor() {
-    this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseAnonKey);
+    this.supabase = createClient<Database>(
+      environment.supabaseUrl,
+      environment.supabaseAnonKey
+    );
+
+    this.loadSession();
+
+    setTimeout(() => {
+      console.log(this._session$.value)
+    }, 3000);
+  }
+
+  private async loadSession() {
+    const {data, } = await this.supabase.auth.getSession();
+
+    if (data.session) {
+      this._session$.next(data.session);
+    } else {
+      this._session$.next(null);
+    }
+  }
+
+  get session() {
+    return from(this.supabase.auth.getSession()).pipe(
+      map(({ data, }) => data.session)
+    )
+  }
+
+  profile(user: User) {
+    return this.supabase
+      .from('profiles')
+      .select(`username, website, avatar_url`)
+      .eq('id', user.id)
+      .single();
+  }
+
+  authChanges(
+    callback: (event: AuthChangeEvent, session: Session | null) => void
+  ) {
+    return this.supabase.auth.onAuthStateChange(callback);
+  }
+
+  signIn(email: string) {
+    return from(
+      this.supabase.auth.signInWithOtp({ email })
+    ).pipe(
+      map(({data, error}) => error ? throwError(error) : data),
+      catchError(err => EMPTY)
+    );
+  }
+
+  signOut() {
+    return this.supabase.auth.signOut();
+  }
+
+  async signUp(credentials: { email: string, password: string }) {
+    return new Promise(async (resolve, reject) => {
+
+      const { error, data } = await this.supabase.auth.signUp(credentials);
+
+      if (error) {
+        reject(error);
+      } else {
+        this._session$.next(data.session);
+        resolve(data.session);
+      }
+
+    });
+
   }
 
   get artists$(): Observable<ArtistWithRelations[]> {

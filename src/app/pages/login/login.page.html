@@ -1,10 +1,13 @@
-<!-- <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>Devdactic App</ion-title>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons>
+      <ion-back-button defaultHref="/tabs"></ion-back-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
-<ion-content>
+<ion-content fullscreen>
+
   <form (ngSubmit)="login()"
         [formGroup]="credentials">
     <div class="input-group">
@@ -18,7 +21,7 @@
         <span *ngIf="email.errors?.required">Email is required</span>
         <span *ngIf="email.errors?.email">Email is invalid</span>
       </div>
-      <ion-item>
+      <!-- <ion-item>
         <ion-input type="password"
                    placeholder="Password"
                    formControlName="password"></ion-input>
@@ -27,18 +30,19 @@
            class="errors">
         <span *ngIf="password.errors?.required">Password is required</span>
         <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
-      </div>
+      </div> -->
     </div>
 
     <ion-button type="submit"
                 expand="block"
-                [disabled]="!credentials.valid">Log in</ion-button>
-    <ion-button type="button"
+                [disabled]="!credentials.valid">Send magic link</ion-button>
+    <!-- <ion-button type="button"
                 expand="block"
                 color="light"
                 fill="clear">Not yet a member? Sign up!
-    </ion-button>
+    </ion-button> -->
 
+    <br>
     <ion-button type="button"
                 expand="block"
                 color="secondary">
@@ -54,5 +58,4 @@
       Sign in with Apple
     </ion-button>
   </form>
-  <!-- <img class="ion-padding" src="/assets/distortion_logo_trans.png" alt="" srcset=""> -->
 </ion-content>
