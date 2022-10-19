@@ -16,7 +16,8 @@ export class AppComponent implements OnInit {
     private oneSignal: OneSignal
   ) {
     this.oneSignal.init({
-      appId: environment.oneSignalAppId
+      appId: environment.oneSignalAppId,
+      allowLocalhostAsSecureOrigin: true
     })
   }
 
