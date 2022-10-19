@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
 import { OneSignal } from 'onesignal-ngx';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ export class AppComponent implements OnInit {
     private oneSignal: OneSignal
   ) {
     this.oneSignal.init({
-      appId: '0ac7afcb-7e95-4642-8d66-f149d173cc5b'
+      appId: environment.oneSignalAppId
     })
   }
 

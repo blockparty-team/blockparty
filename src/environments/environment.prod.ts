@@ -8,4 +8,5 @@ export const environment = {
     zoom: 14,
     pitch: 0
   },
+  oneSignalAppId: '0ac7afcb-7e95-4642-8d66-f149d173cc5b'
 };
