@@ -1,5 +1,5 @@
 <ion-tabs (ionTabsDidChange)="onTabChange($event)"
-          id="main">
+          id="tabs">
 
   <ion-tab-bar slot="bottom"
                color="medium">
@@ -32,7 +32,7 @@
 
 </ion-tabs>
 
-<ion-menu contentId="main"
+<ion-menu contentId="tabs"
           type="overlay">
   <app-sidebar></app-sidebar>
 </ion-menu>

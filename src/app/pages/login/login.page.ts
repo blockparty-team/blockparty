@@ -22,12 +22,16 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.credentials = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      // password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
-  login(): void {
-    this.authService.signIn(this.email.value).subscribe(console.log)
+  signIn(): void {
+    this.authService.signInWithMail(this.email.value).subscribe(console.log)
+  }
+
+  signInWithGoogle() {
+    this.authService.signInWithGoogle()
   }
 
   get email() {

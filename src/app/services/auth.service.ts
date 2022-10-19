@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SupabaseService } from './supabase.service';
 
 @Injectable({
@@ -10,7 +11,19 @@ export class AuthService {
     private supabase: SupabaseService
   ) { }
 
-  signIn(email: string) {
+  signInWithMail(email: string) {
     return this.supabase.signIn(email);
+  }
+
+  signInWithGoogle() {
+    this.supabase.signInWithProvider('google').subscribe();
+  }
+
+  logOut(): void {
+    this.supabase.signOut();
+  }
+
+  get authenticated$(): Observable<boolean> {
+    return this.supabase.authenticated$;
   }
 }

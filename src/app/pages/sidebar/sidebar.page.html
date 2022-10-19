@@ -1,5 +1,41 @@
-<ion-list>
-  <ion-item [routerLink]="['/login']">
-    Login
-  </ion-item>
-</ion-list>
+<div class="container">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title class="ion-text-center">More</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="navigation"
+               color="medium">
+    <ion-list color="primary">
+      <ion-item *ngFor="let item of navigationItems"
+                [routerLink]="item.routerLink"
+                color="medium"
+                lines="none">
+        <ion-icon [name]="item.icon"
+                  slot="start"></ion-icon>
+        <ion-label>
+          <h2>
+            {{item.name}}
+          </h2>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+
+  <ion-footer class="login">
+    <ion-item (click)="signInOrOut()"
+              color="medium"
+              button
+              lines="none">
+      <ion-icon [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"
+                slot="start"
+                size="large"></ion-icon>
+      <ion-label>
+        <h2>
+          {{ (authenticated$ | async) ? 'Logout' : 'Login'}}
+        </h2>
+      </ion-label>
+    </ion-item>
+  </ion-footer>
+</div>

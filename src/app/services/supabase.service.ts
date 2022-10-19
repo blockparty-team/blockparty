@@ -7,6 +7,7 @@ import {
   AuthChangeEvent,
   AuthSession,
   createClient,
+  Provider,
   Session,
   SupabaseClient,
   User
@@ -28,41 +29,30 @@ export class SupabaseService {
   private _session$ = new BehaviorSubject<AuthSession | null>(null);
   session$: Observable<AuthSession | null> = this._session$.asObservable();
 
+  authenticated$ = this.session$.pipe(
+    map(session => session?.user.aud === 'authenticated' ? true : false)
+  );
+
   constructor() {
     this.supabase = createClient<Database>(
       environment.supabaseUrl,
-      environment.supabaseAnonKey
+      environment.supabaseAnonKey,
+      // {
+      //   auth: {
+      //     autoRefreshToken: true,
+      //     persistSession: true,
+      //   }
+      // }
     );
 
-    this.loadSession();
+    this.authChanges((event, session) => {
+      if (event === 'SIGNED_IN') {
+        this._session$.next(session);
+      } else {
+        this._session$.next(null);
+      }
+    })
 
-    setTimeout(() => {
-      console.log(this._session$.value)
-    }, 3000);
-  }
-
-  private async loadSession() {
-    const {data, } = await this.supabase.auth.getSession();
-
-    if (data.session) {
-      this._session$.next(data.session);
-    } else {
-      this._session$.next(null);
-    }
-  }
-
-  get session() {
-    return from(this.supabase.auth.getSession()).pipe(
-      map(({ data, }) => data.session)
-    )
-  }
-
-  profile(user: User) {
-    return this.supabase
-      .from('profiles')
-      .select(`username, website, avatar_url`)
-      .eq('id', user.id)
-      .single();
   }
 
   authChanges(
@@ -75,9 +65,15 @@ export class SupabaseService {
     return from(
       this.supabase.auth.signInWithOtp({ email })
     ).pipe(
-      map(({data, error}) => error ? throwError(error) : data),
+      map(({ data, error }) => error ? throwError(error) : data),
       catchError(err => EMPTY)
     );
+  }
+
+  signInWithProvider(provider: Provider) {
+    return from(
+      this.supabase.auth.signInWithOAuth({ provider })
+    )
   }
 
   signOut() {
@@ -98,6 +94,14 @@ export class SupabaseService {
 
     });
 
+  }
+
+  profile(user: User) {
+    return this.supabase
+      .from('profile')
+      .select(`username, info`)
+      .eq('id', user.id)
+      .single();
   }
 
   get artists$(): Observable<ArtistWithRelations[]> {
