@@ -39,7 +39,7 @@ export class TabMapPage implements OnInit {
   ngOnInit(): void {
 
     this.days$ = this.mapStateService.days$;
-    this.events$ = this.mapStateService.events$
+    this.events$ = this.mapStateService.events$;
 
     this.selectedDayId$ = this.mapStateService.selectedDay$.pipe(
       tap((day) => {

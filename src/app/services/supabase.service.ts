@@ -3,10 +3,19 @@ import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayWithRelations } from '@app/interfaces/entities-with-releation';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+import {
+  AuthChangeEvent,
+  AuthSession,
+  createClient,
+  OAuthResponse,
+  Provider,
+  Session,
+  SupabaseClient,
+  User
+} from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
-import { from, Observable } from 'rxjs';
-import { map, pluck } from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
+import { catchError, distinctUntilChanged, map, pluck, shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Database } from '@app/interfaces/database-definitions';
@@ -18,8 +27,73 @@ import { Artist, Asset, MapIcon } from '@app/interfaces/database-entities';
 export class SupabaseService {
   private supabase: SupabaseClient;
 
+  private _session$ = new BehaviorSubject<AuthSession | null>(null);
+  session$: Observable<AuthSession | null> = this._session$.asObservable();
+
   constructor() {
-    this.supabase = createClient<Database>(environment.supabaseUrl, environment.supabaseAnonKey);
+    this.supabase = createClient<Database>(
+      environment.supabaseUrl,
+      environment.supabaseAnonKey
+    );
+
+    this.authChanges((event, session) => {
+      if (event === 'SIGNED_IN') {
+        this._session$.next(session);
+      } else {
+        this._session$.next(null);
+      }
+    })
+  }
+
+  authChanges(
+    callback: (event: AuthChangeEvent, session: Session | null) => void
+  ) {
+    return this.supabase.auth.onAuthStateChange(callback);
+  }
+
+  signIn(email: string) {
+    return from(
+      this.supabase.auth.signInWithOtp({ email })
+    ).pipe(
+      map(({ data, error }) => error ? throwError(error) : data),
+      catchError(err => EMPTY)
+    );
+  }
+
+  signInWithProvider(provider: Provider): Observable<OAuthResponse['data']> {
+    return from(
+      this.supabase.auth.signInWithOAuth({ provider })
+    ).pipe(
+      map(({data, error}) => data)
+    )
+  }
+
+  signOut() {
+    return this.supabase.auth.signOut();
+  }
+
+  async signUp(credentials: { email: string, password: string }) {
+    return new Promise(async (resolve, reject) => {
+
+      const { error, data } = await this.supabase.auth.signUp(credentials);
+
+      if (error) {
+        reject(error);
+      } else {
+        this._session$.next(data.session);
+        resolve(data.session);
+      }
+
+    });
+
+  }
+
+  profile(user: User) {
+    return this.supabase
+      .from('profile')
+      .select(`username, info`)
+      .eq('id', user.id)
+      .single();
   }
 
   get artists$(): Observable<ArtistWithRelations[]> {

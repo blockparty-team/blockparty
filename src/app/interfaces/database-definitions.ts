@@ -9,6 +9,26 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      profile: {
+        Row: {
+          id: string;
+          updated_at: string | null;
+          username: string | null;
+          info: Json | null;
+        };
+        Insert: {
+          id: string;
+          updated_at?: string | null;
+          username?: string | null;
+          info?: Json | null;
+        };
+        Update: {
+          id?: string;
+          updated_at?: string | null;
+          username?: string | null;
+          info?: Json | null;
+        };
+      };
       event: {
         Row: {
           id: string;
@@ -334,13 +354,6 @@ export interface Database {
           geom: unknown | null;
         };
       };
-      day_event_mask: {
-        Row: {
-          id: string | null;
-          geom: unknown | null;
-          bounds: number[] | null;
-        };
-      };
       day_event_stage_timetable: {
         Row: {
           id: string | null;
@@ -348,6 +361,13 @@ export interface Database {
           first_start_time: string | null;
           last_end_time: string | null;
           events: Json | null;
+        };
+      };
+      day_event_mask: {
+        Row: {
+          id: string | null;
+          geom: unknown | null;
+          bounds: number[] | null;
         };
       };
     };

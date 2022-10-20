@@ -1,6 +1,8 @@
-<ion-tabs (ionTabsDidChange)="onTabChange($event)">
+<ion-tabs (ionTabsDidChange)="onTabChange($event)"
+          id="tabs">
 
-  <ion-tab-bar slot="bottom" color="medium">
+  <ion-tab-bar slot="bottom"
+               color="medium">
 
     <ion-tab-button tab="map">
       <ion-icon name="location"></ion-icon>
@@ -21,6 +23,16 @@
       <ion-icon name="search"></ion-icon>
       <ion-label>Search</ion-label>
     </ion-tab-button>
+
+    <ion-tab-button (click)="openSidebar()">
+      <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+      <ion-label>More</ion-label>
+    </ion-tab-button>
   </ion-tab-bar>
 
 </ion-tabs>
+
+<ion-menu contentId="tabs"
+          type="overlay">
+  <app-sidebar></app-sidebar>
+</ion-menu>

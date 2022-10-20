@@ -24,11 +24,7 @@ export class MapService {
     private geolocationService: GeolocationService,
     private supabaseService: SupabaseService,
     private fileService: FileService
-  ) {
-    //this.fileService.mapIconBlobs$.subscribe(console.log)
-    // this.supabaseService.mapIcons$.subscribe(console.log)
-    //this.supabaseService.downloadFile('icon', 'water.png').subscribe(console.log)
-  }
+  ) { }
 
   public initMap(): void {
     this.map = new Map({

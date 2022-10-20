@@ -1,0 +1,32 @@
+ion-toolbar {
+    --background: transparent;
+    --color: white;
+}
+
+ion-content {
+    --padding-top: 40%;
+    --padding-start: 10%;
+    --padding-end: 10%;
+    --background: var(--ion-color-medium);
+    --background: url('/assets/login.png') no-repeat;
+
+    .input-group {
+        background: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 15px;
+    }
+    
+    .errors {
+        font-size: small;
+        color: #fff;
+        background: var(--ion-color-danger);
+        padding-left: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    ion-button {
+        text-transform: none;
+    }
+}
