@@ -1,7 +1,13 @@
 <div class="container">
   <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar color="secondary">
       <ion-title class="ion-text-center">More</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="toggleSideBar()">
+          <ion-icon slot="icon-only"
+                    name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 

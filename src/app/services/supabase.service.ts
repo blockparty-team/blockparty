@@ -7,6 +7,7 @@ import {
   AuthChangeEvent,
   AuthSession,
   createClient,
+  OAuthResponse,
   Provider,
   Session,
   SupabaseClient,
@@ -14,7 +15,7 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
-import { catchError, map, pluck } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, map, pluck, shareReplay, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Database } from '@app/interfaces/database-definitions';
@@ -29,20 +30,10 @@ export class SupabaseService {
   private _session$ = new BehaviorSubject<AuthSession | null>(null);
   session$: Observable<AuthSession | null> = this._session$.asObservable();
 
-  authenticated$ = this.session$.pipe(
-    map(session => session?.user.aud === 'authenticated' ? true : false)
-  );
-
   constructor() {
     this.supabase = createClient<Database>(
       environment.supabaseUrl,
-      environment.supabaseAnonKey,
-      // {
-      //   auth: {
-      //     autoRefreshToken: true,
-      //     persistSession: true,
-      //   }
-      // }
+      environment.supabaseAnonKey
     );
 
     this.authChanges((event, session) => {
@@ -52,7 +43,6 @@ export class SupabaseService {
         this._session$.next(null);
       }
     })
-
   }
 
   authChanges(
@@ -70,9 +60,11 @@ export class SupabaseService {
     );
   }
 
-  signInWithProvider(provider: Provider) {
+  signInWithProvider(provider: Provider): Observable<OAuthResponse['data']> {
     return from(
       this.supabase.auth.signInWithOAuth({ provider })
+    ).pipe(
+      map(({data, error}) => data)
     )
   }
 

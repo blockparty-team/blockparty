@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
+import { MenuController } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { first, tap } from 'rxjs/operators';
 
 interface NavigationItem {
   name: string,
@@ -22,39 +23,53 @@ export class SidebarPage implements OnInit {
   navigationItems: NavigationItem[] = [
     {
       name: 'Profile',
-      icon: 'person-circle',
+      icon: 'person-circle-outline',
       routerLink: ['/profile']
     },
     {
       name: 'About',
-      icon: 'information-circle',
+      icon: 'information-circle-outline',
       routerLink: ['/about']
     },
     {
       name: 'Events',
-      icon: 'log-in-outline',
+      icon: 'musical-notes-outline',
       routerLink: ['/events']
     },
-    
+    {
+      name: 'Sponsors & Parters',
+      icon: 'rocket-outline',
+      routerLink: ['/partners']
+    },
+    {
+      name: 'Merch',
+      icon: 'cash-outline',
+      routerLink: ['/partners']
+    },
+    {
+      name: 'Settings',
+      icon: 'settings-outline',
+      routerLink: ['/partners']
+    },
   ]
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private menu: MenuController
   ) { }
 
   ngOnInit() {
     this.authenticated$ = this.authService.authenticated$
   }
 
+  toggleSideBar(): void {
+    this.menu.toggle('start');
+  }
+
   signInOrOut() {
     this.authService.authenticated$.pipe(
-      tap(console.log)
-    ).subscribe()
-    // this.authService.logOut();
-
-
-    this.authService.authenticated$.pipe(
+      first(),
       tap(authenticated => {
         if (authenticated) {
           this.authService.logOut();

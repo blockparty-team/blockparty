@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@app/services/auth.service';
-import { SupabaseService } from '@app/services/supabase.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +15,6 @@ export class LoginPage implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    public supabase: SupabaseService
   ) { }
 
   ngOnInit() {

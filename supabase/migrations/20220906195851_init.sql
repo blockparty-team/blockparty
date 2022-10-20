@@ -287,6 +287,18 @@ create policy anon_can_read_public_assets
 	USING (public);
 
 
+-- Grant select fro Authenticated user
+grant select on table artist to authenticated;
+grant select on table asset to authenticated;
+grant select on table asset_type to authenticated;
+grant select on table day to authenticated;
+grant select on table day_event to authenticated;
+grant select on table event to authenticated;
+grant select on table icon to authenticated;
+grant select on table stage to authenticated;
+grant select on table timetable to authenticated;
+
+
 -------------------
 --  VIEWS
 -------------------

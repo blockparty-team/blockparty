@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
 
 const routes: Routes = [
@@ -45,7 +45,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/partners',
+    redirectTo: '/tabs/map',
     pathMatch: 'full'
   }
 ];
