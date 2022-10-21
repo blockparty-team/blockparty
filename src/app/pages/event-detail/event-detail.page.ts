@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EventViewModel } from '@app/interfaces/event';
-import { pathToImageUrl } from '@app/shared/utils';
-import { StoreService } from '@app/store/store.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { EventStateService } from '../event/state/event-state.service';
 
 @Component({
   selector: 'app-event-detail',
@@ -17,19 +16,16 @@ export class EventDetailPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private store: StoreService
+    private eventStateService: EventStateService
   ) { }
 
   ngOnInit() {
     this.event$ = this.activatedRoute.paramMap.pipe(
       map(paramMap => paramMap.get('id')),
-      switchMap(id => this.store.events$.pipe(
+      switchMap(id => this.eventStateService.events$.pipe(
         map(events => events.find(event => event.id === id))
       ))
     );
   }
   
-  imgUrl(path: string): string {
-    return pathToImageUrl(path);
-  }
 }

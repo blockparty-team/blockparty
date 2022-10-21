@@ -10,7 +10,7 @@
 <ion-content color="medium">
   <ng-container *ngIf="events$ | async as events">
     <ion-card *ngFor="let event of events"
-              [style.--background]="'url(' + imgUrl(event.storage_path) + ')'"
+              [style.--background]="'url(' + event.imgUrl + ')'"
               (click)="onGoToEvent(event.id)">
       <div class="card-content">
         <h1>
