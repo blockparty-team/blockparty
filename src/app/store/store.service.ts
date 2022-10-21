@@ -7,6 +7,7 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { concat, Observable } from 'rxjs';
 import { tap, shareReplay, distinctUntilChanged, filter } from 'rxjs/operators';
 import { DayEventMask } from '@app/interfaces/database-entities';
+import { EventViewModel } from '@app/interfaces/event';
 
 @Injectable({
   providedIn: 'root'
@@ -17,12 +18,26 @@ export class StoreService {
     shareReplay(1)
   );
 
+  events$: Observable<EventViewModel[]> = concat(
+    this.deviceStorageService.get('events').pipe(
+      filter(events => !!events)
+    ),
+    this.supabase.events$.pipe(
+      tap(events => this.deviceStorageService.set('events', events)),
+      filter(events => !!events)
+    )
+  ).pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  )
+  
   timetables$: Observable<DayEventStageTimetable[]> = concat(
     this.deviceStorageService.get('timetable').pipe(
-      filter(days => !!days)
+      filter(timetables => !!timetables)
     ),
     this.supabase.timetables$.pipe(
-      tap(timetable => this.deviceStorageService.set('timetable', timetable))
+      tap(timetables => this.deviceStorageService.set('timetable', timetables)),
+      filter(timetables => !!timetables)
     )
   ).pipe(
     distinctUntilChanged(),
@@ -30,12 +45,14 @@ export class StoreService {
   );
 
   artists$: Observable<ArtistWithRelations[]> = concat(
-    this.deviceStorageService.get('artists'),
+    this.deviceStorageService.get('artists').pipe(
+      filter(artists => !!artists)
+    ),
     this.supabase.artists$.pipe(
-      tap(artists => this.deviceStorageService.set('artists', artists))
+      tap(artists => this.deviceStorageService.set('artists', artists)),
+      filter(artists => !!artists)
     )
   ).pipe(
-    filter(artists => !!artists),
     distinctUntilChanged(),
     shareReplay(1)
   );

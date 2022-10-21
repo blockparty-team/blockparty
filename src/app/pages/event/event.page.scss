@@ -1,0 +1,16 @@
+ion-card {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+
+    .card-content {
+        min-height: 150px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.4);
+        padding: 10px;
+    }
+}

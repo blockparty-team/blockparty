@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/event"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Event detail</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="medium">
+  <ng-container *ngIf="event$ | async as event">
+    <img [src]="event.imgUrl"
+         [alt]="'Image of the ' + event.name + ' event'">
+    <div class="ion-padding">
+      <h1>{{event.name}}</h1>
+      <p>{{event.description}}</p>
+    </div>
+  </ng-container>
+</ion-content>

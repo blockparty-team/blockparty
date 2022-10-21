@@ -12,53 +12,21 @@ export interface Database {
       profile: {
         Row: {
           id: string;
-          updated_at: string | null;
           username: string | null;
           info: Json | null;
-        };
-        Insert: {
-          id: string;
-          updated_at?: string | null;
-          username?: string | null;
-          info?: Json | null;
-        };
-        Update: {
-          id?: string;
-          updated_at?: string | null;
-          username?: string | null;
-          info?: Json | null;
-        };
-      };
-      event: {
-        Row: {
-          id: string;
-          name: string;
-          description: string | null;
-          geom: unknown | null;
-          style: Json | null;
           inserted_at: string;
-          public: boolean | null;
-          bounds: number[] | null;
         };
         Insert: {
-          id?: string;
-          name: string;
-          description?: string | null;
-          geom?: unknown | null;
-          style?: Json | null;
+          id: string;
+          username?: string | null;
+          info?: Json | null;
           inserted_at?: string;
-          public?: boolean | null;
-          bounds?: number[] | null;
         };
         Update: {
           id?: string;
-          name?: string;
-          description?: string | null;
-          geom?: unknown | null;
-          style?: Json | null;
+          username?: string | null;
+          info?: Json | null;
           inserted_at?: string;
-          public?: boolean | null;
-          bounds?: number[] | null;
         };
       };
       day: {
@@ -105,6 +73,41 @@ export interface Database {
           day_id?: string;
           event_id?: string;
           inserted_at?: string;
+        };
+      };
+      event: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          geom: unknown | null;
+          style: Json | null;
+          inserted_at: string;
+          public: boolean | null;
+          bounds: number[] | null;
+          storage_path: string | null;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          description?: string | null;
+          geom?: unknown | null;
+          style?: Json | null;
+          inserted_at?: string;
+          public?: boolean | null;
+          bounds?: number[] | null;
+          storage_path?: string | null;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          geom?: unknown | null;
+          style?: Json | null;
+          inserted_at?: string;
+          public?: boolean | null;
+          bounds?: number[] | null;
+          storage_path?: string | null;
         };
       };
       icon: {
@@ -224,61 +227,6 @@ export interface Database {
           ts?: unknown | null;
         };
       };
-      timetable: {
-        Row: {
-          id: string;
-          day_id: string;
-          start_time: string;
-          end_time: string;
-          artist_id: string;
-          stage_id: string;
-          inserted_at: string;
-          public: boolean | null;
-        };
-        Insert: {
-          id?: string;
-          day_id: string;
-          start_time: string;
-          end_time: string;
-          artist_id: string;
-          stage_id: string;
-          inserted_at?: string;
-          public?: boolean | null;
-        };
-        Update: {
-          id?: string;
-          day_id?: string;
-          start_time?: string;
-          end_time?: string;
-          artist_id?: string;
-          stage_id?: string;
-          inserted_at?: string;
-          public?: boolean | null;
-        };
-      };
-      asset_type: {
-        Row: {
-          id: string;
-          name: string;
-          description: string | null;
-          inserted_at: string;
-          public: boolean | null;
-        };
-        Insert: {
-          id?: string;
-          name: string;
-          description?: string | null;
-          inserted_at?: string;
-          public?: boolean | null;
-        };
-        Update: {
-          id?: string;
-          name?: string;
-          description?: string | null;
-          inserted_at?: string;
-          public?: boolean | null;
-        };
-      };
       asset: {
         Row: {
           id: string;
@@ -307,6 +255,61 @@ export interface Database {
           asset_type_id?: string;
           icon_id?: string | null;
           event_id?: string;
+          inserted_at?: string;
+          public?: boolean | null;
+        };
+      };
+      asset_type: {
+        Row: {
+          id: string;
+          name: string;
+          description: string | null;
+          inserted_at: string;
+          public: boolean | null;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          description?: string | null;
+          inserted_at?: string;
+          public?: boolean | null;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          description?: string | null;
+          inserted_at?: string;
+          public?: boolean | null;
+        };
+      };
+      timetable: {
+        Row: {
+          id: string;
+          day_id: string;
+          start_time: string;
+          end_time: string;
+          artist_id: string;
+          stage_id: string;
+          inserted_at: string;
+          public: boolean | null;
+        };
+        Insert: {
+          id?: string;
+          day_id: string;
+          start_time: string;
+          end_time: string;
+          artist_id: string;
+          stage_id: string;
+          inserted_at?: string;
+          public?: boolean | null;
+        };
+        Update: {
+          id?: string;
+          day_id?: string;
+          start_time?: string;
+          end_time?: string;
+          artist_id?: string;
+          stage_id?: string;
           inserted_at?: string;
           public?: boolean | null;
         };
