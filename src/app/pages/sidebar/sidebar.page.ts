@@ -68,8 +68,13 @@ export class SidebarPage implements OnInit {
     this.authenticated$ = this.authService.authenticated$
   }
 
-  toggleSideBar(): void {
-    this.menu.toggle('start');
+  onGoTo(route: string[]): void {
+    this.menu.close();
+    this.router.navigate(route)
+  }
+
+  onCloseSideBar(): void {
+    this.menu.close();
   }
 
   signInOrOut() {

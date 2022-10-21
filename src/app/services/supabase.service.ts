@@ -1,8 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ArtistWithRelations } from '@app/interfaces/artist';
-import { DayWithRelations } from '@app/interfaces/entities-with-releation';
-import { MapSource } from '@app/interfaces/map-layer';
-import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import {
   AuthChangeEvent,
   AuthSession,
@@ -13,13 +9,18 @@ import {
   SupabaseClient,
   User
 } from '@supabase/supabase-js';
+import { ArtistWithRelations } from '@app/interfaces/artist';
+import { DayWithRelations } from '@app/interfaces/entities-with-releation';
+import { MapSource } from '@app/interfaces/map-layer';
+import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
 import { catchError, map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Database } from '@app/interfaces/database-definitions';
-import { Artist, Asset, Event, MapIcon } from '@app/interfaces/database-entities';
+import { Artist, Asset, MapIcon } from '@app/interfaces/database-entities';
+import { EventWithRelations } from '@app/interfaces/event';
 
 @Injectable({
   providedIn: 'root'
@@ -179,7 +180,7 @@ export class SupabaseService {
     );
   }
 
-  get events$(): Observable<Pick<Event, 'id' | 'name' | 'description'>[]> {
+  get events$(): Observable<EventWithRelations[]> {
     return from(
       this.supabase
         .from('event')
@@ -187,9 +188,22 @@ export class SupabaseService {
           id,
           name,
           description,
-          storage_path
+          storage_path,
+          day_event(
+            day(
+              name
+            )
+          ),
+          stage(
+            timetable(
+              artist(
+                name,
+                id
+              )
+            )
+          )
         `)
-        .order('name')
+        .order('name') as any
     ).pipe(
       pluck('data')
     )

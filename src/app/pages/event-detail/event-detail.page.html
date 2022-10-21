@@ -13,7 +13,13 @@
          [alt]="'Image of the ' + event.name + ' event'">
     <div class="ion-padding">
       <h1>{{event.name}}</h1>
-      <p>{{event.description}}</p>
+      <p class="days">{{ event.days.join(' | ')}}</p>
+      <p>{{ event.description }}</p>
+      <div class="artists">
+        <div class="artist-badge"
+             *ngFor="let artist of event.artists"
+             [routerLink]="['/tabs', 'artist', artist.id]">{{ artist.name }}</div>
+      </div>
     </div>
   </ng-container>
 </ion-content>

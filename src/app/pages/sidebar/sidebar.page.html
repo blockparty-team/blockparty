@@ -3,7 +3,7 @@
     <ion-toolbar color="secondary">
       <ion-title class="ion-text-center">More</ion-title>
       <ion-buttons slot="end">
-        <ion-button (click)="toggleSideBar()">
+        <ion-button (click)="onCloseSideBar()">
           <ion-icon slot="icon-only"
                     name="chevron-back"></ion-icon>
         </ion-button>
@@ -15,9 +15,9 @@
                color="medium">
     <ion-list color="primary">
       <ion-item *ngFor="let item of navigationItems"
-                [routerLink]="item.routerLink"
                 color="medium"
-                lines="none">
+                lines="none"
+                (click)="onGoTo(item.routerLink)">
         <ion-icon [name]="item.icon"
                   slot="start"></ion-icon>
         <ion-label>

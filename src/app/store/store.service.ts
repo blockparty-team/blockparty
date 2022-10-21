@@ -7,7 +7,7 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { concat, Observable } from 'rxjs';
 import { tap, shareReplay, distinctUntilChanged, filter } from 'rxjs/operators';
 import { DayEventMask } from '@app/interfaces/database-entities';
-import { EventViewModel } from '@app/interfaces/event';
+import { EventWithRelations } from '@app/interfaces/event';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class StoreService {
     shareReplay(1)
   );
 
-  events$: Observable<EventViewModel[]> = concat(
+  events$: Observable<EventWithRelations[]> = concat(
     this.deviceStorageService.get('events').pipe(
       filter(events => !!events)
     ),

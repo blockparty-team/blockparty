@@ -1,0 +1,16 @@
+.days {
+    color: lightgray;
+}
+
+.artists {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .artist-badge {
+        padding: 5px;
+        margin: 5px;
+        background-color: var(--ion-color-tertiary);
+        color: var(--ion-color-tertiary-contrast);
+    }
+}
