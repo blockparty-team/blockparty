@@ -543,7 +543,8 @@ join asset_type at on at.id = a.asset_type_id;
 -- create bucket for artist photo and icons
 INSERT INTO "storage".buckets (id,"name",public) VALUES
 	('icon','icon',true),
-	('artist','artist',true);
+	('artist','artist',true),
+	('event','event',true);
 
 
 -----------------------

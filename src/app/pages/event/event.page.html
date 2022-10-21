@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/map"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Events</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="medium">
+  <ng-container *ngIf="events$ | async as events">
+    <ion-card *ngFor="let event of events"
+              [style.--background]="'url(' + imgUrl(event.storage_path) + ')'"
+              (click)="onGoToEvent(event.id)">
+      <div class="card-content">
+        <h1>
+          {{event.name}}
+        </h1>
+        <ion-badge color="tertiary">Actionhygge</ion-badge>
+      </div>
+    </ion-card>
+  </ng-container>
+</ion-content>

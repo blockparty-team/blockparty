@@ -15,11 +15,11 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
-import { catchError, distinctUntilChanged, map, pluck, shareReplay, tap } from 'rxjs/operators';
+import { catchError, map, pluck } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Database } from '@app/interfaces/database-definitions';
-import { Artist, Asset, MapIcon } from '@app/interfaces/database-entities';
+import { Artist, Asset, Event, MapIcon } from '@app/interfaces/database-entities';
 
 @Injectable({
   providedIn: 'root'
@@ -177,6 +177,22 @@ export class SupabaseService {
         })
       })
     );
+  }
+
+  get events$(): Observable<Pick<Event, 'id' | 'name' | 'description'>[]> {
+    return from(
+      this.supabase
+        .from('event')
+        .select(`
+          id,
+          name,
+          description,
+          storage_path
+        `)
+        .order('name')
+    ).pipe(
+      pluck('data')
+    )
   }
 
   get timetables$(): Observable<DayEventStageTimetable[]> {

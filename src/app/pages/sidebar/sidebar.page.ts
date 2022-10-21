@@ -34,10 +34,15 @@ export class SidebarPage implements OnInit {
     {
       name: 'Events',
       icon: 'musical-notes-outline',
-      routerLink: ['/events']
+      routerLink: ['/event']
     },
     {
-      name: 'Sponsors & Parters',
+      name: 'Playlists',
+      icon: 'play-outline',
+      routerLink: ['/event']
+    },
+    {
+      name: 'Sponsors & Partners',
       icon: 'rocket-outline',
       routerLink: ['/partners']
     },

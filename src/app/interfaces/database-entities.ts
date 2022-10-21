@@ -10,6 +10,7 @@ export type Artist = Database['public']['Tables']['artist']['Row'];
 export type Icon = Database['public']['Tables']['icon']['Row'];
 export type AssetType = Database['public']['Tables']['asset_type']['Row'];
 export type Asset = Database['public']['Tables']['asset']['Row'];
+export type Profile = Database['public']['Tables']['profile']['Row'];
 
 // Views
 export type AssetGeojson = Database['public']['Views']['asset_geojson']['Row'];
