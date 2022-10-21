@@ -30,5 +30,4 @@ export interface EventViewModel extends Pick<Event, 'id' | 'name' | 'description
     artists: Artist[];
     days: string[];
     imgUrl: string;
-
 }

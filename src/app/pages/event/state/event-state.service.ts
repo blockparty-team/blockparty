@@ -3,7 +3,7 @@ import { EventViewModel } from '@app/interfaces/event';
 import { pathToImageUrl } from '@app/shared/utils';
 import { StoreService } from '@app/store/store.service';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
