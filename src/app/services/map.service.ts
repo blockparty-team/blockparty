@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { concat, forkJoin, Observable } from 'rxjs';
+import { concat, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
-import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { color } from '@app/shared/colors';
-import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { GeolocationService } from './geolocation.service';
 import { FileService } from './file.service';
+import { StoreService } from '@app/store/store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +22,7 @@ export class MapService {
   constructor(
     private mapStateService: MapStateService,
     private geolocationService: GeolocationService,
-    private supabaseService: SupabaseService,
+    private store: StoreService,
     private fileService: FileService
   ) { }
 
@@ -174,21 +174,34 @@ export class MapService {
   }
 
   private get addLayers$(): Observable<any> {
-    return forkJoin(
-      Object.values(MapSource)
-        .map(layer => this.supabaseService.tableAsGeojson(layer))
-    ).pipe(
-      tap((layers) => {
+    return this.store.mapLayers$.pipe(
+      tap(layers => {
 
-        // Add map sources based on MapLayer Enum
-        Object.values(MapSource)
-          .map((layerName, i) => [layerName, layers[i]])
-          .forEach(([layerName, geojson]) => {
-            this.map.addSource(layerName as string, {
-              type: 'geojson',
-              data: geojson
-            })
+        // Add map sources
+        layers.forEach(({ mapSource, geojson }) => {
+
+          // Layer can be added twice since initial load from local storage
+          if (this.map.getSource(mapSource)) {
+            (this.map.getSource(mapSource) as any).setData(geojson)
+            return;
+          }
+
+          this.map.addSource(mapSource as string, {
+            type: 'geojson',
+            data: geojson
           })
+        });
+
+        // Layer can be added twice since initial load from local storage
+        const layersAdded = (Object.values(MapLayer) as string[]).every(layer => {
+          return this.map.getStyle().layers
+            .map(layer => layer.id)
+            .includes(layer)
+        })
+
+        if (layersAdded) {
+          return;
+        }
 
         // Add layers
         this.map.addLayer({
@@ -325,37 +338,37 @@ export class MapService {
     );
   }
 
-  private add3dBuildings(): void {
-    this.map.addLayer({
-      'id': '3d-buildings',
-      'source': 'openmaptiles',
-      'source-layer': 'building',
-      'type': 'fill-extrusion',
-      'minzoom': 16,
-      'paint': {
-        'fill-extrusion-color': 'hsl(47, 66%, 59%)',
-        'fill-extrusion-height': [
-          'interpolate',
-          ['linear'],
-          ['zoom'],
-          16,
-          0,
-          16.5,
-          ['get', 'render_height']
-        ],
-        'fill-extrusion-base': [
-          'interpolate',
-          ['linear'],
-          ['zoom'],
-          16,
-          0,
-          16.5,
-          ['get', 'render_min_height']
-        ],
-        'fill-extrusion-opacity': 0.4
-      }
-    });
-  }
+  // private add3dBuildings(): void {
+  //   this.map.addLayer({
+  //     'id': '3d-buildings',
+  //     'source': 'openmaptiles',
+  //     'source-layer': 'building',
+  //     'type': 'fill-extrusion',
+  //     'minzoom': 16,
+  //     'paint': {
+  //       'fill-extrusion-color': 'hsl(47, 66%, 59%)',
+  //       'fill-extrusion-height': [
+  //         'interpolate',
+  //         ['linear'],
+  //         ['zoom'],
+  //         16,
+  //         0,
+  //         16.5,
+  //         ['get', 'render_height']
+  //       ],
+  //       'fill-extrusion-base': [
+  //         'interpolate',
+  //         ['linear'],
+  //         ['zoom'],
+  //         16,
+  //         0,
+  //         16.5,
+  //         ['get', 'render_min_height']
+  //       ],
+  //       'fill-extrusion-opacity': 0.4
+  //     }
+  //   });
+  // }
 
   private get loadMapIcons$(): Observable<any> {
     return this.fileService.mapIconUrls$.pipe(
