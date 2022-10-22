@@ -319,7 +319,7 @@ export class MapService {
     );
   }
 
-  add3dBuildings(): void {
+  private add3dBuildings(): void {
     this.map.addLayer({
       'id': '3d-buildings',
       'source': 'openmaptiles',

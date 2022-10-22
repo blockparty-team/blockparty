@@ -189,6 +189,7 @@ export class SupabaseService {
           name,
           description,
           storage_path,
+          bounds,
           day_event(
             day(
               name
@@ -203,9 +204,10 @@ export class SupabaseService {
             )
           )
         `)
-        .order('name') as any
+        .order('name')
     ).pipe(
-      pluck('data')
+      // Trouble with type, hence this cast
+      map(({data, }) => data as EventWithRelations[])
     )
   }
 

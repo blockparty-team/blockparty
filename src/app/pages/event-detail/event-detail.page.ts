@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventViewModel } from '@app/interfaces/event';
+import { MapService } from '@app/services/map.service';
+import { LngLatBoundsLike } from 'maplibre-gl';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { EventStateService } from '../event/state/event-state.service';
@@ -16,7 +18,9 @@ export class EventDetailPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
-    private eventStateService: EventStateService
+    private eventStateService: EventStateService,
+    private mapService: MapService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -27,5 +31,10 @@ export class EventDetailPage implements OnInit {
       ))
     );
   }
-  
+
+  onZoomToEventOnMap(bounds: number[]) {
+    this.mapService.fitBounds(bounds as LngLatBoundsLike)
+    this.router.navigate(['/tabs', 'map'])
+  }
+
 }
