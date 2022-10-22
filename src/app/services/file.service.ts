@@ -46,8 +46,6 @@ export class FileService {
 
   }
 
-
-
   allFileUrls(bucket: string): Observable<SafeResourceUrl[]> {
 
     return this.supabaseService.listBucketFiles(bucket).pipe(
@@ -76,6 +74,5 @@ export class FileService {
         })
       })
     )
-
   }
 }

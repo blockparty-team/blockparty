@@ -3,10 +3,11 @@ import { Preferences } from '@capacitor/preferences';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-export type StorageKeys = 
-  'artists' | 
-  'favorites' | 
-  'timetable' | 
+export type StorageKeys =
+  'days' |
+  'artists' |
+  'favorites' |
+  'timetable' |
   'events';
 
 @Injectable({

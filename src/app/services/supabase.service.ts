@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
+import { catchError, map, pluck } from 'rxjs/operators';
 import {
   AuthChangeEvent,
   AuthSession,
@@ -9,17 +11,16 @@ import {
   SupabaseClient,
   User
 } from '@supabase/supabase-js';
-import { ArtistWithRelations } from '@app/interfaces/artist';
-import { DayWithRelations } from '@app/interfaces/entities-with-releation';
-import { MapSource } from '@app/interfaces/map-layer';
-import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
-import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
-import { catchError, map, pluck } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
+
+import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
 import { Artist, Asset, MapIcon } from '@app/interfaces/database-entities';
+import { ArtistWithRelations } from '@app/interfaces/artist';
+import { DayEvent } from '@app/interfaces/day-event';
+import { MapSource } from '@app/interfaces/map-layer';
+import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
+import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { EventWithRelations } from '@app/interfaces/event';
 
 @Injectable({
@@ -65,7 +66,7 @@ export class SupabaseService {
     return from(
       this.supabase.auth.signInWithOAuth({ provider })
     ).pipe(
-      map(({data, error}) => data)
+      map(({ data, }) => data)
     )
   }
 
@@ -102,7 +103,20 @@ export class SupabaseService {
       this.supabase
         .from('artist')
         .select(`
-          *,
+          id,
+          name,
+          description,
+          bandcamp,
+          spotify,
+          tidal,
+          apple_music,
+          soundcloud,
+          youtube,
+          instagram,
+          facebook,
+          webpage,
+          bandcamp_iframe,
+          storage_path,
           timetable(
             start_time,
             end_time,
@@ -118,7 +132,8 @@ export class SupabaseService {
         `)
         .order('name')
     ).pipe(
-      map(res => res.data)
+      // TODO: Trouble with type, hence this cast
+      map(({ data, }) => data as ArtistWithRelations[])
     );
   }
 
@@ -135,7 +150,7 @@ export class SupabaseService {
     );
   }
 
-  get days$(): Observable<DayWithRelations[]> {
+  get days$(): Observable<DayEvent[]> {
     return from(
       this.supabase
         .from('day')
@@ -143,27 +158,11 @@ export class SupabaseService {
           id,
           day,
           name,
-          description,
           day_event(
             event(
               id,
               name,
-              description,
-              bounds,
-              stage(
-                id,
-                name, 
-                description,
-                timetable(
-                  id,
-                  day_id,
-                  start_time,
-                  end_time,
-                  artist(
-                    *
-                  )
-                )
-              )
+              bounds
             )
           )
       `)
@@ -206,8 +205,8 @@ export class SupabaseService {
         `)
         .order('name')
     ).pipe(
-      // Trouble with type, hence this cast
-      map(({data, }) => data as EventWithRelations[])
+      // TODO: Trouble with type, hence this cast
+      map(({ data, }) => data as EventWithRelations[])
     )
   }
 

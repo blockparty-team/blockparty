@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
-import { DayWithRelations } from '@app/interfaces/entities-with-releation';
+import { DayEvent } from '@app/interfaces/day-event';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
@@ -14,17 +14,26 @@ import { EventWithRelations } from '@app/interfaces/event';
 })
 export class StoreService {
 
-  days$: Observable<DayWithRelations[]> = this.supabase.days$.pipe(
+  days$: Observable<DayEvent[]> = concat(
+    this.deviceStorageService.get('days').pipe(
+      filter(days => !!days)
+    ),
+    this.supabase.days$.pipe(
+      filter(days => !!days),
+      tap(days => this.deviceStorageService.set('days', days))
+    )
+  ).pipe(
+    distinctUntilChanged(),
     shareReplay(1)
-  );
-
+  )
+  
   events$: Observable<EventWithRelations[]> = concat(
     this.deviceStorageService.get('events').pipe(
       filter(events => !!events)
     ),
     this.supabase.events$.pipe(
-      tap(events => this.deviceStorageService.set('events', events)),
-      filter(events => !!events)
+      filter(events => !!events),
+      tap(events => this.deviceStorageService.set('events', events))
     )
   ).pipe(
     distinctUntilChanged(),
@@ -36,8 +45,8 @@ export class StoreService {
       filter(timetables => !!timetables)
     ),
     this.supabase.timetables$.pipe(
-      tap(timetables => this.deviceStorageService.set('timetable', timetables)),
-      filter(timetables => !!timetables)
+      filter(timetables => !!timetables),
+      tap(timetables => this.deviceStorageService.set('timetable', timetables))
     )
   ).pipe(
     distinctUntilChanged(),
@@ -49,8 +58,8 @@ export class StoreService {
       filter(artists => !!artists)
     ),
     this.supabase.artists$.pipe(
-      tap(artists => this.deviceStorageService.set('artists', artists)),
-      filter(artists => !!artists)
+      filter(artists => !!artists),
+      tap(artists => this.deviceStorageService.set('artists', artists))
     )
   ).pipe(
     distinctUntilChanged(),

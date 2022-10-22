@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { concat, EMPTY, forkJoin, Observable, of } from 'rxjs';
-import { first, map, tap } from 'rxjs/operators';
-import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, MapMouseEvent } from 'maplibre-gl';
+import { concat, forkJoin, Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { SupabaseService } from '@app/services/supabase.service';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
