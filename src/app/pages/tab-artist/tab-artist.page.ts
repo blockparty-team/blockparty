@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
-import { pathToImageUrl } from '@app/shared/utils';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistWithRelations } from '@app/interfaces/artist';
@@ -111,10 +110,6 @@ export class TabArtistPage implements OnInit {
 
   toggleDayGroupedFavorites(): void {
     this._showDayGroupedFavorites$.next(!this._showDayGroupedFavorites$.value);
-  }
-
-  imgUrl(path: string): string {
-    return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
   trackArtist(index: number, item: ArtistWithRelations) {

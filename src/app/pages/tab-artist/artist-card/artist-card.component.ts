@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { ArtistWithRelations } from '@app/interfaces/artist';
-import { pathToImageUrl } from '@app/shared/utils';
 import { ArtistStateService } from '../state/artist-state.service';
 
 @Component({
@@ -17,10 +16,6 @@ export class ArtistCardComponent implements OnInit {
   ) { }
 
   ngOnInit() {}
-
-  imgUrl(path: string): string {
-    return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
-  }
 
   toggleFavorite(id: string): void {
     this.artistStateService.toggleArtistFavorite(id);

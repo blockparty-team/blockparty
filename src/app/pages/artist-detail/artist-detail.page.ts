@@ -3,11 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
-import { pathToImageUrl } from '@app/shared/utils';
-import { combineLatest, Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../tab-artist/state/artist-state.service';
-import { TapRecognizer } from 'maplibre-gl';
 
 @Component({
   selector: 'app-artist-detail',
@@ -34,10 +32,6 @@ export class ArtistDetailPage implements OnInit {
         map(artists => artists.find(artist => artist.id === id))
       ))
     );
-  }
-
-  imgUrl(path: string): string {
-    return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 
   toggleFavorite(id: string): void {
