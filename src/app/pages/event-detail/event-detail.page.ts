@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EventViewModel } from '@app/interfaces/event';
+import { MapLayer } from '@app/interfaces/map-layer';
 import { MapService } from '@app/services/map.service';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { Observable } from 'rxjs';
@@ -32,9 +33,10 @@ export class EventDetailPage implements OnInit {
     );
   }
 
-  onZoomToEventOnMap(bounds: number[]) {
-    this.mapService.fitBounds(bounds as LngLatBoundsLike)
-    this.router.navigate(['/tabs', 'map'])
+  onZoomToEventOnMap(id: string, bounds: number[]) {
+    this.mapService.fitBounds(bounds as LngLatBoundsLike);
+    this.mapService.highlightFeature(MapLayer.EventHighLight, id, true);
+    this.router.navigate(['/tabs', 'map']);
   }
 
 }

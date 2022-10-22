@@ -124,8 +124,14 @@ export class MapService {
     this.map.resize();
   }
 
-  public highlightFeature(layerName: MapLayer, id: string): void {
+  public highlightFeature(layerName: MapLayer, id: string, autoRemove = false): void {
     this.map.setFilter(layerName, ['==', 'id', id]);
+
+    if (autoRemove) {
+      setTimeout(() => {
+        this.map.setFilter(layerName, ['==', 'id', '']);
+      }, 5000);
+    }
   }
 
   public removeFeatureHighlight(layerName: MapLayer): void {
