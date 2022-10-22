@@ -12,14 +12,28 @@
     <img [src]="event.imgUrl"
          [alt]="'Image of the ' + event.name + ' event'">
     <div class="ion-padding">
-      <h1>{{event.name}}</h1>
-      <p class="days">{{ event.days.join(' | ')}}</p>
-      <p>{{ event.description }}</p>
-      <div class="artists">
+      <header>
+        <h1>
+          {{event.name}}
+
+          <ion-icon slot="icon-only"
+                    name="location-outline"
+                    (click)="onZoomToEventOnMap(event.id, event.bounds)">
+          </ion-icon>
+        </h1>
+
+        <p class="days">{{ event.days.join(' | ')}}</p>
+      </header>
+
+      <section class="description">
+        <p>{{ event.description }}</p>
+      </section>
+
+      <section class="artists">
         <div class="artist-badge"
              *ngFor="let artist of event.artists"
              [routerLink]="['/tabs', 'artist', artist.id]">{{ artist.name }}</div>
-      </div>
+      </section>
     </div>
   </ng-container>
 </ion-content>

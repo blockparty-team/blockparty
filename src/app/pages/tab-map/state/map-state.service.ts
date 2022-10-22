@@ -2,8 +2,7 @@ import { Injectable } from '@angular/core';
 import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
 import { StoreService } from '@app/store/store.service';
-import { DayWithRelations, EventWithRelations } from '@app/interfaces/entities-with-releation';
-import { SupabaseService } from '@app/services/supabase.service';
+import { DayEvent, PartialEvent } from '@app/interfaces/day-event';
 import { distinctUntilChanged, filter, map, pluck, shareReplay, withLatestFrom } from 'rxjs/operators';
 
 @Injectable({
@@ -26,9 +25,9 @@ export class MapStateService {
   private _mapInteraction$ = new BehaviorSubject<boolean>(false);
   mapInteraction$: Observable<boolean> = this._mapInteraction$.asObservable();
 
-  days$: Observable<DayWithRelations[]> = this.supabase.days$;
+  days$: Observable<DayEvent[]> = this.store.days$;
 
-  events$: Observable<EventWithRelations[]> = combineLatest([
+  events$: Observable<PartialEvent[]> = combineLatest([
     this.days$,
     this.selectedDayId$
   ]).pipe(
@@ -52,7 +51,6 @@ export class MapStateService {
   );
 
   constructor(
-    private supabase: SupabaseService,
     private store: StoreService
   ) { }
 

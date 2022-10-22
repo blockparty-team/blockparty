@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
 import { ModalController, SegmentCustomEvent } from '@ionic/angular';
-import { combineLatest, from, Observable } from 'rxjs';
-import { filter, map, switchMap, tap, withLatestFrom, pluck, delay, distinctUntilChanged } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { filter, map, switchMap, tap, withLatestFrom, delay, distinctUntilChanged } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { StoreService } from '@app/store/store.service';
 import { MapService } from '@app/services/map.service';
-import { DayWithRelations } from '@app/interfaces/entities-with-releation';
+import { DayEvent, PartialEvent } from '@app/interfaces/day-event';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { animations } from '@app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
@@ -22,8 +21,8 @@ import { Tab } from '@app/interfaces/tab';
 })
 export class TabMapPage implements OnInit {
 
-  days$: Observable<DayWithRelations[]>;
-  events$: Observable<DayWithRelations['event']>;
+  days$: Observable<DayEvent[]>;
+  events$: Observable<PartialEvent[]>;
   selectedDayId$: Observable<string>;
   selectedEventId$: Observable<string>;
   hideHeader$: Observable<boolean>;
