@@ -1,3 +1,5 @@
+import { FeatureCollection, LineString, Point, Polygon } from "geojson";
+
 // Table or view names for DB entities with geometries
 export enum MapSource {
     DayEventMask = 'day_event_mask',
@@ -35,9 +37,7 @@ export enum DayEventMask {
     DayEventMask = 'day-event-mask',
 }
 
-export const mapSourceLayer = {
-    'day_event_mask': DayEventMask,
-    'stage': StageLayer,
-    'event': Event,
-    'asset_geojson': AssetLayer
+export interface MapSourceGeojson { 
+    mapSource: MapSource; 
+    geojson: FeatureCollection<Point | LineString | Polygon>;
 }

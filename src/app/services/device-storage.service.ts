@@ -8,7 +8,8 @@ export type StorageKeys =
   'artists' |
   'favorites' |
   'timetable' |
-  'events';
+  'events' |
+  'mapLayers';
 
 @Injectable({
   providedIn: 'root'
