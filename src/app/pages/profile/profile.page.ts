@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AuthService } from '@app/services/auth.service';
+import { UserMetadata } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-profile',
@@ -11,6 +12,7 @@ import { map } from 'rxjs/operators';
 })
 export class ProfilePage implements OnInit {
 
+  userMetaData$: Observable<UserMetadata>
   name$: Observable<string>;
   avatarUrl$: Observable<string>
 
@@ -19,14 +21,10 @@ export class ProfilePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.authService.session$.subscribe(console.log)
 
-    this.name$ = this.authService.session$.pipe(
-      map(session => session.user.user_metadata.name)
-    )
-
-    this.avatarUrl$ = this.authService.session$.pipe(
-      map(session => session.user.user_metadata.avatar_url)
+    this.userMetaData$ = this.authService.session$.pipe(
+      filter(session => !!session),
+      map(session => session.user.user_metadata),
     )
   }
 

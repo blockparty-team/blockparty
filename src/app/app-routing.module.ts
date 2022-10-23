@@ -39,6 +39,18 @@ const routes: Routes = [
         loadChildren: () => import('./pages/event-detail/event-detail.module').then(m => m.EventDetailPageModule)
       }
     ]
+  },
+  {
+    path: 'playlist',
+    loadChildren: () => import('./pages/playlist/playlist.module').then( m => m.PlaylistPageModule)
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'merch',
+    loadChildren: () => import('./pages/merch/merch.module').then( m => m.MerchPageModule)
   }
 ];
 @NgModule({

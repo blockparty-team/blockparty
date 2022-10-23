@@ -5,17 +5,10 @@
                        icon="chevron-back">
       </ion-back-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <ion-title>Playlists</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content color="medium">
-  <ng-container *ngIf="userMetaData$ | async as userMeta">
-    <h1 class="ion-text-center">
-      <ion-avatar class="ion-margin">
-        <img [src]="userMeta.avatar_url" />
-      </ion-avatar>
-      {{userMeta.name}}
-    </h1>
-  </ng-container>
+  <h1 class="ion-text-center">Coming...</h1>
 </ion-content>

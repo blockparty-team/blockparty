@@ -39,7 +39,7 @@ export class SidebarPage implements OnInit {
     {
       name: 'Playlists',
       icon: 'play-outline',
-      routerLink: ['/event']
+      routerLink: ['/playlist']
     },
     {
       name: 'Sponsors & Partners',
@@ -49,12 +49,12 @@ export class SidebarPage implements OnInit {
     {
       name: 'Merch',
       icon: 'cash-outline',
-      routerLink: ['/partners']
+      routerLink: ['/merch']
     },
     {
       name: 'Settings',
       icon: 'settings-outline',
-      routerLink: ['/partners']
+      routerLink: ['/settings']
     },
   ]
 
