@@ -37,20 +37,16 @@ export class SupabaseService {
       environment.supabaseUrl,
       environment.supabaseAnonKey
     );
-
-    this.authChanges((event, session) => {
-      if (event === 'SIGNED_IN') {
-        this._session$.next(session);
-      } else {
-        this._session$.next(null);
-      }
-    })
   }
 
   authChanges(
     callback: (event: AuthChangeEvent, session: Session | null) => void
   ) {
     return this.supabase.auth.onAuthStateChange(callback);
+  }
+
+  setSession(session: Session): void {
+    this._session$.next(session);
   }
 
   signIn(email: string) {
