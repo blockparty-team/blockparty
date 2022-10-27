@@ -43,7 +43,7 @@ export class TimetableListComponent implements OnInit {
   }
 
   onToggleFavorite(id: string): void {
-    this.favoritesSerive.toggleFavorite('artists', id);
+    this.favoritesSerive.toggleFavorite('artist', id);
   }
 
 }

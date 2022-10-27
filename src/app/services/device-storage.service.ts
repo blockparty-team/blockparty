@@ -28,4 +28,18 @@ export class DeviceStorageService {
       map(prop => JSON.parse(prop.value))
     );
   }
+
+  // Methods below is used by supabase client to persist login in IOS/Android app
+  getItem(key: string): Promise<string> {
+    return Preferences.get({key}) as Promise<any>;
+  }
+
+  setItem(key: string, value: string): Promise<void> {
+    return Preferences.set({key, value});
+  }
+
+  removeItem(key: string): Promise<void> {
+    return Preferences.remove({key});
+  }
+
 }

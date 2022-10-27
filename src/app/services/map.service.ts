@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { concat, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { concat, EMPTY, Observable } from 'rxjs';
+import { catchError, filter, tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
@@ -372,7 +372,8 @@ export class MapService {
 
   private get loadMapIcons$(): Observable<any> {
     return this.fileService.mapIconUrls$.pipe(
-      tap(mapIcons => mapIcons.forEach(icon => {
+      filter(icons => !!icons),
+      tap(icons => icons.forEach(icon => {
         this.map.loadImage(icon.fileUrl, (error, img) => {
 
           if (error) {
@@ -387,7 +388,11 @@ export class MapService {
 
   private addMapData(): void {
     concat(
-      this.loadMapIcons$,
+      this.loadMapIcons$.pipe(
+        catchError(err => {
+          console.error(err);
+          return EMPTY;
+        })),
       this.addLayers$
     ).subscribe();
   }

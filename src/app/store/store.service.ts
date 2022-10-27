@@ -67,6 +67,19 @@ export class StoreService {
     shareReplay(1)
   );
 
+  // favorites$: Observable<DayEvent[]> = concat(
+  //   this.deviceStorageService.get('favorites').pipe(
+  //     filter(favorites => !!favorites)
+  //   ),
+  //   this.supabase.favorites$.pipe(
+  //     filter(favorites => !!favorites),
+  //     tap(favorites => this.deviceStorageService.set('favorites', favorites))
+  //   )
+  // ).pipe(
+  //   distinctUntilChanged(),
+  //   shareReplay(1)
+  // );
+
   dayMaskBounds$: Observable<DayEventMask[]> = this.supabase.dayMaskBounds$.pipe(
     shareReplay(1)
   );

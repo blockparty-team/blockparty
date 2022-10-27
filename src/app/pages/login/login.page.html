@@ -12,6 +12,26 @@
 
   <form (ngSubmit)="signIn()"
         [formGroup]="credentials">
+
+    <ion-button type="button"
+                expand="block"
+                color="secondary"
+                (click)="signInWithGoogle()">
+      <ion-icon name="logo-google"
+                slot="start"></ion-icon>
+      Sign in with Google
+    </ion-button>
+
+    <ion-button type="button"
+                expand="block"
+                color="secondary">
+      <ion-icon name="logo-facebook"
+                slot="start"></ion-icon>
+      Sign in with Facebook
+    </ion-button>
+
+    <br>
+
     <div class="input-group">
       <ion-item>
         <ion-input type="email"
@@ -44,21 +64,5 @@
                 fill="clear">or Sign up!
     </ion-button>
 
-    <br>
-    <ion-button type="button"
-                expand="block"
-                color="secondary"
-                (click)="signInWithGoogle()">
-      <ion-icon name="logo-google"
-                slot="start"></ion-icon>
-      Sign in with Google
-    </ion-button>
-    <!-- <ion-button type="button"
-                expand="block"
-                color="secondary">
-      <ion-icon name="logo-facebook"
-                slot="start"></ion-icon>
-      Sign in with Facebook
-    </ion-button> -->
   </form>
 </ion-content>

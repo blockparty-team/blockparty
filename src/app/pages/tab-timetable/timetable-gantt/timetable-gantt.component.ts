@@ -192,7 +192,7 @@ export class TimetableGanttComponent implements OnInit {
   }
 
   toggleArtistFavorite(id: string): void {
-    this.favoritesService.toggleFavorite('artists', id);
+    this.favoritesService.toggleFavorite('artist', id);
   }
 
 }

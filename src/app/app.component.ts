@@ -31,7 +31,6 @@ export class AppComponent implements OnInit {
     })
 
     this.supabase.authChanges((event, session) => {
-      console.log(event, session);
       if (event === 'SIGNED_IN') {
         this.supabase.setSession(session);
       } else {

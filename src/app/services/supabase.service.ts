@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Platform } from '@ionic/angular';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
 import { catchError, map, pluck } from 'rxjs/operators';
 import {
@@ -15,13 +16,14 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
-import { Artist, Asset, MapIcon } from '@app/interfaces/database-entities';
+import { Artist, Asset, Favorite, FavoriteEntity, MapIcon } from '@app/interfaces/database-entities';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayEvent } from '@app/interfaces/day-event';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { EventWithRelations } from '@app/interfaces/event';
+import { DeviceStorageService } from './device-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -32,10 +34,22 @@ export class SupabaseService {
   private _session$ = new BehaviorSubject<AuthSession | null>(null);
   session$: Observable<AuthSession | null> = this._session$.asObservable();
 
-  constructor() {
+  constructor(
+    private deviceStorage: DeviceStorageService,
+    private platform: Platform
+  ) {
     this.supabase = createClient<Database>(
       environment.supabaseUrl,
-      environment.supabaseAnonKey
+      environment.supabaseAnonKey,
+      {
+        // auth: {
+        //   storage: this.deviceStorage,
+        //   autoRefreshToken: true,
+        //   persistSession: true,
+        //   detectSessionInUrl: !this.platform.is('capacitor')
+        // }
+      }
+
     );
   }
 
@@ -277,6 +291,47 @@ export class SupabaseService {
     ).pipe(
       pluck('data')
     );
+  }
+
+  get favorites$(): Observable<Favorite[]> {
+    return from(
+      this.supabase
+        .from('favorite')
+        .select()
+    ).pipe(
+      pluck('data')
+    )
+  }
+
+  addFavorites(entity: FavoriteEntity, ids: string[]): Observable<Favorite[]> {
+    return from(
+      this.supabase
+        .from('favorite')
+        .insert({
+          user_id: this._session$.value.user.id,
+          entity,
+          ids
+        })
+        .select()
+    ).pipe(
+      pluck('data')
+    )
+  }
+
+  upsertFavorites(id: string, entity: FavoriteEntity, ids: string[]): Observable<Favorite[]> {
+    return from(
+      this.supabase
+        .from('favorite')
+        .upsert({
+          id,
+          user_id: this._session$.value.user.id,
+          entity,
+          ids
+        })
+        .select()
+    ).pipe(
+      pluck('data')
+    )
   }
 
   downloadFile(bucket: string, path: string) {

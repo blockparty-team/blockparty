@@ -11,11 +11,13 @@
 
 <ion-content color="medium">
   <ng-container *ngIf="userMetaData$ | async as userMeta">
-    <h1 class="ion-text-center">
+    <div class="container">
       <ion-avatar class="ion-margin">
         <img [src]="userMeta.avatar_url" />
       </ion-avatar>
-      {{userMeta.name}}
-    </h1>
+      <h1 class="ion-text-center">
+        {{userMeta.name}}
+      </h1>
+    </div>
   </ng-container>
 </ion-content>
