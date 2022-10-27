@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
-import { Favorites } from '@app/interfaces/favorites';
-import { BehaviorSubject, concat, Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Favorite, FavoriteEntity } from '@app/interfaces/database-entities';
+// import { Favorites } from '@app/interfaces/favorites';
+// import { StoreService } from '@app/store/store.service';
+import { BehaviorSubject, combineLatest, concat, Observable } from 'rxjs';
+import { filter, mapTo, tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 import { DeviceStorageService } from './device-storage.service';
+import { SupabaseService } from './supabase.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritesService {
 
-  private initialFavorites: Favorites = {
-    artists: [],
-    stages: [],
-    assets: []
-  }
+  private initialFavorites: Partial<Favorite>[] = [
+    {
+      entity: 'artist',
+      ids: []
+    }
+  ]
 
-  private _favorites$ = new BehaviorSubject<Favorites>(this.initialFavorites);
-  
-  public favorites$: Observable<Favorites> = concat(
+  private _favorites$ = new BehaviorSubject<Partial<Favorite>[]>(this.initialFavorites);
+
+  public favorites$: Observable<Partial<Favorite>[]> = concat(
     this.deviceStorageService.get('favorites').pipe(
       tap(favorites => {
         if (favorites) this._favorites$.next(favorites);
@@ -27,31 +32,55 @@ export class FavoritesService {
   )
 
   constructor(
-    private deviceStorageService: DeviceStorageService
+    private deviceStorageService: DeviceStorageService,
+    private authService: AuthService,
+    private supabase: SupabaseService,
   ) { }
 
-  toggleFavorite(type: keyof Favorites, id: string) {
-    if (this._favorites$.value[type].includes(id)) {
+  toggleFavorite(entity: FavoriteEntity, id: string) {
 
-      const update = {
-        ...this._favorites$.value,
-        artists: this._favorites$.value[type].filter(typeId => typeId !== id)
+    const update = this._favorites$.value.map(favorite => favorite.entity === entity
+      ? {
+        ...favorite,
+        ids: favorite.ids.includes(id)
+          ? favorite.ids.filter(ids => ids !== id)
+          : [...favorite.ids, id]
       }
+      : favorite
+    )
 
-      this._favorites$.next(update);
-      this.deviceStorageService.set('favorites', update);
-    } else {
-      const update = {
-        ...this._favorites$.value,
-        [type]: [...this._favorites$.value[type], id]
-      }
+    this._favorites$.next(update);
+    this.deviceStorageService.set('favorites', update);
 
-      this._favorites$.next(update);
-      this.deviceStorageService.set('favorites', update);
-    }
+    // Todo move this sideeffect
+    this.authService.authenticated$.pipe(
+      filter(auth => auth),
+      mapTo(this._favorites$.value.find(favorite => favorite.entity === entity).id),
+      tap(favoriteId => {
+
+        if (favoriteId) {
+          this.supabase.upsertFavorites(
+            favoriteId,
+            entity,
+            this._favorites$.value.find(favorite => favorite.entity === entity).ids
+          ).subscribe(favorites => {
+            this._favorites$.next(favorites)
+          });
+        } else {
+          this.supabase.addFavorites(
+            entity, this._favorites$.value.find(favorite => favorite.entity === entity).ids
+          ).subscribe(favorites => {
+            this._favorites$.next(favorites)
+          })
+        }
+      })
+
+    ).subscribe()
   }
 
-  isFavorite(type: keyof Favorites, id: string): boolean {
-    return this._favorites$.value[type].includes(id);
+  isFavorite(entity: FavoriteEntity, id: string): boolean {
+    return this._favorites$.value
+      .find(favorite => favorite.entity === entity).ids
+      .includes(id);
   }
 }

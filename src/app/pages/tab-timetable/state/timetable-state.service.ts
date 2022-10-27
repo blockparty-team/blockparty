@@ -46,7 +46,7 @@ export class TimetableStateService {
         ...stage,
         timetable: stage.timetable.map(timetable => ({
           ...timetable,
-          isFavorite: this.favoritesService.isFavorite('artists', timetable.artist_id)
+          isFavorite: this.favoritesService.isFavorite('artist', timetable.artist_id)
         }))
       }));
 
