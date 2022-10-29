@@ -1,4 +1,4 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons>
       <ion-back-button defaultHref="/tabs"
@@ -6,29 +6,55 @@
       </ion-back-button>
     </ion-buttons>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content fullscreen>
+  <ion-fab vertical="top"
+           horizontal="start"
+           slot="fixed">
+    <ion-back-button defaultHref="/tabs"
+                     icon="chevron-back"
+                     color="light">
+    </ion-back-button>
+  </ion-fab>
 
-  <form (ngSubmit)="signIn()"
-        [formGroup]="credentials">
 
+
+  <div class="container">
     <ion-button type="button"
-                expand="block"
                 color="secondary"
+                size="large"
                 (click)="signInWithGoogle()">
       <ion-icon name="logo-google"
+                size="large"
                 slot="start"></ion-icon>
       Sign in with Google
     </ion-button>
 
     <ion-button type="button"
-                expand="block"
-                color="secondary">
+                disabled
+                color="secondary"
+                size="large">
       <ion-icon name="logo-facebook"
+                size="large"
                 slot="start"></ion-icon>
       Sign in with Facebook
     </ion-button>
+    <ion-button type="button"
+                disabled
+                color="secondary"
+                size="large">
+      <ion-icon name="logo-apple"
+                size="large"
+                slot="start"></ion-icon>
+      Sign in with Apple
+    </ion-button>
+  </div>
+
+
+  <!-- <form (ngSubmit)="signIn()"
+        [formGroup]="credentials">
+
 
     <br>
 
@@ -64,5 +90,5 @@
                 fill="clear">or Sign up!
     </ion-button>
 
-  </form>
+  </form> -->
 </ion-content>
