@@ -4,29 +4,37 @@ ion-toolbar {
 }
 
 ion-content {
-    --padding-top: 40%;
-    --padding-start: 10%;
-    --padding-end: 10%;
     --background: var(--ion-color-medium);
     --background: url('/assets/login.png') no-repeat;
-
-    .input-group {
-        background: #fff;
-        border-radius: 10px;
-        overflow: hidden;
-        margin-bottom: 15px;
-    }
     
-    .errors {
-        font-size: small;
-        color: #fff;
-        background: var(--ion-color-danger);
-        padding-left: 15px;
-        padding-top: 5px;
-        padding-bottom: 5px;
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+
+        ion-button {
+            margin: 10px;
+            width: 300px;
+            text-transform: none;
+            font-size: medium;
+        }
     }
 
-    ion-button {
-        text-transform: none;
-    }
+    // .input-group {
+    //     background: #fff;
+    //     border-radius: 10px;
+    //     overflow: hidden;
+    //     margin-bottom: 15px;
+    // }
+    
+    // .errors {
+    //     font-size: small;
+    //     color: #fff;
+    //     background: var(--ion-color-danger);
+    //     padding-left: 15px;
+    //     padding-top: 5px;
+    //     padding-bottom: 5px;
+    // }
 }

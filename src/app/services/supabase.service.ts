@@ -16,7 +16,7 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
-import { Artist, Asset, Favorite, FavoriteEntity, MapIcon } from '@app/interfaces/database-entities';
+import { Artist, Asset, Favorite, FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
 import { ArtistWithRelations } from '@app/interfaces/artist';
 import { DayEvent } from '@app/interfaces/day-event';
 import { MapSource } from '@app/interfaces/map-layer';
@@ -100,12 +100,16 @@ export class SupabaseService {
 
   }
 
-  profile(user: User) {
-    return this.supabase
-      .from('profile')
-      .select(`username, info`)
-      .eq('id', user.id)
-      .single();
+  profile$(userId: User['id']): Observable<Pick<Profile, 'username' | 'avatar_url'>> {
+    return from(
+      this.supabase
+        .from('profile')
+        .select(`username, avatar_url`)
+        .eq('id', userId)
+        .single()
+    ).pipe(
+      pluck('data')
+    );
   }
 
   get artists$(): Observable<ArtistWithRelations[]> {

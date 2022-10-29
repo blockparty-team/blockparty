@@ -254,20 +254,20 @@ export interface Database {
         Row: {
           id: string
           username: string | null
-          info: Json | null
           inserted_at: string
+          avatar_url: string | null
         }
         Insert: {
           id: string
           username?: string | null
-          info?: Json | null
           inserted_at?: string
+          avatar_url?: string | null
         }
         Update: {
           id?: string
           username?: string | null
-          info?: Json | null
           inserted_at?: string
+          avatar_url?: string | null
         }
       }
       stage: {
