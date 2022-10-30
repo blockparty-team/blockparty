@@ -5,7 +5,7 @@ import { ArtistWithRelations } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { ArtistStateService } from '../tab-artist/state/artist-state.service';
+import { ArtistStateService } from '../artist/state/artist-state.service';
 
 @Component({
   selector: 'app-artist-detail',

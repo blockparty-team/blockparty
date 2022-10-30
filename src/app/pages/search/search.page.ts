@@ -11,7 +11,7 @@ import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { SupabaseService } from '../../services/supabase.service';
-import { ArtistStateService } from '../tab-artist/state/artist-state.service';
+import { ArtistStateService } from '../artist/state/artist-state.service';
 
 enum Entity {
   artist = 'artist',

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
+import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';

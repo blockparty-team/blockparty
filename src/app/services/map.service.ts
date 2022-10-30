@@ -3,7 +3,7 @@ import { concat, EMPTY, Observable } from 'rxjs';
 import { catchError, filter, tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
-import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
+import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { color } from '@app/shared/colors';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';

@@ -10,12 +10,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 type TimeTableViewMode = 'gantt' | 'list'
 
 @Component({
-  selector: 'app-tab-timetable',
-  templateUrl: 'tab-timetable.page.html',
-  styleUrls: ['tab-timetable.page.scss'],
+  selector: 'app-timetable',
+  templateUrl: 'timetable.page.html',
+  styleUrls: ['timetable.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TabTimetablePage implements OnInit {
+export class TimetablePage implements OnInit {
 
   @ViewChild('timetable') timetableElement: ElementRef;
 
