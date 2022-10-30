@@ -1,12 +1,31 @@
 <ion-header>
-  <ion-toolbar color="secondary">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/map"
                        icon="chevron-back">
       </ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button>
+        Event types
+      </ion-button>
+    </ion-buttons>
     <ion-title>Events</ion-title>
   </ion-toolbar>
+
+  <!-- <ng-container *ngIf="eventTypes$ | async as eventTypes">
+    <ion-toolbar color="secondary">
+      <ion-segment scrollable
+                   mode="md"
+                   (ionChange)="onEventTypeFilterChange($event)"
+                   [value]="selectedEventTypeId$ | async">
+        <ion-segment-button *ngFor="let eventType of eventTypes"
+                            [value]="eventType.id">
+          <ion-label>{{eventType.name}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container> -->
 </ion-header>
 
 <ion-content color="medium">
@@ -18,7 +37,7 @@
         <h1>
           {{event.name}}
         </h1>
-        <ion-badge color="tertiary">Actionhygge</ion-badge>
+        <ion-badge [style.--background]="event.event_type.color">{{event.event_type.name}}</ion-badge>
         <p class="days">{{ event.days.join(' | ') }}</p>
       </div>
     </ion-card>
