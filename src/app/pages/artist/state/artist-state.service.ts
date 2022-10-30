@@ -1,18 +1,32 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay } from 'rxjs/operators';
+import { combineLatest, concat, Observable } from 'rxjs';
+import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
 import { ArtistWithRelations } from '@app/interfaces/artist';
-import { StoreService } from '@app/store/store.service';
 import { FavoritesService } from '@app/services/favorites.service';
 import { pathToImageUrl } from '@app/shared/utils';
+import { SupabaseService } from '@app/services/supabase.service';
+import { DeviceStorageService } from '@app/services/device-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtistStateService {
 
+  artists$: Observable<ArtistWithRelations[]> = concat(
+    this.deviceStorageService.get('artists').pipe(
+      filter(artists => !!artists)
+    ),
+    this.supabase.artists$.pipe(
+      filter(artists => !!artists),
+      tap(artists => this.deviceStorageService.set('artists', artists))
+    )
+  ).pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
+
   artistsWithFavorites$: Observable<ArtistWithRelations[]> = combineLatest([
-    this.store.artists$,
+    this.artists$,
     this.favoritesService.favorites$
   ]).pipe(
     filter(([artists, favorites]) => !!artists && !!favorites ),
@@ -29,7 +43,8 @@ export class ArtistStateService {
   )
 
   constructor(
-    private store: StoreService,
+    private supabase: SupabaseService,
+    private deviceStorageService: DeviceStorageService,
     private favoritesService: FavoritesService,
   ) { }
 

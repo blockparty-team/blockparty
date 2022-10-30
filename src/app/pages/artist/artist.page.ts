@@ -13,12 +13,12 @@ interface DayGroupedFavorites {
 }
 
 @Component({
-  selector: 'app-tab-artist',
-  styleUrls: ['./tab-artist.page.scss'],
-  templateUrl: './tab-artist.page.html',
+  selector: 'app-artist',
+  styleUrls: ['./artist.page.scss'],
+  templateUrl: './artist.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TabArtistPage implements OnInit {
+export class ArtistPage implements OnInit {
 
   filteredArtists$: Observable<ArtistWithRelations[]>;
   favoriteArtists$: Observable<ArtistWithRelations[]>;

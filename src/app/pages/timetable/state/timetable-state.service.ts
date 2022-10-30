@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { DayEventStageTimetable, EventTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
+import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FavoritesService } from '@app/services/favorites.service';
-import { StoreService } from '@app/store/store.service';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { distinctUntilChanged, filter, map, pluck, shareReplay } from 'rxjs/operators'
+import { SupabaseService } from '@app/services/supabase.service';
+import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
+import { distinctUntilChanged, filter, map, pluck, shareReplay, tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,19 @@ export class TimetableStateService {
 
   private _selectedEventId$ = new BehaviorSubject<string>(null);
   selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
-
-  days$: Observable<DayEventStageTimetable[]> = this.store.timetables$.pipe(
+  
+  days$: Observable<DayEventStageTimetable[]> = concat(
+    this.deviceStorageService.get('timetable').pipe(
+      filter(timetables => !!timetables)
+    ),
+    this.supabase.timetables$.pipe(
+      filter(timetables => !!timetables),
+      tap(timetables => this.deviceStorageService.set('timetable', timetables))
+    )
+  ).pipe(
     filter(days => !!days),
-    shareReplay()
+    distinctUntilChanged(),
+    shareReplay(1)
   );
 
   events$: Observable<EventTimetable[]> = combineLatest([
@@ -70,7 +80,8 @@ export class TimetableStateService {
   );
 
   constructor(
-    private store: StoreService,
+    private supabase: SupabaseService,
+    private deviceStorageService: DeviceStorageService,
     private favoritesService: FavoritesService
   ) { }
 

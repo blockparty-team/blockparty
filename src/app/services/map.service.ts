@@ -3,14 +3,13 @@ import { concat, EMPTY, Observable } from 'rxjs';
 import { catchError, filter, tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
-import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
+import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { color } from '@app/shared/colors';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { GeolocationService } from './geolocation.service';
 import { FileService } from './file.service';
-import { StoreService } from '@app/store/store.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +21,6 @@ export class MapService {
   constructor(
     private mapStateService: MapStateService,
     private geolocationService: GeolocationService,
-    private store: StoreService,
     private fileService: FileService
   ) { }
 
@@ -174,7 +172,7 @@ export class MapService {
   }
 
   private get addLayers$(): Observable<any> {
-    return this.store.mapLayers$.pipe(
+    return this.mapStateService.mapLayers$.pipe(
       tap(layers => {
 
         // Add map sources

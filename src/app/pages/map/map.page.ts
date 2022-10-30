@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MapStateService } from '@app/pages/tab-map/state/map-state.service';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { ModalController, SegmentCustomEvent } from '@ionic/angular';
 import { from, Observable } from 'rxjs';
 import { filter, map, switchMap, tap, withLatestFrom, delay, distinctUntilChanged } from 'rxjs/operators';
@@ -13,13 +13,13 @@ import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
 
 @Component({
-  selector: 'app-tab-map',
-  templateUrl: 'tab-map.page.html',
-  styleUrls: ['tab-map.page.scss'],
+  selector: 'app-map',
+  templateUrl: 'map.page.html',
+  styleUrls: ['map.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animations.slideInOut
 })
-export class TabMapPage implements OnInit {
+export class MapPage implements OnInit, AfterViewInit {
 
   days$: Observable<DayEvent[]>;
   events$: Observable<PartialEvent[]>;
@@ -71,7 +71,7 @@ export class TabMapPage implements OnInit {
         }
 
         if (feature.mapLayer === MapLayer.Asset || feature.mapLayer === MapLayer.AssetIcon) {
-          return this.openFeatureInfoModal(0.1, [0, 0.1, 0.5, 1])
+          return this.openFeatureInfoModal(0.3, [0, 0.3, 0.6, 1])
         }
       })
     ).subscribe();
@@ -84,6 +84,10 @@ export class TabMapPage implements OnInit {
       filter(([, mapLoaded]) => mapLoaded),
       tap(() => this.mapService.resize())
     ).subscribe()
+  }
+
+  ngAfterViewInit(): void {
+    this.mapService.initMap();
   }
 
   openFeatureInfoModal(

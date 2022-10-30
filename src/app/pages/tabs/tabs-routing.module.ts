@@ -10,7 +10,7 @@ const routes: Routes = [
       {
         path: 'map',
         title: 'Map',
-        loadChildren: () => import('../tab-map/tab-map.module').then(m => m.TabMapPageModule)
+        loadChildren: () => import('../map/map.module').then(m => m.MapPageModule)
       },
       {
         path: 'artist',
@@ -18,7 +18,7 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('../tab-artist/tab-artist.module').then(m => m.TabArtistPageModule)
+            loadChildren: () => import('../artist/artist.module').then(m => m.ArtistPageModule)
           },
           {
             path: ':id',
@@ -29,7 +29,7 @@ const routes: Routes = [
       {
         path: 'timetable',
         title: 'Timetable',
-        loadChildren: () => import('../tab-timetable/tab-timetable.module').then(m => m.TabTimetablePageModule)
+        loadChildren: () => import('../timetable/timetable.module').then(m => m.TimetablePageModule)
       },
       {
         path: 'search',

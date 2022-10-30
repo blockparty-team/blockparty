@@ -5,13 +5,13 @@ import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/int
 import { MapService } from '@app/services/map.service';
 import { SearchService } from '@app/services/search.service';
 import { pathToImageUrl } from '@app/shared/utils';
-import { StoreService } from '@app/store/store.service';
 import { IonSearchbar } from '@ionic/angular';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { SupabaseService } from '../../services/supabase.service';
+import { ArtistStateService } from '../artist/state/artist-state.service';
 
 enum Entity {
   artist = 'artist',
@@ -56,7 +56,7 @@ export class SearchPage implements OnInit {
     private supabaseService: SupabaseService,
     private searchService: SearchService,
     private mapService: MapService,
-    private store: StoreService
+    private artistSateService: ArtistStateService,
   ) { }
 
   ngOnInit() {
@@ -64,7 +64,7 @@ export class SearchPage implements OnInit {
       debounceTime(200),
       distinctUntilChanged(),
       switchMap(term => this.supabaseService.textSearch(term)),
-      withLatestFrom(this.store.artists$),
+      withLatestFrom(this.artistSateService.artists$),
       map(([results, artists]) => results.map(result => {
         return result.entity === Entity.artist ? 
           { ...result, artist: artists.find(artist => artist.id === result.id) } :

@@ -5,9 +5,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { IonicModule } from '@ionic/angular';
 
 
-import { TabArtistPageRoutingModule } from './tab-artist-routing.module';
+import { ArtistPageRoutingModule } from './artist-routing.module';
 
-import { TabArtistPage } from './tab-artist.page';
+import { ArtistPage } from './artist.page';
 import { ArtistCardComponent } from './artist-card/artist-card.component';
 
 @NgModule({
@@ -16,8 +16,8 @@ import { ArtistCardComponent } from './artist-card/artist-card.component';
     ReactiveFormsModule,
     ScrollingModule,
     IonicModule,
-    TabArtistPageRoutingModule
+    ArtistPageRoutingModule
   ],
-  declarations: [TabArtistPage, ArtistCardComponent]
+  declarations: [ArtistPage, ArtistCardComponent]
 })
-export class TabArtistPageModule { }
+export class ArtistPageModule { }

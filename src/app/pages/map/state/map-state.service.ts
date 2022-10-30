@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { StoreService } from '@app/store/store.service';
+import { Observable, BehaviorSubject, combineLatest, concat, forkJoin } from 'rxjs';
 import { DayEvent, PartialEvent } from '@app/interfaces/day-event';
-import { distinctUntilChanged, filter, map, pluck, shareReplay, withLatestFrom } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
+import { SupabaseService } from '@app/services/supabase.service';
+import { DeviceStorageService } from '@app/services/device-storage.service';
+import { DayEventMask } from '@app/interfaces/database-entities';
+import { MapSource, MapSourceGeojson } from '@app/interfaces/map-layer';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +28,37 @@ export class MapStateService {
   private _mapInteraction$ = new BehaviorSubject<boolean>(false);
   mapInteraction$: Observable<boolean> = this._mapInteraction$.asObservable();
 
-  days$: Observable<DayEvent[]> = this.store.days$;
+  mapLayers$: Observable<MapSourceGeojson[]> = concat(
+    this.deviceStorageService.get('mapLayers').pipe(
+      filter(layers => !!layers)
+    ),
+    forkJoin(
+      Object.values(MapSource)
+        .map(layer => this.supabase.tableAsGeojson(layer))
+    ).pipe(
+      filter(layers => !!layers),
+      map(layers => Object.values(MapSource)
+        .map((mapSource, i) => ({ mapSource, geojson: layers[i] }))
+      ),
+      tap(layers => this.deviceStorageService.set('mapLayers', layers))
+    )
+  ).pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  )
+
+  days$: Observable<DayEvent[]> = concat(
+    this.deviceStorageService.get('days').pipe(
+      filter(days => !!days)
+    ),
+    this.supabase.days$.pipe(
+      filter(days => !!days),
+      tap(days => this.deviceStorageService.set('days', days))
+    )
+  ).pipe(
+    distinctUntilChanged(),
+    shareReplay(1)
+  );
 
   events$: Observable<PartialEvent[]> = combineLatest([
     this.days$,
@@ -38,8 +71,12 @@ export class MapStateService {
     shareReplay()
   );
 
+  dayMaskBounds$: Observable<DayEventMask[]> = this.supabase.dayMaskBounds$.pipe(
+    shareReplay(1)
+  );
+
   selectedDay$ = this.selectedDayId$.pipe(
-    withLatestFrom(this.store.dayMaskBounds$),
+    withLatestFrom(this.dayMaskBounds$),
     map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
     filter(dayMask => !!dayMask)
   );
@@ -51,7 +88,8 @@ export class MapStateService {
   );
 
   constructor(
-    private store: StoreService
+    private supabase: SupabaseService,
+    private deviceStorageService: DeviceStorageService,
   ) { }
 
   selectMapFeatures(features: MapClickedFeature<GeojsonProperties>[]): void {
