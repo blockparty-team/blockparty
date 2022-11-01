@@ -47,6 +47,11 @@ export class SidebarPage implements OnInit {
       routerLink: ['/partners']
     },
     {
+      name: 'Tickets',
+      icon: 'ticket-outline',
+      routerLink: ['/merch']
+    },
+    {
       name: 'Merch',
       icon: 'cash-outline',
       routerLink: ['/merch']
