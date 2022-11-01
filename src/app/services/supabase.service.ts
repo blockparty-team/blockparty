@@ -206,6 +206,7 @@ export class SupabaseService {
           event_type(
             id,
             name,
+            description,
             color
           ),
           day_event(

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventViewModel } from '@app/interfaces/event';
-import { SegmentCustomEvent } from '@ionic/angular';
+import { IonModal, SegmentCustomEvent } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventStateService } from './state/event-state.service';
 
@@ -11,6 +11,8 @@ import { EventStateService } from './state/event-state.service';
   styleUrls: ['./event.page.scss'],
 })
 export class EventPage implements OnInit {
+
+  @ViewChild(IonModal) modal: IonModal;
 
   events$: Observable<EventViewModel[]>;
   eventTypes$: Observable<EventViewModel['event_type'][]>;
@@ -33,6 +35,10 @@ export class EventPage implements OnInit {
 
   onEventTypeFilterChange(event: Event): void {
     this.eventStateService.selectEventTypeId((event as SegmentCustomEvent).detail.value);
+  }
+
+  dismiss() {
+    this.modal.dismiss(null, 'cancel');
   }
 
 }
