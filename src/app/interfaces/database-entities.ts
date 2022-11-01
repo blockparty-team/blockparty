@@ -3,6 +3,7 @@ import { Database } from "./database-definitions";
 // Tables
 export type Day = Database['public']['Tables']['day']['Row'];
 export type Event = Database['public']['Tables']['event']['Row'];
+export type EventType = Database['public']['Tables']['event_type']['Row'];
 export type DayEvent = Database['public']['Tables']['day_event']['Row'];
 export type Stage = Database['public']['Tables']['stage']['Row'];
 export type Timetable = Database['public']['Tables']['timetable']['Row'];

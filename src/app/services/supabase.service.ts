@@ -203,6 +203,12 @@ export class SupabaseService {
           description,
           storage_path,
           bounds,
+          event_type(
+            id,
+            name,
+            description,
+            color
+          ),
           day_event(
             day(
               name

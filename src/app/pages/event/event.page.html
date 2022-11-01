@@ -1,12 +1,31 @@
 <ion-header>
-  <ion-toolbar color="secondary">
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/tabs/map"
                        icon="chevron-back">
       </ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button id="open-event-type-modal">
+        Event types
+      </ion-button>
+    </ion-buttons>
     <ion-title>Events</ion-title>
   </ion-toolbar>
+
+  <!-- <ng-container *ngIf="eventTypes$ | async as eventTypes">
+    <ion-toolbar color="secondary">
+      <ion-segment scrollable
+                   mode="md"
+                   (ionChange)="onEventTypeFilterChange($event)"
+                   [value]="selectedEventTypeId$ | async">
+        <ion-segment-button *ngFor="let eventType of eventTypes"
+                            [value]="eventType.id">
+          <ion-label>{{eventType.name}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container> -->
 </ion-header>
 
 <ion-content color="medium">
@@ -18,9 +37,44 @@
         <h1>
           {{event.name}}
         </h1>
-        <ion-badge color="tertiary">Actionhygge</ion-badge>
+        <ion-badge [style.--background]="event.event_type.color">{{event.event_type.name}}</ion-badge>
         <p class="days">{{ event.days.join(' | ') }}</p>
       </div>
     </ion-card>
   </ng-container>
+
+  <ion-modal trigger="open-event-type-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar color="secondary">
+          <ion-title>
+            Event types
+          </ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">
+              <ion-icon slot="icon-only"
+                        name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding" color="medium">
+        <div *ngIf="eventTypes$ | async as eventTypes">
+          <ion-item *ngFor="let eventType of eventTypes" color="medium">
+            <ion-label class="ion-text-wrap">
+              <h2>
+                <ion-badge [style.--background]="eventType.color">
+                  {{eventType.name}}
+                </ion-badge>
+              </h2>
+              <p>
+                {{eventType.description}}
+              </p>
+            </ion-label>
+          </ion-item>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
 </ion-content>

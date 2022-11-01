@@ -180,6 +180,7 @@ export interface Database {
           public: boolean | null
           bounds: number[] | null
           storage_path: string | null
+          event_type_id: string | null
         }
         Insert: {
           id?: string
@@ -191,6 +192,7 @@ export interface Database {
           public?: boolean | null
           bounds?: number[] | null
           storage_path?: string | null
+          event_type_id?: string | null
         }
         Update: {
           id?: string
@@ -202,6 +204,33 @@ export interface Database {
           public?: boolean | null
           bounds?: number[] | null
           storage_path?: string | null
+          event_type_id?: string | null
+        }
+      }
+      event_type: {
+        Row: {
+          id: string
+          name: string
+          description: string | null
+          color: string | null
+          inserted_at: string
+          public: boolean | null
+        }
+        Insert: {
+          id?: string
+          name: string
+          description?: string | null
+          color?: string | null
+          inserted_at?: string
+          public?: boolean | null
+        }
+        Update: {
+          id?: string
+          name?: string
+          description?: string | null
+          color?: string | null
+          inserted_at?: string
+          public?: boolean | null
         }
       }
       favorite: {
