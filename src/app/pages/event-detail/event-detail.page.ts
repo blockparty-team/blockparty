@@ -34,9 +34,9 @@ export class EventDetailPage implements OnInit {
   }
 
   onZoomToEventOnMap(id: string, bounds: number[]) {
+    this.router.navigate(['/tabs', 'map']);
     this.mapService.fitBounds(bounds as LngLatBoundsLike);
     this.mapService.highlightFeature(MapLayer.EventHighLight, id, true);
-    this.router.navigate(['/tabs', 'map']);
   }
 
 }
