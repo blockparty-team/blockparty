@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Distortion</string>
     <string name="title_activity_main">Distortion</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">app.vercel.distortioncph</string>
+    <string name="custom_url_scheme">distortion</string>
 </resources>
