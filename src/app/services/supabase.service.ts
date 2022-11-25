@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { isPlatform, Platform } from '@ionic/angular';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
 import { catchError, map, pluck } from 'rxjs/operators';
 import {
@@ -59,6 +59,11 @@ export class SupabaseService {
     return this.supabase.auth.onAuthStateChange(callback);
   }
 
+  externalSetSession(access_token, refresh_token) {
+    return this.supabase.auth.setSession({access_token, refresh_token})
+  }
+
+
   setSession(session: Session): void {
     this._session$.next(session);
   }
@@ -74,7 +79,12 @@ export class SupabaseService {
 
   signInWithProvider(provider: Provider): Observable<OAuthResponse['data']> {
     return from(
-      this.supabase.auth.signInWithOAuth({ provider })
+      this.supabase.auth.signInWithOAuth({ 
+        provider,
+        options: {
+          redirectTo: isPlatform('capacitor') ? 'distortion://login' : `${window.location.origin}/tabs/map`
+        }
+      })
     ).pipe(
       map(({ data, }) => data)
     )

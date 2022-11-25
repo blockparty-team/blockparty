@@ -1,9 +1,12 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
 import { OneSignal } from 'onesignal-ngx';
 import { environment } from '@env/environment';
 import { SupabaseService } from './services/supabase.service';
+import { App, URLOpenListenerEvent } from "@capacitor/app";
+import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +17,18 @@ import { SupabaseService } from './services/supabase.service';
 export class AppComponent implements OnInit {
 
   constructor(
+    private zone: NgZone,
+    private router: Router,
     private oneSignal: OneSignal,
-    private supabase: SupabaseService
+    private supabase: SupabaseService,
+    private authService: AuthService
   ) {
     this.oneSignal.init({
       appId: environment.oneSignalAppId,
       allowLocalhostAsSecureOrigin: true
     })
+
+    this.setupAppUrlOpenListener();
   }
 
   ngOnInit(): void {
@@ -37,5 +45,22 @@ export class AppComponent implements OnInit {
         this.supabase.setSession(null);
       }
     })
+  }
+
+  setupAppUrlOpenListener() {
+    App.addListener("appUrlOpen", async (urlData: URLOpenListenerEvent) => {
+      console.log("       ", urlData);
+
+      const openUrl = urlData.url;
+      const access = openUrl.split("#access_token=").pop().split("&")[0];
+      const refresh = openUrl.split("&refresh_token=").pop().split("&")[0];
+
+      const {data, error} = await this.supabase.externalSetSession(access, refresh);
+      this.supabase.setSession(data.session);
+
+      this.zone.run(() => {
+        this.router.navigateByUrl("/tabs/map", { replaceUrl: true });
+      });
+    });
   }
 }
