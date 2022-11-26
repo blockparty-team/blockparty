@@ -10,6 +10,7 @@ import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { GeolocationService } from './geolocation.service';
 import { FileService } from './file.service';
+import { MapIconViewModel } from '@app/interfaces/map-icon';
 
 @Injectable({
   providedIn: 'root'
@@ -368,7 +369,7 @@ export class MapService {
   //   });
   // }
 
-  private get loadMapIcons$(): Observable<any> {
+  private get loadMapIcons$(): Observable<MapIconViewModel[]> {
     return this.fileService.mapIconUrls$.pipe(
       filter(icons => !!icons),
       tap(icons => icons.forEach(icon => {
