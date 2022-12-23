@@ -5,7 +5,7 @@ import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { color } from '@app/shared/colors';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { GeolocationService } from './geolocation.service';
@@ -89,10 +89,10 @@ export class MapService {
 
       if (e.features.length > 0) {
 
-        const features: MapClickedFeature<any>[] = e.features.map(feature => ({
+        const features: MapClickedFeature<GeojsonProperties>[] = e.features.map(feature => ({
           id: feature.properties.id,
           mapLayer,
-          properties: feature.properties,
+          properties: feature.properties as GeojsonProperties,
           geometry: feature.geometry as any
         }));
 
