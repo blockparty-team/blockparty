@@ -2,8 +2,12 @@
 <ion-header>
   <ng-container *ngIf="days$ | async as days">
     <ion-toolbar color="medium">
-      <ion-segment scrollable mode="md" (ionChange)="onDayFilterChange($event)" [value]="selectedDayId$ | async">
-        <ion-segment-button *ngFor="let day of days" [value]="day.id">
+      <ion-segment scrollable
+                   mode="md"
+                   (ionChange)="onDayFilterChange($event)"
+                   [value]="selectedDayId$ | async">
+        <ion-segment-button *ngFor="let day of days"
+                            [value]="day.id">
           <ion-label>{{day.name}}</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -12,8 +16,12 @@
 
   <ng-container *ngIf="events$ | async as events">
     <ion-toolbar color="secondary">
-      <ion-segment scrollable mode="md" (ionChange)="onEventFilterChange($event)" [value]="selectedEventId$ | async">
-        <ion-segment-button *ngFor="let event of events" [value]="event.id">
+      <ion-segment scrollable
+                   mode="md"
+                   (ionChange)="onEventFilterChange($event)"
+                   [value]="selectedEventId$ | async">
+        <ion-segment-button *ngFor="let event of events"
+                            [value]="event.id">
           <ion-label>{{event.name}}</ion-label>
         </ion-segment-button>
       </ion-segment>
@@ -22,5 +30,11 @@
 </ion-header>
 
 <ion-content>
-  <div id="map-container"></div>
+  <div id="map-container">
+    <div *ngIf="(mapIdle$ | async)"
+         [@fadeInOut]
+         class="map-loading-animation">
+      <ng-lottie [options]="animationOptions"></ng-lottie>
+    </div>
+  </div>
 </ion-content>

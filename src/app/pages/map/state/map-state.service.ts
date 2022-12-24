@@ -16,6 +16,11 @@ export class MapStateService {
   private _mapLoaded$ = new BehaviorSubject<boolean>(false);
   mapLoaded$: Observable<boolean> = this._mapLoaded$.asObservable();
 
+  private _mapIdle$ = new BehaviorSubject<boolean>(true);
+  mapIdle$: Observable<boolean> = this._mapIdle$.asObservable().pipe(
+    distinctUntilChanged()
+  );
+
   private _selectedMapFeatures$ = new BehaviorSubject<MapClickedFeature<GeojsonProperties>[]>(null);
   selectedMapFeatures$: Observable<MapClickedFeature<GeojsonProperties>[]> = this._selectedMapFeatures$.asObservable();
 
@@ -68,7 +73,7 @@ export class MapStateService {
     map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
     pluck('event'),
     distinctUntilChanged(),
-    shareReplay()
+    shareReplay(1)
   );
 
   dayMaskBounds$: Observable<DayEventMask[]> = this.supabase.dayMaskBounds$.pipe(
@@ -108,8 +113,12 @@ export class MapStateService {
     this._mapInteraction$.next(interacting);
   }
 
-  updateMapLoaded(loadded): void {
-    this._mapLoaded$.next(loadded);
+  updateMapLoaded(loaded: boolean): void {
+    this._mapLoaded$.next(loaded);
+  }
+
+  updateMapIdle(idle: boolean): void {
+    this._mapIdle$.next(idle);
   }
 
 }

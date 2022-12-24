@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { concat, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, tap } from 'rxjs/operators';
+import { catchError, filter, finalize, tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
@@ -50,9 +50,12 @@ export class MapService {
       this.addClickBehaviourToLayer(MapLayer.Asset);
       this.addClickBehaviourToLayer(MapLayer.AssetIcon);
 
-      this.map.on('movestart', () => this.mapStateService.updateMapInteraction(true))
-      this.map.on('moveend', () => this.mapStateService.updateMapInteraction(false))
+      this.map.on('movestart', () => this.mapStateService.updateMapInteraction(true));
+      this.map.on('moveend', () => this.mapStateService.updateMapInteraction(false));
     });
+
+    this.map.once('idle', () => this.mapStateService.updateMapIdle(false));
+
   }
 
   private addControls(): void {

@@ -19,5 +19,16 @@ export const animations = {
                 animate('200ms ease-in', style({ transform: 'translateX(-50%)' }))
             ])
         ])
+    ],
+    fadeInOut: [
+        trigger('fadeInOut', [
+            transition('void => active', [
+              style({ opacity: 0 }),
+              animate(1000, style({ opacity: 1 }))
+            ]),
+            transition('* => void', [
+              animate(1000, style({ opacity: 0 }))
+            ])
+          ])
     ]
 }

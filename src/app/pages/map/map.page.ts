@@ -11,22 +11,32 @@ import { animations } from '@app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
+import { AnimationOptions } from 'ngx-lottie';
 
 @Component({
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: animations.slideInOut
+  animations: [
+    ...animations.slideInOut,
+    ...animations.fadeInOut
+  ]
 })
 export class MapPage implements OnInit, AfterViewInit {
 
+  mapLoaded$: Observable<boolean>;
+  mapIdle$: Observable<boolean>;
   days$: Observable<DayEvent[]>;
   events$: Observable<PartialEvent[]>;
   selectedDayId$: Observable<string>;
   selectedEventId$: Observable<string>;
   hideHeader$: Observable<boolean>;
   modalIsOpen$: Observable<boolean>;
+
+  animationOptions: AnimationOptions = {
+    path: '/assets/lottiefiles/map.json',
+  };
 
   constructor(
     private mapService: MapService,
@@ -37,6 +47,8 @@ export class MapPage implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
+    this.mapLoaded$ = this.mapStateService.mapLoaded$;
+    this.mapIdle$ = this.mapStateService.mapIdle$;
     this.days$ = this.mapStateService.days$;
     this.events$ = this.mapStateService.events$;
 
