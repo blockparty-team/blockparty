@@ -35,6 +35,7 @@
          [@fadeInOut]
          class="map-loading-animation">
       <ng-lottie [options]="animationOptions"></ng-lottie>
+      <p *ngIf="mapIdle$ | async">Map loading...</p>
     </div>
   </div>
 </ion-content>
