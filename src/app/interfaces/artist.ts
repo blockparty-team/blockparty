@@ -13,8 +13,9 @@ interface Timetable {
     };
 }
 
-export interface ArtistWithRelations extends Partial<Artist> {
+export interface ArtistViewModel extends Partial<Artist> {
     timetable: Timetable[];
     isFavorite?: boolean;
     imgUrl?: string;
+    srcset?: string;
 };

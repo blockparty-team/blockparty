@@ -22,12 +22,12 @@ export const animations = {
     ],
     fadeInOut: [
         trigger('fadeInOut', [
-            transition('void => active', [
+            transition(':enter', [
               style({ opacity: 0 }),
-              animate(1000, style({ opacity: 1 }))
+              animate(600, style({ opacity: 1 }))
             ]),
             transition('* => void', [
-              animate(1000, style({ opacity: 0 }))
+              animate(600, style({ opacity: 0 }))
             ])
           ])
     ]

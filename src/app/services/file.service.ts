@@ -4,6 +4,8 @@ import { MapIconViewModel } from '@app/interfaces/map-icon';
 import { forkJoin, Observable } from 'rxjs';
 import { map, pluck, switchMap } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
+import { imageSize } from '@app/shared/models/imageSize';
+import { getBucketAndPath } from '@app/shared/functions/storage';
 
 interface File {
   fileName: string;
@@ -16,15 +18,19 @@ interface File {
 export class FileService {
 
   constructor(
-    private supabaseService: SupabaseService,
+    private supabase: SupabaseService,
     private readonly sanitizer: DomSanitizer
   ) { }
 
   get mapIconUrls$(): Observable<MapIconViewModel[]> {
 
-    return this.supabaseService.mapIcons$.pipe(
+    return this.supabase.mapIcons$.pipe(
       switchMap(files => forkJoin(
-        files.map(file => this.supabaseService.downloadFile('icon', file.storage_path.split('/')[1]))
+        files.map(file => {
+          const [bucket, path] = getBucketAndPath(file.storage_path);
+
+          return this.supabase.downloadFile(bucket, path);
+        })
       ).pipe(
         map(blobs => blobs.map((blob, i) => ({ blob, ...files[i] })))
       )),
@@ -48,10 +54,10 @@ export class FileService {
 
   allFileUrls(bucket: string): Observable<SafeResourceUrl[]> {
 
-    return this.supabaseService.listBucketFiles(bucket).pipe(
+    return this.supabase.listBucketFiles(bucket).pipe(
       pluck('data'),
       switchMap(files => forkJoin(
-        files.map(file => this.supabaseService.downloadFile(bucket, file.name))
+        files.map(file => this.supabase.downloadFile(bucket, file.name))
       ).pipe(
         map(blobs => blobs.map((blob, i) => ({ blob: blob, ...files[i] })))
       )),
@@ -74,5 +80,16 @@ export class FileService {
         })
       })
     )
+  }
+
+  imageSrcset(bucket: string, path: string): string {
+    const srcset = Object.values(imageSize).map(transformation => {
+      const url = this.supabase.publicImageUrl(bucket, path, transformation)
+      const width = transformation.width;
+
+      return `${url} ${width}w`;
+    })
+
+    return srcset.join(', ');
   }
 }

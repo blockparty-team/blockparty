@@ -11,7 +11,9 @@
 
   <ion-content>
 
-    <ion-img [src]="artist.imgUrl"></ion-img>
+    <img [src]="artist.imgUrl"
+         alt="Image of {{artist.name}}"
+         [srcset]="artist.srcset">
 
     <div class="artist-info">
       <h1 class="ion-text-center">

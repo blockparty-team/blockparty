@@ -1,16 +1,20 @@
-<ion-card [style.--background]="'url(' + artist.imgUrl + ')'">
+<ion-card>
+
+  <img [src]="artist.imgUrl"
+       alt="Image of {{artist.name}}"
+       [srcset]="artist.srcset">
 
   <div class="card-content">
 
     <div class="card-text"
          [routerLink]="['./', artist.id]">
-      <h3>
+      <h3 tabindex="1">
         {{artist.name}}
       </h3>
-      <p *ngIf="artist.timetable[0]">
-        {{artist.timetable[0].day.name}} |
-        {{artist.timetable[0].start_time | date:'HH:mm'}} |
-        {{artist.timetable[0].stage.name}}
+      <p *ngFor="let act of artist.timetable">
+        {{act.day.name}} |
+        {{act.start_time | date:'HH:mm'}} |
+        {{act.stage.name}}
       </p>
     </div>
 

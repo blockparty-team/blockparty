@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Event } from '@app/interfaces/database-entities';
 import { EventViewModel, EventWithRelations } from '@app/interfaces/event';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
-import { pathToImageUrl } from '@app/shared/utils';
+import { getBucketAndPath } from '@app/shared/functions/storage';
 import { BehaviorSubject, concat, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
 
@@ -34,10 +35,17 @@ export class EventStateService {
         days: day_event.map(day => day.day.name)
       }
     })),
-    map(events => events.map(event => ({
-      ...event,
-      imgUrl: pathToImageUrl(event.storage_path)
-    }))),
+    map(events => events.map((event: Event) => {
+
+      const [bucket, path] = getBucketAndPath(event.storage_path);
+
+      return {
+        ...event,
+        imgUrl: bucket && path 
+          ? this.supabase.publicImageUrl(bucket, path)
+          : 'assets/distortion_logo.png'
+      }
+    })),
     distinctUntilChanged(),
     shareReplay(1)
   )
@@ -56,7 +64,6 @@ export class EventStateService {
   ) { }
 
   selectEventTypeId(eventTypeId: string): void {
-    console.log(eventTypeId);
     this._selectedEventTypeId$.next(eventTypeId);
 
   }

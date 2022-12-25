@@ -17,13 +17,14 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
 import { Artist, Asset, Favorite, FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
-import { ArtistWithRelations } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@app/interfaces/artist';
 import { DayEvent } from '@app/interfaces/day-event';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { EventWithRelations } from '@app/interfaces/event';
 import { DeviceStorageService } from './device-storage.service';
+import { TransformOptions } from '@app/shared/models/imageSize'
 
 @Injectable({
   providedIn: 'root'
@@ -59,8 +60,8 @@ export class SupabaseService {
     return this.supabase.auth.onAuthStateChange(callback);
   }
 
-  externalSetSession(access_token, refresh_token) {
-    return this.supabase.auth.setSession({access_token, refresh_token})
+  externalSetSession(access_token: string, refresh_token: string) {
+    return this.supabase.auth.setSession({ access_token, refresh_token })
   }
 
 
@@ -79,7 +80,7 @@ export class SupabaseService {
 
   signInWithProvider(provider: Provider): Observable<OAuthResponse['data']> {
     return from(
-      this.supabase.auth.signInWithOAuth({ 
+      this.supabase.auth.signInWithOAuth({
         provider,
         options: {
           redirectTo: isPlatform('capacitor') ? 'distortion://login' : `${window.location.origin}/tabs/map`
@@ -122,7 +123,7 @@ export class SupabaseService {
     );
   }
 
-  get artists$(): Observable<ArtistWithRelations[]> {
+  get artists$(): Observable<ArtistViewModel[]> {
     return from(
       this.supabase
         .from('artist')
@@ -157,7 +158,7 @@ export class SupabaseService {
         .order('name')
     ).pipe(
       // TODO: Trouble with type, hence this cast
-      map(({ data, }) => data as ArtistWithRelations[])
+      map(({ data, }) => data as ArtistViewModel[])
     );
   }
 
@@ -372,6 +373,17 @@ export class SupabaseService {
         .from(bucket)
         .list()
     )
+  }
+
+  publicImageUrl(bucket: string, path: string, imageSize?: TransformOptions): string {
+    const { data } = this.supabase
+      .storage
+      .from(bucket)
+      .getPublicUrl(path, {
+        transform: imageSize,
+      })
+
+    return data.publicUrl
   }
 
   get mapIcons$(): Observable<MapIcon[]> {

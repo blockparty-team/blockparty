@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ArtistWithRelations } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { ArtistStateService } from '../artist/state/artist-state.service';
 })
 export class ArtistDetailPage implements OnInit {
 
-  artist$: Observable<ArtistWithRelations>;
+  artist$: Observable<ArtistViewModel>;
 
   constructor(
     private router: Router,

@@ -3,6 +3,14 @@ ion-toolbar, ion- {
     --ion-toolbar-text-color: white;
 }
 
+img {
+    display: block;
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
+}
+
 .artist-info {
     padding: 10px;
 
