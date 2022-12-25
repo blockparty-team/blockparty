@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { ArtistWithRelations } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@app/interfaces/artist';
 import { ArtistStateService } from '../state/artist-state.service';
 
 @Component({
@@ -9,7 +9,7 @@ import { ArtistStateService } from '../state/artist-state.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistCardComponent implements OnInit {
-  @Input() artist: ArtistWithRelations
+  @Input() artist: ArtistViewModel
 
   constructor(
     private artistStateService: ArtistStateService

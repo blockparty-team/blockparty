@@ -30,7 +30,8 @@
                                  maxBufferPx="1350">
       <app-artist-card *cdkVirtualFor="let artist of artists; trackBy:trackArtist; let i = index"
                        [style.--animation-order]="i"
-                       [artist]="artist"></app-artist-card>
+                       [artist]="artist">
+      </app-artist-card>
     </cdk-virtual-scroll-viewport>
   </ng-container>
 

@@ -1,18 +1,21 @@
 import { Injectable } from '@angular/core';
 import { combineLatest, concat, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
-import { ArtistWithRelations } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@app/interfaces/artist';
 import { FavoritesService } from '@app/services/favorites.service';
-import { pathToImageUrl } from '@app/shared/utils';
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
+import { getBucketAndPath } from '@app/shared/functions/storage';
+import { imageSize } from '@app/shared/models/imageSize';
+import { FileService } from '@app/services/file.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ArtistStateService {
 
-  artists$: Observable<ArtistWithRelations[]> = concat(
+  artists$: Observable<ArtistViewModel[]> = concat(
     this.deviceStorageService.get('artists').pipe(
       filter(artists => !!artists)
     ),
@@ -25,35 +28,43 @@ export class ArtistStateService {
     shareReplay(1)
   );
 
-  artistsWithFavorites$: Observable<ArtistWithRelations[]> = combineLatest([
+  artistsWithFavorites$: Observable<ArtistViewModel[]> = combineLatest([
     this.artists$,
     this.favoritesService.favorites$
   ]).pipe(
-    filter(([artists, favorites]) => !!artists && !!favorites ),
-    map(([artists, favorites]) => artists.map(artist => ({
-      ...artist,
-      imgUrl: this.imgUrl(artist.storage_path),
-      // Favorites only exists if user added artists to favorites
-      isFavorite: favorites
-        .find(favorite => favorite.entity === 'artist').ids
-        .includes(artist.id)
-    }))),
+    filter(([artists, favorites]) => !!artists && !!favorites),
+    map(([artists, favorites]) => artists.map(artist => {
+
+      const [bucket, path] = getBucketAndPath(artist.storage_path);
+
+      const srcset = bucket && path
+        ? this.fileService.imageSrcset(bucket, path)
+        : 'assets/distortion_logo.png';
+
+      return {
+        ...artist,
+        imgUrl: bucket && path
+          ? this.supabase.publicImageUrl(bucket, path)
+          : 'assets/distortion_logo.png',
+        srcset,
+        // Favorites only exists if user added artists to favorites
+        isFavorite: favorites
+          .find(favorite => favorite.entity === 'artist').ids
+          .includes(artist.id)
+      };
+    })),
     distinctUntilChanged(),
-    shareReplay()
+    shareReplay(1)
   )
 
   constructor(
     private supabase: SupabaseService,
     private deviceStorageService: DeviceStorageService,
     private favoritesService: FavoritesService,
+    private fileService: FileService
   ) { }
 
   public toggleArtistFavorite(id: string): void {
     this.favoritesService.toggleFavorite('artist', id);
-  }
-
-  private imgUrl(path: string): string {
-    // TODO don't use hard coded fall back logo 
-    return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
   }
 }

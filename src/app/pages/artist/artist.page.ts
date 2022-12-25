@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
-import { ArtistWithRelations } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@app/interfaces/artist';
 import { FormControl } from '@angular/forms';
 import { ArtistStateService } from './state/artist-state.service';
 import { MenuController } from '@ionic/angular';
@@ -9,7 +9,7 @@ import { MenuController } from '@ionic/angular';
 
 interface DayGroupedFavorites {
   day: { name: string, day: string };
-  artists: ArtistWithRelations[];
+  artists: ArtistViewModel[];
 }
 
 @Component({
@@ -20,8 +20,8 @@ interface DayGroupedFavorites {
 })
 export class ArtistPage implements OnInit {
 
-  filteredArtists$: Observable<ArtistWithRelations[]>;
-  favoriteArtists$: Observable<ArtistWithRelations[]>;
+  filteredArtists$: Observable<ArtistViewModel[]>;
+  favoriteArtists$: Observable<ArtistViewModel[]>;
   dayGroupedFavorites$: Observable<DayGroupedFavorites[]>;
   showSearch$ = new BehaviorSubject(false);
 
@@ -112,7 +112,7 @@ export class ArtistPage implements OnInit {
     this._showDayGroupedFavorites$.next(!this._showDayGroupedFavorites$.value);
   }
 
-  trackArtist(index: number, item: ArtistWithRelations) {
+  trackArtist(index: number, item: ArtistViewModel) {
     return item.id;
   }
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { MapService } from '@app/services/map.service';
 import { SearchService } from '@app/services/search.service';
-import { pathToImageUrl } from '@app/shared/utils';
+import { getBucketAndPath } from '@app/shared/functions/storage';
 import { IonSearchbar } from '@ionic/angular';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
@@ -53,7 +53,7 @@ export class SearchPage implements OnInit {
 
   constructor(
     private router: Router,
-    private supabaseService: SupabaseService,
+    private supabase: SupabaseService,
     private searchService: SearchService,
     private mapService: MapService,
     private artistSateService: ArtistStateService,
@@ -63,7 +63,7 @@ export class SearchPage implements OnInit {
     this.searchResults$ = this.searchTerm.valueChanges.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap(term => this.supabaseService.textSearch(term)),
+      switchMap(term => this.supabase.textSearch(term)),
       withLatestFrom(this.artistSateService.artists$),
       map(([results, artists]) => results.map(result => {
         return result.entity === Entity.artist ? 
@@ -89,7 +89,8 @@ export class SearchPage implements OnInit {
   }
 
   imgUrl(path: string): string {
-    return path ? pathToImageUrl(path) : 'assets/distortion_logo.png';
+    const [bucket, p] = getBucketAndPath(path)
+    return bucket && p ? this.supabase.publicImageUrl(bucket, p) : 'assets/distortion_logo.png';
   }
 
   onSearchModeChange(ev: Event): void {
