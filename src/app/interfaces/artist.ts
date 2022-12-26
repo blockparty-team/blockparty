@@ -15,7 +15,7 @@ interface Timetable {
 
 export interface ArtistViewModel extends Partial<Artist> {
     timetable: Timetable[];
-    isFavorite?: boolean;
-    imgUrl?: string;
-    srcset?: string;
+    isFavorite: boolean;
+    imgUrl: string;
+    srcset: string;
 };

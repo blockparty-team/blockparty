@@ -88,9 +88,9 @@ export class SearchPage implements OnInit {
     }, 150);
   }
 
-  imgUrl(path: string): string {
-    const [bucket, p] = getBucketAndPath(path)
-    return bucket && p ? this.supabase.publicImageUrl(bucket, p) : 'assets/distortion_logo.png';
+  imgUrl(storagePath: string): string {
+    const [bucket, path] = getBucketAndPath(storagePath)
+    return bucket && path ? this.supabase.publicImageUrl(bucket, path) : 'assets/distortion_logo.png';
   }
 
   onSearchModeChange(ev: Event): void {

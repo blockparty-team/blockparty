@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Event } from '@app/interfaces/database-entities';
 import { EventViewModel, EventWithRelations } from '@app/interfaces/event';
 import { DeviceStorageService } from '@app/services/device-storage.service';
+import { FileService } from '@app/services/file.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
 import { BehaviorSubject, concat, Observable } from 'rxjs';
@@ -39,11 +40,16 @@ export class EventStateService {
 
       const [bucket, path] = getBucketAndPath(event.storage_path);
 
+      const srcset = bucket && path
+        ? this.fileService.imageSrcset(bucket, path)
+        : 'assets/distortion_logo.png';
+
       return {
         ...event,
-        imgUrl: bucket && path 
+        imgUrl: bucket && path
           ? this.supabase.publicImageUrl(bucket, path)
-          : 'assets/distortion_logo.png'
+          : 'assets/distortion_logo.png',
+        srcset
       }
     })),
     distinctUntilChanged(),
@@ -61,6 +67,7 @@ export class EventStateService {
   constructor(
     private supabase: SupabaseService,
     private deviceStorageService: DeviceStorageService,
+    private fileService: FileService
   ) { }
 
   selectEventTypeId(eventTypeId: string): void {

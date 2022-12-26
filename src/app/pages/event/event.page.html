@@ -12,35 +12,13 @@
     </ion-buttons>
     <ion-title>Events</ion-title>
   </ion-toolbar>
-
-  <!-- <ng-container *ngIf="eventTypes$ | async as eventTypes">
-    <ion-toolbar color="secondary">
-      <ion-segment scrollable
-                   mode="md"
-                   (ionChange)="onEventTypeFilterChange($event)"
-                   [value]="selectedEventTypeId$ | async">
-        <ion-segment-button *ngFor="let eventType of eventTypes"
-                            [value]="eventType.id">
-          <ion-label>{{eventType.name}}</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-  </ng-container> -->
 </ion-header>
 
 <ion-content color="medium">
   <ng-container *ngIf="events$ | async as events">
-    <ion-card *ngFor="let event of events"
-              [style.--background]="'url(' + event.imgUrl + ')'"
-              (click)="onGoToEvent(event.id)">
-      <div class="card-content">
-        <h1>
-          {{event.name}}
-        </h1>
-        <ion-badge [style.--background]="event.event_type.color">{{event.event_type.name}}</ion-badge>
-        <p class="days">{{ event.days.join(' | ') }}</p>
-      </div>
-    </ion-card>
+    <app-event-card *ngFor="let event of events"
+                    [event]="event">
+    </app-event-card>
   </ng-container>
 
   <ion-modal trigger="open-event-type-modal">
@@ -58,9 +36,11 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding" color="medium">
+      <ion-content class="ion-padding"
+                   color="medium">
         <div *ngIf="eventTypes$ | async as eventTypes">
-          <ion-item *ngFor="let eventType of eventTypes" color="medium">
+          <ion-item *ngFor="let eventType of eventTypes"
+                    color="medium">
             <ion-label class="ion-text-wrap">
               <h2>
                 <ion-badge [style.--background]="eventType.color">

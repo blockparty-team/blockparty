@@ -35,5 +35,6 @@ export interface EventViewModel extends PartialEvent {
     artists: Artist[];
     days: string[];
     imgUrl: string;
+    srcset: string;
     event_type: PartialEventType;
 }

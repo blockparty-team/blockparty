@@ -11,17 +11,19 @@
 
 <ion-content color="medium">
   <ng-container *ngIf="event$ | async as event">
-    <ion-fab vertical="top" horizontal="end">
+    <ion-fab vertical="top"
+             horizontal="end">
       <ion-fab-button>
-        <ion-icon
-                  name="map-outline"
+        <ion-icon name="map-outline"
                   (click)="onZoomToEventOnMap(event.id, event.bounds)">
         </ion-icon>
       </ion-fab-button>
     </ion-fab>
 
     <img [src]="event.imgUrl"
-         [alt]="'Image of the ' + event.name + ' event'">
+         alt="Image of {{event.name}}"
+         [srcset]="event.srcset">
+
     <div class="ion-padding">
       <header class="ion-text-center">
         <h1>

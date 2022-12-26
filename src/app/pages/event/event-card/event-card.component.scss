@@ -1,31 +1,28 @@
 ion-card {
-    background: none;
-
     img {
         position: absolute;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        filter: brightness(70%)
+        filter: brightness(60%)
     }
 
     .card-content {
         min-height: 150px;
         display: flex;
-        align-items: stretch;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
         color: white;
         padding: 10px;
 
         .card-text {
-            flex-grow: 1;
-            align-self: center;
             z-index: 1;
+            text-align: center;
         }
-
-        .card-actions {
-            align-self: center;
-            font-size: xx-large;
-            z-index: 1;
+        
+        .days {
+            color: rgb(232, 231, 231);
         }
     }
 }

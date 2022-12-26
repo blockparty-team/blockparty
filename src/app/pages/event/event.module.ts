@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EventPageRoutingModule } from './event-routing.module';
 
 import { EventPage } from './event.page';
+import { EventCardComponent } from './event-card/event-card.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,9 @@ import { EventPage } from './event.page';
     IonicModule,
     EventPageRoutingModule
   ],
-  declarations: [EventPage]
+  declarations: [
+    EventPage,
+    EventCardComponent
+  ]
 })
-export class EventPageModule {}
+export class EventPageModule { }

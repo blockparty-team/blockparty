@@ -6,7 +6,6 @@ import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
-import { imageSize } from '@app/shared/models/imageSize';
 import { FileService } from '@app/services/file.service';
 
 
