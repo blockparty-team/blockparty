@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Favorite, FavoriteEntity } from '@app/interfaces/database-entities';
-// import { Favorites } from '@app/interfaces/favorites';
-// import { StoreService } from '@app/store/store.service';
-import { BehaviorSubject, combineLatest, concat, iif, merge, Observable, of, Subject } from 'rxjs';
-import { delay, distinctUntilChanged, filter, first, map, mapTo, mergeMap, scan, share, shareReplay, startWith, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, iif, merge, Observable, of } from 'rxjs';
+import { filter, first, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 import { DeviceStorageService } from './device-storage.service';
 import { SupabaseService } from './supabase.service';
-
-type ToggledFavoritePayload = { entity: FavoriteEntity, id: string }
 
 @Injectable({
   providedIn: 'root'
