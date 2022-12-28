@@ -29,10 +29,10 @@ export class ArtistStateService {
 
   artistsWithFavorites$: Observable<ArtistViewModel[]> = combineLatest([
     this.artists$,
-    this.favoritesService.favorites$
+    this.favoritesService.artistIds$
   ]).pipe(
-    filter(([artists, favorites]) => !!artists && !!favorites),
-    map(([artists, favorites]) => artists.map(artist => {
+    filter(([artists, favoriteArtistIds]) => !!artists && !!favoriteArtistIds),
+    map(([artists, favoriteArtistIds]) => artists.map(artist => {
 
       const [bucket, path] = getBucketAndPath(artist.storage_path);
 
@@ -47,9 +47,7 @@ export class ArtistStateService {
           : 'assets/distortion_logo.png',
         srcset,
         // Favorites only exists if user added artists to favorites
-        isFavorite: favorites
-          .find(favorite => favorite.entity === 'artist').ids
-          .includes(artist.id)
+        isFavorite: favoriteArtistIds.includes(artist.id)
       };
     })),
     distinctUntilChanged(),

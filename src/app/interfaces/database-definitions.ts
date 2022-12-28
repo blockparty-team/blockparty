@@ -235,21 +235,18 @@ export interface Database {
       }
       favorite: {
         Row: {
-          id: string
           user_id: string
           entity: Database["public"]["Enums"]["favorite_entity"]
           ids: string[]
           inserted_at: string
         }
         Insert: {
-          id?: string
           user_id: string
           entity: Database["public"]["Enums"]["favorite_entity"]
           ids: string[]
           inserted_at?: string
         }
         Update: {
-          id?: string
           user_id?: string
           entity?: Database["public"]["Enums"]["favorite_entity"]
           ids?: string[]
@@ -438,6 +435,14 @@ export interface Database {
       text_search: {
         Args: { search_term: string }
         Returns: Record<string, unknown>[]
+      }
+      upsert_favorite: {
+        Args: {
+          _user_id: string
+          _entity: Database["public"]["Enums"]["favorite_entity"]
+          _ids: unknown
+        }
+        Returns: undefined
       }
     }
     Enums: {

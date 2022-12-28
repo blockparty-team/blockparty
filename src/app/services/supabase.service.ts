@@ -324,35 +324,17 @@ export class SupabaseService {
     )
   }
 
-  addFavorites(entity: FavoriteEntity, ids: string[]): Observable<Favorite[]> {
+  // Couldn't make supabase client upsert() work on composite primary keys hence this RPC
+  upsertFavorites(entity: FavoriteEntity, ids: string[]): Observable<any> {
     return from(
-      this.supabase
-        .from('favorite')
-        .insert({
-          user_id: this._session$.value.user.id,
-          entity,
-          ids
-        })
-        .select()
+      this.supabase.rpc('upsert_favorite', { 
+        _user_id: this._session$.value?.user.id, 
+        _entity: entity, 
+        _ids: ids 
+      })
     ).pipe(
       pluck('data')
-    )
-  }
-
-  upsertFavorites(id: string, entity: FavoriteEntity, ids: string[]): Observable<Favorite[]> {
-    return from(
-      this.supabase
-        .from('favorite')
-        .upsert({
-          id,
-          user_id: this._session$.value.user.id,
-          entity,
-          ids
-        })
-        .select()
-    ).pipe(
-      pluck('data')
-    )
+    );
   }
 
   downloadFile(bucket: string, path: string) {
