@@ -6,12 +6,19 @@ import { AuthService } from './auth.service';
 import { DeviceStorageService } from './device-storage.service';
 import { SupabaseService } from './supabase.service';
 
+const initialState: Pick<Favorite, 'entity' | 'ids'>[] = [
+  {
+    entity: 'artist',
+    ids: []
+  }
+]
+
 @Injectable({
   providedIn: 'root'
 })
 export class FavoritesService {
 
-  private _favorites$ = new BehaviorSubject<Partial<Favorite>[]>([]);
+  private _favorites$ = new BehaviorSubject<Partial<Favorite>[]>(initialState);
 
   // Only fetch favorites from Supabase if authenticated
   private supaFavorites$ = this.authService.authenticated$.pipe(
@@ -57,7 +64,7 @@ export class FavoritesService {
         }));
       }
 
-      return [];
+      return initialState;
     }),
     tap(unionFavorites => {
       this._favorites$.next(unionFavorites);
@@ -88,18 +95,28 @@ export class FavoritesService {
 
   toggleFavorite(entity: FavoriteEntity, id: string) {
 
-    const update = this._favorites$.value.map(favorite => favorite.entity === entity
-      ? {
-        ...favorite,
-        ids: favorite.ids.includes(id)
-          ? favorite.ids.filter(ids => ids !== id)
-          : [...favorite.ids, id]
-      }
-      : favorite
-    );
+    let update: Partial<Favorite>[];
 
-    this._favorites$.next(update);
-    this.deviceStorageService.set('favorites', update);
+    if (this._favorites$.value.length === 0) {      
+      update = [{entity, ids: [id]}];
+
+      this._favorites$.next(update);
+      this.deviceStorageService.set('favorites', update);
+    } else {
+      update = this._favorites$.value.map(favorite => favorite.entity === entity
+        ? {
+          ...favorite,
+          ids: favorite.ids.includes(id)
+            ? favorite.ids.filter(ids => ids !== id)
+            : [...favorite.ids, id]
+        }
+        : favorite
+      );
+  
+      this._favorites$.next(update);
+      this.deviceStorageService.set('favorites', update);
+    }
+
 
     this.authService.authenticated$.pipe(
       first(),
