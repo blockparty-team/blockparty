@@ -78,12 +78,12 @@ export class SupabaseService {
     );
   }
 
-  signInWithProvider(provider: Provider): Observable<OAuthResponse['data']> {
+  signInWithProvider(provider: Provider, redirectTo: string = '/'): Observable<OAuthResponse['data']> {
     return from(
       this.supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: isPlatform('capacitor') ? 'distortion://login' : `${window.location.origin}/tabs/map`
+          redirectTo: isPlatform('capacitor') ? 'distortion://login' : `${window.location.origin}${redirectTo}`
         }
       })
     ).pipe(

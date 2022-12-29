@@ -6,7 +6,7 @@ import { environment } from '@env/environment';
 import { SupabaseService } from './services/supabase.service';
 import { App, URLOpenListenerEvent } from "@capacitor/app";
 import { Router } from '@angular/router';
-import { AuthService } from './services/auth.service';
+import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private oneSignal: OneSignal,
     private supabase: SupabaseService,
-    private authService: AuthService
+    private routeHistoryService: RouteHistoryService
   ) {
     this.oneSignal.init({
       appId: environment.oneSignalAppId,
@@ -45,6 +45,9 @@ export class AppComponent implements OnInit {
         this.supabase.setSession(null);
       }
     })
+
+    this.routeHistoryService.init();
+
   }
 
   setupAppUrlOpenListener() {

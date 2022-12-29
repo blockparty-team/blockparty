@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Session } from '@supabase/supabase-js';
+import { OAuthResponse, Session } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
@@ -27,8 +27,8 @@ export class AuthService {
     return this.supabase.signIn(email);
   }
 
-  signInWithGoogle() {
-    this.supabase.signInWithProvider('google').subscribe();
+  signInWithGoogle(redirectTo?: string): Observable<OAuthResponse['data']> {
+    return this.supabase.signInWithProvider('google', redirectTo);
   }
 
   logOut(): void {
