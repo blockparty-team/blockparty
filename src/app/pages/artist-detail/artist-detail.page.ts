@@ -6,6 +6,7 @@ import { MapService } from '@app/services/map.service';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
+import { RouteHistoryService } from '@app/services/routeHistory.service';
 
 @Component({
   selector: 'app-artist-detail',
@@ -17,12 +18,17 @@ export class ArtistDetailPage implements OnInit {
 
   artist$: Observable<ArtistViewModel>;
 
+  previousRoute$ = this.routeHistoryService.history$.pipe(
+    map(history => history.previous ? history.previous : '/')
+  );
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
     private artistStateService: ArtistStateService,
-    private mapService: MapService
+    private mapService: MapService,
+    private routeHistoryService: RouteHistoryService
   ) { }
 
   ngOnInit() {
