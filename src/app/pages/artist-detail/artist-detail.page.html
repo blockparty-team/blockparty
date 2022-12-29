@@ -2,7 +2,7 @@
   <ion-header>
     <ion-toolbar color="medium">
       <ion-buttons slot="start">
-        <ion-back-button defaultHref="tabs/artist"
+        <ion-back-button [defaultHref]="previousRoute$ | async"
                          icon="chevron-back">
         </ion-back-button>
       </ion-buttons>
