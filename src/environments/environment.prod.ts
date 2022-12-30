@@ -1,4 +1,16 @@
-import { Environment } from "./environment";
+export interface Environment {
+  production: boolean;
+  festivalName: string;
+  supabaseUrl: string;
+  supabaseAnonKey: string;
+  maptilerStyleJson: string;
+  oneSignalAppId: string;
+  mapView: {
+    center: [number, number];
+    zoom: number;
+    pitch: number;
+  };
+}
 
 export const environment: Environment = {
   production: true,
