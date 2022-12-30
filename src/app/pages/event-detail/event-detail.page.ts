@@ -52,7 +52,7 @@ export class EventDetailPage implements OnInit {
           dialogTitle: `${event.name}`,
           title: 'Share',
           text: `Check out ${event.name} event at ${environment.festivalName} running ${event.days.join(' and ')}`,
-          url: window.location.href
+          url: `${environment.appUrl}${this.router.url}`
         });
       }
     });

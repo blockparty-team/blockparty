@@ -1,4 +1,4 @@
-import { Environment } from "./environment.prod";
+import { Environment } from "./environment.model";
 
 /* eslint-disable max-len */
 // This file can be replaced during build by using the `fileReplacements` array.
@@ -8,6 +8,7 @@ import { Environment } from "./environment.prod";
 export const environment: Environment = {
   production: false,
   festivalName: 'Distortion Festival',
+  appUrl: 'http://localhost:8100',
   supabaseUrl: 'https://kutgkjqbdasprmpugfyi.supabase.co',
   supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt1dGdranFiZGFzcHJtcHVnZnlpIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NTU2MjExNDQsImV4cCI6MTk3MTE5NzE0NH0.d_DBRZQaIrQDgRhTC8LB35YHy279FVn4vs1L4uTp11k',
   // supabaseUrl: 'http://localhost:54321',

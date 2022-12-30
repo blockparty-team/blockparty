@@ -112,7 +112,7 @@ export class ArtistDetailPage implements OnInit {
           dialogTitle: `${artist.name}`,
           title: 'Share',
           text: `${artist.name} is playing at ${environment.festivalName} ${artist.timetable.map(t => t.day.name).join(' and ')} - Check it out:`,
-          url: window.location.href
+          url: `${environment.appUrl}${this.router.url}`
         });
       }
     });
