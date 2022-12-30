@@ -29,7 +29,6 @@ img {
 
     .acts {
         margin-top: 20px;
-
         ion-badge {
             overflow: hidden;
             white-space: nowrap;
@@ -39,11 +38,9 @@ img {
     }
 }
 
-.music-player {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    height: $music-player-height;
+ion-fab-list {
+    background-color: rgba(var(--ion-color-medium-rgb), 0.7);
+    border-radius: 27px;
 }
 
 .loading {
