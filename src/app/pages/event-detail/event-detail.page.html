@@ -13,11 +13,17 @@
   <ng-container *ngIf="event$ | async as event">
     <ion-fab vertical="top"
              horizontal="end">
-      <ion-fab-button>
-        <ion-icon name="map-outline"
-                  (click)="onZoomToEventOnMap(event.id, event.bounds)">
-        </ion-icon>
+
+      <ion-fab-button (click)="onZoomToEventOnMap(event.id, event.bounds)">
+        <ion-icon name="map-outline"></ion-icon>
       </ion-fab-button>
+
+      <ion-fab-button *ngIf="canShare$ | async"
+                      class="share-fab"
+                      (click)="share(event)">
+        <ion-icon name="share-social-outline"></ion-icon>
+      </ion-fab-button>
+
     </ion-fab>
 
     <img [src]="event.imgUrl"

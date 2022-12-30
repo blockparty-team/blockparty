@@ -52,7 +52,6 @@
       </ion-fab-button>
 
       <ion-fab-list side="top">
-
         <ion-fab-button size="small"
                         *ngFor="let soMe of soMeLinks$ | async"
                         (click)="openUrl(soMe.url)">
@@ -65,8 +64,18 @@
                     [src]="soMe.svg">
           </ion-icon>
         </ion-fab-button>
-        
       </ion-fab-list>
+
+      <ion-fab-list *ngIf="canShare$ | async"
+                    side="start">
+        <ion-fab-button size="small"
+                        (click)="share(artist)">
+          <ion-icon name="share-social-outline"
+                    size="large">
+          </ion-icon>
+        </ion-fab-button>
+      </ion-fab-list>
+      
     </ion-fab>
   </ion-content>
 </ng-container>
