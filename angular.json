@@ -32,9 +32,11 @@
               "src/manifest.webmanifest",
               "src/OneSignalSDKWorker.js"
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss"],
+            "styles": [
+              "src/theme/variables.scss",
+              "src/global.scss"
+            ],
             "scripts": [],
-            "aot": false,
             "vendorChunk": true,
             "extractLicenses": false,
             "buildOptimizer": false,
