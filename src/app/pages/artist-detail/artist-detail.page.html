@@ -1,15 +1,12 @@
 <ng-container *ngIf="artist$ | async as artist; else loading">
-  <ion-header>
-    <ion-toolbar color="medium">
-      <ion-buttons slot="start">
-        <ion-back-button [defaultHref]="previousRoute$ | async"
-                         icon="chevron-back">
-        </ion-back-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
 
   <ion-content color="medium">
+
+    <ion-back-button [defaultHref]="previousRoute$ | async"
+                     icon="chevron-back"
+                     color="medium"
+                     mode="md">
+    </ion-back-button>
 
     <img [src]="artist.imgUrl"
          alt="Image of {{artist.name}}"
@@ -47,75 +44,28 @@
 
     </div>
 
-    <ion-fab vertical="top"
+    <ion-fab vertical="bottom"
              horizontal="end"
-             edge
              slot="fixed">
       <ion-fab-button color="secondary">
         <ion-icon name="open-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab-list side="left">
-        <ion-fab-button size="small">
-          <ion-icon name="copy-outline"></ion-icon>
-        </ion-fab-button>
-      </ion-fab-list>
+      <ion-fab-list side="top">
 
-      <ion-fab-list side="bottom">
-        <a *ngIf="artist.instagram"
-           [href]="artist.instagram"
-           target="_blank">
-          <ion-fab-button size="small">
-            <ion-icon size="large"
-                      name="logo-instagram"></ion-icon>
-          </ion-fab-button>
-        </a>
-        <a *ngIf="artist.soundcloud"
-           [href]="artist.soundcloud"
-           target="_blank">
-          <ion-fab-button size="small">
-            <ion-icon size="large"
-                      name="logo-soundcloud"></ion-icon>
-          </ion-fab-button>
-        </a>
-        <a *ngIf="artist.spotify"
-           [href]="artist.spotify"
-           target="_blank">
-          <ion-fab-button size="small">
-            <ion-icon size="large"
-                      src="assets/so-me-icons/spotify.svg"></ion-icon>
-          </ion-fab-button>
-        </a>
-        <a *ngIf="artist.bandcamp"
-           [href]="artist.bandcamp"
-           target="_blank">
-          <ion-fab-button size="small">
-            <ion-icon size="large"
-                      src="assets/so-me-icons/bandcamp.svg"></ion-icon>
-          </ion-fab-button>
-        </a>
-        <a *ngIf="artist.apple_music"
-           [href]="artist.apple_music"
-           target="_blank">
-          <ion-icon size="large"
-                    name="logo-soundcloud"></ion-icon>
-        </a>
-        <a *ngIf="artist.tidal"
-           [href]="artist.tidal"
-           target="_blank">
-          <ion-fab-button size="small">
-            <ion-icon size="large"
-                      name="logo-soundcloud"></ion-icon>
-          </ion-fab-button>
-        </a>
-        <a *ngIf="artist.youtube"
-           [href]="artist.youtube"
-           target="_blank">
-          <ion-fab-button size="small">
-            <ion-icon size="large"
-                      name="logo-youtube"></ion-icon>
-          </ion-fab-button>
-        </a>
+        <ion-fab-button size="small"
+                        *ngFor="let soMe of soMeLinks$ | async"
+                        (click)="openUrl(soMe.url)">
+          <ion-icon *ngIf="soMe.icon"
+                    size="large"
+                    [name]="soMe.icon">
+          </ion-icon>
+          <ion-icon *ngIf="soMe.svg"
+                    size="large"
+                    [src]="soMe.svg">
+          </ion-icon>
+        </ion-fab-button>
+        
       </ion-fab-list>
     </ion-fab>
   </ion-content>

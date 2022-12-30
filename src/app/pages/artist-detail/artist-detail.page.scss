@@ -1,6 +1,8 @@
-ion-toolbar, ion- {
-    --background: transparent;
-    --ion-toolbar-text-color: white;
+ion-back-button {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    --background: rgba(255, 255, 255, 0.3)
 }
 
 img {
@@ -12,16 +14,14 @@ img {
 }
 
 .artist-info {
-    padding: 10px;
+    padding: 20px;
 
     .acts {
         ion-badge {
-            // color: var(--ion-color-medium);
             overflow: hidden;
-            white-space: nowrap; 
+            white-space: nowrap;
             text-overflow: ellipsis;
             padding: 10px;
-            // margin: 8px 0; 
         }
     }
 }
