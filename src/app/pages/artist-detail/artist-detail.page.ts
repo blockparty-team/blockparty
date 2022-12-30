@@ -6,7 +6,7 @@ import { Share } from '@capacitor/share';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
 import { Observable, from } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
@@ -67,6 +67,8 @@ export class ArtistDetailPage implements OnInit {
     );
 
     this.soMeLinks$ = this.artist$.pipe(
+      // Prevent disapearing SoMe fab's when artist is liked
+      distinctUntilKeyChanged('id'),
       map(artist => {
         const soMeColumns = soMeIcons.map(conf => conf.column);
 

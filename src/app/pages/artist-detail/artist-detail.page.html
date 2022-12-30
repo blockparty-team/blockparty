@@ -44,7 +44,8 @@
 
     </div>
 
-    <ion-fab vertical="bottom"
+    <ion-fab *ngIf="(canShare$ | async) || (soMeLinks$ | async).length > 0"
+    vertical="bottom"
              horizontal="end"
              slot="fixed">
       <ion-fab-button color="secondary">
@@ -52,8 +53,8 @@
       </ion-fab-button>
 
       <ion-fab-list side="top">
-        <ion-fab-button size="small"
-                        *ngFor="let soMe of soMeLinks$ | async"
+        <ion-fab-button *ngFor="let soMe of soMeLinks$ | async"
+                        color="secondary"
                         (click)="openUrl(soMe.url)">
           <ion-icon *ngIf="soMe.icon"
                     size="large"
@@ -69,13 +70,14 @@
       <ion-fab-list *ngIf="canShare$ | async"
                     side="start">
         <ion-fab-button size="small"
+                        color="secondary"
                         (click)="share(artist)">
           <ion-icon name="share-social-outline"
                     size="large">
           </ion-icon>
         </ion-fab-button>
       </ion-fab-list>
-      
+
     </ion-fab>
   </ion-content>
 </ng-container>
