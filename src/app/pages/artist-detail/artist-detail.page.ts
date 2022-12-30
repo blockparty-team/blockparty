@@ -2,21 +2,23 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Browser } from '@capacitor/browser';
+import { Share } from '@capacitor/share';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
+import { environment } from '@env/environment';
 
-interface SoMeConfig {
+interface SoMeIcon {
   column: string;
   icon?: string;
   svg?: string;
   url?: string;
 }
 
-const soMeConfig: SoMeConfig[] = [
+const soMeIcons: SoMeIcon[] = [
   { column: 'bandcamp', svg: 'assets/so-me-icons/bandcamp.svg' },
   { column: 'spotify', svg: 'assets/so-me-icons/spotify.svg' },
   { column: 'tidal', icon: '', svg: 'assets/so-me-icons/tidal.svg' },
@@ -37,7 +39,10 @@ const soMeConfig: SoMeConfig[] = [
 export class ArtistDetailPage implements OnInit {
 
   artist$: Observable<ArtistViewModel>;
-  soMeLinks$: Observable<SoMeConfig[]>;
+  soMeLinks$: Observable<SoMeIcon[]>;
+  canShare$ = from(Share.canShare()).pipe(
+    map(res => res.value)
+  );
 
   previousRoute$ = this.routeHistoryService.history$.pipe(
     map(history => history.previous ? history.previous : '/')
@@ -63,13 +68,13 @@ export class ArtistDetailPage implements OnInit {
 
     this.soMeLinks$ = this.artist$.pipe(
       map(artist => {
-        const soMeColumns = soMeConfig.map(conf => conf.column);
+        const soMeColumns = soMeIcons.map(conf => conf.column);
 
         return Object.entries(artist)
           .filter(([column, value]) => soMeColumns.includes(column) && !!value)
           .map(([column, url]) => {
 
-            const { icon, svg, } = soMeConfig
+            const { icon, svg, } = soMeIcons
               .find(conf => conf.column === column);
 
             return {
@@ -98,6 +103,19 @@ export class ArtistDetailPage implements OnInit {
 
   safeUrl(url: string): SafeResourceUrl {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  share(artist: ArtistViewModel): void {
+    Share.canShare().then(canShare => {
+      if (canShare.value) {
+        Share.share({
+          dialogTitle: `${artist.name}`,
+          title: 'Share',
+          text: `${artist.name} is playing at ${environment.festivalName} ${artist.timetable.map(t => t.day.name).join(' and ')} - Check it out:`,
+          url: window.location.href
+        });
+      }
+    });
   }
 
 }

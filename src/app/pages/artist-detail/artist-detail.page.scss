@@ -17,6 +17,7 @@ img {
     padding: 20px;
 
     .acts {
+        margin-top: 20px;
         ion-badge {
             overflow: hidden;
             white-space: nowrap;
@@ -24,6 +25,11 @@ img {
             padding: 10px;
         }
     }
+}
+
+ion-fab-list {
+    background-color: rgba(var(--ion-color-medium-rgb), 0.7);
+    border-radius: 27px;
 }
 
 .loading {

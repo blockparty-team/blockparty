@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Share } from '@capacitor/share'
 import { EventViewModel } from '@app/interfaces/event';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { MapService } from '@app/services/map.service';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { Observable } from 'rxjs';
+import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { EventStateService } from '../event/state/event-state.service';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-event-detail',
@@ -16,6 +18,10 @@ import { EventStateService } from '../event/state/event-state.service';
 export class EventDetailPage implements OnInit {
 
   event$: Observable<EventViewModel>
+  canShare$ = from(Share.canShare()).pipe(
+    map(res => res.value)
+  );
+
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -37,6 +43,19 @@ export class EventDetailPage implements OnInit {
     this.router.navigate(['/tabs', 'map']);
     this.mapService.fitBounds(bounds as LngLatBoundsLike);
     this.mapService.highlightFeature(MapLayer.EventHighLight, id, true);
+  }
+
+  share(event: EventViewModel): void {
+    Share.canShare().then(canShare => {
+      if (canShare.value) {
+        Share.share({
+          dialogTitle: `${event.name}`,
+          title: 'Share',
+          text: `Check out ${event.name} event at ${environment.festivalName} running ${event.days.join(' and ')}`,
+          url: window.location.href
+        });
+      }
+    });
   }
 
 }
