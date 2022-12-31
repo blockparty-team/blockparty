@@ -1,20 +1,31 @@
+$image-height: 250px;
+$music-player-height: 120px;
+
 ion-back-button {
     position: fixed;
     top: 10px;
     left: 10px;
-    --background: rgba(255, 255, 255, 0.3)
+    --background: rgba(255, 255, 255, 0.3);
+    z-index: 10;
 }
 
 img {
+    position: fixed;
+    top: 0;
     display: block;
     width: 100%;
-    height: 250px;
+    height: $image-height;
     object-fit: cover;
     object-position: center;
+    z-index: -1;
 }
 
 .artist-info {
+    position: relative;
+    top: $image-height;
     padding: 20px;
+    background-color: var(--ion-color-medium);
+    padding-bottom: $music-player-height;
 
     .acts {
         margin-top: 20px;
@@ -26,6 +37,13 @@ img {
             padding: 10px;
         }
     }
+}
+
+.music-player {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: $music-player-height;
 }
 
 .loading {

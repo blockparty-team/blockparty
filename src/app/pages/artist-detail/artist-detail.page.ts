@@ -40,6 +40,7 @@ export class ArtistDetailPage implements OnInit {
 
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
+  
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );

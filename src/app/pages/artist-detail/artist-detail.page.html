@@ -34,25 +34,26 @@
         </ion-badge>
       </div>
       <p>{{artist.description}}</p>
-
-      <ng-container *ngIf="artist.bandcamp_iframe as bandcampIframe">
-        <iframe style="border: 0; width: 100%; height: 42px;"
-                [src]="safeUrl(bandcampIframe)"
-                seamless>
-        </iframe>
-      </ng-container>
-
     </div>
 
+    <ng-container *ngIf="artist.bandcamp_iframe">
+      <div class="music-player">
+        <iframe style="border: 0; width: 100%; height: 120px;"
+                [src]="safeUrl(artist.bandcamp_iframe)"
+                seamless>
+        </iframe>
+      </div>
+    </ng-container>
+
     <ion-fab *ngIf="(canShare$ | async) || (soMeLinks$ | async).length > 0"
-    vertical="bottom"
+             vertical="top"
              horizontal="end"
              slot="fixed">
       <ion-fab-button color="secondary">
         <ion-icon name="open-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab-list side="top">
+      <ion-fab-list side="bottom">
         <ion-fab-button *ngFor="let soMe of soMeLinks$ | async"
                         color="secondary"
                         (click)="openUrl(soMe.url)">
