@@ -38,9 +38,11 @@ img {
     }
 }
 
-ion-fab-list {
-    background-color: rgba(var(--ion-color-medium-rgb), 0.7);
-    border-radius: 27px;
+.music-player {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    height: $music-player-height;
 }
 
 .loading {
