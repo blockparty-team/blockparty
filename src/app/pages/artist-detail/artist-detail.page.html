@@ -1,6 +1,6 @@
 <ng-container *ngIf="artist$ | async as artist; else loading">
 
-  <ion-content color="medium">
+  <ion-content color="medium" scrollEvents="true" (ionScroll)="onScroll($event)">
 
     <ion-back-button [defaultHref]="previousRoute$ | async"
                      icon="chevron-back"
@@ -10,7 +10,8 @@
 
     <img [src]="artist.imgUrl"
          alt="Image of {{artist.name}}"
-         [srcset]="artist.srcset">
+         [srcset]="artist.srcset"
+         [style.transform]="imageScale$ | async">
 
     <div class="artist-info">
       <h1 class="ion-text-center">
@@ -39,7 +40,7 @@
     <ng-container *ngIf="artist.bandcamp_iframe">
       <div class="music-player">
         <iframe style="border: 0; width: 100%; height: 120px;"
-                [src]="safeUrl(artist.bandcamp_iframe)"
+                [iframeSrc]="artist.bandcamp_iframe"
                 seamless>
         </iframe>
       </div>

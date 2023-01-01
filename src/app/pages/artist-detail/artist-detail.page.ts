@@ -1,15 +1,15 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
-import { Observable, from } from 'rxjs';
+import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
+import { ScrollCustomEvent } from '@ionic/angular';
 
 interface SoMeIcon {
   column: string;
@@ -40,7 +40,8 @@ export class ArtistDetailPage implements OnInit {
 
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
-  
+  imageScale$ = new Subject<string>();
+
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );
@@ -52,7 +53,6 @@ export class ArtistDetailPage implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer,
     private artistStateService: ArtistStateService,
     private mapService: MapService,
     private routeHistoryService: RouteHistoryService
@@ -104,10 +104,6 @@ export class ArtistDetailPage implements OnInit {
     Browser.open({ url });
   }
 
-  safeUrl(url: string): SafeResourceUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
-
   share(artist: ArtistViewModel): void {
     Share.canShare().then(canShare => {
       if (canShare.value) {
@@ -121,4 +117,9 @@ export class ArtistDetailPage implements OnInit {
     });
   }
 
+  onScroll(event: Event): void {
+    const scrollTop = (event as ScrollCustomEvent).detail.scrollTop;
+    const scale = (100 + (scrollTop / 40)) / 100;
+    this.imageScale$.next(`scale(${scale})`);
+  }
 }
