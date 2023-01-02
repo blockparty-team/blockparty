@@ -9,26 +9,48 @@ ion-back-button {
     z-index: 10;
 }
 
-img {
-    position: fixed;
-    top: 0;
-    display: block;
-    width: 100%;
-    height: $image-height;
-    object-fit: cover;
-    object-position: center;
-    z-index: -1;
+.header-image {
+    img {
+        position: fixed;
+        top: 0;
+        display: block;
+        width: 100%;
+        height: $image-height;
+        object-fit: cover;
+        object-position: center;
+        z-index: -1;
+    }
 }
+
+.toggle-player {
+    position: fixed;
+    top: 76px;
+    right: 10px;
+    z-index: 10;
+}
+
 
 .artist-info {
     position: relative;
     top: $image-height;
-    padding: 20px;
+    padding: 0 20px;
     background-color: var(--ion-color-medium);
-    padding-bottom: $music-player-height;
+
+    &.music-player-padding {
+        padding-bottom: $music-player-height;
+    }
+
+    h1 {
+        padding: 20px 0;
+        position: sticky;
+        top: 0;
+        background-color: var(--ion-color-medium);
+        z-index: 1;
+    }
 
     .acts {
         margin-top: 20px;
+
         ion-badge {
             overflow: hidden;
             white-space: nowrap;
@@ -43,6 +65,29 @@ img {
     width: 100%;
     bottom: 0;
     height: $music-player-height;
+    background-color: var(--ion-color-medium-shade);
+    overflow: visible;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    iframe {
+        position: absolute;
+        z-index: 1;
+    }
+
+    ion-spinner {
+        position: fixed;
+    }
+
+    .close-player {
+        background-color: var(--ion-color-medium-shade);
+        position: absolute;
+        border-radius: 50%;
+        padding: 5px;
+        right: 3px;
+        bottom: calc($music-player-height - 5px);
+    }
 }
 
 .loading {
