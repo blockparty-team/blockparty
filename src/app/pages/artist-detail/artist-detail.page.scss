@@ -33,15 +33,11 @@ ion-back-button {
 .artist-info {
     position: relative;
     top: $image-height;
-    padding: 0 20px;
     background-color: var(--ion-color-medium);
 
-    &.music-player-padding {
-        padding-bottom: $music-player-height;
-    }
-
-    h1 {
-        padding: 20px 0;
+    .artist-title {
+        padding: 20px 0 24px 0;
+        margin: 0;
         position: sticky;
         top: 0;
         background-color: var(--ion-color-medium);
@@ -49,14 +45,20 @@ ion-back-button {
     }
 
     .acts {
-        margin-top: 20px;
-
         ion-badge {
             overflow: hidden;
             white-space: nowrap;
             text-overflow: ellipsis;
             padding: 10px;
         }
+    }
+
+    .description {
+        padding: 0 20px;
+    }
+
+    &.music-player-padding {
+        padding-bottom: calc($music-player-height + 10px);
     }
 }
 
@@ -86,7 +88,7 @@ ion-back-button {
         border-radius: 50%;
         padding: 5px;
         right: 3px;
-        bottom: calc($music-player-height - 5px);
+        bottom: $music-player-height;
     }
 }
 

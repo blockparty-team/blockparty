@@ -8,7 +8,8 @@
       <img [src]="artist.imgUrl"
            alt="Image of {{artist.name}}"
            [srcset]="artist.srcset"
-           [style.transform]="imageScale$ | async">
+           [style.transform]="imageScale$ | async"
+           [style.filter]="imageBlur$ | async">
     </header>
 
     <ion-back-button [defaultHref]="previousRoute$ | async"
@@ -54,14 +55,14 @@
 
     <ion-fab-button class="toggle-player"
                     color="secondary"
-                    *ngIf="!(showPlayer$ | async)"
+                    *ngIf="artist.bandcamp_iframe && !(showPlayer$ | async)"
                     (click)="togglePlayer()">
-      <ion-icon name="play-outline"></ion-icon>
+      <ion-icon name="musical-note-outline"></ion-icon>
     </ion-fab-button>
 
     <section class="artist-info"
              [ngClass]="{'music-player-padding': (showPlayer$ | async)}">
-      <h1 class="ion-text-center">
+      <h1 class="artist-title ion-text-center">
         {{artist.name}}
         <ion-icon slot="icon-only"
                   [color]="artist.isFavorite ? 'primary' : ''"
@@ -81,7 +82,7 @@
           {{act.stage.name}}
         </ion-badge>
       </div>
-      <p>{{artist.description}}</p>
+      <p class="description">{{artist.description}}</p>
     </section>
 
     <ng-container *ngIf="artist.bandcamp_iframe && (showPlayer$ | async)">

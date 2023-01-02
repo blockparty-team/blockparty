@@ -45,6 +45,7 @@ export class ArtistDetailPage implements OnInit {
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
   imageScale$ = new Subject<string>();
+  imageBlur$ = new Subject<string>();
   showPlayer$ = new BehaviorSubject<boolean>(false);
 
   canShare$ = from(Share.canShare()).pipe(
@@ -125,7 +126,10 @@ export class ArtistDetailPage implements OnInit {
   onScroll(event: Event): void {
     const scrollTop = (event as ScrollCustomEvent).detail.scrollTop;
     const scale = (100 + (scrollTop / 40)) / 100;
+    const blur = scrollTop / 100;
+
     this.imageScale$.next(`scale(${scale})`);
+    this.imageBlur$.next(`blur(${blur}px)`);
   }
 
   togglePlayer(): void {
