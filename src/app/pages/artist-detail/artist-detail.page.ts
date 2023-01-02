@@ -1,15 +1,16 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
-import { Observable, Subject, from } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
 import { ScrollCustomEvent } from '@ionic/angular';
+import { animations } from '@app/shared/animations';
 
 interface SoMeIcon {
   column: string;
@@ -34,13 +35,17 @@ const soMeIcons: SoMeIcon[] = [
   selector: 'app-artist-detail',
   templateUrl: './artist-detail.page.html',
   styleUrls: ['./artist-detail.page.scss'],
+  animations: animations.slideUp,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailPage implements OnInit {
 
+  @ViewChild('musicPlayer') musicPlayerIframe: ElementRef<HTMLIFrameElement>;
+
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
   imageScale$ = new Subject<string>();
+  showPlayer$ = new BehaviorSubject<boolean>(false);
 
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
@@ -122,4 +127,9 @@ export class ArtistDetailPage implements OnInit {
     const scale = (100 + (scrollTop / 40)) / 100;
     this.imageScale$.next(`scale(${scale})`);
   }
+
+  togglePlayer(): void {
+    this.showPlayer$.next(!this.showPlayer$.value);
+  }
+
 }

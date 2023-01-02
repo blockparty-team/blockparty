@@ -1,50 +1,21 @@
 <ng-container *ngIf="artist$ | async as artist; else loading">
 
-  <ion-content color="medium" scrollEvents="true" (ionScroll)="onScroll($event)">
+  <ion-content color="medium"
+               scrollEvents="true"
+               (ionScroll)="onScroll($event)">
+
+    <header class="header-image">
+      <img [src]="artist.imgUrl"
+           alt="Image of {{artist.name}}"
+           [srcset]="artist.srcset"
+           [style.transform]="imageScale$ | async">
+    </header>
 
     <ion-back-button [defaultHref]="previousRoute$ | async"
                      icon="chevron-back"
                      color="medium"
                      mode="md">
     </ion-back-button>
-
-    <img [src]="artist.imgUrl"
-         alt="Image of {{artist.name}}"
-         [srcset]="artist.srcset"
-         [style.transform]="imageScale$ | async">
-
-    <div class="artist-info">
-      <h1 class="ion-text-center">
-        {{artist.name}}
-        <ion-icon slot="icon-only"
-                  [color]="artist.isFavorite ? 'primary' : ''"
-                  [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
-                  (click)="toggleFavorite(artist.id)">
-        </ion-icon>
-      </h1>
-      <div class="acts ion-text-center">
-        <ion-badge mode="ios"
-                   color="light"
-                   *ngFor="let act of artist.timetable"
-                   (click)="goToStageOnMap(act.stage.geom)">
-          <ion-icon name="location"></ion-icon>
-          {{act.day.name}} |
-          {{act.start_time | date:'HH:mm'}} -
-          {{act.end_time | date:'HH:mm'}} |
-          {{act.stage.name}}
-        </ion-badge>
-      </div>
-      <p>{{artist.description}}</p>
-    </div>
-
-    <ng-container *ngIf="artist.bandcamp_iframe">
-      <div class="music-player">
-        <iframe style="border: 0; width: 100%; height: 120px;"
-                [iframeSrc]="artist.bandcamp_iframe"
-                seamless>
-        </iframe>
-      </div>
-    </ng-container>
 
     <ion-fab *ngIf="(canShare$ | async) || (soMeLinks$ | async).length > 0"
              vertical="top"
@@ -79,8 +50,60 @@
           </ion-icon>
         </ion-fab-button>
       </ion-fab-list>
-
     </ion-fab>
+
+    <ion-fab-button class="toggle-player"
+                    color="secondary"
+                    *ngIf="!(showPlayer$ | async)"
+                    (click)="togglePlayer()">
+      <ion-icon name="play-outline"></ion-icon>
+    </ion-fab-button>
+
+    <section class="artist-info"
+             [ngClass]="{'music-player-padding': (showPlayer$ | async)}">
+      <h1 class="ion-text-center">
+        {{artist.name}}
+        <ion-icon slot="icon-only"
+                  [color]="artist.isFavorite ? 'primary' : ''"
+                  [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
+                  (click)="toggleFavorite(artist.id)">
+        </ion-icon>
+      </h1>
+      <div class="acts ion-text-center">
+        <ion-badge mode="ios"
+                   color="light"
+                   *ngFor="let act of artist.timetable"
+                   (click)="goToStageOnMap(act.stage.geom)">
+          <ion-icon name="location"></ion-icon>
+          {{act.day.name}} |
+          {{act.start_time | date:'HH:mm'}} -
+          {{act.end_time | date:'HH:mm'}} |
+          {{act.stage.name}}
+        </ion-badge>
+      </div>
+      <p>{{artist.description}}</p>
+    </section>
+
+    <ng-container *ngIf="artist.bandcamp_iframe && (showPlayer$ | async)">
+      <div class="music-player"
+           [@slideUp]>
+
+        <ion-spinner mode="md"
+                     color="secondary">
+        </ion-spinner>
+        <iframe #musicPlayer
+                style="border: 0; width: 100%; height: 120px;"
+                [iframeSrc]="artist.bandcamp_iframe"
+                seamless>
+        </iframe>
+        <ion-icon slot="icon-only"
+                  class="close-player"
+                  size="large"
+                  name="close-circle-outline"
+                  (click)="togglePlayer()">
+        </ion-icon>
+      </div>
+    </ng-container>
   </ion-content>
 </ng-container>
 
