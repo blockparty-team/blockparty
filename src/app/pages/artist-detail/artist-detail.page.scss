@@ -22,13 +22,18 @@ ion-back-button {
     }
 }
 
-.toggle-player {
+.fab-actions {
     position: fixed;
-    top: 76px;
+    top: 10px;
     right: 10px;
     z-index: 10;
-}
+    display: grid;
+    grid-auto-flow: row;
 
+    .so-me {
+        position: relative;
+    }
+}
 
 .artist-info {
     position: relative;
