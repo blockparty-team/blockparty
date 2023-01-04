@@ -47,7 +47,7 @@
       <section class="artists">
         <div class="artist-badge"
              *ngFor="let artist of event.artists"
-             [routerLink]="['/tabs', 'artist', artist.id]">{{ artist.name }}</div>
+             [routerLink]="['/tabs', 'artist', artist.name]">{{ artist.name }}</div>
       </section>
     </div>
   </ng-container>

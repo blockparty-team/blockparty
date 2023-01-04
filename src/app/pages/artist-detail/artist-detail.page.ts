@@ -32,7 +32,6 @@ const soMeIcons: SoMeIcon[] = [
 ]
 
 @Component({
-  selector: 'app-artist-detail',
   templateUrl: './artist-detail.page.html',
   styleUrls: ['./artist-detail.page.scss'],
   animations: animations.slideUp,
@@ -67,9 +66,9 @@ export class ArtistDetailPage implements OnInit {
 
   ngOnInit() {
     this.artist$ = this.activatedRoute.paramMap.pipe(
-      map(paramMap => paramMap.get('id')),
-      switchMap(id => this.artistStateService.artistsWithFavorites$.pipe(
-        map(artists => artists.find(artist => artist.id === id))
+      map(paramMap => paramMap.get('name')),
+      switchMap(name => this.artistStateService.artistsWithFavorites$.pipe(
+        map(artists => artists.find(artist => artist.name === name))
       ))
     );
 
