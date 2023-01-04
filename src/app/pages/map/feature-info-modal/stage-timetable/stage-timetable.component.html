@@ -24,7 +24,7 @@
         <span slot="start">
           {{act.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
         </span>
-        <ion-label (click)="onGoToArtist(act?.artist_id)">
+        <ion-label (click)="onGoToArtist(act?.name)">
           {{act?.name}}
         </ion-label>
       </ion-item>

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, SegmentCustomEvent } from '@ionic/angular';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { MapLayer } from '@app/interfaces/map-layer';
@@ -76,13 +76,13 @@ export class StageTimetableComponent implements OnInit {
     );
   }
 
-  onSelectDay(event): void {
-    this._selectedDay$.next(event.detail.value);
+  onSelectDay(event: Event): void {
+    this._selectedDay$.next((event as SegmentCustomEvent).detail.value);
   }
 
-  onGoToArtist(artistId: string): void {
+  onGoToArtist(name: string): void {
     this.modalCtrl.dismiss();
-    this.router.navigate(['/tabs/', 'artist', artistId]);
+    this.router.navigate(['/tabs/', 'artist', name]);
   }
 
   onOpenGoogleMapseDirections(coords: [number, number]): void {

@@ -69,7 +69,7 @@
         <ion-list>
           <ion-item *ngFor="let artist of favoriteArtists; let i = index ; trackBy:trackArtist"
                     [style.--animation-order]="i">
-            <ion-label [routerLink]="['./', artist.id]">{{artist.name}}</ion-label>
+            <ion-label [routerLink]="['./', artist.name]">{{artist.name}}</ion-label>
             <div slot="end"
                  (click)="toggleFavorite(artist.id)">
               <ion-icon slot="icon-only"
@@ -94,7 +94,7 @@
             <ion-label>{{group.day.name}}</ion-label>
           </ion-item-divider>
           <ion-item *ngFor="let artist of group.artists">
-            <ion-label [routerLink]="['./', artist.id]">
+            <ion-label [routerLink]="['./', artist.name]">
               <span class="artist-name">{{artist.name}}</span>
               <span class="time">
                 {{artist.timetable[0]?.start_time | date:'HH:mm'}} -
