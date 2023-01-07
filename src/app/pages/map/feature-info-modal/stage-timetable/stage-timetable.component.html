@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="primary">
+  <ion-toolbar color="secondary">
     <ion-title>{{stageName$ | async}}</ion-title>
     <ion-buttons slot="end">
       <ng-container *ngIf="location$ | async as location">
@@ -11,16 +11,23 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content color="medium">
   <ng-container *ngIf="days$ | async as days; else loading;">
-    <ion-segment scrollable mode="md" (ionChange)="onSelectDay($event)" [value]="days[0].id">
-      <ion-segment-button color="light" *ngFor="let day of days" [value]="day.id">
+    <ion-segment scrollable
+                 mode="md"
+                 (ionChange)="onSelectDay($event)"
+                 [value]="days[0].id">
+      <ion-segment-button color="light"
+                          *ngFor="let day of days"
+                          [value]="day.id">
         <ion-label>{{day.name}}</ion-label>
       </ion-segment-button>
     </ion-segment>
 
     <ng-container *ngIf="timetable$ | async as timetable">
-      <ion-item *ngFor="let act of timetable; let i = index" [style.--animation-order]="i">
+      <ion-item color="medium"
+                *ngFor="let act of timetable; let i = index"
+                [style.--animation-order]="i">
         <span slot="start">
           {{act.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
         </span>
