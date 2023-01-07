@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { concat, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, finalize, tap } from 'rxjs/operators';
+import { combineLatest, concat, EMPTY, Observable } from 'rxjs';
+import { catchError, filter, finalize, first, takeUntil, tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
@@ -112,14 +112,26 @@ export class MapService {
   }
 
   public flyTo(center: [number, number]): void {
-    this.map.flyTo({
-      center,
-      zoom: 18
-    })
+    this.mapStateService.mapLoaded$.pipe(
+      filter(mapLoaded => !!mapLoaded),
+      first(),
+      tap(() => {
+        this.map.flyTo({
+          center,
+          zoom: 18
+        })
+      })
+    ).subscribe()
   }
 
   public fitBounds(bounds: LngLatBoundsLike): void {
-    this.map.fitBounds(bounds, { padding: 10 });
+    this.mapStateService.mapLoaded$.pipe(
+      filter(mapLoaded => !!mapLoaded),
+      first(),
+      tap(() => {
+        this.map.fitBounds(bounds, { padding: 10 });
+      })
+    ).subscribe()
   }
 
   public resize(): void {
@@ -127,13 +139,19 @@ export class MapService {
   }
 
   public highlightFeature(layerName: MapLayer, id: string, autoRemove = false): void {
-    this.map.setFilter(layerName, ['==', 'id', id]);
-
-    if (autoRemove) {
-      setTimeout(() => {
-        this.map.setFilter(layerName, ['==', 'id', '']);
-      }, 5000);
-    }
+    this.mapStateService.mapLoaded$.pipe(
+      filter(mapLoaded => !!mapLoaded),
+      first(),
+      tap(() => {
+        this.map.setFilter(layerName, ['==', 'id', id]);
+    
+        if (autoRemove) {
+          setTimeout(() => {
+            this.removeFeatureHighlight(layerName);
+          }, 5000);
+        }
+      })
+    ).subscribe();
   }
 
   public removeFeatureHighlight(layerName: MapLayer): void {
