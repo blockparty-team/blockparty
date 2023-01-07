@@ -113,7 +113,7 @@ export class MapService {
 
   public flyTo(center: [number, number]): void {
     this.mapStateService.mapLoaded$.pipe(
-      filter(mapLoaded => !!mapLoaded),
+      filter(mapLoaded => mapLoaded),
       first(),
       tap(() => {
         this.map.flyTo({
@@ -126,7 +126,7 @@ export class MapService {
 
   public fitBounds(bounds: LngLatBoundsLike): void {
     this.mapStateService.mapLoaded$.pipe(
-      filter(mapLoaded => !!mapLoaded),
+      filter(mapLoaded => mapLoaded),
       first(),
       tap(() => {
         this.map.fitBounds(bounds, { padding: 10 });
@@ -139,8 +139,8 @@ export class MapService {
   }
 
   public highlightFeature(layerName: MapLayer, id: string, autoRemove = false): void {
-    this.mapStateService.mapLoaded$.pipe(
-      filter(mapLoaded => !!mapLoaded),
+    this.mapStateService.mapIdle$.pipe(
+      filter(mapIdle => !mapIdle),
       first(),
       tap(() => {
         this.map.setFilter(layerName, ['==', 'id', id]);
