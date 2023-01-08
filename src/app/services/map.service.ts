@@ -253,7 +253,7 @@ export class MapService {
           source: MapSource.Event,
           layout: {},
           paint: {
-            'line-color': color('--ion-color-tertiary'),
+            'line-color': color('--ion-color-primary'),
             'line-width': 6,
           },
           filter: ['==', 'id', '']
@@ -265,7 +265,7 @@ export class MapService {
           source: MapSource.Stage,
           layout: {},
           paint: {
-            'circle-color': color('--ion-color-tertiary'),
+            'circle-color': color('--ion-color-primary'),
             'circle-radius': 40,
           },
           filter: ['==', 'id', '']

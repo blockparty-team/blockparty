@@ -1,3 +1,5 @@
+type Size = 'small' | 'medium' | 'large';
+
 type Resize = 'cover' | 'contain' | 'fill';
 
 export interface TransformOptions {
@@ -5,10 +7,8 @@ export interface TransformOptions {
     resize: Resize;
 }
 
-type Size = 'small' | 'medium' | 'large';
-
 export const imageSize: Record<Size, TransformOptions> = {
-    small: { width: 200, resize: 'cover' },
-    medium: { width: 400, resize: 'cover' },
-    large: { width: 800, resize: 'cover' }
+    small: { width: 100, resize: 'cover' },
+    medium: { width: 200, resize: 'cover' },
+    large: { width: 300, resize: 'cover' }
 };
