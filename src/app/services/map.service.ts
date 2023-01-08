@@ -324,8 +324,8 @@ export class MapService {
             'text-anchor': 'top'
           },
           paint: {
-            "text-color": color('--ion-color-light'),
-            "text-halo-color": color('--ion-color-medium'),
+            "text-color": color('--ion-text-color'),
+            "text-halo-color": color('--ion-background-color'),
             "text-halo-width": 3,
             'icon-halo-blur': 10,
             'text-opacity': [

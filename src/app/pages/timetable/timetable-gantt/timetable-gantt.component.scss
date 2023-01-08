@@ -1,6 +1,5 @@
 .timetable {
     height: 100%;
-    background: var(--ion-color-medium);
     overflow: scroll;
     display: grid;
     grid-template-columns: repeat(calc(var(--template-columns) * 60), 2.5px);
@@ -11,8 +10,8 @@
     .time-label {
         grid-row: time-labels;
         grid-column: var(--time-label-column-start) / var(--time-label-column-end);
-        color: var(--ion-color-medium-contrast);
-        background-color: rgba(var(--ion-color-medium-contrast-rgb), 0.3);
+        color: var(--ion-text-color);
+        background-color: rgba(var(--ion-background-color-rgb), 0.7);
         position: sticky;
         top: 0;
         z-index: 1;

@@ -1,7 +1,6 @@
 <ng-container *ngIf="artist$ | async as artist; else loading">
 
-  <ion-content color="medium"
-               scrollEvents="true"
+  <ion-content scrollEvents="true"
                (ionScroll)="onScroll($event)">
 
     <header class="header-image">
@@ -14,7 +13,6 @@
 
     <ion-back-button [defaultHref]="previousRoute$ | async"
                      icon="chevron-back"
-                     color="medium"
                      mode="md">
     </ion-back-button>
 

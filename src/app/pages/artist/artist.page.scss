@@ -2,7 +2,7 @@
 
 ion-content#main {
     --background: var(--ion-color-secondary);
-    --background: linear-gradient(180deg, rgba(var(--ion-color-secondary-rgb), 0.6) 51%, var(--ion-color-secondary) 100%);
+    --background: linear-gradient(180deg, var(--ion-color-secondary) 50%, rgba(var(--ion-color-secondary-rgb), 0.3) 100%);
 }
 
 ion-item {
@@ -19,7 +19,8 @@ app-artist-card {
 
 .time {
     margin-left: 10px;
-    color: var(--ion-color-medium);
+    opacity: 0.7;
+    font-size: small;
 }
 
 ion-menu {

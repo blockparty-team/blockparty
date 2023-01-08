@@ -14,7 +14,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content color="medium">
+<ion-content>
   <ng-container *ngIf="events$ | async as events">
     <app-event-card *ngFor="let event of events"
                     [event]="event">
@@ -36,11 +36,9 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <ion-content class="ion-padding"
-                   color="medium">
+      <ion-content class="ion-padding">
         <div *ngIf="eventTypes$ | async as eventTypes">
-          <ion-item *ngFor="let eventType of eventTypes"
-                    color="medium">
+          <ion-item *ngFor="let eventType of eventTypes">
             <ion-label class="ion-text-wrap">
               <h2>
                 <ion-badge [style.--background]="eventType.color">

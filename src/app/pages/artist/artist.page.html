@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar color="medium">
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="toggleSearch()">
         <ion-icon slot="icon-only"
@@ -13,8 +13,7 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-toolbar *ngIf="showSearch$ | async"
-               color="medium">
+  <ion-toolbar *ngIf="showSearch$ | async">
     <ion-searchbar #search
                    mode="ios"
                    debounce="0"
@@ -89,8 +88,7 @@
       <ng-container *ngIf="showDayGroupedFavorites$ | async">
         <ion-item-group *ngFor="let group of dayGroupedFavorites; let i = index; trackBy:trackDay"
                         [style.--animation-order]="i">
-          <ion-item-divider sticky="true"
-                            color="medium">
+          <ion-item-divider sticky="true">
             <ion-label>{{group.day.name}}</ion-label>
           </ion-item-divider>
           <ion-item *ngFor="let artist of group.artists">

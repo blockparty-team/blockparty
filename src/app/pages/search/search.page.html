@@ -1,6 +1,5 @@
 <ion-header>
-  <ion-toolbar color="medium"
-               class="ion-text-center">
+  <ion-toolbar class="ion-text-center">
     <div class="search-mode ion-padding">
       <ion-segment mode="ios"
                    [value]="selectedSearchMode$ | async"
@@ -16,7 +15,7 @@
     </div>
   </ion-toolbar>
 
-  <ion-toolbar color="medium">
+  <ion-toolbar>
     <ion-searchbar #search
                    mode="ios"
                    debounce="0"
@@ -31,7 +30,8 @@
     <ng-container *ngIf="nearBy$ | async as nearBy">
 
       <ion-list>
-        <ion-item *ngFor="let result of nearBy" (click)="onShowOnMap(result.geom)">
+        <ion-item *ngFor="let result of nearBy"
+                  (click)="onShowOnMap(result.geom)">
           <span slot="start">{{result.distance}} m</span>
           <ion-badge slot="end"
                      [color]="badgeColor[result.entity]">{{result.entity}}</ion-badge>
@@ -58,7 +58,8 @@
             </ion-avatar>
             <ion-label>
               <h2>{{result.name}}</h2>
-              <p>{{result.artist.timetable[0]?.day.name}} | {{result.artist.timetable[0]?.start_time | date:'HH:mm'}}</p>
+              <p>{{result.artist.timetable[0]?.day.name}} | {{result.artist.timetable[0]?.start_time | date:'HH:mm'}}
+              </p>
             </ion-label>
             <ion-badge slot="end"
                        [color]="badgeColor[result.entity]">{{result.entity}}</ion-badge>

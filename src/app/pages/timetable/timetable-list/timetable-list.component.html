@@ -1,4 +1,4 @@
-<ion-content color="medium">
+<ion-content>
   <ng-container *ngIf="(listViewMode$ | async) === 'byStage'">
     <ng-container *ngIf="timetableByStage$ | async as stages">
       <ion-list>
@@ -7,8 +7,7 @@
                             color="primary">
             <ion-label>{{stage.stage_name}}</ion-label>
           </ion-item-divider>
-          <ion-item *ngFor="let artist of stage.timetable"
-                    color="medium">
+          <ion-item *ngFor="let artist of stage.timetable">
             <ion-label>
               <div class="timeslot">
                 <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
@@ -30,11 +29,10 @@
       </ion-list>
     </ng-container>
   </ng-container>
-  
+
   <ng-container *ngIf="(listViewMode$ | async) === 'byTime'">
     <ion-list>
-      <ion-item *ngFor="let artist of timetableByTime$ | async"
-                color="medium">
+      <ion-item *ngFor="let artist of timetableByTime$ | async">
         <ion-label>
           <div class="timeslot">
             <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
@@ -49,14 +47,14 @@
               {{artist.stageName}}
             </span>
           </div>
-  
+
           <div class="favorite">
             <ion-icon slot="icon-only"
                       [color]="artist.isFavorite ? 'primary' : ''"
                       [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
                       (click)="onToggleFavorite(artist.artist_id)"></ion-icon>
           </div>
-  
+
         </ion-label>
       </ion-item>
     </ion-list>
