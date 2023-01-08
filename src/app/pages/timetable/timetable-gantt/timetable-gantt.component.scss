@@ -1,6 +1,6 @@
 .timetable {
     height: 100%;
-    background: var(--ion-color-medium-tint);
+    background: var(--ion-color-medium);
     overflow: scroll;
     display: grid;
     grid-template-columns: repeat(calc(var(--template-columns) * 60), 2.5px);
