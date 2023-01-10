@@ -9,7 +9,7 @@ Before getting started, make sure you have the following installed on your devel
 * Android Studio (If you are going to build the app for android)
 * Xcode (If you are going to build the app for iOS)
 * OneSignal account
-* Supabase account
+* Supabase account (if not self hosting)
 * Maptiler account
 
 ## Clone the repo
