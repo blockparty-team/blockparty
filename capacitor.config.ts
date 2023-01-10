@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'app.vercel.distortioncph',
+  appId: 'com.cphdistortion.app',
   appName: 'Distortion',
   webDir: 'www',
   bundledWebRuntime: false

@@ -1,5 +1,5 @@
 {
-	"appId": "app.vercel.distortioncph",
+	"appId": "com.cphdistortion.app",
 	"appName": "Distortion",
 	"webDir": "www",
 	"bundledWebRuntime": false
