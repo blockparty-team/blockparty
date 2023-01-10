@@ -25,6 +25,11 @@ Navigate to the root of the project and install the app's dependencies by runnin
 npm install
 ```
 
+## Setup Supabase project
+You can create supabase project using the CLI.
+
+Run migrations scripts
+
 ## Run the app
 You can now run the app on your development machine by running the following command:
 ```bash
