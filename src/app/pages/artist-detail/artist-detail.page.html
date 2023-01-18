@@ -3,7 +3,12 @@
   <ion-content scrollEvents="true"
                (ionScroll)="onScroll($event)">
 
-    <header class="header-image">
+
+    <header>
+      <div *ngIf="coverIosStatusBar$ | async"
+           class="ios-status-bar-background">
+      </div>
+
       <img [src]="artist.imgUrl"
            alt="Image of {{artist.name}}"
            [srcset]="artist.srcset"

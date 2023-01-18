@@ -4,7 +4,7 @@ import { catchError, filter, finalize, first, takeUntil, tap } from 'rxjs/operat
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { color } from '@app/shared/colors';
+import { getCssVariable } from '@app/shared/colors';
 import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
@@ -253,7 +253,7 @@ export class MapService {
           source: MapSource.Event,
           layout: {},
           paint: {
-            'line-color': color('--ion-color-primary'),
+            'line-color': getCssVariable('--ion-color-primary'),
             'line-width': 6,
           },
           filter: ['==', 'id', '']
@@ -265,7 +265,7 @@ export class MapService {
           source: MapSource.Stage,
           layout: {},
           paint: {
-            'circle-color': color('--ion-color-primary'),
+            'circle-color': getCssVariable('--ion-color-primary'),
             'circle-radius': 40,
           },
           filter: ['==', 'id', '']
@@ -324,8 +324,8 @@ export class MapService {
             'text-anchor': 'top'
           },
           paint: {
-            "text-color": color('--ion-text-color'),
-            "text-halo-color": color('--ion-background-color'),
+            "text-color": getCssVariable('--ion-text-color'),
+            "text-halo-color": getCssVariable('--ion-background-color'),
             "text-halo-width": 3,
             'icon-halo-blur': 10,
             'text-opacity': [
