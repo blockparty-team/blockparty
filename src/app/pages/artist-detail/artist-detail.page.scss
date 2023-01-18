@@ -1,7 +1,18 @@
 $image-height: 250px;
 $music-player-height: 120px;
 
-.header-image {
+
+
+header {
+    .ios-status-bar-background {
+        position: fixed;
+        top: 0;
+        height: var(--ion-safe-area-top);
+        width: 100%;
+        background-color: var(--ion-background-color);
+        z-index: 100;
+    }
+
     img {
         position: fixed;
         top: 0;

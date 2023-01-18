@@ -43,16 +43,24 @@ export class ArtistDetailPage implements OnInit {
 
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
-  imageScale$ = new Subject<string>();
-  imageBlur$ = new Subject<string>();
   showPlayer$ = new BehaviorSubject<boolean>(false);
-
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );
-
   previousRoute$ = this.routeHistoryService.history$.pipe(
     map(history => history.previous ? history.previous : '/')
+  );
+
+  private _titleScrollTop$ = new Subject<number>();
+  imageScale$: Observable<string> = this._titleScrollTop$.pipe(
+    map(scrollTop => `scale(${(100 + (scrollTop / 40)) / 100})`),
+  )
+  imageBlur$: Observable<string> = this._titleScrollTop$.pipe(
+    map(scrollTop => `blur(${scrollTop / 100}px)`)
+  );
+  coverIosStatusBar$ = this._titleScrollTop$.pipe(
+    // Image heght is defined for 250 in css
+    map(titleDistanceTop => titleDistanceTop < 250 ? false : true)
   );
 
   constructor(
@@ -124,11 +132,7 @@ export class ArtistDetailPage implements OnInit {
 
   onScroll(event: Event): void {
     const scrollTop = (event as ScrollCustomEvent).detail.scrollTop;
-    const scale = (100 + (scrollTop / 40)) / 100;
-    const blur = scrollTop / 100;
-
-    this.imageScale$.next(`scale(${scale})`);
-    this.imageBlur$.next(`blur(${blur}px)`);
+    this._titleScrollTop$.next(scrollTop);
   }
 
   togglePlayer(): void {
