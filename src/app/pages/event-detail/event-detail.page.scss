@@ -13,6 +13,10 @@ img {
     margin-top: 10px;
 }
 
+.description {
+    white-space: pre-wrap;
+}
+
 .artists {
     display: flex;
     flex-wrap: wrap;
