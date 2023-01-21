@@ -4,8 +4,8 @@ Before getting started, make sure you have the following installed on your devel
 
 * Node.js (version 12 or later)
 * npm (Node Package Manager)
-* Ionic CLI
-* Supabase CLI
+* [Ionic CLI](https://ionicframework.com/docs/cli#installation)
+* [Supabase CLI](https://supabase.com/docs/guides/resources/supabase-cli)
 * Android Studio (If you are going to build the app for android)
 * Xcode (If you are going to build the app for iOS)
 * OneSignal account
@@ -50,7 +50,7 @@ This will create a platform-specific build of your app in the /platforms folder.
 The project includes documentation on the project structure, dependencies, Ionic features, Capacitor plugins, and more, be sure to check the documentation or docs folder for more information on the app.
 
 ## Getting Help
-If you have any questions or need help getting started with the app, feel free to reach out through the project's issue tracker.
+If you have any questions or need help getting started with the app, feel free to reach out through the project's [issue tracker](https://github.com/baffioso/distortion/issues).
 
 ## Push Notifications
 OneSignal is for Notification
