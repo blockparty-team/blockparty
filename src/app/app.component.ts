@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
-import { OneSignal } from 'onesignal-ngx';
+import OneSignal from 'onesignal-cordova-plugin';
 import { environment } from '@env/environment';
 import { SupabaseService } from './services/supabase.service';
 import { App, URLOpenListenerEvent } from "@capacitor/app";
@@ -19,14 +19,13 @@ export class AppComponent implements OnInit {
   constructor(
     private zone: NgZone,
     private router: Router,
-    private oneSignal: OneSignal,
     private supabase: SupabaseService,
     private routeHistoryService: RouteHistoryService
   ) {
-    this.oneSignal.init({
-      appId: environment.oneSignalAppId,
-      allowLocalhostAsSecureOrigin: true
-    })
+    // this.oneSignal.init({
+    //   appId: environment.oneSignalAppId,
+    //   allowLocalhostAsSecureOrigin: true
+    // })
 
     this.setupAppUrlOpenListener();
   }
@@ -35,6 +34,7 @@ export class AppComponent implements OnInit {
     Device.getInfo().then(info => {
       if (info.platform !== 'web') {
         StatusBar.setBackgroundColor({ color: '#443f3f' })
+        this.oneSignalInit();
       }
     })
 
@@ -47,18 +47,26 @@ export class AppComponent implements OnInit {
     })
 
     this.routeHistoryService.init();
+  }
 
+  oneSignalInit(): void {
+    OneSignal.setAppId(environment.oneSignalAppId);
+    OneSignal.setNotificationOpenedHandler((jsonData) => {
+      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
+    });
+    OneSignal.promptForPushNotificationsWithUserResponse((accepted) => {
+      console.log("User accepted notifications: " + accepted);
+
+    });
   }
 
   setupAppUrlOpenListener() {
     App.addListener("appUrlOpen", async (urlData: URLOpenListenerEvent) => {
-      console.log("       ", urlData);
-
       const openUrl = urlData.url;
       const access = openUrl.split("#access_token=").pop().split("&")[0];
       const refresh = openUrl.split("&refresh_token=").pop().split("&")[0];
 
-      const {data, error} = await this.supabase.externalSetSession(access, refresh);
+      const { data, error } = await this.supabase.externalSetSession(access, refresh);
       this.supabase.setSession(data.session);
 
       this.zone.run(() => {
