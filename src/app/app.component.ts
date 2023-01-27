@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
-import OneSignal from 'onesignal-cordova-plugin';
-import { environment } from '@env/environment';
 import { SupabaseService } from './services/supabase.service';
 import { App, URLOpenListenerEvent } from "@capacitor/app";
 import { Router } from '@angular/router';
 import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
+import { PushNotificationService } from './services/push-notification.service';
 
 @Component({
   selector: 'app-root',
@@ -20,22 +19,21 @@ export class AppComponent implements OnInit {
     private zone: NgZone,
     private router: Router,
     private supabase: SupabaseService,
-    private routeHistoryService: RouteHistoryService
+    private routeHistoryService: RouteHistoryService,
+    private pushNotificationService: PushNotificationService
   ) {
-    // this.oneSignal.init({
-    //   appId: environment.oneSignalAppId,
-    //   allowLocalhostAsSecureOrigin: true
-    // })
-
     this.setupAppUrlOpenListener();
   }
 
   ngOnInit(): void {
     Device.getInfo().then(info => {
       if (info.platform !== 'web') {
-        StatusBar.setBackgroundColor({ color: '#443f3f' })
-        this.oneSignalInit();
+        StatusBar.setBackgroundColor({ color: '#443f3f' });
       }
+    });
+
+    Device.getId().then(deviceId => {
+      this.pushNotificationService.initOneSignal(deviceId.uuid);
     })
 
     this.supabase.authChanges((event, session) => {
@@ -44,22 +42,12 @@ export class AppComponent implements OnInit {
       } else {
         this.supabase.setSession(null);
       }
-    })
+    });
 
     this.routeHistoryService.init();
   }
 
-  oneSignalInit(): void {
-    OneSignal.setAppId(environment.oneSignalAppId);
-    OneSignal.setNotificationOpenedHandler((jsonData) => {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    });
-    OneSignal.promptForPushNotificationsWithUserResponse((accepted) => {
-      console.log("User accepted notifications: " + accepted);
-
-    });
-  }
-
+  // Url listener extracting tokens when getting auth redirect on ios/android native 
   setupAppUrlOpenListener() {
     App.addListener("appUrlOpen", async (urlData: URLOpenListenerEvent) => {
       const openUrl = urlData.url;
