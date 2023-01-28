@@ -7,403 +7,431 @@ export type Json =
   | Json[]
 
 export interface Database {
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          operationName: string
+          query: string
+          variables: Json
+          extensions: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
   public: {
     Tables: {
       artist: {
         Row: {
-          id: string
-          name: string
-          description: string | null
-          storage_path: string | null
-          bandcamp: string | null
-          spotify: string | null
-          tidal: string | null
           apple_music: string | null
-          soundcloud: string | null
-          youtube: string | null
-          instagram: string | null
-          facebook: string | null
-          webpage: string | null
+          bandcamp: string | null
           bandcamp_iframe: string | null
+          description: string | null
+          facebook: string | null
+          id: string
           inserted_at: string
+          instagram: string | null
+          name: string
           public: boolean | null
+          soundcloud: string | null
+          soundcloud_iframe: string | null
+          spotify: string | null
+          storage_path: string | null
+          tidal: string | null
           ts: unknown | null
+          webpage: string | null
+          youtube: string | null
         }
         Insert: {
-          id?: string
-          name: string
-          description?: string | null
-          storage_path?: string | null
-          bandcamp?: string | null
-          spotify?: string | null
-          tidal?: string | null
           apple_music?: string | null
-          soundcloud?: string | null
-          youtube?: string | null
-          instagram?: string | null
-          facebook?: string | null
-          webpage?: string | null
+          bandcamp?: string | null
           bandcamp_iframe?: string | null
+          description?: string | null
+          facebook?: string | null
+          id?: string
           inserted_at?: string
+          instagram?: string | null
+          name: string
           public?: boolean | null
+          soundcloud?: string | null
+          soundcloud_iframe?: string | null
+          spotify?: string | null
+          storage_path?: string | null
+          tidal?: string | null
           ts?: unknown | null
+          webpage?: string | null
+          youtube?: string | null
         }
         Update: {
-          id?: string
-          name?: string
-          description?: string | null
-          storage_path?: string | null
-          bandcamp?: string | null
-          spotify?: string | null
-          tidal?: string | null
           apple_music?: string | null
-          soundcloud?: string | null
-          youtube?: string | null
-          instagram?: string | null
-          facebook?: string | null
-          webpage?: string | null
+          bandcamp?: string | null
           bandcamp_iframe?: string | null
+          description?: string | null
+          facebook?: string | null
+          id?: string
           inserted_at?: string
+          instagram?: string | null
+          name?: string
           public?: boolean | null
+          soundcloud?: string | null
+          soundcloud_iframe?: string | null
+          spotify?: string | null
+          storage_path?: string | null
+          tidal?: string | null
           ts?: unknown | null
+          webpage?: string | null
+          youtube?: string | null
         }
       }
       asset: {
         Row: {
-          id: string
-          description: string | null
-          geom: unknown | null
           asset_type_id: string
-          icon_id: string | null
+          description: string | null
           event_id: string
+          geom: unknown | null
+          icon_id: string | null
+          id: string
           inserted_at: string
           public: boolean | null
         }
         Insert: {
-          id?: string
-          description?: string | null
-          geom?: unknown | null
           asset_type_id: string
-          icon_id?: string | null
+          description?: string | null
           event_id: string
+          geom?: unknown | null
+          icon_id?: string | null
+          id?: string
           inserted_at?: string
           public?: boolean | null
         }
         Update: {
-          id?: string
-          description?: string | null
-          geom?: unknown | null
           asset_type_id?: string
-          icon_id?: string | null
+          description?: string | null
           event_id?: string
+          geom?: unknown | null
+          icon_id?: string | null
+          id?: string
           inserted_at?: string
           public?: boolean | null
         }
       }
       asset_type: {
         Row: {
-          id: string
-          name: string
           description: string | null
+          id: string
           inserted_at: string
+          name: string
           public: boolean | null
         }
         Insert: {
-          id?: string
-          name: string
           description?: string | null
+          id?: string
           inserted_at?: string
+          name: string
           public?: boolean | null
         }
         Update: {
-          id?: string
-          name?: string
           description?: string | null
+          id?: string
           inserted_at?: string
+          name?: string
           public?: boolean | null
         }
       }
       day: {
         Row: {
-          id: string
           day: string
-          name: string | null
           description: string | null
+          id: string
           inserted_at: string
+          name: string | null
           public: boolean | null
         }
         Insert: {
-          id?: string
           day: string
-          name?: string | null
           description?: string | null
+          id?: string
           inserted_at?: string
+          name?: string | null
           public?: boolean | null
         }
         Update: {
-          id?: string
           day?: string
-          name?: string | null
           description?: string | null
+          id?: string
           inserted_at?: string
+          name?: string | null
           public?: boolean | null
         }
       }
       day_event: {
         Row: {
-          id: string
           day_id: string
           event_id: string
+          id: string
           inserted_at: string
         }
         Insert: {
-          id?: string
           day_id: string
           event_id: string
+          id?: string
           inserted_at?: string
         }
         Update: {
-          id?: string
           day_id?: string
           event_id?: string
+          id?: string
           inserted_at?: string
         }
       }
       event: {
         Row: {
-          id: string
-          name: string
-          description: string | null
-          geom: unknown | null
-          style: Json | null
-          inserted_at: string
-          public: boolean | null
           bounds: number[] | null
-          storage_path: string | null
+          description: string | null
           event_type_id: string | null
+          geom: unknown | null
+          id: string
+          inserted_at: string
+          name: string
+          public: boolean | null
+          storage_path: string | null
+          style: Json | null
         }
         Insert: {
-          id?: string
-          name: string
-          description?: string | null
-          geom?: unknown | null
-          style?: Json | null
-          inserted_at?: string
-          public?: boolean | null
           bounds?: number[] | null
-          storage_path?: string | null
+          description?: string | null
           event_type_id?: string | null
+          geom?: unknown | null
+          id?: string
+          inserted_at?: string
+          name: string
+          public?: boolean | null
+          storage_path?: string | null
+          style?: Json | null
         }
         Update: {
-          id?: string
-          name?: string
-          description?: string | null
-          geom?: unknown | null
-          style?: Json | null
-          inserted_at?: string
-          public?: boolean | null
           bounds?: number[] | null
-          storage_path?: string | null
+          description?: string | null
           event_type_id?: string | null
+          geom?: unknown | null
+          id?: string
+          inserted_at?: string
+          name?: string
+          public?: boolean | null
+          storage_path?: string | null
+          style?: Json | null
         }
       }
       event_type: {
         Row: {
-          id: string
-          name: string
-          description: string | null
           color: string | null
+          description: string | null
+          id: string
           inserted_at: string
+          name: string
           public: boolean | null
         }
         Insert: {
-          id?: string
-          name: string
-          description?: string | null
           color?: string | null
+          description?: string | null
+          id?: string
           inserted_at?: string
+          name: string
           public?: boolean | null
         }
         Update: {
-          id?: string
-          name?: string
-          description?: string | null
           color?: string | null
+          description?: string | null
+          id?: string
           inserted_at?: string
+          name?: string
           public?: boolean | null
         }
       }
       favorite: {
         Row: {
-          user_id: string
           entity: Database["public"]["Enums"]["favorite_entity"]
           ids: string[]
           inserted_at: string
+          user_id: string
         }
         Insert: {
-          user_id: string
           entity: Database["public"]["Enums"]["favorite_entity"]
           ids: string[]
           inserted_at?: string
+          user_id: string
         }
         Update: {
-          user_id?: string
           entity?: Database["public"]["Enums"]["favorite_entity"]
           ids?: string[]
           inserted_at?: string
+          user_id?: string
         }
       }
       icon: {
         Row: {
           id: string
-          name: string
-          storage_path: string | null
           inserted_at: string
+          name: string
           public: boolean | null
+          storage_path: string | null
         }
         Insert: {
           id?: string
-          name: string
-          storage_path?: string | null
           inserted_at?: string
+          name: string
           public?: boolean | null
+          storage_path?: string | null
         }
         Update: {
           id?: string
-          name?: string
-          storage_path?: string | null
           inserted_at?: string
+          name?: string
           public?: boolean | null
+          storage_path?: string | null
         }
       }
       profile: {
         Row: {
-          id: string
-          username: string | null
-          inserted_at: string
           avatar_url: string | null
+          id: string
+          inserted_at: string
+          username: string | null
         }
         Insert: {
-          id: string
-          username?: string | null
-          inserted_at?: string
           avatar_url?: string | null
+          id: string
+          inserted_at?: string
+          username?: string | null
         }
         Update: {
-          id?: string
-          username?: string | null
-          inserted_at?: string
           avatar_url?: string | null
+          id?: string
+          inserted_at?: string
+          username?: string | null
         }
       }
       stage: {
         Row: {
-          id: string
-          name: string
           description: string | null
-          icon_id: string | null
-          geom: unknown | null
           event_id: string
+          geom: unknown | null
+          icon_id: string | null
+          id: string
           inserted_at: string
+          name: string
           public: boolean | null
           ts: unknown | null
         }
         Insert: {
-          id?: string
-          name: string
           description?: string | null
-          icon_id?: string | null
-          geom?: unknown | null
           event_id: string
+          geom?: unknown | null
+          icon_id?: string | null
+          id?: string
           inserted_at?: string
+          name: string
           public?: boolean | null
           ts?: unknown | null
         }
         Update: {
-          id?: string
-          name?: string
           description?: string | null
-          icon_id?: string | null
-          geom?: unknown | null
           event_id?: string
+          geom?: unknown | null
+          icon_id?: string | null
+          id?: string
           inserted_at?: string
+          name?: string
           public?: boolean | null
           ts?: unknown | null
         }
       }
       timetable: {
         Row: {
-          id: string
-          day_id: string
-          start_time: string
-          end_time: string
           artist_id: string
-          stage_id: string
+          day_id: string
+          end_time: string
+          id: string
           inserted_at: string
           public: boolean | null
+          stage_id: string
+          start_time: string
         }
         Insert: {
-          id?: string
-          day_id: string
-          start_time: string
-          end_time: string
           artist_id: string
-          stage_id: string
+          day_id: string
+          end_time: string
+          id?: string
           inserted_at?: string
           public?: boolean | null
+          stage_id: string
+          start_time: string
         }
         Update: {
-          id?: string
-          day_id?: string
-          start_time?: string
-          end_time?: string
           artist_id?: string
-          stage_id?: string
+          day_id?: string
+          end_time?: string
+          id?: string
           inserted_at?: string
           public?: boolean | null
+          stage_id?: string
+          start_time?: string
         }
       }
     }
     Views: {
       asset_geojson: {
         Row: {
+          description: string | null
+          geom: unknown | null
+          icon: string | null
           id: string | null
           name: string | null
-          description: string | null
-          icon: string | null
-          geom: unknown | null
         }
       }
       day_event_mask: {
         Row: {
-          id: string | null
-          geom: unknown | null
           bounds: number[] | null
+          geom: unknown | null
+          id: string | null
         }
       }
       day_event_stage_timetable: {
         Row: {
-          id: string | null
-          name: string | null
-          first_start_time: string | null
-          last_end_time: string | null
           events: Json | null
+          first_start_time: string | null
+          id: string | null
+          last_end_time: string | null
+          name: string | null
         }
       }
       entity_distance_search: {
         Row: {
           entity: string | null
+          geom: unknown | null
           id: string | null
           name: string | null
-          geom: unknown | null
         }
       }
       entity_text_search: {
         Row: {
+          description: string | null
           entity: string | null
           id: string | null
           name: string | null
-          description: string | null
           ts: unknown | null
         }
       }
@@ -415,18 +443,24 @@ export interface Database {
       }
       stage_geojson: {
         Row: {
+          geom: unknown | null
+          icon: string | null
           id: string | null
           name: string | null
-          icon: string | null
           timetables: Json | null
-          geom: unknown | null
         }
       }
     }
     Functions: {
       distance_to: {
         Args: { lng: number; lat: number; search_radius: number }
-        Returns: Record<string, unknown>[]
+        Returns: {
+          entity: string
+          id: string
+          name: string
+          geom: unknown
+          distance: number
+        }[]
       }
       table_as_geojson: {
         Args: { _tbl: unknown }
@@ -434,19 +468,161 @@ export interface Database {
       }
       text_search: {
         Args: { search_term: string }
-        Returns: Record<string, unknown>[]
+        Returns: {
+          rank: number
+          similarity: number
+          entity: string
+          id: string
+          name: string
+          description: string
+        }[]
       }
       upsert_favorite: {
         Args: {
           _user_id: string
           _entity: Database["public"]["Enums"]["favorite_entity"]
-          _ids: unknown
+          _ids: string[]
         }
         Returns: undefined
       }
     }
     Enums: {
       favorite_entity: "artist" | "stage" | "asset"
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
+  }
+  storage: {
+    Tables: {
+      buckets: {
+        Row: {
+          created_at: string | null
+          id: string
+          name: string
+          owner: string | null
+          public: boolean | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id: string
+          name: string
+          owner?: string | null
+          public?: boolean | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          name?: string
+          owner?: string | null
+          public?: boolean | null
+          updated_at?: string | null
+        }
+      }
+      migrations: {
+        Row: {
+          executed_at: string | null
+          hash: string
+          id: number
+          name: string
+        }
+        Insert: {
+          executed_at?: string | null
+          hash: string
+          id: number
+          name: string
+        }
+        Update: {
+          executed_at?: string | null
+          hash?: string
+          id?: number
+          name?: string
+        }
+      }
+      objects: {
+        Row: {
+          bucket_id: string | null
+          created_at: string | null
+          id: string
+          last_accessed_at: string | null
+          metadata: Json | null
+          name: string | null
+          owner: string | null
+          path_tokens: string[] | null
+          updated_at: string | null
+        }
+        Insert: {
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+        }
+        Update: {
+          bucket_id?: string | null
+          created_at?: string | null
+          id?: string
+          last_accessed_at?: string | null
+          metadata?: Json | null
+          name?: string | null
+          owner?: string | null
+          path_tokens?: string[] | null
+          updated_at?: string | null
+        }
+      }
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      extension: {
+        Args: { name: string }
+        Returns: string
+      }
+      filename: {
+        Args: { name: string }
+        Returns: string
+      }
+      foldername: {
+        Args: { name: string }
+        Returns: string[]
+      }
+      get_size_by_bucket: {
+        Args: Record<PropertyKey, never>
+        Returns: { size: number; bucket_id: string }[]
+      }
+      search: {
+        Args: {
+          prefix: string
+          bucketname: string
+          limits: number
+          levels: number
+          offsets: number
+          search: string
+          sortcolumn: string
+          sortorder: string
+        }
+        Returns: {
+          name: string
+          id: string
+          updated_at: string
+          created_at: string
+          last_accessed_at: string
+          metadata: Json
+        }[]
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
     }
   }
 }

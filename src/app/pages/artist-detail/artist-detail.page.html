@@ -2,8 +2,6 @@
 
   <ion-content scrollEvents="true"
                (ionScroll)="onScroll($event)">
-
-
     <header>
       <div *ngIf="coverIosStatusBar$ | async"
            class="ios-status-bar-background">
@@ -56,14 +54,14 @@
       <ion-fab-button class="toggle-player"
                       size="small"
                       color="secondary"
-                      *ngIf="artist.bandcamp_iframe && !(showPlayer$ | async)"
-                      (click)="togglePlayer()">
+                      *ngIf="(artist.bandcamp_iframe || artist.soundcloud_iframe) && !(showMusicPlayer$ | async)"
+                      (click)="toggleMusicPlayer()">
         <ion-icon name="musical-note-outline"></ion-icon>
       </ion-fab-button>
     </div>
 
     <section class="artist-info"
-             [ngClass]="{'music-player-padding': (showPlayer$ | async)}">
+             [ngClass]="{'music-player-padding': (showMusicPlayer$ | async)}">
       <h1 class="artist-title ion-text-center">
         {{artist.name}}
         <ion-icon slot="icon-only"
@@ -87,26 +85,10 @@
       <p class="description">{{artist.description}}</p>
     </section>
 
-    <ng-container *ngIf="artist.bandcamp_iframe && (showPlayer$ | async)">
-      <div class="music-player"
-           [@slideUp]>
-
-        <ion-spinner mode="md"
-                     color="secondary">
-        </ion-spinner>
-        <iframe #musicPlayer
-                style="border: 0; width: 100%; height: 120px;"
-                [iframeSrc]="artist.bandcamp_iframe"
-                seamless>
-        </iframe>
-        <ion-icon slot="icon-only"
-                  class="close-player"
-                  size="large"
-                  name="close-circle-outline"
-                  (click)="togglePlayer()">
-        </ion-icon>
-      </div>
-    </ng-container>
+    <app-music-player [showPlayer$]="showMusicPlayer$"
+                      [soundcloudUrl]="artist.soundcloud_iframe"
+                      [bandcampUrl]="artist.bandcamp_iframe">
+    </app-music-player>
   </ion-content>
 </ng-container>
 

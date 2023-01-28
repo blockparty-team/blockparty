@@ -31,8 +31,8 @@ export const animations = {
             ])
           ])
     ],
-    slideUp: [
-        trigger('slideUp', [
+    slideUpDown: [
+        trigger('slideUpDown', [
             transition(':enter', [
                 style({ transform: 'translateY(100%)' }),
                 animate('200ms ease-in', style({ transform: 'translateY(0%)' }))
