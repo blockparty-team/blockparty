@@ -1,7 +1,4 @@
 $image-height: 250px;
-$music-player-height: 120px;
-
-
 
 header {
     .ios-status-bar-background {
@@ -71,42 +68,12 @@ ion-back-button {
     }
 
     .description {
-        padding: 0 20px;
+        padding: 10px 20px;
         white-space: pre-wrap;
     }
 
     &.music-player-padding {
-        padding-bottom: calc($music-player-height + 10px);
-    }
-}
-
-.music-player {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    height: $music-player-height;
-    background-color: var(--ion-background-color);
-    overflow: visible;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    iframe {
-        position: absolute;
-        z-index: 1;
-    }
-
-    ion-spinner {
-        position: fixed;
-    }
-
-    .close-player {
-        background-color: var(--ion-background-color);
-        position: absolute;
-        border-radius: 50%;
-        padding: 5px;
-        right: 3px;
-        bottom: $music-player-height;
+        padding-bottom: 150px;
     }
 }
 

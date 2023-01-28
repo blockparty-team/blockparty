@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
@@ -10,7 +10,6 @@ import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
 import { ScrollCustomEvent } from '@ionic/angular';
-import { animations } from '@app/shared/animations';
 
 interface SoMeIcon {
   column: string;
@@ -34,16 +33,13 @@ const soMeIcons: SoMeIcon[] = [
 @Component({
   templateUrl: './artist-detail.page.html',
   styleUrls: ['./artist-detail.page.scss'],
-  animations: animations.slideUp,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArtistDetailPage implements OnInit {
 
-  @ViewChild('musicPlayer') musicPlayerIframe: ElementRef<HTMLIFrameElement>;
-
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
-  showPlayer$ = new BehaviorSubject<boolean>(false);
+  showMusicPlayer$ = new BehaviorSubject<boolean>(false);
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );
@@ -70,7 +66,6 @@ export class ArtistDetailPage implements OnInit {
     private mapService: MapService,
     private routeHistoryService: RouteHistoryService
   ) { }
-
 
   ngOnInit() {
     this.artist$ = this.activatedRoute.paramMap.pipe(
@@ -135,8 +130,8 @@ export class ArtistDetailPage implements OnInit {
     this._titleScrollTop$.next(scrollTop);
   }
 
-  togglePlayer(): void {
-    this.showPlayer$.next(!this.showPlayer$.value);
+  toggleMusicPlayer(): void {
+    this.showMusicPlayer$.next(!this.showMusicPlayer$.value);
   }
 
 }

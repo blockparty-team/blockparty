@@ -141,6 +141,7 @@ export class SupabaseService {
           facebook,
           webpage,
           bandcamp_iframe,
+          soundcloud_iframe,
           storage_path,
           timetable(
             start_time,
