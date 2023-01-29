@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/map"
+                       icon="chevron-back">
+      </ion-back-button>
+    </ion-buttons>
+    <ion-title>Tickets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="eventTypes$ | async as eventTypes">
+    <ion-accordion-group>
+      <ion-accordion *ngFor="let eventType of eventTypes">
+        <ion-item slot="header"
+                  [style.--background]="eventType.color ? eventType.color : 'gray'">
+          <ion-label color="dark">
+            <h2>{{eventType.name}}</h2>
+          </ion-label>
+        </ion-item>
+        <div class="ion-padding"
+             slot="content">
+          <ion-list lines="none">
+            <ion-item *ngFor="let event of eventType.event" (click)="onGoToTicket(event.ticket_url)">
+              <ion-icon name="ticket"
+                        slot="start"></ion-icon>
+              {{event.name}}
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ng-container>
+</ion-content>

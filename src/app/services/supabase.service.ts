@@ -242,6 +242,23 @@ export class SupabaseService {
     )
   }
 
+  get eventTypes$(): Observable<any> {
+    return from(
+      this.supabase
+        .from('event_type')
+        .select(`
+          name,
+          color,
+          event(
+            name,
+            ticket_url
+          )
+        `)
+    ).pipe(
+      pluck('data')
+    )
+  }
+
   get timetables$(): Observable<DayEventStageTimetable[]> {
     return from(
       this.supabase
@@ -250,35 +267,6 @@ export class SupabaseService {
     ).pipe(
       pluck('data')
     )
-  }
-
-  get assets$(): Observable<Asset[]> {
-    return from<any>(
-      this.supabase
-        .from('asset')
-        .select(`
-          id,
-          name,
-          description,
-          asset_type(
-            name
-          )
-        `)
-    ).pipe(
-      pluck('data')
-    )
-  }
-
-  artist(id: string): Observable<Artist> {
-    return from(
-      this.supabase
-        .from('artist')
-        .select()
-        .filter('id', 'eq', id)
-        .single()
-    ).pipe(
-      pluck('data')
-    );
   }
 
   searchArtist(searchTerm: string) {
@@ -328,10 +316,10 @@ export class SupabaseService {
   // Couldn't make supabase client upsert() work on composite primary keys hence this RPC
   upsertFavorites(entity: FavoriteEntity, ids: string[]): Observable<any> {
     return from(
-      this.supabase.rpc('upsert_favorite', { 
-        _user_id: this._session$.value?.user.id, 
-        _entity: entity, 
-        _ids: ids 
+      this.supabase.rpc('upsert_favorite', {
+        _user_id: this._session$.value?.user.id,
+        _entity: entity,
+        _ids: ids
       })
     ).pipe(
       pluck('data')
