@@ -20,6 +20,7 @@ export interface TimetableDay {
 
 export interface StageGeojsonProperties {
     id: Stage['id'];
+    description: Stage['description'];
     name: Stage['name'];
     icon: Icon['name'];
     timetables: TimetableDay[];

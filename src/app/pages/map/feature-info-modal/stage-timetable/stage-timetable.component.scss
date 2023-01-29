@@ -2,6 +2,14 @@ ion-item {
     animation: popIn .2s calc(var(--animation-order) * 70ms) both ease-in;
 }
 
+.description {
+    padding: 0 15px;
+
+    .no-timetable {
+        text-align: center;
+    }
+}
+
 @keyframes popIn {
     0% {
         opacity: 0;
