@@ -10,7 +10,10 @@
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="eventTypes$ | async as eventTypes">
+  <section class="ion-padding ion-text-center">
+    <p>Select event types below to buy tickets</p>
+  </section>
+  <ng-container *ngIf="eventsGroupedByType$ | async as eventTypes">
     <ion-accordion-group>
       <ion-accordion *ngFor="let eventType of eventTypes">
         <ion-item slot="header"
@@ -22,7 +25,9 @@
         <div class="ion-padding"
              slot="content">
           <ion-list lines="none">
-            <ion-item *ngFor="let event of eventType.event" (click)="onGoToTicket(event.ticket_url)">
+            <ion-item *ngFor="let event of eventType.event"
+                      (click)="onGoToTicket(event.ticket_url)"
+                      button="true">
               <ion-icon name="ticket"
                         slot="start"></ion-icon>
               {{event.name}}

@@ -16,13 +16,14 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
-import { Artist, Asset, Favorite, FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
+import { Favorite, FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { DayEvent } from '@app/interfaces/day-event';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { EventWithRelations } from '@app/interfaces/event';
+import { EventsGroupedByType } from '@app/interfaces/event-type';
 import { DeviceStorageService } from './device-storage.service';
 import { TransformOptions } from '@app/shared/models/imageSize'
 
@@ -242,7 +243,7 @@ export class SupabaseService {
     )
   }
 
-  get eventTypes$(): Observable<any> {
+  get eventsGroupedByTypes$(): Observable<EventsGroupedByType[]> {
     return from(
       this.supabase
         .from('event_type')
@@ -254,8 +255,9 @@ export class SupabaseService {
             ticket_url
           )
         `)
+        .order('name')
     ).pipe(
-      pluck('data')
+      map(({ data, }) => data as EventsGroupedByType[])
     )
   }
 

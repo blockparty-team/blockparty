@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketsStateService } from './state/tickets-state.service';
-import { tap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
+import { EventsGroupedByType } from '@app/interfaces/event-type';
 
 @Component({
   selector: 'app-tickets',
@@ -11,14 +11,14 @@ import { Browser } from '@capacitor/browser';
 })
 export class TicketsPage implements OnInit {
 
-  eventTypes$: Observable<any[]>;
+  eventsGroupedByType$: Observable<EventsGroupedByType[]>;
 
   constructor(
     private ticketStateService: TicketsStateService,
   ) { }
 
   ngOnInit() {
-    this.eventTypes$ = this.ticketStateService.eventTypes$.pipe(tap(console.log));
+    this.eventsGroupedByType$ = this.ticketStateService.eventsGroupedByType$;
   }
 
   onGoToTicket(ticketUrl: string): void {
