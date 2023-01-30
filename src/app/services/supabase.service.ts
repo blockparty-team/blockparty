@@ -16,13 +16,14 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
-import { Artist, Asset, Favorite, FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
+import { Favorite, FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { DayEvent } from '@app/interfaces/day-event';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { EventWithRelations } from '@app/interfaces/event';
+import { EventsGroupedByType } from '@app/interfaces/event-type';
 import { DeviceStorageService } from './device-storage.service';
 import { TransformOptions } from '@app/shared/models/imageSize'
 
@@ -242,6 +243,24 @@ export class SupabaseService {
     )
   }
 
+  get eventsGroupedByTypes$(): Observable<EventsGroupedByType[]> {
+    return from(
+      this.supabase
+        .from('event_type')
+        .select(`
+          name,
+          color,
+          event(
+            name,
+            ticket_url
+          )
+        `)
+        .order('name')
+    ).pipe(
+      map(({ data, }) => data as EventsGroupedByType[])
+    )
+  }
+
   get timetables$(): Observable<DayEventStageTimetable[]> {
     return from(
       this.supabase
@@ -250,35 +269,6 @@ export class SupabaseService {
     ).pipe(
       pluck('data')
     )
-  }
-
-  get assets$(): Observable<Asset[]> {
-    return from<any>(
-      this.supabase
-        .from('asset')
-        .select(`
-          id,
-          name,
-          description,
-          asset_type(
-            name
-          )
-        `)
-    ).pipe(
-      pluck('data')
-    )
-  }
-
-  artist(id: string): Observable<Artist> {
-    return from(
-      this.supabase
-        .from('artist')
-        .select()
-        .filter('id', 'eq', id)
-        .single()
-    ).pipe(
-      pluck('data')
-    );
   }
 
   searchArtist(searchTerm: string) {
@@ -328,10 +318,10 @@ export class SupabaseService {
   // Couldn't make supabase client upsert() work on composite primary keys hence this RPC
   upsertFavorites(entity: FavoriteEntity, ids: string[]): Observable<any> {
     return from(
-      this.supabase.rpc('upsert_favorite', { 
-        _user_id: this._session$.value?.user.id, 
-        _entity: entity, 
-        _ids: ids 
+      this.supabase.rpc('upsert_favorite', {
+        _user_id: this._session$.value?.user.id,
+        _entity: entity,
+        _ids: ids
       })
     ).pipe(
       pluck('data')

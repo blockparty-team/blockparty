@@ -209,6 +209,7 @@ export interface Database {
           public: boolean | null
           storage_path: string | null
           style: Json | null
+          ticket_url: string | null
         }
         Insert: {
           bounds?: number[] | null
@@ -221,6 +222,7 @@ export interface Database {
           public?: boolean | null
           storage_path?: string | null
           style?: Json | null
+          ticket_url?: string | null
         }
         Update: {
           bounds?: number[] | null
@@ -233,6 +235,7 @@ export interface Database {
           public?: boolean | null
           storage_path?: string | null
           style?: Json | null
+          ticket_url?: string | null
         }
       }
       event_type: {
@@ -443,6 +446,7 @@ export interface Database {
       }
       stage_geojson: {
         Row: {
+          description: string | null
           geom: unknown | null
           icon: string | null
           id: string | null

@@ -51,6 +51,10 @@ const routes: Routes = [
   {
     path: 'merch',
     loadChildren: () => import('./pages/merch/merch.module').then( m => m.MerchPageModule)
+  },
+  {
+    path: 'tickets',
+    loadChildren: () => import('./pages/tickets/tickets.module').then( m => m.TicketsPageModule)
   }
 ];
 @NgModule({

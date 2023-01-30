@@ -9,6 +9,7 @@ export type StorageKeys =
   'favorites' |
   'timetable' |
   'events' |
+  'eventsGroupedByType' |
   'mapLayers';
 
 @Injectable({

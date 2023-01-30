@@ -49,7 +49,7 @@ export class SidebarPage implements OnInit {
     {
       name: 'Tickets',
       icon: 'ticket-outline',
-      routerLink: ['/merch']
+      routerLink: ['/tickets']
     },
     {
       name: 'Merch',
