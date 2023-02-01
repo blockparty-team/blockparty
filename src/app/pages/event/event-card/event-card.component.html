@@ -9,7 +9,7 @@
       <h1>
         {{event.name}}
       </h1>
-      <ion-badge [style.--background]="event.event_type.color">{{event.event_type.name}}</ion-badge>
+      <ion-badge [style.--background]="event.event_type?.color">{{event.event_type?.name}}</ion-badge>
       <p class="days">{{ event.days.join(' | ') }}</p>
     </div>
   </div>
