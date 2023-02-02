@@ -1,6 +1,13 @@
-import { Day, Event } from './database-entities';
+import { Day, Event, EventType } from './database-entities';
 
-export type PartialEvent = Pick<Event, 'id' | 'name' | 'bounds'>
+export interface PartialEvent {
+    id: Event['id'];
+    name: Event['name'];
+    bounds: Event['bounds'];
+    event_type: {
+        color: EventType['color'];
+    };
+}
 
 export interface DayEvent {
     id: Day['id'];

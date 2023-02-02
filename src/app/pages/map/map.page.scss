@@ -1,3 +1,22 @@
+ion-header {
+    ion-segment-button {
+        --color-checked: var(--ion-text-color);
+    }
+
+    .event-filter {
+        ion-label {
+            margin: 0;
+        }
+
+        .event-color {
+            margin-top: 2px;
+            width: 50px;
+            height: 6px;
+            border-radius: 3px;
+        }
+    }
+}
+
 #map-container {
     height: 100%;
     width: 100%;

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Event } from '@app/interfaces/database-entities';
 import { EventViewModel, EventWithRelations } from '@app/interfaces/event';
+import { EventsGroupedByType } from '@app/interfaces/event-type';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FileService } from '@app/services/file.service';
 import { SupabaseService } from '@app/services/supabase.service';
@@ -56,14 +57,16 @@ export class EventStateService {
     shareReplay(1)
   )
 
-  eventTypes$: Observable<EventViewModel['event_type'][]> = this.events$.pipe(
-    map(events => {
-      const eventTypes = events.map(event => event.event_type)
-      // Get unique event types
-      return [...new Map(eventTypes.map(i => [i.id, i])).values()]
-    })
+  eventsGroupedByType: Observable<EventsGroupedByType[]> = concat(
+    this.deviceStorageService.get('eventsGroupedByType').pipe(
+      filter(eventTypes => !!eventTypes)
+    ),
+    this.supabase.eventsGroupedByTypes$.pipe(
+      filter(eventTypes => !!eventTypes),
+      tap(eventTypes => this.deviceStorageService.set('eventsGroupedByType', eventTypes))
+    )
   )
-
+  
   constructor(
     private supabase: SupabaseService,
     private deviceStorageService: DeviceStorageService,

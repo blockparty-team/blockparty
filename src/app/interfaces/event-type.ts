@@ -7,6 +7,7 @@ interface EventTicket {
 
 export interface EventsGroupedByType {
     name: EventType['name'];
+    description: EventType['description'];
     color: EventType['color'];
     event: EventTicket[];
 }

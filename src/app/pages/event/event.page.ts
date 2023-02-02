@@ -4,6 +4,7 @@ import { EventViewModel } from '@app/interfaces/event';
 import { IonModal, SegmentCustomEvent } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventStateService } from './state/event-state.service';
+import { EventsGroupedByType } from '@app/interfaces/event-type';
 
 @Component({
   selector: 'app-event',
@@ -15,7 +16,7 @@ export class EventPage implements OnInit {
   @ViewChild(IonModal) modal: IonModal;
 
   events$: Observable<EventViewModel[]>;
-  eventTypes$: Observable<EventViewModel['event_type'][]>;
+  eventTypes$: Observable<EventsGroupedByType[]>;
   selectedEventTypeId$: Observable<string>;
 
   constructor(
@@ -25,7 +26,7 @@ export class EventPage implements OnInit {
 
   ngOnInit() {
     this.events$ = this.eventStateService.events$;
-    this.eventTypes$ = this.eventStateService.eventTypes$;
+    this.eventTypes$ = this.eventStateService.eventsGroupedByType;
     this.selectedEventTypeId$ = this.eventStateService.selectedEventTypeId$;
   }
 

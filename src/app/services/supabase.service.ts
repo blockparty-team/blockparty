@@ -189,7 +189,10 @@ export class SupabaseService {
             event(
               id,
               name,
-              bounds
+              bounds,
+              event_type(
+                color
+              )
             )
           )
       `)
@@ -250,6 +253,7 @@ export class SupabaseService {
         .select(`
           name,
           color,
+          description,
           event(
             name,
             ticket_url

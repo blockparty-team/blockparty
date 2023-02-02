@@ -1,7 +1,6 @@
-<!-- <ion-header *ngIf="hideHeader$ | async" [@slideInOut]> -->
 <ion-header>
   <ng-container *ngIf="days$ | async as days">
-    <ion-toolbar color="secondary">
+    <ion-toolbar>
       <ion-segment scrollable
                    mode="md"
                    (ionChange)="onDayFilterChange($event)"
@@ -15,7 +14,8 @@
   </ng-container>
 
   <ng-container *ngIf="events$ | async as events">
-    <ion-toolbar color="tertiary">
+    <ion-toolbar class="event-filter"
+                 color="medium">
       <ion-segment scrollable
                    mode="md"
                    (ionChange)="onEventFilterChange($event)"
@@ -23,6 +23,9 @@
         <ion-segment-button *ngFor="let event of events"
                             [value]="event.id">
           <ion-label>{{event.name}}</ion-label>
+          <span class="event-color"
+                [style.background-color]="event.event_type.color">
+          </span>
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
