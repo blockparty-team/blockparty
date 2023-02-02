@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Share } from '@capacitor/share'
-import { EventViewModel } from '@app/interfaces/event';
-import { MapLayer } from '@app/interfaces/map-layer';
-import { MapService } from '@app/services/map.service';
-import { LngLatBoundsLike } from 'maplibre-gl';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { Browser } from '@capacitor/browser';
+import { Share } from '@capacitor/share'
+import { LngLatBoundsLike } from 'maplibre-gl';
+import { MapService } from '@app/services/map.service';
 import { EventStateService } from '../event/state/event-state.service';
+import { EventViewModel } from '@app/interfaces/event';
+import { MapLayer } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 
 @Component({
@@ -21,7 +22,6 @@ export class EventDetailPage implements OnInit {
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );
-
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -58,4 +58,9 @@ export class EventDetailPage implements OnInit {
     });
   }
 
+  onGoToTicket(ticketUrl: string): void {
+    Browser.open({
+      url: ticketUrl
+    })
+  }
 }

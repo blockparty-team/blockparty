@@ -219,6 +219,7 @@ export class SupabaseService {
           description,
           storage_path,
           bounds,
+          ticket_url,
           event_type(
             id,
             name,

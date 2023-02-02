@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalController, SegmentCustomEvent } from '@ionic/angular';
-import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { filter, map, shareReplay, tap } from 'rxjs/operators';
+import { filter, map, pluck, shareReplay, tap } from 'rxjs/operators';
+import { ModalController, SegmentCustomEvent } from '@ionic/angular';
+import { Browser } from '@capacitor/browser';
+import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { Day, StageGeojsonProperties, Timetable, TimetableDay } from '@app/interfaces/stage-geojson-properties';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
@@ -18,6 +19,7 @@ export class StageTimetableComponent implements OnInit {
 
   stageName$: Observable<string>;
   stageDescription$: Observable<string>;
+  ticketUrl$: Observable<string>;
   days$: Observable<Day[]>;
   timetable$: Observable<Timetable[]>;
   hasTimetable$: Observable<boolean>;
@@ -81,6 +83,10 @@ export class StageTimetableComponent implements OnInit {
       map(stage => stage.properties.timetables[0] !== null)
     );
 
+    this.ticketUrl$ = stage$.pipe(
+      pluck('properties', 'ticket_url'),
+    );
+
     this.location$ = stage$.pipe(
       map(stage => [
         stage.geometry.coordinates[1],
@@ -96,6 +102,12 @@ export class StageTimetableComponent implements OnInit {
   onGoToArtist(name: string): void {
     this.modalCtrl.dismiss();
     this.router.navigate(['/tabs/', 'artist', name]);
+  }
+
+  onGoToTicket(ticketUrl: string): void {
+    Browser.open({
+      url: ticketUrl
+    })
   }
 
   onOpenGoogleMapsDirections(coords: [number, number]): void {
