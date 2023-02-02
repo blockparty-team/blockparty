@@ -451,6 +451,7 @@ export interface Database {
           icon: string | null
           id: string | null
           name: string | null
+          ticket_url: string | null
           timetables: Json | null
         }
       }

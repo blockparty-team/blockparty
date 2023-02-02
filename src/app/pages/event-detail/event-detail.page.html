@@ -18,8 +18,14 @@
         <ion-icon name="map-outline"></ion-icon>
       </ion-fab-button>
 
+      <ion-fab-button *ngIf="event.ticket_url"
+                      (click)="onGoToTicket(event.ticket_url)"
+                      class="margin-top">
+        <ion-icon name="ticket-outline"></ion-icon>
+      </ion-fab-button>
+
       <ion-fab-button *ngIf="canShare$ | async"
-                      class="share-fab"
+                      class="margin-top"
                       (click)="share(event)">
         <ion-icon name="share-social-outline"></ion-icon>
       </ion-fab-button>

@@ -1,18 +1,29 @@
 <ion-header>
   <ion-toolbar color="secondary">
+
     <ion-title>{{stageName$ | async}}</ion-title>
+
     <ion-buttons slot="end">
+      <ng-container *ngIf="ticketUrl$ | async as ticketUrl">
+        <ion-button (click)="onGoToTicket(ticketUrl)">
+          <ion-icon slot="icon-only"
+                    name="ticket-outline"></ion-icon>
+        </ion-button>
+      </ng-container>
+
       <ion-button id="open-description-modal"
                   *ngIf="hasTimetable$ | async">
         <ion-icon slot="icon-only"
                   name="information-outline"></ion-icon>
       </ion-button>
+
       <ng-container *ngIf="location$ | async as location">
         <ion-button (click)="onOpenGoogleMapsDirections(location)">
           <ion-icon slot="icon-only"
                     name="compass-outline"></ion-icon>
         </ion-button>
       </ng-container>
+
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

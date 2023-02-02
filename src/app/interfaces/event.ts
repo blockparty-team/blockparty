@@ -1,6 +1,6 @@
 import { Event, EventType } from "./database-entities"
 
-type PartialEvent = Pick<Event, 'id' | 'name' | 'description' | 'storage_path' | 'bounds'>;
+type PartialEvent = Pick<Event, 'id' | 'name' | 'description' | 'storage_path' | 'bounds' | 'ticket_url'>;
 type PartialEventType = Pick<EventType, 'id' | 'name' | 'color' | 'description'>
 
 
