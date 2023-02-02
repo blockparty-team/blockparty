@@ -1,0 +1,15 @@
+ion-accordion {
+    &.accordion-expanding, 
+    &.accordion-expanded {
+        margin: 16px auto;
+    }
+
+    ion-list {
+        background-color: rgba(13, 13, 13, 0);
+    }
+
+    ion-item {
+        --background: rgba(13, 13, 13, 0);
+        color: black;
+    }
+}

@@ -18,3 +18,16 @@ ion-card {
         }
     }
 }
+
+ion-modal {
+    ion-accordion {
+        .content {
+            color: black;
+        }
+
+        &.accordion-expanding, 
+        &.accordion-expanded {
+            margin: 16px auto;
+        }
+    }
+}

@@ -23,7 +23,8 @@
           </ion-label>
         </ion-item>
         <div class="ion-padding"
-             slot="content">
+             slot="content"
+             [style.background-color]="eventType.color">
           <ion-list lines="none">
             <ion-item *ngFor="let event of eventType.event"
                       (click)="onGoToTicket(event.ticket_url)"
