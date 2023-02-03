@@ -56,6 +56,7 @@ export class MapPage implements OnInit, AfterViewInit {
       tap((day) => {
         this.mapService.fitBounds(day.bounds as LngLatBoundsLike);
         this.mapService.highlightFeature(MapLayer.DayEventMask, day.id)
+        this.mapService.removeFeatureHighlight(MapLayer.EventHighLight);
       }),
       map(day => day.id)
     );
@@ -117,12 +118,11 @@ export class MapPage implements OnInit, AfterViewInit {
     );
   }
 
-  onDayFilterChange(event: Event): void {
-    this.mapStateService.selectDay((event as SegmentCustomEvent).detail.value);
+  onDayFilterSelect(id: string): void {
+    this.mapStateService.selectDay(id);
   }
 
-  onEventFilterChange(event: Event): void {
-    this.mapStateService.selectEvent((event as SegmentCustomEvent).detail.value);
+  onEventFilterSelect(id: string): void {
+    this.mapStateService.selectEvent(id);
   }
-
 }

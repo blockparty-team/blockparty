@@ -3,7 +3,7 @@ import { FeatureCollection, LineString, Point, Polygon } from "geojson";
 // Table or view names for DB entities with geometries
 export enum MapSource {
     DayEventMask = 'day_event_mask',
-    Event = 'event',
+    Event = 'event_geojson',
     Stage = 'stage_geojson',
     Asset = 'asset_geojson',
 }

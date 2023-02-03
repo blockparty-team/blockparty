@@ -3,9 +3,9 @@
     <ion-toolbar>
       <ion-segment scrollable
                    mode="md"
-                   (ionChange)="onDayFilterChange($event)"
                    [value]="selectedDayId$ | async">
         <ion-segment-button *ngFor="let day of days"
+                            (click)="onDayFilterSelect(day.id)"
                             [value]="day.id">
           <ion-label>{{day.name}}</ion-label>
         </ion-segment-button>
@@ -18,9 +18,9 @@
                  color="medium">
       <ion-segment scrollable
                    mode="md"
-                   (ionChange)="onEventFilterChange($event)"
                    [value]="selectedEventId$ | async">
         <ion-segment-button *ngFor="let event of events"
+                            (click)="onEventFilterSelect(event.id)"
                             [value]="event.id">
           <ion-label>{{event.name}}</ion-label>
           <span class="event-color"

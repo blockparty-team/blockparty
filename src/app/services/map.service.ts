@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { combineLatest, concat, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, finalize, first, takeUntil, tap } from 'rxjs/operators';
+import { concat, EMPTY, Observable } from 'rxjs';
+import { catchError, filter, first, tap } from 'rxjs/operators';
 import { AttributionControl, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
@@ -144,7 +144,7 @@ export class MapService {
       first(),
       tap(() => {
         this.map.setFilter(layerName, ['==', 'id', id]);
-    
+
         if (autoRemove) {
           setTimeout(() => {
             this.removeFeatureHighlight(layerName);
@@ -242,8 +242,14 @@ export class MapService {
           source: MapSource.Event,
           layout: {},
           paint: {
-            'line-color': 'white',
-            'line-width': 3,
+            'line-color': ['get', 'color'],
+            'line-width': [
+              'interpolate', ['linear'], ['zoom'],
+              10, 1,
+              17, 5,
+              21, 14,
+            ],
+            'line-opacity': 0.8
           },
         });
 
@@ -253,8 +259,13 @@ export class MapService {
           source: MapSource.Event,
           layout: {},
           paint: {
-            'line-color': getCssVariable('--ion-color-primary'),
-            'line-width': 6,
+            'line-color': ['get', 'color'],
+            'line-width': [
+              'interpolate', ['linear'], ['zoom'],
+              10, 2,
+              18, 7,
+              21, 18,
+            ],
           },
           filter: ['==', 'id', '']
         });
