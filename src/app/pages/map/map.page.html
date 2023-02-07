@@ -40,5 +40,21 @@
       <ng-lottie [options]="animationOptions"></ng-lottie>
       <p *ngIf="mapIdle$ | async">Map loading...</p>
     </div>
+    <ion-fab slot="fixed"
+             vertical="bottom"
+             horizontal="start">
+      <ion-fab-button id="open-legend"
+                      color="secondary">
+        <ion-icon name="filter-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
   </div>
+
+  <ion-modal trigger="open-legend"
+             [breakpoints]="[0.4, 0.7 ,0.9]"
+             [initialBreakpoint]="0.7">
+    <ng-template>
+      <app-legend></app-legend>
+    </ng-template>
+  </ion-modal>
 </ion-content>
