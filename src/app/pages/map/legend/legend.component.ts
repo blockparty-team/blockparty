@@ -57,4 +57,8 @@ export class LegendComponent implements OnInit {
     const visible = (event as ToggleCustomEvent).detail.checked;
     this.mapStateService.updateRemovedAssetIconNames(name, visible);
   }
+
+  public trackBy(index, asset: MapIconViewModel) {
+    return asset.name;
+  }
 }

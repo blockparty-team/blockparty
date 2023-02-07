@@ -5,7 +5,7 @@
 </ion-header>
 <ng-container *ngIf="iconsWithToggleState$ | async as icons">
   <ion-list>
-    <ion-item *ngFor="let icon of icons">
+    <ion-item *ngFor="let icon of icons; trackBy: trackBy">
       <ion-thumbnail slot="start">
         <img [src]="icon.fileUrl | safe: 'url'" />
       </ion-thumbnail>
