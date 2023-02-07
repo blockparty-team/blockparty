@@ -44,6 +44,8 @@ export class ArtistPage implements OnInit {
       debounceTime(100),
       filter(([artists, ,]) => !!artists),
       map(([artists, term]) => artists
+        // Only show visible artist but include all on search
+        .filter(artist => !!term ? true : artist.is_visible)
         .filter(artist => artist.name.toLowerCase()
           .includes(term.toLowerCase())
         )

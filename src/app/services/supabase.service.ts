@@ -129,21 +129,7 @@ export class SupabaseService {
       this.supabase
         .from('artist')
         .select(`
-          id,
-          name,
-          description,
-          bandcamp,
-          spotify,
-          tidal,
-          apple_music,
-          soundcloud,
-          youtube,
-          instagram,
-          facebook,
-          webpage,
-          bandcamp_iframe,
-          soundcloud_iframe,
-          storage_path,
+          *,
           timetable(
             start_time,
             end_time,
