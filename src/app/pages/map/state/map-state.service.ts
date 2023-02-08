@@ -33,6 +33,9 @@ export class MapStateService {
   private _mapInteraction$ = new BehaviorSubject<boolean>(false);
   mapInteraction$: Observable<boolean> = this._mapInteraction$.asObservable();
 
+  private _removedAssetIconNames$ = new BehaviorSubject<string[]>([]);
+  removedAssetIconNames$: Observable<any> = this._removedAssetIconNames$.asObservable();
+
   mapLayers$: Observable<MapSourceGeojson[]> = concat(
     this.deviceStorageService.get('mapLayers').pipe(
       filter(layers => !!layers)
@@ -119,6 +122,21 @@ export class MapStateService {
 
   updateMapIdle(idle: boolean): void {
     this._mapIdle$.next(idle);
+  }
+
+  updateRemovedAssetIconNames(iconName: string, visible: boolean): void {
+
+    if (visible === false) {
+      this._removedAssetIconNames$.next(
+        [...new Set(
+          [...this._removedAssetIconNames$.value, iconName]
+        )]
+      )
+    } else {
+      this._removedAssetIconNames$.next(
+        this._removedAssetIconNames$.value.filter(x => x !== iconName)
+      )
+    }
   }
 
 }

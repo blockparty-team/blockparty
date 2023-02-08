@@ -9,6 +9,8 @@ import { MapPageRoutingModule } from './map-routing.module';
 import { StageTimetableComponent } from '@app/pages/map/feature-info-modal/stage-timetable/stage-timetable.component';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { AssetComponent } from './feature-info-modal/asset/asset.component';
+import { LegendComponent } from './legend/legend.component';
+import { SafePipe } from '@app/shared/pipes/safe.pipe';
 
 @NgModule({
   imports: [
@@ -22,7 +24,9 @@ import { AssetComponent } from './feature-info-modal/asset/asset.component';
     MapPage,
     FeatureInfoModalComponent,
     StageTimetableComponent,
-    AssetComponent
+    AssetComponent,
+    LegendComponent,
+    SafePipe
   ]
 })
 export class MapPageModule { }
