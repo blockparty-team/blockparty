@@ -44,6 +44,7 @@ export interface Database {
           id: string
           inserted_at: string
           instagram: string | null
+          is_visible: boolean | null
           name: string
           public: boolean | null
           soundcloud: string | null
@@ -64,6 +65,7 @@ export interface Database {
           id?: string
           inserted_at?: string
           instagram?: string | null
+          is_visible?: boolean | null
           name: string
           public?: boolean | null
           soundcloud?: string | null
@@ -84,6 +86,7 @@ export interface Database {
           id?: string
           inserted_at?: string
           instagram?: string | null
+          is_visible?: boolean | null
           name?: string
           public?: boolean | null
           soundcloud?: string | null
@@ -436,6 +439,13 @@ export interface Database {
           id: string | null
           name: string | null
           ts: unknown | null
+        }
+      }
+      event_geojson: {
+        Row: {
+          color: string | null
+          geom: unknown | null
+          id: string | null
         }
       }
       map_icon: {
