@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Tab } from '@app/interfaces/tab';
 import { MenuController } from '@ionic/angular';
 import { TabsStateService } from './state/tabs-state.service';
+import { RouteName } from '@app/shared/models/routeName';
 
 interface TabsChanged {
   tab: string;
@@ -14,6 +15,8 @@ interface TabsChanged {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsPage {
+
+  routeName = RouteName;
 
   constructor(
     private tabStateService: TabsStateService,

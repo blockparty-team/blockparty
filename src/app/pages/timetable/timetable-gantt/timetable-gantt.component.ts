@@ -7,6 +7,7 @@ import { TimetableStateService } from '../state/timetable-state.service';
 import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ActivatedRoute } from '@angular/router';
 import { FavoritesService } from '@app/services/favorites.service';
+import { RouteName } from '@app/shared/models/routeName';
 
 
 @Component({
@@ -16,6 +17,8 @@ import { FavoritesService } from '@app/services/favorites.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimetableGanttComponent implements OnInit {
+
+  routeName = RouteName;
 
   @ViewChild('timetable') timetableElement: ElementRef;
 

@@ -6,6 +6,7 @@ import { pluck } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { animations } from '@app/shared/animations';
 import { FavoritesService } from '@app/services/favorites.service';
+import { RouteName } from '@app/shared/models/routeName';
 
 type ListViewMode = 'byTime' | 'byStage';
 
@@ -17,6 +18,8 @@ type ListViewMode = 'byTime' | 'byStage';
   animations: animations.slideLeft
 })
 export class TimetableListComponent implements OnInit {
+
+  routeName = RouteName;
 
   timetableByStage$: Observable<StageTimetable[]>;
   timetableByTime$: Observable<TimetableWithStageName[]>

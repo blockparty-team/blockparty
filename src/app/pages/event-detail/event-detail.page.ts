@@ -19,6 +19,8 @@ import { RouteName } from '@app/shared/models/routeName';
 })
 export class EventDetailPage implements OnInit {
 
+  routeName = RouteName;
+
   event$: Observable<EventViewModel>
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)

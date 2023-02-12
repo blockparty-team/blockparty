@@ -39,6 +39,8 @@ enum SearchMode {
 })
 export class SearchPage implements OnInit {
 
+  routeName = RouteName;
+
   searchTerm = new FormControl('');
   @ViewChild('search') searchElement: IonSearchbar;
 
