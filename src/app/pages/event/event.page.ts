@@ -5,6 +5,7 @@ import { IonModal, SegmentCustomEvent } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { EventStateService } from './state/event-state.service';
 import { EventsGroupedByType } from '@app/interfaces/event-type';
+import { RouteName } from '@app/shared/models/routeName';
 
 @Component({
   selector: 'app-event',
@@ -31,7 +32,7 @@ export class EventPage implements OnInit {
   }
 
   onGoToEvent(eventId: string): void {
-    this.router.navigate(['/event', eventId]);
+    this.router.navigate([RouteName.Event, eventId]);
   }
 
   onEventTypeFilterChange(event: Event): void {
