@@ -4,7 +4,8 @@ import { AuthService } from '@app/services/auth.service';
 import { MenuController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
-
+import { environment } from '@env/environment'
+ 
 interface NavigationItem {
   name: string,
   icon?: string,
@@ -17,6 +18,8 @@ interface NavigationItem {
   styleUrls: ['./sidebar.page.scss'],
 })
 export class SidebarPage implements OnInit {
+
+  showLogin: boolean = environment.featureToggle.enableLogin;
 
   authenticated$: Observable<boolean>;
 

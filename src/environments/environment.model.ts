@@ -11,4 +11,7 @@ export interface Environment {
       zoom: number;
       pitch: number;
     };
+    featureToggle: {
+      enableLogin: boolean;
+    };
   }

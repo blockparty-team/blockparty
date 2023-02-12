@@ -27,7 +27,7 @@
     </ion-list>
   </ion-content>
 
-  <ion-footer class="login">
+  <ion-footer class="login" *ngIf="showLogin">
     <ion-item (click)="signInOrOut()"
               button
               lines="none">
