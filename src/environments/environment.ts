@@ -19,7 +19,7 @@ export const environment: Environment = {
     zoom: 14,
     pitch: 0
   },
-  oneSignalAppId: '32f2edb8-46e9-4eb1-9960-aa9ca8176d72'
+  oneSignalAppId: 'e5df19f0-b1e1-4e2d-bbc0-3e7c8437fdc4'
 };
 
 /*
