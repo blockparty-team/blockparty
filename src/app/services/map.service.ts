@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { concat, EMPTY, Observable } from 'rxjs';
 import { catchError, filter, first, tap } from 'rxjs/operators';
-import { AttributionControl, FilterSpecification, GeolocateControl, LngLatBoundsLike, LngLatLike, Map } from 'maplibre-gl';
+import { AttributionControl, FilterSpecification, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, PointLike } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { getCssVariable } from '@app/shared/colors';
@@ -111,14 +111,19 @@ export class MapService {
     });
   }
 
-  public flyTo(center: [number, number]): void {
+  public flyTo(
+    center: [number, number],
+    offset: PointLike = [0,0],
+    zoom: number = 18
+  ): void {
     this.mapStateService.mapLoaded$.pipe(
       filter(mapLoaded => mapLoaded),
       first(),
       tap(() => {
         this.map.flyTo({
           center,
-          zoom: 18
+          offset,
+          zoom,
         })
       })
     ).subscribe()

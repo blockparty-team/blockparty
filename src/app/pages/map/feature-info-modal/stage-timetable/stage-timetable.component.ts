@@ -88,10 +88,7 @@ export class StageTimetableComponent implements OnInit {
     );
 
     this.location$ = stage$.pipe(
-      map(stage => [
-        stage.geometry.coordinates[1],
-        stage.geometry.coordinates[0]
-      ] as [number, number])
+      map(stage => stage.geometry.coordinates as [number, number])
     );
   }
 
@@ -111,7 +108,7 @@ export class StageTimetableComponent implements OnInit {
   }
 
   onOpenGoogleMapsDirections(coords: [number, number]): void {
-    const url = `https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${coords[0]},${coords[1]}`;
+    const url = `https://www.google.com/maps/dir/?api=1&travelmode=walking&destination=${coords[1]},${coords[0]}`;
     window.open(url, '_blank');
   }
 

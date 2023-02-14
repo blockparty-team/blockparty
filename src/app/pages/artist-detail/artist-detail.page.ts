@@ -105,7 +105,7 @@ export class ArtistDetailPage implements OnInit {
 
   goToStageOnMap(geom: any): void {
     this.router.navigate(['tabs', 'map']);
-    this.mapService.flyTo(geom.coordinates);
+    this.mapService.flyTo(geom.coordinates as [number, number]);
   }
 
   openUrl(url: string): void {
