@@ -80,11 +80,11 @@ export class MapPage implements OnInit, AfterViewInit {
       map(features => features[0]),
       switchMap(feature => {
         if (feature.mapLayer === MapLayer.Stage) {
-          return this.openFeatureInfoModal(0.4, [0, 0.4, 1])
+          return this.openFeatureInfoModal(0.4, [0, 0.4, 0.9])
         }
 
         if (feature.mapLayer === MapLayer.Asset || feature.mapLayer === MapLayer.AssetIcon) {
-          return this.openFeatureInfoModal(0.3, [0, 0.3, 0.6, 1])
+          return this.openFeatureInfoModal(0.3, [0, 0.3, 0.6])
         }
       })
     ).subscribe();

@@ -9,5 +9,5 @@ export interface MapClickedFeature<T> {
     id: string;
     properties: T
     mapLayer: MapLayer;
-    geometry: Point | Polygon;
+    geometry: Point;
 };
