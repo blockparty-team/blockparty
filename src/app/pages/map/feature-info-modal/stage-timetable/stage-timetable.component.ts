@@ -8,6 +8,7 @@ import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { Day, StageGeojsonProperties, Timetable, TimetableDay } from '@app/interfaces/stage-geojson-properties';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { RouteName } from '@app/shared/models/routeName';
 
 @Component({
   selector: 'app-stage-timetable',
@@ -98,7 +99,7 @@ export class StageTimetableComponent implements OnInit {
 
   onGoToArtist(name: string): void {
     this.modalCtrl.dismiss();
-    this.router.navigate(['/tabs/', 'artist', name]);
+    this.router.navigate(['/tabs', RouteName.Artist, name]);
   }
 
   onGoToTicket(ticketUrl: string): void {

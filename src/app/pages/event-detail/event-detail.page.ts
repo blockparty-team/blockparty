@@ -10,6 +10,7 @@ import { EventStateService } from '../event/state/event-state.service';
 import { EventViewModel } from '@app/interfaces/event';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
+import { RouteName } from '@app/shared/models/routeName';
 
 @Component({
   selector: 'app-event-detail',
@@ -17,6 +18,8 @@ import { environment } from '@env/environment';
   styleUrls: ['./event-detail.page.scss'],
 })
 export class EventDetailPage implements OnInit {
+
+  routeName = RouteName;
 
   event$: Observable<EventViewModel>
   canShare$ = from(Share.canShare()).pipe(
@@ -40,7 +43,7 @@ export class EventDetailPage implements OnInit {
   }
 
   onZoomToEventOnMap(id: string, bounds: number[]) {
-    this.router.navigate(['/tabs', 'map']);
+    this.router.navigate(['/tabs', RouteName.Map]);
     this.mapService.fitBounds(bounds as LngLatBoundsLike);
     this.mapService.highlightFeature(MapLayer.EventHighLight, id, true);
   }

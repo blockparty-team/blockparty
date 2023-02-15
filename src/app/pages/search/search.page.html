@@ -52,7 +52,7 @@
                       [ngSwitch]="entity[result.entity]">
 
           <ion-item *ngSwitchCase="entity.artist"
-                    [routerLink]="['/tabs', 'artist', result.name]">
+                    [routerLink]="['/tabs', routeName.Artist, result.name]">
             <ion-avatar slot="start">
               <img [src]="imgUrl(result.artist.storage_path)" />
             </ion-avatar>

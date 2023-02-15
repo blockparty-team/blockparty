@@ -12,6 +12,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { SupabaseService } from '../../services/supabase.service';
 import { ArtistStateService } from '../artist/state/artist-state.service';
+import { RouteName } from '@app/shared/models/routeName';
 
 enum Entity {
   artist = 'artist',
@@ -37,6 +38,8 @@ enum SearchMode {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchPage implements OnInit {
+
+  routeName = RouteName;
 
   searchTerm = new FormControl('');
   @ViewChild('search') searchElement: IonSearchbar;
@@ -100,7 +103,7 @@ export class SearchPage implements OnInit {
   }
 
   onShowOnMap(geom: Point) {
-    this.router.navigate(['tabs', 'map']);
+    this.router.navigate(['tabs', RouteName.Map]);
     this.mapService.flyTo(geom.coordinates as [number, number]);
   }
 }

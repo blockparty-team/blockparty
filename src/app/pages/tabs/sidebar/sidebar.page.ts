@@ -4,12 +4,14 @@ import { AuthService } from '@app/services/auth.service';
 import { MenuController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
+import { environment } from '@env/environment'
+import { RouteName } from '@app/shared/models/routeName';
 
 interface NavigationItem {
   name: string,
-  icon?: string,
-  routerLink?: string[]
-} 
+  icon: string,
+  routeName: RouteName
+}
 
 @Component({
   selector: 'app-sidebar',
@@ -18,50 +20,57 @@ interface NavigationItem {
 })
 export class SidebarPage implements OnInit {
 
+  showLogin: boolean = environment.featureToggle.enableLogin;
+
   authenticated$: Observable<boolean>;
 
   navigationItems: NavigationItem[] = [
     {
       name: 'Profile',
       icon: 'person-circle-outline',
-      routerLink: ['/profile']
+      routeName: RouteName.Profile
     },
     {
       name: 'About',
       icon: 'information-circle-outline',
-      routerLink: ['/about']
+      routeName: RouteName.About
     },
     {
       name: 'Events',
       icon: 'musical-notes-outline',
-      routerLink: ['/event']
+      routeName: RouteName.Event
     },
     {
       name: 'Playlists',
       icon: 'play-outline',
-      routerLink: ['/playlist']
+      routeName: RouteName.Playlists
     },
     {
       name: 'Sponsors & Partners',
       icon: 'rocket-outline',
-      routerLink: ['/partners']
+      routeName: RouteName.Partners
     },
     {
       name: 'Tickets',
       icon: 'ticket-outline',
-      routerLink: ['/tickets']
+      routeName: RouteName.Tickets
     },
     {
       name: 'Merch',
       icon: 'cash-outline',
-      routerLink: ['/merch']
+      routeName: RouteName.Merch
     },
     {
       name: 'Settings',
       icon: 'settings-outline',
-      routerLink: ['/settings']
+      routeName: RouteName.Settings
     },
-  ]
+    // Hide profile menu item when login is disabled
+  ].filter(navItem => !environment.featureToggle.enableLogin
+    && navItem.routeName === RouteName.Profile
+    ? false
+    : true
+  )
 
   constructor(
     private authService: AuthService,
@@ -73,9 +82,9 @@ export class SidebarPage implements OnInit {
     this.authenticated$ = this.authService.authenticated$
   }
 
-  onGoTo(route: string[]): void {
+  onGoTo(route: RouteName): void {
     this.menu.close();
-    this.router.navigate(route)
+    this.router.navigate([route]);
   }
 
   onCloseSideBar(): void {
@@ -89,7 +98,7 @@ export class SidebarPage implements OnInit {
         if (authenticated) {
           this.authService.logOut();
         } else {
-          this.router.navigate(['/login'])
+          this.router.navigate([RouteName.Login])
         }
       })
     ).subscribe()

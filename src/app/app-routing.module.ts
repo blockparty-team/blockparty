@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { CanLoadLoginGuard } from './guards/can-load.guard';
+import { RouteName } from './shared/models/routeName';
 
 const routes: Routes = [
   {
@@ -7,32 +9,34 @@ const routes: Routes = [
     loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'partners',
+    path: RouteName.Partners,
     title: 'Partners',
-    loadChildren: () => import('./pages/partners/partners.module').then( m => m.PartnersPageModule)
+    loadChildren: () => import('./pages/partners/partners.module').then(m => m.PartnersPageModule)
   },
   {
-    path: 'login',
+    path: RouteName.Login,
     title: 'Login',
-    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
+    canLoad: [CanLoadLoginGuard]
   },
   {
-    path: 'profile',
+    path: RouteName.Profile,
     title: 'Profile',
-    loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
+    canLoad: [CanLoadLoginGuard]
   },
   {
-    path: 'about',
+    path: RouteName.About,
     title: 'About',
-    loadChildren: () => import('./pages/about/about.module').then( m => m.AboutPageModule)
+    loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
   },
   {
-    path: 'event',
+    path: RouteName.Event,
     title: 'Events',
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/event/event.module').then( m => m.EventPageModule)
+        loadChildren: () => import('./pages/event/event.module').then(m => m.EventPageModule)
       },
       {
         path: ':id',
@@ -41,20 +45,20 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'playlist',
-    loadChildren: () => import('./pages/playlist/playlist.module').then( m => m.PlaylistPageModule)
+    path: RouteName.Playlists,
+    loadChildren: () => import('./pages/playlist/playlist.module').then(m => m.PlaylistPageModule)
   },
   {
-    path: 'settings',
-    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+    path: RouteName.Settings,
+    loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
   },
   {
     path: 'merch',
-    loadChildren: () => import('./pages/merch/merch.module').then( m => m.MerchPageModule)
+    loadChildren: () => import('./pages/merch/merch.module').then(m => m.MerchPageModule)
   },
   {
-    path: 'tickets',
-    loadChildren: () => import('./pages/tickets/tickets.module').then( m => m.TicketsPageModule)
+    path: RouteName.Tickets,
+    loadChildren: () => import('./pages/tickets/tickets.module').then(m => m.TicketsPageModule)
   }
 ];
 @NgModule({
@@ -63,4 +67,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

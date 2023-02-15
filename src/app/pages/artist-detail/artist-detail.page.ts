@@ -10,6 +10,7 @@ import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
 import { ScrollCustomEvent } from '@ionic/angular';
+import { RouteName } from '@app/shared/models/routeName';
 
 interface SoMeIcon {
   column: string;
@@ -104,8 +105,8 @@ export class ArtistDetailPage implements OnInit {
   }
 
   goToStageOnMap(geom: any): void {
-    this.router.navigate(['tabs', 'map']);
-    this.mapService.flyTo(geom.coordinates as [number, number]);
+    this.router.navigate(['tabs', RouteName.Map]);
+    this.mapService.flyTo(geom.coordinates);
   }
 
   openUrl(url: string): void {
