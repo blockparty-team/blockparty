@@ -1,4 +1,4 @@
-package app.vercel.distortioncph;
+package dk.cphdistortion.app;
 
 import com.getcapacitor.BridgeActivity;
 
