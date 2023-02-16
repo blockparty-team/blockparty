@@ -23,33 +23,17 @@ export class FileService {
   ) { }
 
   get mapIconUrls$(): Observable<MapIconViewModel[]> {
-
     return this.supabase.mapIcons$.pipe(
-      switchMap(files => forkJoin(
-        files.map(file => {
-          const [bucket, path] = getBucketAndPath(file.storage_path);
+      map(mapIcons => mapIcons.map(mapIcon => {
 
-          return this.supabase.downloadFile(bucket, path);
-        })
-      ).pipe(
-        map(blobs => blobs.map((blob, i) => ({ blob, ...files[i] })))
-      )),
-      map(filesWithBlobs => {
-        return filesWithBlobs.map(fileWithBlob => {
+        const [bucket, path] = getBucketAndPath(mapIcon.storage_path);
 
-          if (fileWithBlob.blob instanceof Blob) {
-
-            const { blob, ...file } = fileWithBlob
-
-            return {
-              ...file,
-              fileUrl: URL.createObjectURL(blob)
-            }
-          }
-        })
-      })
+        return {
+          ...mapIcon,
+          fileUrl: this.supabase.publicImageUrl(bucket, path)
+        }
+      }))
     )
-
   }
 
   allFileUrls(bucket: string): Observable<SafeResourceUrl[]> {
