@@ -1,6 +1,12 @@
+ion-header {
+    ion-toolbar {
+        .search-mode {
+            width: 100%;
+        }
+    }
+}
+
 ion-content {
-    --background: var(--ion-color-secondary);
-    --background: linear-gradient(180deg, var(--ion-color-secondary) 50%, rgba(var(--ion-color-secondary-rgb), 0.3) 100%);
 
     ion-list {
         background: none;
