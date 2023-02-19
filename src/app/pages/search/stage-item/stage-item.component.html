@@ -1,0 +1,13 @@
+<ion-item>
+  <ion-badge slot="start"
+             [color]="badgeColor.stage">Stage
+  </ion-badge>
+  <ion-label>
+    <h2>{{stage.properties.name}}</h2>
+    <p>{{stage.properties.description}}</p>
+  </ion-label>
+  <ion-icon slot="end"
+            name="map"
+            (click)="onShowOnMap(stage.geometry.coordinates)">
+  </ion-icon>
+</ion-item>
