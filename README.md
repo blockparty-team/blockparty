@@ -59,5 +59,6 @@ OneSignal is for Notification
 * Add the app ids to `environment.ts` and `environment.prod.ts`.
 
 ## Scripts
-Often used scripts has been added to `package.json` for convenience. Run with `npm run <command>`:
+Utility scripts has been added to `package.json` for convenience. Run with `npm run <command>`:
 * `update-types`: Update database definition Typescript Interface from local Supabase
+* `db-reset-local-to-prod`: Restores local DB with dump from remote supabase instance. Dependency `pg_dump`, .pgpass with local and remote DB credentials and environmental variable `SUPABASE_DB_HOST` with remote host name.
