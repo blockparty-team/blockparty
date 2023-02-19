@@ -4,8 +4,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
 import isWithinInterval from 'date-fns/isWithinInterval';
 import { TimetableStateService } from './state/timetable-state.service';
-import { DayEventStageTimetable, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
+import { DayEventStageTimetable, EventTypeViewModel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EventType } from '@app/interfaces/database-entities';
 
 type TimeTableViewMode = 'gantt' | 'list'
 
@@ -23,8 +24,10 @@ export class TimetablePage implements OnInit {
   timetableViewMode$: Observable<TimeTableViewMode> = this._timetableViewMode$.asObservable();
 
   days$: Observable<DayEventStageTimetable[]>;
+  eventTypes$: Observable<EventTypeViewModel[]>;
   events$: Observable<EventTimetable[]>;
   selectedDayId$: Observable<string>;
+  selectedEventTypeId$: Observable<string>;
   selectedEventId$: Observable<string>;
 
   constructor(
@@ -34,6 +37,7 @@ export class TimetablePage implements OnInit {
 
   ngOnInit(): void {
     this.selectedDayId$ = this.timetableStateService.selectedDayId$;
+    this.selectedEventTypeId$ = this.timetableStateService.selectedEventTypeId$;
     this.selectedEventId$ = this.timetableStateService.selectedEventId$;
 
     this.days$ = this.timetableStateService.days$.pipe(
@@ -60,6 +64,8 @@ export class TimetablePage implements OnInit {
       }),
       map(([days, ]) => days)
     )
+    
+    this.eventTypes$ = null;
 
     this.events$ = this.timetableStateService.events$.pipe(
       withLatestFrom(this.route.queryParamMap),
@@ -91,6 +97,11 @@ export class TimetablePage implements OnInit {
     //     queryParamsHandling: 'merge'
     //   }
     // );
+  }
+
+  onEventTypeFilterChange(event: Event): void {
+    const eventTypeId = (event as SegmentCustomEvent).detail.value
+    this.timetableStateService.selectEventTypeId(eventTypeId);
   }
 
   onEventFilterChange(event: Event): void {

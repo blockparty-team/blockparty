@@ -181,7 +181,7 @@ export class TimetableGanttComponent implements OnInit {
       row += row === 1 ? 1 : this.EVENT_ROW_GAP;
 
       return eventConfig
-    })
+    });
 
     return {
       dayId: day.id,
@@ -191,7 +191,6 @@ export class TimetableGanttComponent implements OnInit {
       timeLabels,
       events
     }
-
   }
 
   toggleArtistFavorite(id: string): void {

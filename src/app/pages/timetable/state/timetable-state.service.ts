@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DayEventStageTimetable, EventTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
+import { DayEventStageTimetable, EventTypeViewModel, EventTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
@@ -13,6 +13,9 @@ export class TimetableStateService {
 
   private _selectedDayId$ = new BehaviorSubject<string>(null);
   selectedDayId$: Observable<string> = this._selectedDayId$.asObservable();
+
+  private _selectedEventTypeId$ = new BehaviorSubject<string>(null);
+  selectedEventTypeId$: Observable<string> = this._selectedEventTypeId$.asObservable();
 
   private _selectedEventId$ = new BehaviorSubject<string>(null);
   selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
@@ -31,7 +34,7 @@ export class TimetableStateService {
     shareReplay(1)
   );
 
-  events$: Observable<EventTimetable[]> = combineLatest([
+  eventTypes$: Observable<EventTypeViewModel[]> = combineLatest([
     this.days$,
     this.selectedDayId$,
   ]).pipe(
@@ -41,6 +44,22 @@ export class TimetableStateService {
     distinctUntilChanged(),
     shareReplay()
   );
+
+  events$: Observable<EventTimetable[]> = combineLatest([
+    this.days$,
+    this.selectedDayId$,
+    this.selectedEventTypeId$,
+  ]).pipe(
+    filter(([days, selectedDayId, selectedEventTypeId]) => !!days && !!selectedDayId && !!selectedEventTypeId),
+    map(([days, selectedDayId, selectedEventTypeId]) => days.find(day => day.id === selectedDayId && 
+      day.events.find(event => event.event_type_id === selectedEventTypeId)
+      )),
+    pluck('events'),
+    distinctUntilChanged(),
+    shareReplay()
+  );
+
+  selectedEventType$: Observable<EventTypeViewModel> = null;
 
   selectedEvent$: Observable<EventTimetable> = combineLatest([
     this.events$,
@@ -87,6 +106,10 @@ export class TimetableStateService {
 
   selectDayId(dayId: string): void {
     this._selectedDayId$.next(dayId);
+  }
+
+  selectEventTypeId(eventTypeId: string): void {
+    this._selectedEventTypeId$.next(eventTypeId);
   }
 
   selectEventId(eventId: string): void {

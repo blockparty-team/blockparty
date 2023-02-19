@@ -12,6 +12,19 @@
       </ion-segment>
     </ion-toolbar>
   </ng-container>
+  <ng-container *ngIf="eventTypes$ | async as eventTypes">
+    <ion-toolbar color="secondary">
+      <ion-segment scrollable
+                   mode="md"
+                   (ionChange)="onEventTypeFilterChange($event)"
+                   [value]="selectedEventTypeId$ | async">
+        <ion-segment-button *ngFor="let eventType of eventTypes"
+                            [value]="eventType.event_type_id">
+          <ion-label>{{eventType}}</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-toolbar>
+  </ng-container> 
 
   <ng-container *ngIf="events$ | async as events">
     <ion-toolbar color="tertiary">
