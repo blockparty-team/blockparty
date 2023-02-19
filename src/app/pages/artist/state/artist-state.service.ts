@@ -14,7 +14,7 @@ import { FileService } from '@app/services/file.service';
 })
 export class ArtistStateService {
 
-  artists$: Observable<ArtistViewModel[]> = concat(
+  private _artists$: Observable<ArtistViewModel[]> = concat(
     this.deviceStorageService.get('artists').pipe(
       filter(artists => !!artists)
     ),
@@ -27,8 +27,9 @@ export class ArtistStateService {
     shareReplay(1)
   );
 
-  artistsWithFavorites$: Observable<ArtistViewModel[]> = combineLatest([
-    this.artists$,
+  // Enriched artist with favorite status and img/srcset
+  artists$: Observable<ArtistViewModel[]> = combineLatest([
+    this._artists$,
     this.favoritesService.artistIds$
   ]).pipe(
     filter(([artists, favoriteArtistIds]) => !!artists && !!favoriteArtistIds),
