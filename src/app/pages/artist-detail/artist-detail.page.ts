@@ -71,7 +71,7 @@ export class ArtistDetailPage implements OnInit {
   ngOnInit() {
     this.artist$ = this.activatedRoute.paramMap.pipe(
       map(paramMap => paramMap.get('name')),
-      switchMap(name => this.artistStateService.artistsWithFavorites$.pipe(
+      switchMap(name => this.artistStateService.artists$.pipe(
         map(artists => artists.find(artist => artist.name === name))
       ))
     );

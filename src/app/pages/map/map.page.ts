@@ -100,7 +100,10 @@ export class MapPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.mapService.initMap();
+    // Hack to make sure div is 100% height before map load
+    setTimeout(() => {
+      this.mapService.initMap();
+    }, 150);
   }
 
   openFeatureInfoModal(

@@ -38,7 +38,7 @@ export class ArtistPage implements OnInit {
 
   ngOnInit() {
     this.filteredArtists$ = combineLatest([
-      this.artistStateService.artistsWithFavorites$,
+      this.artistStateService.artists$,
       this.searchTerm.valueChanges.pipe(startWith('')),
     ]).pipe(
       debounceTime(100),
@@ -52,7 +52,7 @@ export class ArtistPage implements OnInit {
       )
     );
 
-    this.favoriteArtists$ = this.artistStateService.artistsWithFavorites$.pipe(
+    this.favoriteArtists$ = this.artistStateService.artists$.pipe(
       map(artists => artists.filter(artist => artist.isFavorite))
     );
 

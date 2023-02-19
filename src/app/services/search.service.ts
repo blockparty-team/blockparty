@@ -1,9 +1,16 @@
 import { Injectable } from '@angular/core';
-import { EntityDistanceSearchResult } from '@app/interfaces/entity-search-result';
+import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Observable } from 'rxjs';
-import { pluck, switchMap } from 'rxjs/operators';
+import { filter, map, pluck, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from './geolocation.service';
 import { SupabaseService } from './supabase.service';
+import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
+import { EventStateService } from '@app/pages/event/state/event-state.service';
+import { MapStateService } from '@app/pages/map/state/map-state.service';
+import { MapSource } from '@app/interfaces/map-layer';
+import { Feature, Point } from 'geojson';
+import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
+import { AssetGeojson } from '@app/interfaces/database-entities';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +19,51 @@ export class SearchService {
 
   constructor(
     private supabase: SupabaseService,
-    private geolocationService: GeolocationService
+    private geolocationService: GeolocationService,
+    private artistSateService: ArtistStateService,
+    private eventStateService: EventStateService,
+    private mapStateService: MapStateService
   ) { }
 
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(
       pluck('coords'),
-      switchMap(pos => this.supabase.distanceTo([pos.longitude, pos.latitude], 1000))
+      switchMap(pos => this.supabase.distanceTo([pos.longitude, pos.latitude], 1000000000))
+    );
+  }
+
+  textSearch(term: string): Observable<EntityFreeTextSearchResult[]> {
+    return this.supabase.textSearch(term).pipe(
+      withLatestFrom(
+        this.artistSateService.artists$,
+        this.eventStateService.events$,
+        this.mapStateService.mapLayers$
+      ),
+      filter(([results,]) => !!results),
+      map(([results, artists, events, mapLayers]) => results.map(result => {
+        switch (result.entity) {
+          case 'artist':
+            return { ...result, artist: artists.find(artist => artist.id === result.id) };
+          case 'event':
+            return { ...result, event: events.find(event => event.id === result.id) };
+          case 'stage':
+            return {
+              ...result,
+              stage: mapLayers
+                .find(layer => layer.mapSource === MapSource.Stage).geojson.features
+                .find(feature => feature.properties.id === result.id) as Feature<Point, StageGeojsonProperties>
+            };
+          case 'asset':
+            return {
+              ...result,
+              asset: mapLayers
+                .find(layer => layer.mapSource === MapSource.Asset).geojson.features
+                .find(feature => feature.properties.id === result.id) as Feature<Point, AssetGeojson>
+            };
+          default:
+            return result;
+        }
+      }))
     );
   }
 

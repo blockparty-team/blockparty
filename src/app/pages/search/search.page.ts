@@ -9,21 +9,16 @@ import { IonSearchbar } from '@ionic/angular';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from '../../services/supabase.service';
-import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteName } from '@app/shared/models/routeName';
+import { EntityBadgeColor } from './entity-badge-color';
 
 enum Entity {
   artist = 'artist',
   stage = 'stage',
-  asset = 'asset'
-}
-
-enum EntityBadgeColor {
-  artist = 'primary',
-  stage = 'secondary',
-  asset = 'tertiary'
+  asset = 'asset',
+  event = 'event'
 }
 
 enum SearchMode {
@@ -40,13 +35,12 @@ enum SearchMode {
 export class SearchPage implements OnInit {
 
   routeName = RouteName;
-
-  searchTerm = new FormControl('');
-  @ViewChild('search') searchElement: IonSearchbar;
-
   entity = Entity;
   searchMode = SearchMode;
   badgeColor = EntityBadgeColor;
+
+  searchTerm = new FormControl('');
+  @ViewChild('search') searchElement: IonSearchbar;
 
   private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(SearchMode.FreeText);
   selectedSearchMode$: Observable<SearchMode> = this._selectedSearchMode$.asObservable();
@@ -59,21 +53,13 @@ export class SearchPage implements OnInit {
     private supabase: SupabaseService,
     private searchService: SearchService,
     private mapService: MapService,
-    private artistSateService: ArtistStateService,
   ) { }
 
   ngOnInit() {
     this.searchResults$ = this.searchTerm.valueChanges.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap(term => this.supabase.textSearch(term)),
-      withLatestFrom(this.artistSateService.artists$),
-      map(([results, artists]) => results.map(result => {
-        return result.entity === Entity.artist ? 
-          { ...result, artist: artists.find(artist => artist.id === result.id) } :
-          result
-      
-      }))
+      switchMap(term => this.searchService.textSearch(term))
     );
 
     this.nearBy$ = combineLatest([
@@ -86,9 +72,11 @@ export class SearchPage implements OnInit {
   }
 
   ionViewDidEnter(): void {
-    setTimeout(() => {
-      this.searchElement.setFocus();
-    }, 150);
+    if (this._selectedSearchMode$.value === SearchMode.FreeText) {
+      setTimeout(() => {
+        this.searchElement.setFocus();
+      }, 150);
+    } 
   }
 
   imgUrl(storagePath: string): string {

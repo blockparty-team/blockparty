@@ -17,10 +17,10 @@ export interface Database {
     Functions: {
       graphql: {
         Args: {
-          operationName: string
-          query: string
-          variables: Json
-          extensions: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+          extensions?: Json
         }
         Returns: Json
       }
@@ -434,8 +434,7 @@ export interface Database {
       }
       entity_text_search: {
         Row: {
-          description: string | null
-          entity: string | null
+          entity: Database["public"]["Enums"]["text_search_entity"] | null
           id: string | null
           name: string | null
           ts: unknown | null
@@ -468,7 +467,11 @@ export interface Database {
     }
     Functions: {
       distance_to: {
-        Args: { lng: number; lat: number; search_radius: number }
+        Args: {
+          lng: number
+          lat: number
+          search_radius: number
+        }
         Returns: {
           entity: string
           id: string
@@ -478,18 +481,20 @@ export interface Database {
         }[]
       }
       table_as_geojson: {
-        Args: { _tbl: unknown }
+        Args: {
+          _tbl: unknown
+        }
         Returns: Json
       }
       text_search: {
-        Args: { search_term: string }
+        Args: {
+          search_term: string
+        }
         Returns: {
           rank: number
           similarity: number
-          entity: string
+          entity: Database["public"]["Enums"]["text_search_entity"]
           id: string
-          name: string
-          description: string
         }[]
       }
       upsert_favorite: {
@@ -503,6 +508,7 @@ export interface Database {
     }
     Enums: {
       favorite_entity: "artist" | "stage" | "asset"
+      text_search_entity: "artist" | "stage" | "asset" | "event"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -597,31 +603,40 @@ export interface Database {
     }
     Functions: {
       extension: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string
       }
       filename: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string
       }
       foldername: {
-        Args: { name: string }
+        Args: {
+          name: string
+        }
         Returns: string[]
       }
       get_size_by_bucket: {
         Args: Record<PropertyKey, never>
-        Returns: { size: number; bucket_id: string }[]
+        Returns: {
+          size: number
+          bucket_id: string
+        }[]
       }
       search: {
         Args: {
           prefix: string
           bucketname: string
-          limits: number
-          levels: number
-          offsets: number
-          search: string
-          sortcolumn: string
-          sortorder: string
+          limits?: number
+          levels?: number
+          offsets?: number
+          search?: string
+          sortcolumn?: string
+          sortorder?: string
         }
         Returns: {
           name: string

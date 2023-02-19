@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "update-types": "supabase gen types typescript --local > ${PWD}/src/app/interfaces/database-definitions.ts"
+    "update-types": "npx supabase gen types typescript --local > ${PWD}/src/app/interfaces/database-definitions.ts",
+    "db-reset-local-to-prod": "npx supabase db reset && pg_dump --column-inserts --data-only --disable-trigger --schema=public postgres -h $SUPABASE_DB_HOST -U postgres | psql -h localhost -p 54322 -U postgres -d postgres"
   },
   "private": true,
   "dependencies": {
