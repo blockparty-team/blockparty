@@ -37,7 +37,7 @@ export enum DayEventMask {
     DayEventMask = 'day-event-mask',
 }
 
-export interface MapSourceGeojson { 
+export interface MapSourceGeojson<T> { 
     mapSource: MapSource; 
-    geojson: FeatureCollection<Point | LineString | Polygon>;
+    geojson: FeatureCollection<Point | LineString | Polygon, T>;
 }

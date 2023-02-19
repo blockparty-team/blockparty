@@ -36,7 +36,7 @@ export class MapStateService {
   private _removedAssetIconNames$ = new BehaviorSubject<string[]>([]);
   removedAssetIconNames$: Observable<any> = this._removedAssetIconNames$.asObservable();
 
-  mapLayers$: Observable<MapSourceGeojson[]> = concat(
+  mapLayers$: Observable<MapSourceGeojson<GeojsonProperties>[]> = concat(
     this.deviceStorageService.get('mapLayers').pipe(
       filter(layers => !!layers)
     ),
