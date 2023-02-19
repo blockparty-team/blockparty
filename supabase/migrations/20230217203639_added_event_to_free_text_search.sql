@@ -1,3 +1,5 @@
+CREATE TYPE text_search_entity AS ENUM ('artist', 'stage', 'asset', 'event');
+
 drop view if exists "public"."entity_text_search";
 
 drop function if exists "public"."text_search"(search_term text);
