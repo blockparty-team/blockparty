@@ -25,3 +25,4 @@ export type MapIcon = Database['public']['Views']['map_icon']['Row'];
 
 // Enums
 export type FavoriteEntity = Database['public']['Enums']['favorite_entity'];
+export type TextSearchEntity = Database['public']['Enums']['text_search_entity'];
