@@ -6,7 +6,6 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import { TimetableStateService } from './state/timetable-state.service';
 import { DayEventStageTimetable, EventTypeViewModel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ActivatedRoute, Router } from '@angular/router';
-import { EventType } from '@app/interfaces/database-entities';
 
 type TimeTableViewMode = 'gantt' | 'list'
 
@@ -40,6 +39,9 @@ export class TimetablePage implements OnInit {
     this.selectedEventTypeId$ = this.timetableStateService.selectedEventTypeId$;
     this.selectedEventId$ = this.timetableStateService.selectedEventId$;
 
+
+    this.timetableStateService.selectedEventTypeId$.subscribe(d=> console.log("selectedEventTypeId$", d));
+
     this.days$ = this.timetableStateService.days$.pipe(
       withLatestFrom(this.route.queryParamMap),
       tap(([days, param]) => {
@@ -62,25 +64,37 @@ export class TimetablePage implements OnInit {
           this.timetableStateService.selectDayId(days[0].id);
         }
       }),
-      map(([days, ]) => days)
+      map(([days, ]) => days),
     )
     
-    this.eventTypes$ = null;
+    this.eventTypes$ = this.timetableStateService.eventTypes$.pipe(
+      withLatestFrom(this.route.queryParamMap),
+      // Handle url if event query params exists
+      tap(([eventTypes, param]) => {
+        if (!!param.get('eventType') && eventTypes.some(eventType => eventType.event_type_id === param.get('eventType'))) {
+          this.timetableStateService.selectEventTypeId(param.get('eventType'))
+        } else {
+          this.timetableStateService.selectEventTypeId(eventTypes[0].event_type_id)
+        }
+      }),
+      map(([eventTypes,]) => eventTypes)
+    );
 
     this.events$ = this.timetableStateService.events$.pipe(
       withLatestFrom(this.route.queryParamMap),
       // Handle url if event query params exists
-      tap(([events, param]) => {
-        if (!!param.get('event') && events.some(event => event.event_id === param.get('event'))) {
-          this.timetableStateService.selectEventId(param.get('event'))
-        } else {
-          this.timetableStateService.selectEventId(events[0].event_id)
-        }
-      }),
-      map(([events,]) => events)
+      // tap(([events, param]) => {
+      //   if (!!param.get('event') && events.some(event => event.event_id === param.get('event'))) {
+      //     this.timetableStateService.selectEventId(param.get('event'))
+      //   } else {
+      //     this.timetableStateService.selectEventId(events[0].event_id)
+      //   }
+      // }),
+      map(([events,]) => { return events}),
     )
-
   }
+
+
 
   
 

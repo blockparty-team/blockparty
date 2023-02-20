@@ -41,9 +41,21 @@ export class TimetableStateService {
     filter(([days, selectedDayId]) => !!days && !!selectedDayId),
     map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
     map(day => day.events),
+    map(events => events.map(event => {
+      return {'event_type_id': event.event_type_id, 'event_type_name': event.event_type_name}
+    })),
     distinctUntilChanged(),
-    shareReplay()
+    shareReplay(1),
   );
+
+  selectedEventType$: Observable<EventTypeViewModel> = combineLatest([
+    this.eventTypes$,
+    this.selectedEventTypeId$
+  ]).pipe(
+    filter(([eventTypes, selectedEventTypeId]) => !!eventTypes && !!selectedEventTypeId),
+    map(([eventTypes, selectedEventTypeId]) => eventTypes.find(eventType => eventType.event_type_id === selectedEventTypeId)),
+  );
+
 
   events$: Observable<EventTimetable[]> = combineLatest([
     this.days$,
@@ -51,19 +63,15 @@ export class TimetableStateService {
     this.selectedEventTypeId$,
   ]).pipe(
     filter(([days, selectedDayId, selectedEventTypeId]) => !!days && !!selectedDayId && !!selectedEventTypeId),
-    map(([days, selectedDayId, selectedEventTypeId]) => days.find(day => day.id === selectedDayId && 
-      day.events.find(event => event.event_type_id === selectedEventTypeId)
-      )),
-    pluck('events'),
+    map(([days, selectedDayId, selectedEventTypeId]) => days.find(day => day.id === selectedDayId).events.filter(event => event.event_type_id === selectedEventTypeId)),
     distinctUntilChanged(),
-    shareReplay()
+    shareReplay(1)
   );
-
-  selectedEventType$: Observable<EventTypeViewModel> = null;
 
   selectedEvent$: Observable<EventTimetable> = combineLatest([
     this.events$,
     this.selectedEventId$,
+    this.selectedEventTypeId$,
     this.favoritesService.favorites$
   ]).pipe(
     filter(([events, selectedEventId, ]) => !!events && !!selectedEventId),
@@ -78,14 +86,13 @@ export class TimetableStateService {
           isFavorite: this.favoritesService.isFavorite('artist', timetable.artist_id)
         }))
       }));
-
       return {
         ...event,
         stages
       }
     }),
     distinctUntilChanged(),
-    shareReplay()
+    shareReplay(1)
   )
 
   eventTimetableByTime$: Observable<TimetableWithStageName[]> = this.selectedEvent$.pipe(
