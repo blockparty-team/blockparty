@@ -39,10 +39,8 @@ export class TimetablePage implements OnInit {
     this.selectedEventTypeId$ = this.timetableStateService.selectedEventTypeId$;
     this.selectedEventId$ = this.timetableStateService.selectedEventId$;
 
-
-    this.timetableStateService.selectedEventTypeId$.subscribe(d=> console.log("selectedEventTypeId$", d));
-
-    this.days$ = this.timetableStateService.days$.pipe(
+    this.days$ = this.timetableStateService.days$
+    .pipe(
       withLatestFrom(this.route.queryParamMap),
       tap(([days, param]) => {
 

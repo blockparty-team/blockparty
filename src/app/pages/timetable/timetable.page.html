@@ -1,6 +1,6 @@
 <ion-header>
   <ng-container *ngIf="days$ | async as days">
-    <ion-toolbar color="secondary">
+    <ion-toolbar>
       <ion-segment scrollable
                    mode="md"
                    (ionChange)="onDayFilterChange($event)"
@@ -13,7 +13,7 @@
     </ion-toolbar>
   </ng-container>
   <ng-container *ngIf="eventTypes$ | async as eventTypes">
-    <ion-toolbar color="secondary">
+    <ion-toolbar color="tertiary">
       <ion-segment scrollable
                    mode="md"
                    (ionChange)="onEventTypeFilterChange($event)"
@@ -27,13 +27,13 @@
   </ng-container> 
 
   <ng-container *ngIf="events$ | async as events">
-    <ion-toolbar color="tertiary">
+    <ion-toolbar color="medium">
       <ion-segment scrollable
                    mode="md"
                    (ionChange)="onEventFilterChange($event)"
                    [value]="selectedEventId$ | async">
         <ion-segment-button *ngFor="let event of events"
-                            [value]="event.event_type_id">
+                            [value]="event.event_id">
           <ion-label>{{event.event_type_name}}</ion-label>
         </ion-segment-button>
       </ion-segment>

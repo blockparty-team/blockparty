@@ -53,10 +53,10 @@ export class TimetableGanttComponent implements OnInit {
       this.favoritesService.favorites$
     ]).pipe(
       filter(([days, dayId,,]) => !!dayId && !!days),
+      tap(console.log),
       // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
       map(([days, dayId, event,]) => {
         const day: DayEventStageTimetable = days.find(day => day.id === dayId);
-
         if (event) {
           return {
             ...day,
@@ -65,13 +65,11 @@ export class TimetableGanttComponent implements OnInit {
             last_end_time: event.last_end_time
           };
         }
-
         return day;
 
       }),
       map(day => this.timetableGridConfig(day)),
       catchError(err => {
-        console.log(err);
         return EMPTY;
       }),
       distinctUntilChanged(),
@@ -115,6 +113,7 @@ export class TimetableGanttComponent implements OnInit {
   }
 
   timeLables(firstStartTime: Date, lastEndTime: Date): TimeLabel[] {
+
     return eachHourOfInterval({
       start: firstStartTime.getTime(),
       end: lastEndTime.getTime()
@@ -158,7 +157,6 @@ export class TimetableGanttComponent implements OnInit {
   timetableGridConfig(day: DayEventStageTimetable): DayTimetableViewModel {
 
     let row = 1; // First row is time labels
-
     const firstStartTime = new Date(day.first_start_time);
     const lastEndTime = new Date(day.last_end_time);
 

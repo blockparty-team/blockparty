@@ -60,6 +60,8 @@ select
 					'event_type_name', event_type_name,
 					'event_id', event_id, 
 					'event_name', event_name, 
+					'first_start_time', first_start_time,
+					'last_end_time', last_end_time,
 					'stages', stages
 					)  
 	) events

@@ -4,7 +4,7 @@ import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators'
+import { distinctUntilChanged, filter, map, pluck, shareReplay, startWith, tap, withLatestFrom } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -48,12 +48,14 @@ export class TimetableStateService {
     shareReplay(1),
   );
 
-  selectedEventType$: Observable<EventTypeViewModel> = combineLatest([
-    this.eventTypes$,
-    this.selectedEventTypeId$
-  ]).pipe(
-    filter(([eventTypes, selectedEventTypeId]) => !!eventTypes && !!selectedEventTypeId),
-    map(([eventTypes, selectedEventTypeId]) => eventTypes.find(eventType => eventType.event_type_id === selectedEventTypeId)),
+  selectedEventType$: Observable<EventTypeViewModel> = this.selectedEventId$
+  //   this.eventTypes$,
+  //   this.selectedEventTypeId$
+  // ])
+  .pipe(
+    withLatestFrom(this.eventTypes$),
+    filter(([selectedEventTypeId, eventTypes]) => !!eventTypes && !!selectedEventTypeId),
+    map(([selectedEventTypeId, eventTypes]) => eventTypes.find(eventType => eventType.event_type_id === selectedEventTypeId)),
   );
 
 
@@ -68,17 +70,21 @@ export class TimetableStateService {
     shareReplay(1)
   );
 
-  selectedEvent$: Observable<EventTimetable> = combineLatest([
-    this.events$,
-    this.selectedEventId$,
-    this.selectedEventTypeId$,
-    this.favoritesService.favorites$
-  ]).pipe(
-    filter(([events, selectedEventId, ]) => !!events && !!selectedEventId),
-    map(([events, selectedEventId, ]) => events.find(event => event.event_id === selectedEventId)),
-    filter(event => !!event),
+  selectedEvent$: Observable<EventTimetable> = this.selectedEventId$
+  // combineLatest([
+  //   this.events$,
+  //   this.selectedEventId$,
+  //   this.favoritesService.favorites$
+  // ])
+  .pipe(
+    withLatestFrom(this.events$),
+    filter(([selectedEventId, events ]) => !!events && !!selectedEventId),
+    map(([selectedEventId, events ]) => events.find(event => event.event_id === selectedEventId)),
     map(event => {
-      // Add favorites
+      // Add favorites - 
+      // TODO: Move to timetable logic, this is not part of filter as such.
+      // Reckon filter should be strictly on days, any augmentation of data could/should
+      // be later.
       const stages = event.stages.map(stage => ({
         ...stage,
         timetable: stage.timetable.map(timetable => ({
@@ -91,8 +97,9 @@ export class TimetableStateService {
         stages
       }
     }),
-    distinctUntilChanged(),
-    shareReplay(1)
+    filter(event => !!event),
+    // distinctUntilChanged(),
+    // shareReplay(1)
   )
 
   eventTimetableByTime$: Observable<TimetableWithStageName[]> = this.selectedEvent$.pipe(
