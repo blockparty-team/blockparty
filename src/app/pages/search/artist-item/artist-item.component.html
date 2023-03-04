@@ -1,13 +1,13 @@
 <ion-item [routerLink]="['/tabs', routeName.Artist, artist.name]">
-  <ion-thumbnail slot="end">
+
+  <ion-avatar slot="start">
     <img [src]="artist.imgUrl" />
-  </ion-thumbnail>
+  </ion-avatar>
+
   <ion-label>
     <h2>{{artist.name}}</h2>
     <p *ngFor="let act of artist.timetable">{{act?.day.name}} | {{act?.start_time | date:'HH:mm'}}
     </p>
   </ion-label>
-  <ion-badge slot="start"
-             [color]="badgeColor.artist">Artist
-  </ion-badge>
+  
 </ion-item>

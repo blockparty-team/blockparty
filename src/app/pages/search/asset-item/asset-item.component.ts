@@ -1,10 +1,13 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Feature, Point, Position } from 'geojson';
-import { AssetGeojson } from '@app/interfaces/database-entities';
-import { EntityBadgeColor } from '../entity-badge-color';
 import { Router } from '@angular/router';
+import { Feature, Point, Position } from 'geojson';
 import { RouteName } from '@app/shared/models/routeName';
 import { MapService } from '@app/services/map.service';
+import { AssetGeojson } from '@app/interfaces/database-entities';
+
+interface AssetProperties extends AssetGeojson {
+  imgUrl?: string;
+}
 
 @Component({
   selector: 'app-asset-item',
@@ -13,9 +16,7 @@ import { MapService } from '@app/services/map.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AssetItemComponent {
-  @Input() asset: Feature<Point, AssetGeojson>
-
-  badgeColor = EntityBadgeColor;
+  @Input() asset: Feature<Point, AssetProperties>
 
   constructor(
     private router: Router,
