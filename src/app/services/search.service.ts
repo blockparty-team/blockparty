@@ -47,18 +47,34 @@ export class SearchService {
           case 'event':
             return { ...result, event: events.find(event => event.id === result.id) };
           case 'stage':
+            const stage = mapLayers
+                .find(layer => layer.mapSource === MapSource.Stage).geojson.features
+                .find(feature => feature.properties.id === result.id) as Feature<Point, StageGeojsonProperties>;
+
             return {
               ...result,
-              stage: mapLayers
-                .find(layer => layer.mapSource === MapSource.Stage).geojson.features
-                .find(feature => feature.properties.id === result.id) as Feature<Point, StageGeojsonProperties>
+              stage: {
+                ...stage,
+                properties: {
+                  ...stage.properties,
+                  imgUrl: this.supabase.publicImageUrl('icon', `${stage.properties.icon}.png`)
+                }
+              }
             };
           case 'asset':
+            const asset = mapLayers
+              .find(layer => layer.mapSource === MapSource.Asset).geojson.features
+              .find(feature => feature.properties.id === result.id) as Feature<Point, AssetGeojson>;
+
             return {
               ...result,
-              asset: mapLayers
-                .find(layer => layer.mapSource === MapSource.Asset).geojson.features
-                .find(feature => feature.properties.id === result.id) as Feature<Point, AssetGeojson>
+              asset: {
+                ...asset,
+                properties: {
+                  ...asset.properties,
+                  imgUrl: this.supabase.publicImageUrl('icon', `${asset.properties.icon}.png`)
+                }
+              }
             };
           default:
             return result;
@@ -66,6 +82,4 @@ export class SearchService {
       }))
     );
   }
-
-
 }
