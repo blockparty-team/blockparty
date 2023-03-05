@@ -3,33 +3,33 @@
 
 /** Ionic CSS Variables **/
 :root {
-  --ion-color-primary: #C97F00;
-  --ion-color-primary-rgb: 201, 127, 0;
-  --ion-color-primary-contrast: #000000;
-  --ion-color-primary-contrast-rgb: 0, 0, 0;
-  --ion-color-primary-shade: #b17000;
-  --ion-color-primary-tint: #ce8c1a;
+	--ion-color-primary: #FF7800;
+	--ion-color-primary-rgb: 255,120,0;
+	--ion-color-primary-contrast: #000000;
+	--ion-color-primary-contrast-rgb: 0,0,0;
+	--ion-color-primary-shade: #e06a00;
+	--ion-color-primary-tint: #ff861a;
 
-  --ion-color-secondary: #C2AE00;
-  --ion-color-secondary-rgb: 194, 174, 0;
-  --ion-color-secondary-contrast: #000000;
-  --ion-color-secondary-contrast-rgb: 0, 0, 0;
-  --ion-color-secondary-shade: #ab9900;
-  --ion-color-secondary-tint: #c8b61a;
+	--ion-color-secondary: #B2DF00;
+	--ion-color-secondary-rgb: 178,223,0;
+	--ion-color-secondary-contrast: #000000;
+	--ion-color-secondary-contrast-rgb: 0,0,0;
+	--ion-color-secondary-shade: #9dc400;
+	--ion-color-secondary-tint: #bae21a;
 
-  --ion-color-tertiary: #747F00;
-  --ion-color-tertiary-rgb: 116, 127, 0;
-  --ion-color-tertiary-contrast: #ffffff;
-  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #667000;
-  --ion-color-tertiary-tint: #828c1a;
+	--ion-color-tertiary: #00FFCD;
+	--ion-color-tertiary-rgb: 0,255,205;
+	--ion-color-tertiary-contrast: #000000;
+	--ion-color-tertiary-contrast-rgb: 0,0,0;
+	--ion-color-tertiary-shade: #00e0b4;
+	--ion-color-tertiary-tint: #1affd2;
 
-  --ion-color-success: #9bd9b4;
-  --ion-color-success-rgb: 155, 217, 180;
-  --ion-color-success-contrast: #000000;
-  --ion-color-success-contrast-rgb: 0, 0, 0;
-  --ion-color-success-shade: #88bf9e;
-  --ion-color-success-tint: #a5ddbc;
+	--ion-color-success: #008632;
+	--ion-color-success-rgb: 0,134,50;
+	--ion-color-success-contrast: #ffffff;
+	--ion-color-success-contrast-rgb: 255,255,255;
+	--ion-color-success-shade: #00762c;
+	--ion-color-success-tint: #1a9247;
 
   --ion-color-warning: #ffe95c;
   --ion-color-warning-rgb: 255, 233, 92;
@@ -89,7 +89,7 @@
 
   --ion-item-background: #443f3f;
 
-  --ion-toolbar-background: #443f3f;
+  --ion-toolbar-background: #454545;
 
   --ion-tab-bar-background: #443f3f;
 }
