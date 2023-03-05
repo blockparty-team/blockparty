@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { filter, map, pluck, shareReplay, tap } from 'rxjs/operators';
+import { filter, map, pluck, tap } from 'rxjs/operators';
 import { ModalController, SegmentCustomEvent } from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
@@ -9,6 +9,7 @@ import { MapLayer } from '@app/interfaces/map-layer';
 import { Day, StageGeojsonProperties, Timetable, TimetableDay } from '@app/interfaces/stage-geojson-properties';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { RouteName } from '@app/shared/models/routeName';
+import { Ticket } from '@app/interfaces/event';
 
 @Component({
   selector: 'app-stage-timetable',
@@ -20,7 +21,7 @@ export class StageTimetableComponent implements OnInit {
 
   stageName$: Observable<string>;
   stageDescription$: Observable<string>;
-  ticketUrl$: Observable<string>;
+  tickets$: Observable<Ticket[]>;
   days$: Observable<Day[]>;
   timetable$: Observable<Timetable[]>;
   hasTimetable$: Observable<boolean>;
@@ -45,7 +46,8 @@ export class StageTimetableComponent implements OnInit {
         properties: {
           ...stage.properties,
           // JSON.parse is used since Maplibre stringifies nested properties in GeoJSON maplayers
-          timetables: JSON.parse(stage.properties.timetables as any) as TimetableDay[]
+          timetables: JSON.parse(stage.properties.timetables as any) as TimetableDay[],
+          tickets: stage.properties.tickets ? JSON.parse(stage.properties?.tickets as any) : null as Ticket[]
         }
       }))
     );
@@ -84,8 +86,8 @@ export class StageTimetableComponent implements OnInit {
       map(stage => stage.properties.timetables[0] !== null)
     );
 
-    this.ticketUrl$ = stage$.pipe(
-      pluck('properties', 'ticket_url'),
+    this.tickets$ = stage$.pipe(
+      pluck('properties', 'tickets'),
     );
 
     this.location$ = stage$.pipe(
@@ -113,7 +115,7 @@ export class StageTimetableComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  onCloseStageDescriptionModal() {
+  onCloseModal(): void {
     this.modalCtrl.dismiss();
   }
 

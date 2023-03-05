@@ -212,7 +212,7 @@ export interface Database {
           public: boolean | null
           storage_path: string | null
           style: Json | null
-          ticket_url: string | null
+          tickets: Json | null
         }
         Insert: {
           bounds?: number[] | null
@@ -225,7 +225,7 @@ export interface Database {
           public?: boolean | null
           storage_path?: string | null
           style?: Json | null
-          ticket_url?: string | null
+          tickets?: Json | null
         }
         Update: {
           bounds?: number[] | null
@@ -238,7 +238,7 @@ export interface Database {
           public?: boolean | null
           storage_path?: string | null
           style?: Json | null
-          ticket_url?: string | null
+          tickets?: Json | null
         }
       }
       event_type: {
@@ -460,7 +460,7 @@ export interface Database {
           icon: string | null
           id: string | null
           name: string | null
-          ticket_url: string | null
+          tickets: Json | null
           timetables: Json | null
         }
       }

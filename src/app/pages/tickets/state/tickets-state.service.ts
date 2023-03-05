@@ -12,10 +12,10 @@ export class TicketsStateService {
   eventsGroupedByType$: Observable<EventsGroupedByType[]> = this.eventStateService.eventsGroupedByType.pipe(
     map(eventTypes => eventTypes
       // Only include eventtypes/events with tickets
-      .filter(eventType => eventType.event.some(event => event.ticket_url))
+      .filter(eventType => eventType.event.some(event => event.tickets))
       .map(eventType => ({
         ...eventType,
-        event: eventType.event.filter(event => !!event.ticket_url)
+        event: eventType.event.filter(event => !!event.tickets)
       }))
     )
   );

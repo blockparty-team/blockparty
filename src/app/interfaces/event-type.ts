@@ -1,8 +1,9 @@
 import { Event, EventType } from "./database-entities"
+import { Ticket } from "./event";
 
 interface EventTicket {
     name: Event['name'];
-    ticket_url: Event['ticket_url'];
+    tickets: Ticket[];
 }
 
 export interface EventsGroupedByType {

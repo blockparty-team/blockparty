@@ -1,6 +1,6 @@
 import { Event, EventType } from "./database-entities"
 
-type PartialEvent = Pick<Event, 'id' | 'name' | 'description' | 'storage_path' | 'bounds' | 'ticket_url'>;
+type PartialEvent = Pick<Event, 'id' | 'name' | 'description' | 'storage_path' | 'bounds'>;
 type PartialEventType = Pick<EventType, 'id' | 'name' | 'color' | 'description'>
 
 
@@ -25,6 +25,11 @@ interface Stage {
     timetable: Timetable[];
 }
 
+export interface Ticket {
+    name: string;
+    url: string;
+}
+
 export interface EventWithRelations extends PartialEvent {
     day_event: DayEvent[];
     stage: Stage[];
@@ -37,4 +42,5 @@ export interface EventViewModel extends PartialEvent {
     imgUrl: string;
     srcset: string;
     event_type: PartialEventType;
+    tickets: Ticket[]
 }

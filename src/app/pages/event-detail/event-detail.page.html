@@ -18,8 +18,8 @@
         <ion-icon name="map-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab-button *ngIf="event.ticket_url"
-                      (click)="onGoToTicket(event.ticket_url)"
+      <ion-fab-button id="event-detail-open-tickets-modal"
+                      *ngIf="event.tickets"
                       class="margin-top">
         <ion-icon name="ticket-outline"></ion-icon>
       </ion-fab-button>
@@ -55,5 +55,32 @@
              [routerLink]="['/tabs', routeName.Artist, artist.name]">{{ artist.name }}</div>
       </section>
     </div>
+
+    <ion-modal trigger="event-detail-open-tickets-modal"
+               [initialBreakpoint]="0.4"
+               [breakpoints]="[0.4, 0.75]">
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="end">
+              <ion-button (click)="onCloseModal()">
+                <ion-icon slot="icon-only"
+                          name="close"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+            <ion-title>Tickets</ion-title>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-list>
+            <ion-item *ngFor="let ticket of event.tickets"
+                      [href]="ticket.url">
+              {{ticket.name}}
+            </ion-item>
+          </ion-list>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
   </ng-container>
+
 </ion-content>

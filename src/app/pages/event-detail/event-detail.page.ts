@@ -11,6 +11,7 @@ import { EventViewModel } from '@app/interfaces/event';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { RouteName } from '@app/shared/models/routeName';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-event-detail',
@@ -28,6 +29,7 @@ export class EventDetailPage implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private modalCtrl: ModalController,
     private eventStateService: EventStateService,
     private mapService: MapService,
     private router: Router
@@ -65,5 +67,9 @@ export class EventDetailPage implements OnInit {
     Browser.open({
       url: ticketUrl
     })
+  }
+
+  onCloseModal(): void {
+    this.modalCtrl.dismiss();
   }
 }

@@ -13,8 +13,37 @@
   <section class="ion-padding ion-text-center">
     <p>Select event types below to buy tickets</p>
   </section>
+
+  <ion-accordion-group>
+
+  </ion-accordion-group>
+
   <ng-container *ngIf="eventsGroupedByType$ | async as eventTypes">
     <ion-accordion-group>
+
+      <!-- Custom Accordion with full festival pass -->
+      <ion-accordion>
+        <ion-item slot="header"
+                  color="primary">
+          <ion-label color="dark">
+            <h2>Festival Pass</h2>
+          </ion-label>
+        </ion-item>
+        <div class="ion-padding"
+             slot="content"
+             [style.background-color]="'var(--ion-color-primary)'">
+          <ion-list lines="none">
+            <ion-item (click)="onGoToTicket('https://www.ticketmaster.dk/event/DIS0406P')"
+                      button="true">
+              <ion-icon name="ticket"
+                        slot="start"></ion-icon>
+              Full Festival Pass
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-accordion>
+
+      <!-- Generated accordions from event/types -->
       <ion-accordion *ngFor="let eventType of eventTypes">
         <ion-item slot="header"
                   [style.--background]="eventType.color ? eventType.color : 'gray'">
@@ -26,13 +55,17 @@
              slot="content"
              [style.background-color]="eventType.color">
           <ion-list lines="none">
-            <ion-item *ngFor="let event of eventType.event"
-                      (click)="onGoToTicket(event.ticket_url)"
-                      button="true">
-              <ion-icon name="ticket"
-                        slot="start"></ion-icon>
-              {{event.name}}
-            </ion-item>
+            <ng-container *ngFor="let event of eventType.event">
+
+              <ion-item *ngFor="let ticket of event.tickets"
+                        (click)="onGoToTicket(ticket.url)"
+                        button="true">
+                <ion-icon name="ticket"
+                          slot="start"></ion-icon>
+                {{ticket.name}}
+              </ion-item>
+            </ng-container>
+
           </ion-list>
         </div>
       </ion-accordion>
