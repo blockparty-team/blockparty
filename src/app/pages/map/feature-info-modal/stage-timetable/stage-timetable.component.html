@@ -4,8 +4,8 @@
     <ion-title>{{stageName$ | async}}</ion-title>
 
     <ion-buttons slot="end">
-      <ng-container *ngIf="ticketUrl$ | async as ticketUrl">
-        <ion-button (click)="onGoToTicket(ticketUrl)">
+      <ng-container *ngIf="tickets$ | async">
+        <ion-button id="open-tickets-modal">
           <ion-icon slot="icon-only"
                     name="ticket-outline"></ion-icon>
         </ion-button>
@@ -70,7 +70,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="end">
-            <ion-button (click)="onCloseStageDescriptionModal()">
+            <ion-button (click)="onCloseModal()">
               <ion-icon slot="icon-only"
                         name="close"></ion-icon>
             </ion-button>
@@ -81,6 +81,32 @@
       <ion-content class="ion-padding">
         <h3>{{stageName$ | async}}</h3>
         <p>{{stageDescription$ | async}}</p>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal trigger="open-tickets-modal"
+             [initialBreakpoint]="0.4"
+             [breakpoints]="[0.4, 0.75]">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="onCloseModal()">
+              <ion-icon slot="icon-only"
+                        name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-title>Tickets</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-list>
+          <ion-item *ngFor="let ticket of tickets$ | async"
+                    [href]="ticket.url">
+            {{ticket.name}}
+          </ion-item>
+        </ion-list>
       </ion-content>
     </ng-template>
   </ion-modal>

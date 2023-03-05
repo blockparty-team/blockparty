@@ -205,7 +205,7 @@ export class SupabaseService {
           description,
           storage_path,
           bounds,
-          ticket_url,
+          tickets,
           event_type(
             id,
             name,
@@ -243,7 +243,7 @@ export class SupabaseService {
           description,
           event(
             name,
-            ticket_url
+            tickets
           )
         `)
         .order('name')

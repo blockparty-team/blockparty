@@ -1,4 +1,5 @@
 import { Artist, Day as DayType, Event, Icon, Stage, Timetable as TimetableType } from "./database-entities";
+import { Ticket } from "./event";
 
 export interface Day {
     id: DayType['id'];
@@ -23,7 +24,7 @@ export interface StageGeojsonProperties {
     description: Stage['description'];
     name: Stage['name'];
     icon: Icon['name'];
-    ticket_url: Event['ticket_url'];
+    tickets: Ticket[]
     timetables: TimetableDay[];
 }
 
