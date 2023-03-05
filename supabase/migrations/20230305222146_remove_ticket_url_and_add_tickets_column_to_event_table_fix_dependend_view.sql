@@ -1,7 +1,7 @@
+drop view if exists "public"."stage_geojson";
 alter table "public"."event" drop column "ticket_url";
 alter table "public"."event" add column "tickets" jsonb;
 
-drop view if exists "public"."stage_geojson";
 
 create or replace view "public"."stage_geojson" as  WITH cte_day AS (
          SELECT day.id,
