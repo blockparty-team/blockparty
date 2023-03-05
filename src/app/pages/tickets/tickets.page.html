@@ -14,10 +14,6 @@
     <p>Select event types below to buy tickets</p>
   </section>
 
-  <ion-accordion-group>
-
-  </ion-accordion-group>
-
   <ng-container *ngIf="eventsGroupedByType$ | async as eventTypes">
     <ion-accordion-group>
 
@@ -69,6 +65,7 @@
           </ion-list>
         </div>
       </ion-accordion>
+      
     </ion-accordion-group>
   </ng-container>
 </ion-content>
