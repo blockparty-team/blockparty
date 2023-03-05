@@ -1,6 +1,6 @@
 <div class="container">
   <ion-header>
-    <ion-toolbar color="secondary">
+    <ion-toolbar>
       <ion-title class="ion-text-center">More</ion-title>
       <ion-buttons slot="end">
         <ion-button (click)="onCloseSideBar()">
@@ -12,7 +12,7 @@
   </ion-header>
 
   <ion-content class="navigation">
-    <ion-list color="primary">
+    <ion-list>
       <ion-item *ngFor="let item of navigationItems"
                 lines="none"
                 (click)="onGoTo(item.routeName)">

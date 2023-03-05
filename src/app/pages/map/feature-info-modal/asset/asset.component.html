@@ -1,13 +1,13 @@
 <ng-container *ngIf="asset$ | async as asset; else loading;">
 
   <ion-header>
-    <ion-toolbar color="primary">
+    <ion-toolbar>
       <ion-title>
         {{asset.properties.name}}
       </ion-title>
     </ion-toolbar>
   </ion-header>
-  
+
   <ion-content class="ion-padding">
     {{asset.properties.description}}
   </ion-content>
