@@ -3,11 +3,7 @@ import { Router } from '@angular/router';
 import { Feature, Point, Position } from 'geojson';
 import { RouteName } from '@app/shared/models/routeName';
 import { MapService } from '@app/services/map.service';
-import { AssetGeojson } from '@app/interfaces/database-entities';
-
-interface AssetProperties extends AssetGeojson {
-  imgUrl?: string;
-}
+import { AssetGeojsonProperties } from '@app/interfaces/asset-geojson-properties';
 
 @Component({
   selector: 'app-asset-item',
@@ -16,7 +12,7 @@ interface AssetProperties extends AssetGeojson {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AssetItemComponent {
-  @Input() asset: Feature<Point, AssetProperties>
+  @Input() asset: Feature<Point, AssetGeojsonProperties>
 
   constructor(
     private router: Router,

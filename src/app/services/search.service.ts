@@ -10,7 +10,7 @@ import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapSource } from '@app/interfaces/map-layer';
 import { Feature, Point } from 'geojson';
 import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
-import { AssetGeojson } from '@app/interfaces/database-entities';
+import { AssetGeojsonProperties } from '@app/interfaces/asset-geojson-properties';
 
 @Injectable({
   providedIn: 'root'
@@ -64,7 +64,7 @@ export class SearchService {
           case 'asset':
             const asset = mapLayers
               .find(layer => layer.mapSource === MapSource.Asset).geojson.features
-              .find(feature => feature.properties.id === result.id) as Feature<Point, AssetGeojson>;
+              .find(feature => feature.properties.id === result.id) as Feature<Point, AssetGeojsonProperties>;
 
             return {
               ...result,

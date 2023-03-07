@@ -75,9 +75,7 @@ export class MapPage implements OnInit, AfterViewInit {
     );
 
     // Open modal based on clicked map feature
-    this.mapStateService.selectedMapFeatures$.pipe(
-      filter(features => !!features),
-      map(features => features[0]),
+    this.mapStateService.selectedMapFeature$.pipe(
       switchMap(feature => {
         if (feature.mapLayer === MapLayer.Stage) {
           return this.openFeatureInfoModal(0.4, [0, 0.4, 0.9])

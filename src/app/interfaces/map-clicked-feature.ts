@@ -1,9 +1,9 @@
 import { Point } from 'geojson';
-import { AssetGeojson } from './database-entities';
 import { MapLayer } from './map-layer';
 import { StageGeojsonProperties } from './stage-geojson-properties';
+import { AssetGeojsonProperties } from './asset-geojson-properties';
 
-export type GeojsonProperties =  StageGeojsonProperties | AssetGeojson;
+export type GeojsonProperties = StageGeojsonProperties | AssetGeojsonProperties;
 
 export interface MapClickedFeature<T> {
     id: string;

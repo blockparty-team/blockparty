@@ -24,7 +24,7 @@ export interface StageGeojsonProperties {
     description: Stage['description'];
     name: Stage['name'];
     icon: Icon['name'];
-    tickets: Ticket[]
+    tickets: Ticket[];
     timetables: TimetableDay[];
+    imgUrl?: string;
 }
-

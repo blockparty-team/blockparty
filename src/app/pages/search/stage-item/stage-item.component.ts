@@ -8,11 +8,6 @@ import { MapService } from '@app/services/map.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { Feature, Point } from 'geojson';
 
-interface StageProperties extends Omit<StageGeojsonProperties, 'timetables'> {
-  imgUrl?: string;
-  timetables: any;
-}
-
 @Component({
   selector: 'app-stage-item',
   templateUrl: './stage-item.component.html',
@@ -20,7 +15,7 @@ interface StageProperties extends Omit<StageGeojsonProperties, 'timetables'> {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class StageItemComponent {
-  @Input() stage: Feature<Point, StageProperties>;
+  @Input() stage: Feature<Point, StageGeojsonProperties>;
 
   constructor(
     private router: Router,
@@ -32,15 +27,13 @@ export class StageItemComponent {
     this.router.navigate(['/tabs', RouteName.Map])
     this.mapService.flyTo(this.stage.geometry.coordinates as [number, number])
 
-    const feature: MapClickedFeature<StageProperties> = {
+    const feature: MapClickedFeature<StageGeojsonProperties> = {
       id: this.stage.properties.id,
       mapLayer: MapLayer.Stage,
       properties: {
         ...this.stage.properties, 
-        // TODO(barfod): this object is stringified because of mapblibre 
-        // features not supporting nested properties. No need to enforce this
-        // in MapClickedFeature.
-        timetables: JSON.stringify(this.stage.properties.timetables)
+        timetables: this.stage.properties.timetables,
+        tickets: this.stage.properties.tickets
       },
       geometry: this.stage.geometry
     };
