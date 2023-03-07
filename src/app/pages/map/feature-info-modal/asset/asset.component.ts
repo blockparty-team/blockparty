@@ -20,8 +20,7 @@ export class AssetComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.asset$ = this.mapStateService.selectedMapFeatures$.pipe(
-      map(features => features[0]),
+    this.asset$ = this.mapStateService.selectedMapFeature$.pipe(
       filter(feature => (
         feature.mapLayer === MapLayer.Asset ||
         feature.mapLayer === MapLayer.AssetIcon

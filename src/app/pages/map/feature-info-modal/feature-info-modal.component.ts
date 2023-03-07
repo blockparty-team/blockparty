@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { AssetGeojson } from '@app/interfaces/database-entities';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 import { MapStateService } from '../state/map-state.service';
 import { MapService } from '@app/services/map.service';
 
@@ -15,7 +15,7 @@ import { MapService } from '@app/services/map.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeatureInfoModalComponent implements OnInit {
-  selectedFeature$: Observable<MapClickedFeature<StageGeojsonProperties | AssetGeojson>>;
+  selectedFeature$: Observable<MapClickedFeature<GeojsonProperties>>;
   mapLayer = MapLayer
 
   constructor(
@@ -25,8 +25,7 @@ export class FeatureInfoModalComponent implements OnInit {
 
   ngOnInit(
   ) {
-    this.selectedFeature$ = this.mapStateService.selectedMapFeatures$.pipe(
-      map(features => features[0]),
+    this.selectedFeature$ = this.mapStateService.selectedMapFeature$.pipe(
       tap(feature => this.mapService.flyTo(
         feature.geometry.coordinates as [number, number],
         [0, -100]

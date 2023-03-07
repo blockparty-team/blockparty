@@ -38,18 +38,9 @@ export class StageTimetableComponent implements OnInit {
 
   ngOnInit() {
 
-    const stage$ = this.mapStateService.selectedMapFeatures$.pipe(
-      filter(features => !!features && features[0].mapLayer === MapLayer.Stage),
-      map(stages => (stages[0] as MapClickedFeature<StageGeojsonProperties>)),
-      map(stage => ({
-        ...stage,
-        properties: {
-          ...stage.properties,
-          // JSON.parse is used since Maplibre stringifies nested properties in GeoJSON maplayers
-          timetables: JSON.parse(stage.properties.timetables as any) as TimetableDay[],
-          tickets: stage.properties.tickets ? JSON.parse(stage.properties?.tickets as any) : null as Ticket[]
-        }
-      }))
+    const stage$: Observable<MapClickedFeature<StageGeojsonProperties>> = this.mapStateService.selectedMapFeature$.pipe(
+      filter(feature => feature.mapLayer === MapLayer.Stage),
+      map(stage => stage as MapClickedFeature<StageGeojsonProperties>)
     );
 
     this.stageName$ = stage$.pipe(

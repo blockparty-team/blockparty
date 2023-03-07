@@ -5,12 +5,14 @@ import { AttributionControl, FilterSpecification, GeolocateControl, LngLatBounds
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { getCssVariable } from '@app/shared/colors';
-import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { GeolocationService } from './geolocation.service';
 import { FileService } from './file.service';
 import { MapIconViewModel } from '@app/interfaces/map-icon';
+import { Point } from 'geojson';
+import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
 
 @Injectable({
   providedIn: 'root'
@@ -90,17 +92,25 @@ export class MapService {
   private addClickBehaviourToLayer(mapLayer: MapLayer): void {
     this.map.on('click', mapLayer, e => {
 
-      if (e.features.length > 0) {
+      if (e.features.length === 0) return;
 
-        const features: MapClickedFeature<GeojsonProperties>[] = e.features.map(feature => ({
-          id: feature.properties.id,
-          mapLayer,
-          properties: feature.properties as GeojsonProperties,
-          geometry: feature.geometry as any
-        }));
+      const features: MapClickedFeature<any>[] = e.features.map(feature => ({
+        id: feature.properties.id,
+        mapLayer,
+        properties: mapLayer === MapLayer.Stage ?
+          {
+            ...feature.properties,
+            // MapLibre automaticly stingifies nested objects in geojson properties.
+            // Since stages has objects for timetables and tickets these are parsed
+            // to get the back to original objects.
+            timetables: JSON.parse(feature.properties.timetables),
+            tickets: feature.properties.tickets ? JSON.parse(feature.properties.tickets) : null
+          } as StageGeojsonProperties
+          : feature.properties,
+        geometry: feature.geometry as Point
+      }));
 
-        this.mapStateService.selectMapFeatures(features);
-      }
+      this.mapStateService.selectMapFeatures(features);
     });
 
     this.map.on('mouseenter', mapLayer, () => {
@@ -113,7 +123,7 @@ export class MapService {
 
   public flyTo(
     center: [number, number],
-    offset: PointLike = [0,0],
+    offset: PointLike = [0, 0],
     zoom: number = 18
   ): void {
     this.mapStateService.mapLoaded$.pipe(

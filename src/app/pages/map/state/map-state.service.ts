@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { Observable, BehaviorSubject, combineLatest, concat, forkJoin } from 'rxjs';
-import { DayEvent, PartialEvent } from '@app/interfaces/day-event';
 import { distinctUntilChanged, filter, map, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
+
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
+import { DayEvent, PartialEvent } from '@app/interfaces/day-event';
 import { DayEventMask } from '@app/interfaces/database-entities';
 import { MapSource, MapSourceGeojson } from '@app/interfaces/map-layer';
+import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,11 @@ export class MapStateService {
   );
 
   private _selectedMapFeatures$ = new BehaviorSubject<MapClickedFeature<GeojsonProperties>[]>(null);
-  selectedMapFeatures$: Observable<MapClickedFeature<GeojsonProperties>[]> = this._selectedMapFeatures$.asObservable();
+  selectedMapFeature$: Observable<MapClickedFeature<GeojsonProperties>> = this._selectedMapFeatures$.asObservable().pipe(
+    filter(features => !!features),
+    // Only provide first clicked layer
+    map(features => features[0])
+  );
 
   private _selectedDayId$ = new BehaviorSubject<string>(null);
   selectedDayId$: Observable<string> = this._selectedDayId$.asObservable();
