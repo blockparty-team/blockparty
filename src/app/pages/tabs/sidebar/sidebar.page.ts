@@ -26,14 +26,9 @@ export class SidebarPage implements OnInit {
 
   navigationItems: NavigationItem[] = [
     {
-      name: 'Profile',
-      icon: 'person-circle-outline',
-      routeName: RouteName.Profile
-    },
-    {
-      name: 'About',
-      icon: 'information-circle-outline',
-      routeName: RouteName.About
+      name: 'Tickets',
+      icon: 'ticket-outline',
+      routeName: RouteName.Tickets
     },
     {
       name: 'Events',
@@ -51,19 +46,24 @@ export class SidebarPage implements OnInit {
       routeName: RouteName.Partners
     },
     {
-      name: 'Tickets',
-      icon: 'ticket-outline',
-      routeName: RouteName.Tickets
-    },
-    {
       name: 'Merch',
       icon: 'cash-outline',
       routeName: RouteName.Merch
     },
     {
+      name: 'About',
+      icon: 'information-circle-outline',
+      routeName: RouteName.About
+    },
+    {
       name: 'Settings',
       icon: 'settings-outline',
       routeName: RouteName.Settings
+    },
+    {
+      name: 'Profile',
+      icon: 'person-circle-outline',
+      routeName: RouteName.Profile
     },
     // Hide profile menu item when login is disabled
   ].filter(navItem => !environment.featureToggle.enableLogin
