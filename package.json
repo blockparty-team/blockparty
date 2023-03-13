@@ -31,7 +31,7 @@
     "@capacitor/device": "^4.1.0",
     "@capacitor/geolocation": "^4.1.0",
     "@capacitor/ios": "^4.6.1",
-    "@capacitor/keyboard": "^4.1.0",
+    "@capacitor/keyboard": "^4.1.1",
     "@capacitor/preferences": "^4.0.2",
     "@capacitor/share": "^4.1.0",
     "@capacitor/status-bar": "^4.1.0",
