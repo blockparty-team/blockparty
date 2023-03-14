@@ -95,6 +95,7 @@ export class MapStateService {
   );
 
   selectedEvent$ = this.selectedEventId$.pipe(
+    tap(console.log),
     withLatestFrom(this.events$),
     map(([eventId, events]) => events.find(event => event.id === eventId)),
     filter(event => !!event)
@@ -115,6 +116,7 @@ export class MapStateService {
 
   selectEvent(eventId: string): void {
     this._selectedEventId$.next(eventId);
+    this._selectedEventId$.subscribe(console.log);
   }
 
   updateMapInteraction(interacting: boolean): void {

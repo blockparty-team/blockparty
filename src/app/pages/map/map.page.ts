@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { ModalController, SegmentCustomEvent } from '@ionic/angular';
 import { from, Observable } from 'rxjs';
@@ -33,6 +33,10 @@ export class MapPage implements OnInit, AfterViewInit {
   selectedEventId$: Observable<string>;
   hideHeader$: Observable<boolean>;
   modalIsOpen$: Observable<boolean>;
+  
+  eventEmitted: string;
+  dayEmitted: string;
+
 
   animationOptions: AnimationOptions = {
     path: '/assets/lottiefiles/map.json',
@@ -122,6 +126,7 @@ export class MapPage implements OnInit, AfterViewInit {
   onDayFilterSelect(id: string): void {
     this.mapStateService.selectDay(id);
   }
+
 
   onEventFilterSelect(id: string): void {
     this.mapStateService.selectEvent(id);

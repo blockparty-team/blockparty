@@ -31,7 +31,6 @@ export class FilterEventsService {
     )
   ).pipe(
     filter(days => !!days),
-    tap(console.log),
     distinctUntilChanged(),
     shareReplay(1)
   );

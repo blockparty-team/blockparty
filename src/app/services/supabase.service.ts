@@ -180,6 +180,8 @@ export class SupabaseService {
               name,
               bounds,
               event_type(
+                id, 
+                name,
                 color
               )
             )

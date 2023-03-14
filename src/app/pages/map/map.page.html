@@ -1,5 +1,8 @@
 <ion-header>
-  <app-filter-events></app-filter-events>
+  <app-filter-events 
+    (selectedDayId)="onDayFilterSelect($event)"
+    (selectedEventId)="onEventFilterSelect($event)"
+  ></app-filter-events>
   <!-- <ng-container *ngIf="days$ | async as days">
     <ion-toolbar>
       <ion-segment scrollable
