@@ -38,6 +38,7 @@ export class TimetableStateService {
     this.days$,
     this.selectedDayId$,
   ]).pipe(
+    tap(console.log),
     filter(([days, selectedDayId]) => !!days && !!selectedDayId),
     map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
     map(day => day.events),
@@ -78,6 +79,7 @@ export class TimetableStateService {
   // ])
   .pipe(
     withLatestFrom(this.events$),
+    tap(console.log),
     filter(([selectedEventId, events ]) => !!events && !!selectedEventId),
     map(([selectedEventId, events ]) => events.find(event => event.event_id === selectedEventId)),
     map(event => {

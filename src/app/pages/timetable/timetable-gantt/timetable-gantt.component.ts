@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { combineLatest, EMPTY, interval, Observable } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, map, shareReplay, startWith, take, tap } from 'rxjs/operators';
+import { catchError, distinctUntilChanged, filter, map, shareReplay, startWith, take, tap, withLatestFrom } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { TimetableStateService } from '../state/timetable-state.service';
@@ -46,16 +46,25 @@ export class TimetableGanttComponent implements OnInit {
     this.days$ = this.timetableStateService.days$;
     this.events$ = this.timetableStateService.events$;
 
-    this.timetableConfig$ = combineLatest([
-      this.timetableStateService.days$,
-      this.timetableStateService.selectedDayId$,
-      this.timetableStateService.selectedEvent$,
-      this.favoritesService.favorites$
-    ]).pipe(
-      filter(([days, dayId,,]) => !!dayId && !!days),
-      tap(console.log),
+    this.timetableConfig$ = this.timetableStateService.selectedEventId$
+    // combineLatest([
+
+    //   this.timetableStateService.days$,
+    //   this.timetableStateService.selectedDayId$,
+    //   this.timetableStateService.selectedEvent$,
+    //   this.favoritesService.favorites$
+    // ])
+    .pipe(
+      withLatestFrom(
+        this.timetableStateService.selectedEvent$,
+        this.timetableStateService.days$,
+        this.timetableStateService.selectedDayId$,
+        this.favoritesService.favorites$
+      ),
+      // tap(console.log),
+      filter(([,, days, dayId, ]) => !!dayId && !!days),
       // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
-      map(([days, dayId, event,]) => {
+      map(([,event,days, dayId,,]) => {
         const day: DayEventStageTimetable = days.find(day => day.id === dayId);
         if (event) {
           return {

@@ -90,46 +90,58 @@ export class TimetablePage implements OnInit {
       // }),
       map(([events,]) => { return events}),
     )
-  }
+    this.events$.subscribe(d => d)
 
+  }
 
 
   
 
-  onDayFilterChange(event: Event): void {
-    const dayId = (event as SegmentCustomEvent).detail.value
-    this.timetableStateService.selectDayId(dayId);
-    // this.router.navigate(
-    //   [],
-    //   {
-    //     relativeTo: this.route,
-    //     queryParams: {
-    //       day: dayId
-    //     },
-    //     queryParamsHandling: 'merge'
-    //   }
-    // );
+  // onDayFilterChange(event: Event): void {
+  //   const dayId = (event as SegmentCustomEvent).detail.value
+  //   this.timetableStateService.selectDayId(dayId);
+  //   // this.router.navigate(
+  //   //   [],
+  //   //   {
+  //   //     relativeTo: this.route,
+  //   //     queryParams: {
+  //   //       day: dayId
+  //   //     },
+  //   //     queryParamsHandling: 'merge'
+  //   //   }
+  //   // );
+  // }
+
+  onDayFilterSelect(id: string): void {
+    this.timetableStateService.selectDayId(id);
   }
 
-  onEventTypeFilterChange(event: Event): void {
-    const eventTypeId = (event as SegmentCustomEvent).detail.value
-    this.timetableStateService.selectEventTypeId(eventTypeId);
+  onEventTypeFilterSelect(id: string): void {
+    this.timetableStateService.selectEventTypeId(id);
+  }
+  onEventFilterSelect(id: string): void {
+    this.timetableStateService.selectEventId(id);
   }
 
-  onEventFilterChange(event: Event): void {
-    const eventId = (event as SegmentCustomEvent).detail.value;
-    this.timetableStateService.selectEventId(eventId);
-    // this.router.navigate(
-    //   [],
-    //   {
-    //     relativeTo: this.route,
-    //     queryParams: {
-    //       event: eventId
-    //     },
-    //     queryParamsHandling: 'merge'
-    //   }
-    // );
-  }
+  // onEventTypeFilterChange(event: Event): void {
+  //   const eventTypeId = (event as SegmentCustomEvent).detail.value
+  //   this.timetableStateService.selectEventTypeId(eventTypeId);
+  // }
+
+  // onEventFilterChange(event: Event): void {
+  //   const eventId = (event as SegmentCustomEvent).detail.value;
+  //   this.timetableStateService.selectEventId(eventId);
+  //   // this.router.navigate(
+  //   //   [],
+  //   //   {
+  //   //     relativeTo: this.route,
+  //   //     queryParams: {
+  //   //       event: eventId
+  //   //     },
+  //   //     queryParamsHandling: 'merge'
+  //   //   }
+  //   // );
+  // }
 
   onToggleTimetableView(): void {
     this._timetableViewMode$.value === 'gantt' ?

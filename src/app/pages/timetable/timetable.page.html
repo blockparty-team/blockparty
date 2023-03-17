@@ -1,5 +1,9 @@
 <ion-header>
-  <ng-container *ngIf="days$ | async as days">
+  <app-filter-events
+    (selectedDayId)="onDayFilterSelect($event)"
+    (selectedEventId)="onEventFilterSelect($event)"
+  ></app-filter-events>
+  <!-- <ng-container *ngIf="days$ | async as days">
     <ion-toolbar>
       <ion-segment scrollable
                    mode="md"
@@ -38,10 +42,10 @@
         </ion-segment-button>
       </ion-segment>
     </ion-toolbar>
-  </ng-container>
+  </ng-container> -->
 </ion-header>
 
-<ion-content #content>
+<ion-content #content [ngSwitch]="selectedEventId$ | async">
   <ng-container *ngIf="(timetableViewMode$ | async) === 'gantt'">
     <app-timetable-gantt></app-timetable-gantt>
   </ng-container>

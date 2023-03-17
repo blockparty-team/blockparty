@@ -11,7 +11,7 @@ import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-mod
 import { AssetComponent } from './feature-info-modal/asset/asset.component';
 import { LegendComponent } from './legend/legend.component';
 import { SafePipe } from '@app/shared/pipes/safe.pipe';
-import { FilterEventsComponent } from '@app/shared/components/filter-events/filter-events.component';
+import { FilterEventModule } from '@app/shared/components/filter-events/filter-event.module';
 
 @NgModule({
   imports: [
@@ -19,11 +19,11 @@ import { FilterEventsComponent } from '@app/shared/components/filter-events/filt
     CommonModule,
     FormsModule,
     MapPageRoutingModule,
-    LottieModule
+    LottieModule,
+    FilterEventModule
   ],
   declarations: [
     MapPage,
-    FilterEventsComponent,
     FeatureInfoModalComponent,
     StageTimetableComponent,
     AssetComponent,
