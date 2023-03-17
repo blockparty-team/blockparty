@@ -1,5 +1,5 @@
 <ion-header>
-  <app-filter-events 
+  <app-filter-events
     (selectedDayId)="onDayFilterSelect($event)"
     (selectedEventId)="onEventFilterSelect($event)"
   ></app-filter-events>
@@ -36,7 +36,7 @@
   </ng-container> -->
 </ion-header>
 
-<ion-content>
+<ion-content *ngFor="selectedDayId$ | async">
   <div id="map-container">
     <div *ngIf="(mapIdle$ | async)"
          [@fadeInOut]

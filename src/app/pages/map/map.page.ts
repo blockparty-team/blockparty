@@ -65,13 +65,16 @@ export class MapPage implements OnInit, AfterViewInit {
       map(day => day.id)
     );
 
+
     this.selectedEventId$ = this.mapStateService.selectedEvent$.pipe(
       tap((event) => {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
       }),
-      map(event => event.id)
+      map(event => event.id),
     );
+
+    // this.selectedEventId$.subscribe(d => d);
 
     this.hideHeader$ = this.mapStateService.mapInteraction$.pipe(
       map(interaction => !interaction),
@@ -102,10 +105,7 @@ export class MapPage implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // Hack to make sure div is 100% height before map load
-    setTimeout(() => {
-      this.mapService.initMap();
-    }, 150);
+    this.mapService.initMap();
   }
 
   openFeatureInfoModal(
@@ -130,5 +130,6 @@ export class MapPage implements OnInit, AfterViewInit {
 
   onEventFilterSelect(id: string): void {
     this.mapStateService.selectEvent(id);
+    console.log(id);
   }
 }

@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
+import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { Observable, BehaviorSubject, combineLatest, concat, forkJoin } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
-
+import { DayEvent, PartialEvent } from '@app/interfaces/day-event';
+import { distinctUntilChanged, filter, map, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
-import { DayEvent, PartialEvent } from '@app/interfaces/day-event';
 import { DayEventMask } from '@app/interfaces/database-entities';
 import { MapSource, MapSourceGeojson } from '@app/interfaces/map-layer';
-import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 
 @Injectable({
   providedIn: 'root'
@@ -95,10 +94,9 @@ export class MapStateService {
   );
 
   selectedEvent$ = this.selectedEventId$.pipe(
-    tap(console.log),
     withLatestFrom(this.events$),
     map(([eventId, events]) => events.find(event => event.id === eventId)),
-    filter(event => !!event)
+    filter(event => !!event),
   );
 
   constructor(
@@ -116,7 +114,6 @@ export class MapStateService {
 
   selectEvent(eventId: string): void {
     this._selectedEventId$.next(eventId);
-    this._selectedEventId$.subscribe(console.log);
   }
 
   updateMapInteraction(interacting: boolean): void {

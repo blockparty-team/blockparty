@@ -1,16 +1,16 @@
 ion-segment-button {
-    --color-checked: var(--ion-text-color);
-}
-
-.event-filter {
-    ion-label {
-        margin: 0;
+        --color-checked: var(--ion-text-color);
     }
 
-    .event-color {
-        margin-top: 2px;
-        width: 50px;
-        height: 6px;
-        border-radius: 3px;
+    .event-type-filter {
+        ion-label {
+            margin: 0;
+        }
+
+        .event-type-color {
+            margin-top: 2px;
+            width: 50px;
+            height: 6px;
+            border-radius: 3px;
+        }
     }
-}
