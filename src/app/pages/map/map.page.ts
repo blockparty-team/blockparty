@@ -30,7 +30,7 @@ export class MapPage implements OnInit, AfterViewInit {
   days$: Observable<DayEvent[]>;
   events$: Observable<PartialEvent[]>;
   selectedDayId$: Observable<string>;
-  selectedEventId$: Observable<string>;
+  // selectedEventId$: Observable<string>;
   hideHeader$: Observable<boolean>;
   modalIsOpen$: Observable<boolean>;
   
@@ -66,13 +66,13 @@ export class MapPage implements OnInit, AfterViewInit {
     );
 
 
-    this.selectedEventId$ = this.mapStateService.selectedEvent$.pipe(
+    this.mapStateService.selectedEvent$.pipe(
       tap((event) => {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
       }),
       map(event => event.id),
-    );
+    ).subscribe();
 
     // this.selectedEventId$.subscribe(d => d);
 
@@ -130,6 +130,6 @@ export class MapPage implements OnInit, AfterViewInit {
 
   onEventFilterSelect(id: string): void {
     this.mapStateService.selectEvent(id);
-    console.log(id);
+    console.log('hello', id);
   }
 }
