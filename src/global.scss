@@ -28,6 +28,9 @@
 // Maplibre
 @import "~maplibre-gl/dist/maplibre-gl.css";
 
+// Driver
+@import "~driver.js/dist/driver.min.css";
+
 // Font
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Source+Sans+Pro&display=swap');
 
@@ -54,4 +57,17 @@ h3 {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+
+#driver-popover-item {
+  background-color: var(--ion-background-color) !important;
+  color: var(--ion-text-color) !important;
+
+  .driver-popover-title {
+    color: var(--ion-color-secondary) !important;
+  }
+
+  .driver-popover-description {
+    color: var(--ion-text-color) !important;
+  }
 }

@@ -38,6 +38,7 @@
     "@ionic/angular": "^6.3.8",
     "@supabase/supabase-js": "^2.2.3",
     "date-fns": "^2.29.3",
+    "driver.js": "^0.9.8",
     "geojson": "^0.5.0",
     "lottie-web": "^5.10.1",
     "maplibre-gl": "^2.4.0",

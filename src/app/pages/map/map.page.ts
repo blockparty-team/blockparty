@@ -12,6 +12,7 @@ import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-mod
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
 import { AnimationOptions } from 'ngx-lottie';
+import { IntroService } from '@app/services/intro.service';
 
 @Component({
   selector: 'app-map',
@@ -43,12 +44,16 @@ export class MapPage implements OnInit, AfterViewInit {
     private mapStateService: MapStateService,
     private tabStateService: TabsStateService,
     private modalCtrl: ModalController,
+    private introService: IntroService
   ) { }
 
   ngOnInit(): void {
 
     this.mapLoaded$ = this.mapStateService.mapLoaded$;
-    this.mapIdle$ = this.mapStateService.mapIdle$;
+    this.mapIdle$ = this.mapStateService.mapIdle$.pipe(
+      filter(idle => !idle),
+      tap(() => this.introService.mapPage())
+    );
     this.days$ = this.mapStateService.days$;
     this.events$ = this.mapStateService.events$;
 
