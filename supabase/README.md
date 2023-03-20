@@ -10,7 +10,7 @@ supabase projects create <YOUR FESTIVAL NAME> --interactive
 
 Find $SUPABASE_PROJECT_ID under settings -> Geneal -> Reference ID
 ```bash
-supabase link --project-ref $SUPABASE_PROJECT_ID
+supabase link --project-ref $SUPABASE_PROJECT_ID -p <YOUR-PG-PASSWORD>
 ```
 This will prompt for PostgreSQL password provided when project was created.
 
