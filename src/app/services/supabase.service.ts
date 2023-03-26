@@ -330,14 +330,16 @@ export class SupabaseService {
   }
 
   publicImageUrl(bucket: string, path: string, imageSize?: TransformOptions): string {
-    const { data } = this.supabase
-      .storage
-      .from(bucket)
-      .getPublicUrl(path, {
-        transform: imageSize,
-      })
+    // const { data } = this.supabase
+    //   .storage
+    //   .from(bucket)
+    //   .getPublicUrl(path, {
+    //     transform: imageSize,
+    //   });
 
-    return data.publicUrl
+    // return data.publicUrl;
+
+    return `${environment.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
   }
 
   get mapIcons$(): Observable<MapIcon[]> {
