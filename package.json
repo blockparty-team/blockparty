@@ -42,7 +42,7 @@
     "lottie-web": "^5.10.1",
     "maplibre-gl": "^2.4.0",
     "ngx-lottie": "^10.0.0",
-    "onesignal-cordova-plugin": "^3.3.0",
+    "onesignal-cordova-plugin": "^3.3.1",
     "onesignal-ngx": "^1.0.2",
     "rxjs": "~6.6.0",
     "tslib": "^2.2.0",
