@@ -33,3 +33,5 @@ npm-debug.log*
 .envrc
 resources/android/**/*
 resources/ios/**/*
+
+/android/.idea/deploymentTargetDropDown.xml
