@@ -39,6 +39,7 @@ export interface Database {
           apple_music: string | null
           bandcamp: string | null
           bandcamp_iframe: string | null
+          country: string | null
           description: string | null
           facebook: string | null
           id: string
@@ -60,6 +61,7 @@ export interface Database {
           apple_music?: string | null
           bandcamp?: string | null
           bandcamp_iframe?: string | null
+          country?: string | null
           description?: string | null
           facebook?: string | null
           id?: string
@@ -81,6 +83,7 @@ export interface Database {
           apple_music?: string | null
           bandcamp?: string | null
           bandcamp_iframe?: string | null
+          country?: string | null
           description?: string | null
           facebook?: string | null
           id?: string
@@ -518,7 +521,10 @@ export interface Database {
     Tables: {
       buckets: {
         Row: {
+          allowed_mime_types: string[] | null
+          avif_autodetection: boolean | null
           created_at: string | null
+          file_size_limit: number | null
           id: string
           name: string
           owner: string | null
@@ -526,7 +532,10 @@ export interface Database {
           updated_at: string | null
         }
         Insert: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
           created_at?: string | null
+          file_size_limit?: number | null
           id: string
           name: string
           owner?: string | null
@@ -534,7 +543,10 @@ export interface Database {
           updated_at?: string | null
         }
         Update: {
+          allowed_mime_types?: string[] | null
+          avif_autodetection?: boolean | null
           created_at?: string | null
+          file_size_limit?: number | null
           id?: string
           name?: string
           owner?: string | null

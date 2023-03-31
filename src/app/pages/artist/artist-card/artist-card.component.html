@@ -8,13 +8,21 @@
 
     <div class="card-text"
          [routerLink]="['./', artist.name]">
-      <h3 tabindex="1">
-        {{artist.name}}
+      <h3 tabindex="1"
+          class="artist-name-country">
+        <span>
+          {{artist.name}}
+        </span>
+        <span *ngIf="artist.country"
+              class="country">
+          ({{artist.country}})
+        </span>
       </h3>
-      <p *ngFor="let act of artist.timetable">
+      <p *ngFor="let act of artist.timetable"
+         class="act">
+        {{act.stage.event.name}} |
         {{act.day.name}} |
-        {{act.start_time | date:'HH:mm'}} |
-        {{act.stage.name}}
+        {{act.start_time | date:'HH:mm'}}
       </p>
     </div>
 

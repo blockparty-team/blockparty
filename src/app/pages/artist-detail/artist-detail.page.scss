@@ -56,6 +56,18 @@ ion-back-button {
         top: var(--ion-safe-area-top);
         background-color: var(--ion-background-color);
         z-index: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .country {
+            margin-left: 5px;
+            font-size: medium;
+        }
+
+        .favorite-icon {
+            margin-left: 10px;
+        }
     }
 
     .acts {

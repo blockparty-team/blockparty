@@ -62,9 +62,14 @@
 
     <section class="artist-info"
              [ngClass]="{'music-player-padding': (showMusicPlayer$ | async)}">
-      <h1 class="artist-title ion-text-center">
+      <h1 class="artist-title">
         {{artist.name}}
+        <span *ngIf="artist.country"
+              class="country">
+          ({{artist.country}})
+        </span>
         <ion-icon slot="icon-only"
+                  class="favorite-icon"
                   [color]="artist.isFavorite ? 'primary' : ''"
                   [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
                   (click)="toggleFavorite(artist.id)">

@@ -139,7 +139,10 @@ export class SupabaseService {
             ),
             stage(
               name,
-              geom
+              geom,
+              event(
+                name
+              )
             )
           )
         `)

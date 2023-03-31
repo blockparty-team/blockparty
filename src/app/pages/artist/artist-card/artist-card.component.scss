@@ -20,6 +20,22 @@ ion-card {
             flex-grow: 1;
             align-self: center;
             z-index: 1;
+
+            .artist-name-country {
+                display: flex;
+                align-items: center;
+                margin: 0;
+
+                .country {
+                    margin-left: 5px;
+                    font-size: medium;
+                    color: var(--ion-color-light-shade);
+                }
+            }
+
+            .act {
+                margin-bottom: 0;
+            }
         }
 
         .card-actions {

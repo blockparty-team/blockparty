@@ -1,4 +1,4 @@
-import { Artist, Day, Stage, Timetable as TimetableType } from './database-entities'
+import { Artist, Day, Stage, Event, Timetable as TimetableType } from './database-entities'
 
 interface Timetable {
     day: {
@@ -10,6 +10,9 @@ interface Timetable {
     stage: {
         name: Stage['name'];
         geom: Stage['geom'];
+        event: {
+            name: Event['name'];
+        };
     };
 }
 
