@@ -7,6 +7,7 @@
         </ion-segment>
     </ion-toolbar>
 </ng-container>
+
 <ng-container *ngIf="eventTypes$ | async as eventTypes">
     <ion-toolbar color="medium" class="event-type-filter">
         <ion-segment scrollable mode="md" [value]="selectedEventTypeId$ | async">

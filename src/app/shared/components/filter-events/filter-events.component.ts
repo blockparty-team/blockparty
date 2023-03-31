@@ -1,9 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, ElementRef, Output, OnInit, ViewChild } from '@angular/core';
-import { SegmentCustomEvent } from '@ionic/angular';
-import { DayEvent, PartialEvent, PartialEventType } from '@app/interfaces/day-event';
-import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
-import { distinctUntilChanged, filter, map, pluck, shareReplay, startWith, tap, withLatestFrom } from 'rxjs/operators'
-import { FilterEventsService } from './filter-events.service';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { FilterEventsStateService } from './filter-events-state.service';
 
 @Component({
     selector: 'app-filter-events',
@@ -12,46 +8,30 @@ import { FilterEventsService } from './filter-events.service';
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class FilterEventsComponent implements OnInit {
+export class FilterEventsComponent {
 
-    @Output() selectedDayId: EventEmitter<string> = new EventEmitter<string>();
-    @Output() selectedEventTypeId: EventEmitter<string> = new EventEmitter<string>();
-    @Output() selectedEventId: EventEmitter<string> = new EventEmitter<string>();
+    private filterEventsStateService = inject(FilterEventsStateService);
 
-    days$: Observable<DayEvent[]>;
-    eventTypes$: Observable<PartialEventType[]>;
-    events$: Observable<PartialEvent[]>;
-    
-    selectedDayId$: Observable<string>;
-    selectedEventTypeId$: Observable<string>;
-    selectedEventId$: Observable<string>;
+    days$ = this.filterEventsStateService.days$;
+    eventTypes$ = this.filterEventsStateService.eventTypes$;
+    events$ = this.filterEventsStateService.events$;
 
-    constructor(
-        private filterEventsService: FilterEventsService,
-    ) {}
+    selectedDayId$ = this.filterEventsStateService.selectedDayId$;
+    selectedEventTypeId$ = this.filterEventsStateService.selectedEventTypeId$;
+    selectedEventId$ = this.filterEventsStateService.selectedEventId$;
 
     onDayFilterSelect(id: string): void {
-        this.filterEventsService.selectDay(id);
-        this.selectedDayId.emit(id);
-      }
-    
+        this.filterEventsStateService.selectDay(id);
+        this.filterEventsStateService.selectEventType(null);
+        this.filterEventsStateService.selectEvent(null);
+    }
+
     onEventTypeFilterSelect(id: string): void {
-        this.filterEventsService.selectEventType(id);
-        this.selectedEventTypeId.emit(id);
+        this.filterEventsStateService.selectEventType(id);
+        this.filterEventsStateService.selectEvent(null);
     }
 
     onEventFilterSelect(id: string): void {
-        this.filterEventsService.selectEvent(id);
-        this.selectedEventId.emit(id);
-    }
-
-    ngOnInit(): void {
-        this.days$ = this.filterEventsService.days$;
-        this.eventTypes$ = this.filterEventsService.eventTypes$;
-        this.events$ = this.filterEventsService.events$;
-        this.selectedDayId$ = this.filterEventsService.selectedDayId$;
-        this.selectedEventTypeId$ = this.filterEventsService.selectedEventTypeId$;
-
-        // this.filterEventsService.selectedEvent$.subscribe(event => this.selectedEvent.emit(event.id));
+        this.filterEventsStateService.selectEvent(id);
     }
 }
