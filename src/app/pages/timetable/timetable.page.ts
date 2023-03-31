@@ -6,6 +6,7 @@ import isWithinInterval from 'date-fns/isWithinInterval';
 import { TimetableStateService } from './state/timetable-state.service';
 import { DayEventStageTimetable, EventTypeViewModel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 
 type TimeTableViewMode = 'gantt' | 'list'
 
@@ -13,6 +14,7 @@ type TimeTableViewMode = 'gantt' | 'list'
   selector: 'app-timetable',
   templateUrl: 'timetable.page.html',
   styleUrls: ['timetable.page.scss'],
+  providers: [FilterEventsStateService],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TimetablePage implements OnInit {

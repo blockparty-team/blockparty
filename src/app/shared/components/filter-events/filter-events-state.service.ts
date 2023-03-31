@@ -5,9 +5,7 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
 import { distinctUntilChanged, filter, map, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class FilterEventsStateService {
 
   private _selectedDayId$ = new BehaviorSubject<string>(null);

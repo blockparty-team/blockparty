@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { ModalController, SegmentCustomEvent } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 import { from, Observable } from 'rxjs';
 import { filter, map, switchMap, tap, withLatestFrom, delay, distinctUntilChanged } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
@@ -12,11 +12,13 @@ import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-mod
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
 import { AnimationOptions } from 'ngx-lottie';
+import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 
 @Component({
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
+  providers: [FilterEventsStateService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     ...animations.slideInOut,
@@ -33,7 +35,7 @@ export class MapPage implements OnInit, AfterViewInit {
   // selectedEventId$: Observable<string>;
   hideHeader$: Observable<boolean>;
   modalIsOpen$: Observable<boolean>;
-  
+
   eventEmitted: string;
   dayEmitted: string;
 
@@ -127,9 +129,7 @@ export class MapPage implements OnInit, AfterViewInit {
     this.mapStateService.selectDay(id);
   }
 
-
   onEventFilterSelect(id: string): void {
     this.mapStateService.selectEvent(id);
-    console.log('hello', id);
   }
 }
