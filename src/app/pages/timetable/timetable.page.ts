@@ -19,10 +19,6 @@ export class TimetablePage implements OnInit {
 
   @ViewChild('timetable') timetableElement: ElementRef;
 
-  @Input() selectedDayFromFilter: string;
-  @Input() selectedEventFromFilter: string;
-
-
   private _timetableViewMode$ = new BehaviorSubject<TimeTableViewMode>('gantt');
   timetableViewMode$: Observable<TimeTableViewMode> = this._timetableViewMode$.asObservable();
 
@@ -44,47 +40,9 @@ export class TimetablePage implements OnInit {
     this.selectedEventTypeId$ = this.timetableStateService.selectedEventTypeId$;
     this.selectedEventId$ = this.timetableStateService.selectedEventId$;
 
-    this.days$ = this.timetableStateService.days$
-    .pipe(
-      withLatestFrom(this.route.queryParamMap),
-      tap(([days, param]) => {
-
-        // Check if current time is within on of the days
-        const currentDay = days.find(day => isWithinInterval(
-          new Date(),
-          {
-            start: new Date(day.first_start_time),
-            end: new Date(day.last_end_time)
-          }
-        ))
-
-        // Select day based on url query params / current time / default to first day
-        if (!!param.get('day') && days.some(day => day.id === param.get('day'))) {
-          this.timetableStateService.selectDayId(param.get('day'));
-        } else if (currentDay) {
-          this.timetableStateService.selectDayId(currentDay.id);
-        } else {
-          this.timetableStateService.selectDayId(days[0].id);
-        }
-      }),
-      map(([days, ]) => days),
-    )
-    
-    this.eventTypes$ = this.timetableStateService.eventTypes$.pipe(
-      withLatestFrom(this.route.queryParamMap),
-      // Handle url if event query params exists
-      tap(([eventTypes, param]) => {
-        if (!!param.get('eventType') && eventTypes.some(eventType => eventType.event_type_id === param.get('eventType'))) {
-          this.timetableStateService.selectEventTypeId(param.get('eventType'))
-        } else {
-          this.timetableStateService.selectEventTypeId(eventTypes[0].event_type_id)
-        }
-      }),
-      map(([eventTypes,]) => eventTypes)
-    );
-
-    this.events$ = this.timetableStateService.events$.pipe(
-      withLatestFrom(this.route.queryParamMap),
+    this.events$ = this.timetableStateService.events$
+    // .pipe(
+      // withLatestFrom(this.route.queryParamMap),
       // Handle url if event query params exists
       // tap(([events, param]) => {
       //   if (!!param.get('event') && events.some(event => event.event_id === param.get('event'))) {
@@ -93,14 +51,10 @@ export class TimetablePage implements OnInit {
       //     this.timetableStateService.selectEventId(events[0].event_id)
       //   }
       // }),
-      map(([events,]) => { return events}),
-    )
-
-    this.selectedEventId$.pipe(tap(console.log))
-    this.events$.subscribe(d => d)
+      // map((events) => { return events}),
+    // )
 
   }
-
   
 
   // onDayFilterChange(event: Event): void {
@@ -126,7 +80,6 @@ export class TimetablePage implements OnInit {
     this.timetableStateService.selectEventTypeId(id);
   }
   onEventFilterSelect(id: string): void {
-    console.log(id);
     this.timetableStateService.selectEventId(id);
   }
 

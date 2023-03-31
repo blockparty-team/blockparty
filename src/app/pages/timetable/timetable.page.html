@@ -1,6 +1,7 @@
 <ion-header>
   <app-filter-events
     (selectedDayId)="onDayFilterSelect($event)"
+    (selectedEventTypeId)="onEventTypeFilterSelect($event)"
     (selectedEventId)="onEventFilterSelect($event)"
   ></app-filter-events>
   <!-- <ng-container *ngIf="days$ | async as days">
@@ -47,7 +48,6 @@
 
 <ion-content #content [ngSwitch]="selectedEventId$ | async">
   <ng-container *ngIf="(selectedEventId$ | async) as selectedEventId">
-    {{ selectedEventId }}
   <ng-container *ngIf="(timetableViewMode$ | async) === 'gantt'">
     <app-timetable-gantt></app-timetable-gantt>
   </ng-container>

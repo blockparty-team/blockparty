@@ -38,7 +38,6 @@ export class TimetableStateService {
     this.days$,
     this.selectedDayId$,
   ]).pipe(
-    tap(console.log),
     filter(([days, selectedDayId]) => !!days && !!selectedDayId),
     map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
     map(day => day.events),
@@ -49,7 +48,7 @@ export class TimetableStateService {
     shareReplay(1),
   );
 
-  selectedEventType$: Observable<EventTypeViewModel> = this.selectedEventId$
+  selectedEventType$: Observable<EventTypeViewModel> = this.selectedEventTypeId$
   //   this.eventTypes$,
   //   this.selectedEventTypeId$
   // ])
@@ -65,6 +64,7 @@ export class TimetableStateService {
     this.selectedDayId$,
     this.selectedEventTypeId$,
   ]).pipe(
+    // tap(console.log),
     filter(([days, selectedDayId, selectedEventTypeId]) => !!days && !!selectedDayId && !!selectedEventTypeId),
     map(([days, selectedDayId, selectedEventTypeId]) => days.find(day => day.id === selectedDayId).events.filter(event => event.event_type_id === selectedEventTypeId)),
     distinctUntilChanged(),
@@ -79,7 +79,6 @@ export class TimetableStateService {
   // ])
   .pipe(
     withLatestFrom(this.events$),
-    tap(console.log),
     filter(([selectedEventId, events ]) => !!events && !!selectedEventId),
     map(([selectedEventId, events ]) => events.find(event => event.event_id === selectedEventId)),
     map(event => {
@@ -100,8 +99,8 @@ export class TimetableStateService {
       }
     }),
     filter(event => !!event),
-    // distinctUntilChanged(),
-    // shareReplay(1)
+    distinctUntilChanged(),
+    shareReplay(1)
   )
 
   eventTimetableByTime$: Observable<TimetableWithStageName[]> = this.selectedEvent$.pipe(
