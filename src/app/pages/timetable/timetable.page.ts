@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnChanges, OnInit, Input, SimpleChange, SimpleChanges, ViewChild } from '@angular/core';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap, withLatestFrom } from 'rxjs/operators';
@@ -19,9 +19,14 @@ export class TimetablePage implements OnInit {
 
   @ViewChild('timetable') timetableElement: ElementRef;
 
+  @Input() selectedDayFromFilter: string;
+  @Input() selectedEventFromFilter: string;
+
+
   private _timetableViewMode$ = new BehaviorSubject<TimeTableViewMode>('gantt');
   timetableViewMode$: Observable<TimeTableViewMode> = this._timetableViewMode$.asObservable();
 
+  
   days$: Observable<DayEventStageTimetable[]>;
   eventTypes$: Observable<EventTypeViewModel[]>;
   events$: Observable<EventTimetable[]>;
@@ -90,10 +95,11 @@ export class TimetablePage implements OnInit {
       // }),
       map(([events,]) => { return events}),
     )
+
+    this.selectedEventId$.pipe(tap(console.log))
     this.events$.subscribe(d => d)
 
   }
-
 
   
 
@@ -120,6 +126,7 @@ export class TimetablePage implements OnInit {
     this.timetableStateService.selectEventTypeId(id);
   }
   onEventFilterSelect(id: string): void {
+    console.log(id);
     this.timetableStateService.selectEventId(id);
   }
 

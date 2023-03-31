@@ -46,6 +46,8 @@
 </ion-header>
 
 <ion-content #content [ngSwitch]="selectedEventId$ | async">
+  <ng-container *ngIf="(selectedEventId$ | async) as selectedEventId">
+    {{ selectedEventId }}
   <ng-container *ngIf="(timetableViewMode$ | async) === 'gantt'">
     <app-timetable-gantt></app-timetable-gantt>
   </ng-container>
@@ -61,4 +63,5 @@
       <!-- <ion-icon src="assets/ui-icons/gantt.svg"></ion-icon> -->
     </ion-fab-button>
   </ion-fab>
+</ng-container>
 </ion-content>

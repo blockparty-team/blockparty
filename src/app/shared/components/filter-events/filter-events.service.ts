@@ -43,7 +43,6 @@ export class FilterEventsService {
     map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
     pluck('event'),
     map(events => events.map(event => event.event_type).filter((v,i,a)=>a.findIndex(v2=>(v2.id===v.id))===i)),
-    tap(console.log),
     distinctUntilChanged(),
     shareReplay(1),
   );
