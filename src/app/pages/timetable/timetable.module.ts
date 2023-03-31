@@ -7,7 +7,7 @@ import { TimetablePage } from './timetable.page';
 import { TimetablePageRoutingModule } from './timetable-routing.module';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
-import { FilterEventModule } from '@app/shared/components/filter-events/filter-event.module';
+import { FilterEventsModule } from '@app/shared/components/filter-events/filter-events.module';
 
 @NgModule({
   imports: [
@@ -15,7 +15,7 @@ import { FilterEventModule } from '@app/shared/components/filter-events/filter-e
     CommonModule,
     FormsModule,
     TimetablePageRoutingModule,
-    FilterEventModule
+    FilterEventsModule
   ],
   declarations: [
     TimetablePage, 

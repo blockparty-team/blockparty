@@ -10,11 +10,11 @@ import { FilterEventsComponent } from './filter-events.component';
     FilterEventsComponent
   ],
   imports: [
-    IonicModule,
     CommonModule,
+    IonicModule
   ],
   exports: [
     FilterEventsComponent
   ]
 })
-export class FilterEventModule { }
+export class FilterEventsModule { }
