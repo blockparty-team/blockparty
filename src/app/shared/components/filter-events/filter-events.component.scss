@@ -1,19 +1,27 @@
 .filter-events-container {
-    
+
     ion-segment-button {
         --color-checked: var(--ion-text-color);
     }
-    
+
     .event-type-filter {
         ion-label {
             margin: 0;
         }
-    
+
         .event-type-color {
             margin-top: 2px;
             width: 50px;
             height: 6px;
             border-radius: 3px;
+        }
+    }
+
+    .event-filter {
+        ion-segment-button {
+            --color: var(--ion-color-medium-shade);
+            --color-checked: var(--ion-color-light-contrast);
+            --indicator-color: var(--ion-color-light-contrast);
         }
     }
 }

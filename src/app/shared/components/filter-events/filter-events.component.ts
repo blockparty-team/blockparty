@@ -20,15 +20,15 @@ export class FilterEventsComponent {
     selectedEventTypeId$ = this.filterEventsStateService.selectedEventTypeId$;
     selectedEventId$ = this.filterEventsStateService.selectedEventId$;
 
-    onDayFilterSelect(id: string): void {
+    onDaySelect(id: string): void {
         this.filterEventsStateService.selectDay(id);
     }
 
-    onEventTypeFilterSelect(id: string): void {
+    onEventTypeSelect(id: string): void {
         this.filterEventsStateService.selectEventType(id);
     }
 
-    onEventFilterSelect(id: string): void {
+    onEventSelect(id: string): void {
         this.filterEventsStateService.selectEvent(id);
     }
 }
