@@ -60,10 +60,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.abandon$)
     ).subscribe();
 
-    this.filterEventStateService.selectedEventId$.pipe(
-      filter(eventId => !!eventId),
-      withLatestFrom(this.filterEventStateService.events$),
-      map(([selectedEventId, events]) => events.find(event => event.id === selectedEventId)),
+    this.filterEventStateService.selectedEvent$.pipe(
       tap(event => {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);

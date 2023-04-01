@@ -22,13 +22,10 @@ export class FilterEventsComponent {
 
     onDayFilterSelect(id: string): void {
         this.filterEventsStateService.selectDay(id);
-        this.filterEventsStateService.selectEventType(null);
-        this.filterEventsStateService.selectEvent(null);
     }
 
     onEventTypeFilterSelect(id: string): void {
         this.filterEventsStateService.selectEventType(id);
-        this.filterEventsStateService.selectEvent(null);
     }
 
     onEventFilterSelect(id: string): void {

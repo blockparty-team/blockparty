@@ -3,7 +3,7 @@ import { DayEvent, PartialEvent, PartialEventType } from '@app/interfaces/day-ev
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
-import { distinctUntilChanged, filter, map, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, pairwise, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
 
 @Injectable()
 export class FilterEventsStateService {
@@ -43,6 +43,11 @@ export class FilterEventsStateService {
     map(events => events
       .map(event => event.event_type)
       .filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i)),
+    tap(eventTypes => {
+      if (eventTypes.length === 1) {
+        this.selectEventType(eventTypes[0].id);
+      }
+    }),
     shareReplay(1),
   );
 
@@ -58,9 +63,12 @@ export class FilterEventsStateService {
         .filter(event => event.event_type.id === selectedEventTypeId)
       // Template hides segments when events$ emits null
       return events.length > 0 ? events : null;
-    }
-
-    ),
+    }),
+    tap(events => {
+      if (events && events.length === 1) {
+        this.selectEvent(events[0].id);
+      }
+    }),
     shareReplay(1)
   );
 
