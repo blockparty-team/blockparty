@@ -1,19 +1,8 @@
 ion-header {
-    ion-segment-button {
-        --color-checked: var(--ion-text-color);
-    }
-
-    .event-filter {
-        ion-label {
-            margin: 0;
-        }
-
-        .event-color {
-            margin-top: 2px;
-            width: 50px;
-            height: 6px;
-            border-radius: 3px;
-        }
+    .filter-events {
+        width: 100%;
+        position: fixed;
+        top: 0;
     }
 }
 
