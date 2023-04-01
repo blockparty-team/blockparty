@@ -1,5 +1,15 @@
 .filter-events-container {
 
+    // Hide scrollbar
+    ion-segment {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+    }
+
     ion-segment-button {
         --color-checked: var(--ion-text-color);
     }
