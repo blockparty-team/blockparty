@@ -19,9 +19,9 @@
 
     .event-filter {
         ion-segment-button {
-            --color: var(--ion-color-medium-shade);
-            --color-checked: var(--ion-color-light-contrast);
-            --indicator-color: var(--ion-color-light-contrast);
+            --color: rgb(40, 40, 40);
+            --color-checked: black;
+            --indicator-color: black;
         }
     }
 }
