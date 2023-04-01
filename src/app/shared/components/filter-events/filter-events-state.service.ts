@@ -79,15 +79,16 @@ export class FilterEventsStateService {
       map(([selectedEventTypeId, eventTypes]) => eventTypes.find(eventType => eventType.id === selectedEventTypeId)),
     );
 
-  // TODO: Generalize and return selectedEvents$: Observable<PartialEvent[]> instead. Make it up to consumer (parent) to process.
-  selectedEvent$: Observable<PartialEvent> = this.selectedEventId$
-    .pipe(
-      withLatestFrom(this.events$),
-      filter(([selectedEventId, events]) => !!events && !!selectedEventId),
-      map(([selectedEventId, events]) => events.find(event => event.id === selectedEventId)),
-      filter(event => !!event),
-      shareReplay(1)
-    )
+  selectedEvent$: Observable<PartialEvent> = combineLatest([
+    this.selectedEventId$,
+    this.events$
+  ]).pipe(
+    tap(console.log),
+    filter(([selectedEventId, events]) => !!events && !!selectedEventId),
+    map(([selectedEventId, events]) => events.find(event => event.id === selectedEventId)),
+    filter(event => !!event),
+    shareReplay(1)
+  )
 
   selectDay(dayId: string): void {
     this._selectedDayId$.next(dayId);
