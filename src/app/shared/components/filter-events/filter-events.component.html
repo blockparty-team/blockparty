@@ -1,7 +1,11 @@
 <ng-container *ngIf="days$ | async as days">
     <ion-toolbar>
-        <ion-segment scrollable mode="md" [value]="selectedDayId$ | async">
-            <ion-segment-button *ngFor="let day of days" [value]="day.id" (click)="onDayFilterSelect(day.id)">
+        <ion-segment scrollable
+                     mode="md"
+                     [value]="selectedDayId$ | async">
+            <ion-segment-button *ngFor="let day of days"
+                                [value]="day.id"
+                                (click)="onDayFilterSelect(day.id)">
                 <ion-label>{{day.name}}</ion-label>
             </ion-segment-button>
         </ion-segment>
@@ -9,12 +13,17 @@
 </ng-container>
 
 <ng-container *ngIf="eventTypes$ | async as eventTypes">
-    <ion-toolbar color="medium" class="event-type-filter">
-        <ion-segment scrollable mode="md" [value]="selectedEventTypeId$ | async">
-            <ion-segment-button *ngFor="let eventType of eventTypes" (click)="onEventTypeFilterSelect(eventType.id)"
-                [value]="eventType.id">
+    <ion-toolbar color="medium"
+                 class="event-type-filter">
+        <ion-segment scrollable
+                     mode="md"
+                     [value]="selectedEventTypeId$ | async">
+            <ion-segment-button *ngFor="let eventType of eventTypes"
+                                (click)="onEventTypeFilterSelect(eventType.id)"
+                                [value]="eventType.id">
                 <ion-label>{{eventType.name}}</ion-label>
-                <span class="event-type-color" [style.background-color]="eventType.color">
+                <span class="event-type-color"
+                      [style.background-color]="eventType.color">
                 </span>
             </ion-segment-button>
         </ion-segment>
@@ -23,10 +32,13 @@
 
 <ng-container *ngIf="events$ | async as events">
     <ion-toolbar color="medium">
-        <ion-segment scrollable mode="md" [value]="selectedEventId$ | async">
-            <ion-segment-button *ngFor="let event of events" (click)="onEventFilterSelect(event.id)" [value]="event.id">
+        <ion-segment scrollable
+                     mode="md"
+                     [value]="selectedEventId$ | async">
+            <ion-segment-button *ngFor="let event of events"
+                                (click)="onEventFilterSelect(event.id)"
+                                [value]="event.id">
                 <ion-label>{{event.name}}</ion-label>
-
             </ion-segment-button>
         </ion-segment>
     </ion-toolbar>

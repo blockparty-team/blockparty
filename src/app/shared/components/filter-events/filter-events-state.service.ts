@@ -51,10 +51,16 @@ export class FilterEventsStateService {
     this.selectedDayId$,
     this.selectedEventTypeId$,
   ]).pipe(
-    filter(([days, selectedDayId, selectedEventTypeId]) => !!days && !!selectedDayId && !!selectedEventTypeId),
-    map(([days, selectedDayId, selectedEventTypeId]) => days
-      .find(day => day.id === selectedDayId).event
-      .filter(event => event.event_type.id === selectedEventTypeId)),
+    filter(([days, selectedDayId,]) => !!days && !!selectedDayId),
+    map(([days, selectedDayId, selectedEventTypeId]) => {
+      const events = days
+        .find(day => day.id === selectedDayId).event
+        .filter(event => event.event_type.id === selectedEventTypeId)
+      // Template hides segments when events$ emits null
+      return events.length > 0 ? events : null;
+    }
+
+    ),
     shareReplay(1)
   );
 

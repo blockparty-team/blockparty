@@ -49,8 +49,6 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 
     this.filterEventStateService.selectedDayId$.pipe(
       filter(dayId => !!dayId),
-      withLatestFrom(this.filterEventStateService.days$),
-      map(([selectedDayId, days]) => days.find(day => day.id === selectedDayId).id),
       withLatestFrom(this.mapStateService.dayMaskBounds$),
       map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
       filter(dayMask => !!dayMask),
