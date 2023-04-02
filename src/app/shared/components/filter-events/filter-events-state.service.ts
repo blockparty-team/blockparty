@@ -3,7 +3,7 @@ import { DayEvent, PartialEvent, PartialEventType } from '@app/interfaces/day-ev
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
-import { filter, map, pairwise, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, pluck, shareReplay, tap } from 'rxjs/operators';
 
 @Injectable()
 export class FilterEventsStateService {
@@ -72,18 +72,20 @@ export class FilterEventsStateService {
     shareReplay(1)
   );
 
-  selectedEventType$: Observable<PartialEventType> = this.selectedEventId$
-    .pipe(
-      withLatestFrom(this.eventTypes$),
-      filter(([selectedEventTypeId, eventTypes]) => !!eventTypes && !!selectedEventTypeId),
-      map(([selectedEventTypeId, eventTypes]) => eventTypes.find(eventType => eventType.id === selectedEventTypeId)),
-    );
+  selectedEventType$: Observable<PartialEventType> = combineLatest([
+    this.selectedEventTypeId$,
+    this.eventTypes$
+  ]).pipe(
+    filter(([selectedEventTypeId, eventTypes]) => !!eventTypes && !!selectedEventTypeId),
+    map(([selectedEventTypeId, eventTypes]) => eventTypes.find(eventType => eventType.id === selectedEventTypeId)),
+    filter(eventType => !!eventType),
+    shareReplay(1)
+  );
 
   selectedEvent$: Observable<PartialEvent> = combineLatest([
     this.selectedEventId$,
     this.events$
   ]).pipe(
-    tap(console.log),
     filter(([selectedEventId, events]) => !!events && !!selectedEventId),
     map(([selectedEventId, events]) => events.find(event => event.id === selectedEventId)),
     filter(event => !!event),

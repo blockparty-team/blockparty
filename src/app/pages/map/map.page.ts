@@ -60,9 +60,22 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.abandon$)
     ).subscribe();
 
+    this.filterEventStateService.selectedEventType$.pipe(
+      withLatestFrom(
+        this.filterEventStateService.selectedDayId$,
+        this.mapStateService.dayMaskBounds$
+      ),
+      map(([selectedEventType, selectDayId, dayMasks]) => dayMasks.find(mask => mask.id === `${selectDayId}_${selectedEventType.id}`)),
+      tap(mask => {
+        this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 100, [0, 40]);
+        this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
+      }),
+      takeUntil(this.abandon$)
+    ).subscribe();
+
     this.filterEventStateService.selectedEvent$.pipe(
       tap(event => {
-        this.mapService.fitBounds(event.bounds as LngLatBoundsLike);
+        this.mapService.fitBounds(event.bounds as LngLatBoundsLike, 10, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
       }),
       takeUntil(this.abandon$)
