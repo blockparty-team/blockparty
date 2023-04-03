@@ -1,13 +1,13 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { combineLatest, EMPTY, interval, Observable } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, map, shareReplay, startWith, take, tap, withLatestFrom } from 'rxjs/operators';
+import { catchError, filter, map, shareReplay, startWith, take, tap } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { TimetableStateService } from '../state/timetable-state.service';
-import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
-import { ActivatedRoute } from '@angular/router';
+import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel } from '@app/interfaces/day-event-stage-timetable';
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
+import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 
 
 @Component({
@@ -18,73 +18,60 @@ import { RouteName } from '@app/shared/models/routeName';
 })
 export class TimetableGanttComponent implements OnInit {
 
+  private filterEventStateService = inject(FilterEventsStateService);
+  private timetableStateService = inject(TimetableStateService);
+  private favoritesService = inject(FavoritesService);
+  // private route = inject(ActivatedRoute);
+
   routeName = RouteName;
 
   @ViewChild('timetable') timetableElement: ElementRef;
 
-  days$: Observable<DayEventStageTimetable[]>;
-  events$: Observable<EventTimetable[]>;
-  selectedDayId$: Observable<string>;
-  selectedEventId$: Observable<string>;
   timetableConfig$: Observable<DayTimetableViewModel>;
   currentTimeColumn$: Observable<number>;
+  selectedEvent$ = this.filterEventStateService.selectedEvent$;
 
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1
   COLUMN_SIZE = 2.5 // 1min = COLUMN_SIZE - Defined in CSS
 
-  constructor(
-    private timetableStateService: TimetableStateService,
-    private favoritesService: FavoritesService,
-    private route: ActivatedRoute,
-  ) { }
-
   ngOnInit(): void {
-    this.selectedDayId$ = this.timetableStateService.selectedDayId$;
-    this.selectedEventId$ = this.timetableStateService.selectedEventId$;
-    this.days$ = this.timetableStateService.days$;
-    this.events$ = this.timetableStateService.events$;
 
-    this.timetableConfig$ = this.timetableStateService.selectedEventId$
-    // combineLatest([
-
-    //   this.timetableStateService.days$,
-    //   this.timetableStateService.selectedDayId$,
-    //   this.timetableStateService.selectedEvent$,
-    //   this.favoritesService.favorites$
-    // ])
-    .pipe(
-      withLatestFrom(
-        this.timetableStateService.selectedEvent$,
-        this.timetableStateService.days$,
-        this.timetableStateService.selectedDayId$,
-        this.favoritesService.favorites$
-      ),
-      // tap(console.log),
-      filter(([,, days, dayId, ]) => !!dayId && !!days),
+    this.timetableConfig$ = combineLatest([
+      this.timetableStateService.days$,
+      this.filterEventStateService.selectedDayId$,
+      this.filterEventStateService.selectedEvent$,
+      this.favoritesService.favorites$
+    ]).pipe(
+      filter(([days, dayId, selectedEvent,]) => !!dayId && !!days && !!selectedEvent),
       // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
-      map(([,event,days, dayId,,]) => {
+      map(([days, dayId, event,]) => {
         const day: DayEventStageTimetable = days.find(day => day.id === dayId);
-        if (event) {
+        if (!day) return;
+      
+        const tevent: any = day.events.find(e => e.event_id === event.id)
+
+        if (tevent) {
           return {
             ...day,
-            events: [event],
-            first_start_time: event.first_start_time,
-            last_end_time: event.last_end_time
+            events: [tevent],
+            first_start_time: tevent.first_start_time,
+            last_end_time: tevent.last_end_time
           };
         }
+
         return day;
 
       }),
       map(day => this.timetableGridConfig(day)),
       catchError(err => {
+        console.log(err);
         return EMPTY;
       }),
-      distinctUntilChanged(),
-      shareReplay()
+      shareReplay(1)
     );
-
+    
     this.currentTimeColumn$ = combineLatest([
       interval(1000 * 60).pipe(startWith(0)),
       this.timetableConfig$
@@ -164,6 +151,8 @@ export class TimetableGanttComponent implements OnInit {
   }
 
   timetableGridConfig(day: DayEventStageTimetable): DayTimetableViewModel {
+
+    if (!day) return;
 
     let row = 1; // First row is time labels
     const firstStartTime = new Date(day.first_start_time);

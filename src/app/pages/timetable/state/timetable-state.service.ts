@@ -1,24 +1,17 @@
-import { Injectable } from '@angular/core';
-import { DayEventStageTimetable, EventTypeViewModel, EventTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
+import { Injectable, inject } from '@angular/core';
+import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { DeviceStorageService } from '@app/services/device-storage.service';
-import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
-import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
-import { distinctUntilChanged, filter, map, pluck, shareReplay, startWith, tap, withLatestFrom } from 'rxjs/operators'
+import { Observable, concat } from 'rxjs';
+import { distinctUntilChanged, filter, shareReplay, tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
 })
 export class TimetableStateService {
 
-  private _selectedDayId$ = new BehaviorSubject<string>(null);
-  selectedDayId$: Observable<string> = this._selectedDayId$.asObservable();
-
-  private _selectedEventTypeId$ = new BehaviorSubject<string>(null);
-  selectedEventTypeId$: Observable<string> = this._selectedEventTypeId$.asObservable();
-
-  private _selectedEventId$ = new BehaviorSubject<string>(null);
-  selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
+  private supabase = inject(SupabaseService);
+  private deviceStorageService = inject(DeviceStorageService);
   
   days$: Observable<DayEventStageTimetable[]> = concat(
     this.deviceStorageService.get('timetable').pipe(
