@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { StageTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
 import { TimetableStateService } from '../state/timetable-state.service';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
@@ -33,8 +33,16 @@ export class TimetableListComponent implements OnInit {
   listViewMode$: Observable<ListViewMode> = this._listViewMode$.asObservable();
 
   ngOnInit() {
-    this.timetableByStage$ = this.timetableStateService.selectedEvent$.pipe(
-      map(event => event.stages)
+    const event$ = combineLatest([
+      this.filterEventsStateService.selectedEventId$,
+      this.timetableStateService.timetableWithFavorites$
+    ]).pipe(
+      map(([eventId, timetableDays]) => timetableDays
+        .map(day => day.events
+          .find(event => event.event_id === eventId)
+        )[0]
+      ),
+      filter(event => !!event)
     );
 
     this.timetableByTime$ = event$.pipe(

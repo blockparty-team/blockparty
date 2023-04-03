@@ -54,7 +54,7 @@
   </div>
 </ng-container>
 
-<ng-container *ngIf="selectedEvent$ | async">
+<ng-container *ngIf="!(selectedEvent$ | async)">
   <p class="ion-margin ion-text-center">
     <ion-text color="tertiary">
       No timetables available for this event

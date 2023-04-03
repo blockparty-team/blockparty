@@ -39,29 +39,29 @@ export class TimetableGanttComponent implements OnInit {
   ngOnInit(): void {
 
     this.timetableConfig$ = combineLatest([
-      this.timetableStateService.days$,
+      this.timetableStateService.timetableWithFavorites$,
       this.filterEventStateService.selectedDayId$,
       this.filterEventStateService.selectedEvent$,
       this.favoritesService.favorites$
     ]).pipe(
-      filter(([days, dayId, selectedEvent,]) => !!dayId && !!days && !!selectedEvent),
+      filter(([timetableDays, dayId, selectedEvent,]) => !!dayId && !!timetableDays && !!selectedEvent),
       // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
-      map(([days, dayId, event,]) => {
-        const day: DayEventStageTimetable = days.find(day => day.id === dayId);
-        if (!day) return;
-      
-        const tevent: any = day.events.find(e => e.event_id === event.id)
+      map(([timetableDays, dayId, event,]) => {
+        const timetableDay: DayEventStageTimetable = timetableDays.find(day => day.id === dayId);
+        if (!timetableDay) return;
 
-        if (tevent) {
+        const timetableEvent = timetableDay.events.find(e => e.event_id === event.id);
+
+        if (timetableEvent) {
           return {
-            ...day,
-            events: [tevent],
-            first_start_time: tevent.first_start_time,
-            last_end_time: tevent.last_end_time
+            ...timetableDay,
+            events: [timetableEvent],
+            first_start_time: timetableEvent.first_start_time,
+            last_end_time: timetableEvent.last_end_time
           };
         }
 
-        return day;
+        return timetableDay;
 
       }),
       map(day => this.timetableGridConfig(day)),
@@ -71,7 +71,7 @@ export class TimetableGanttComponent implements OnInit {
       }),
       shareReplay(1)
     );
-    
+
     this.currentTimeColumn$ = combineLatest([
       interval(1000 * 60).pipe(startWith(0)),
       this.timetableConfig$
