@@ -30,6 +30,7 @@ export class TimetableGanttComponent implements OnInit {
   timetableConfig$: Observable<DayTimetableViewModel>;
   currentTimeColumn$: Observable<number>;
   selectedEvent$ = this.filterEventStateService.selectedEvent$;
+  eventTypeColor$: Observable<string>;
 
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
@@ -46,23 +47,18 @@ export class TimetableGanttComponent implements OnInit {
     ]).pipe(
       filter(([timetableDays, dayId, selectedEvent,]) => !!dayId && !!timetableDays && !!selectedEvent),
       // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
-      map(([timetableDays, dayId, event,]) => {
+      map(([timetableDays, dayId, selectedEvent,]) => {
         const timetableDay: DayEventStageTimetable = timetableDays.find(day => day.id === dayId);
-        if (!timetableDay) return;
+        const timetableEvent = timetableDay.events.find(e => e.event_id === selectedEvent.id);
+        
+        if (!timetableDay || !timetableEvent) return;
 
-        const timetableEvent = timetableDay.events.find(e => e.event_id === event.id);
-
-        if (timetableEvent) {
-          return {
-            ...timetableDay,
-            events: [timetableEvent],
-            first_start_time: timetableEvent.first_start_time,
-            last_end_time: timetableEvent.last_end_time
-          };
-        }
-
-        return timetableDay;
-
+        return {
+          ...timetableDay,
+          events: [timetableEvent],
+          first_start_time: timetableEvent.first_start_time,
+          last_end_time: timetableEvent.last_end_time
+        };
       }),
       map(day => this.timetableGridConfig(day)),
       catchError(err => {
@@ -88,6 +84,10 @@ export class TimetableGanttComponent implements OnInit {
       }),
       shareReplay()
     )
+
+    this.eventTypeColor$ = this.selectedEvent$.pipe(
+      map(event => event.event_type.color)
+    );
 
   }
 

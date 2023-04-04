@@ -32,7 +32,8 @@
              *ngFor="let timetable of stage.timetable"
              [style.--act-column-start]="timetable.columnStart"
              [style.--act-column-end]="timetable.columnEnd"
-             [style.--act-row-start]="timetable.rowStart">
+             [style.--act-row-start]="timetable.rowStart"
+             [style.background-color]="eventTypeColor$ | async">
           <div class="act-content">
             <div class="act-sticky">
               <div [routerLink]="['/tabs', routeName.Artist, timetable.artist_name]">

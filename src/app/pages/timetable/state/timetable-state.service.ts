@@ -43,7 +43,9 @@ export class TimetableStateService {
                   ...stage, timetable: stage.timetable
                     .map(act => ({
                       ...act,
-                      isFavorite: favorites.find(favorite => favorite.entity === 'artist').ids.includes(act.artist_id)
+                      isFavorite: favorites
+                        .find(favorite => favorite.entity === 'artist').ids
+                        .includes(act.artist_id)
                     }))
                 }))
             }))
