@@ -49,9 +49,10 @@ export class TimetableGanttComponent implements OnInit {
       // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
       map(([timetableDays, dayId, selectedEvent,]) => {
         const timetableDay: DayEventStageTimetable = timetableDays.find(day => day.id === dayId);
+        if (!timetableDay) return;
+
         const timetableEvent = timetableDay.events.find(e => e.event_id === selectedEvent.id);
-        
-        if (!timetableDay || !timetableEvent) return;
+        if (!timetableEvent) return;
 
         return {
           ...timetableDay,
