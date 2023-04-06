@@ -66,8 +66,8 @@ export class FilterEventsStateService {
       return events.length > 0 ? events : null;
     }),
     tap(events => {
-      if (events) {
-        // Default select first event 
+      if (events?.length === 1) {
+        // Default select first event if only one 
         this.selectEvent(events[0].id);
       }
     }),
