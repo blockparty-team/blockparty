@@ -44,7 +44,7 @@ export class FilterEventsStateService {
       .map(event => event.event_type)
       .filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i)),
     tap(eventTypes => {
-      if (eventTypes.length === 1) {
+      if (eventTypes) {
         this.selectEventType(eventTypes[0].id);
       }
     }),
@@ -65,7 +65,7 @@ export class FilterEventsStateService {
       return events.length > 0 ? events : null;
     }),
     tap(events => {
-      if (events && events.length === 1) {
+      if (events) {
         this.selectEvent(events[0].id);
       }
     }),
