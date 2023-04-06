@@ -29,8 +29,8 @@ export class TimetableGanttComponent implements OnInit {
 
   timetableConfig$: Observable<DayTimetableViewModel>;
   currentTimeColumn$: Observable<number>;
-  selectedEvent$ = this.filterEventStateService.selectedEvent$;
   eventTypeColor$: Observable<string>;
+  selectedEvent$ = this.filterEventStateService.selectedEvent$;
 
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
