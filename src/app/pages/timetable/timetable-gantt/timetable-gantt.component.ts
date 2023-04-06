@@ -42,16 +42,15 @@ export class TimetableGanttComponent implements OnInit {
     this.timetableConfig$ = combineLatest([
       this.timetableStateService.timetableWithFavorites$,
       this.filterEventStateService.selectedDayId$,
-      this.filterEventStateService.selectedEvent$,
-      this.favoritesService.favorites$
+      this.filterEventStateService.selectedEventId$
     ]).pipe(
-      filter(([timetableDays, dayId, selectedEvent,]) => !!dayId && !!timetableDays && !!selectedEvent),
+      filter(([timetableDays, selectedDayId, selectedEventId]) => !!selectedDayId && !!timetableDays && !!selectedEventId),
       // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
-      map(([timetableDays, dayId, selectedEvent,]) => {
-        const timetableDay: DayEventStageTimetable = timetableDays.find(day => day.id === dayId);
+      map(([timetableDays, selectedDayId, selectedEventId]) => {
+        const timetableDay: DayEventStageTimetable = timetableDays.find(day => day.id === selectedDayId);
         if (!timetableDay) return;
 
-        const timetableEvent = timetableDay.events.find(e => e.event_id === selectedEvent.id);
+        const timetableEvent = timetableDay.events.find(e => e.event_id === selectedEventId);
         if (!timetableEvent) return;
 
         return {
@@ -155,7 +154,7 @@ export class TimetableGanttComponent implements OnInit {
 
     if (!day) return;
 
-    let row = 1; // First row is time labels
+    let row = 0; // First row is time labels
     const firstStartTime = new Date(day.first_start_time);
     const lastEndTime = new Date(day.last_end_time);
 

@@ -4,7 +4,7 @@ import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { Observable, combineLatest, concat } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators'
+import { filter, map, shareReplay, tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'

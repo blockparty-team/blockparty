@@ -33,29 +33,31 @@ export class TimetableListComponent implements OnInit {
   listViewMode$: Observable<ListViewMode> = this._listViewMode$.asObservable();
 
   ngOnInit() {
+
     const event$ = combineLatest([
-      this.filterEventsStateService.selectedEventId$,
-      this.timetableStateService.timetableWithFavorites$
+      this.timetableStateService.timetableWithFavorites$,
+      this.filterEventsStateService.selectedDayId$,
+      this.filterEventsStateService.selectedEventId$
     ]).pipe(
-      map(([eventId, timetableDays]) => timetableDays
-        .map(day => day.events
-          .find(event => event.event_id === eventId)
-        )[0]
-      ),
-      filter(event => !!event)
+      filter(([timetableDays, selectedDayId, eventId]) => !!timetableDays && !!selectedDayId && !!eventId),
+      map(([timetableDays, selectedDayId, eventId]) => timetableDays
+        .find(day => day.id === selectedDayId)?.events
+        .find(event => event.event_id === eventId)
+      )
     );
 
     this.timetableByTime$ = event$.pipe(
-      map(event => event.stages
+      map(event => event?.stages
         .flatMap(stage => stage.timetable
           .flatMap(timetable => ({ stageName: stage.stage_name, ...timetable }))
         )
         .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
+        ?? null
       )
     )
 
     this.timetableByStage$ = event$.pipe(
-      map(event => event.stages)
+      map(event => event?.stages ?? null)
     );
   }
 

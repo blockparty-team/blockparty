@@ -45,6 +45,7 @@ export class FilterEventsStateService {
       .filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i)),
     tap(eventTypes => {
       if (eventTypes) {
+        // Default select first event type
         this.selectEventType(eventTypes[0].id);
       }
     }),
@@ -66,6 +67,7 @@ export class FilterEventsStateService {
     }),
     tap(events => {
       if (events) {
+        // Default select first event 
         this.selectEvent(events[0].id);
       }
     }),
