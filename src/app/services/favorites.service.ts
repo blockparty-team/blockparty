@@ -5,6 +5,7 @@ import { Favorite, FavoriteEntity } from '@app/interfaces/database-entities';
 import { DeviceStorageService } from './device-storage.service';
 import { SupabaseService } from './supabase.service';
 import { DeviceService } from './device.service';
+import { LocalNotificationsService } from './local-notifications.service';
 
 const initialState: Pick<Favorite, 'entity' | 'ids'>[] = [
   {
@@ -39,6 +40,7 @@ export class FavoritesService {
     private deviceStorageService: DeviceStorageService,
     private deviceService: DeviceService,
     private supabase: SupabaseService,
+    private localNotifications: LocalNotificationsService
   ) { }
 
   toggleFavorite(entity: FavoriteEntity, id: string) {
@@ -57,6 +59,7 @@ export class FavoritesService {
         }
         : favorite
       );
+      this.localNotifications.scheduleNotification("1", "HEY");
     }
 
     this._favorites$.next(update);
