@@ -42,13 +42,8 @@ export class FilterEventsStateService {
     pluck('event'),
     map(events => events
       .map(event => event.event_type)
-      .filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i)),
-    tap(eventTypes => {
-      if (eventTypes) {
-        // Default select first event type
-        this.selectEventType(eventTypes[0].id);
-      }
-    }),
+      .filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i)
+    ),
     shareReplay(1),
   );
 
@@ -64,12 +59,6 @@ export class FilterEventsStateService {
         .filter(event => event.event_type.id === selectedEventTypeId)
       // Template hides segments when events$ emits null
       return events.length > 0 ? events : null;
-    }),
-    tap(events => {
-      if (events?.length === 1) {
-        // Default select first event if only one 
-        this.selectEvent(events[0].id);
-      }
     }),
     shareReplay(1)
   );

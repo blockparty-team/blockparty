@@ -28,7 +28,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 
   private mapService = inject(MapService);
   private mapStateService = inject(MapStateService);
-  private filterEventStateService = inject(FilterEventsStateService);
+  private filterEventsStateService = inject(FilterEventsStateService);
   private tabStateService = inject(TabsStateService);
   private modalCtrl = inject(ModalController);
 
@@ -47,33 +47,35 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.filterEventStateService.selectedDayId$.pipe(
+    this.filterEventsStateService.selectedDayId$.pipe(
       filter(dayId => !!dayId),
       withLatestFrom(this.mapStateService.dayMaskBounds$),
       map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
       filter(dayMask => !!dayMask),
       tap((dayMask) => {
-        this.mapService.fitBounds(dayMask.bounds as LngLatBoundsLike);
+        this.filterEventsStateService.selectEventType(null);
+        this.filterEventsStateService.selectEvent(null);
+        this.mapService.fitBounds(dayMask.bounds as LngLatBoundsLike,  80, [0, 30]);
         this.mapService.removeFeatureHighlight(MapLayer.EventHighLight);
         this.mapService.highlightFeature(MapLayer.DayEventMask, dayMask.id);
       }),
       takeUntil(this.abandon$)
     ).subscribe();
 
-    this.filterEventStateService.selectedEventType$.pipe(
+    this.filterEventsStateService.selectedEventType$.pipe(
       withLatestFrom(
-        this.filterEventStateService.selectedDayId$,
+        this.filterEventsStateService.selectedDayId$,
         this.mapStateService.dayMaskBounds$
       ),
       map(([selectedEventType, selectDayId, dayMasks]) => dayMasks.find(mask => mask.id === `${selectDayId}_${selectedEventType.id}`)),
       tap(mask => {
-        this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 100, [0, 40]);
+        this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 80, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
       }),
       takeUntil(this.abandon$)
     ).subscribe();
 
-    this.filterEventStateService.selectedEvent$.pipe(
+    this.filterEventsStateService.selectedEvent$.pipe(
       tap(event => {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike, 10, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
