@@ -69,6 +69,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       ),
       map(([selectedEventType, selectDayId, dayMasks]) => dayMasks.find(mask => mask.id === `${selectDayId}_${selectedEventType.id}`)),
       tap(mask => {
+        this.filterEventsStateService.selectEvent(null);
         this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 80, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
       }),
