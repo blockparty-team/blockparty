@@ -4,7 +4,13 @@ const config: CapacitorConfig = {
   appId: 'dk.cphdistortion.app',
   appName: 'Distortion',
   webDir: 'www',
-  bundledWebRuntime: false
+  bundledWebRuntime: false,
+  plugins: {
+    LocalNotifications: {
+      smallIcon: "splash",
+      iconColor: "#488AFF",
+    }
+  }
 };
 
 export default config;
