@@ -12,7 +12,8 @@ export class LocalNotificationsService {
     var notification: LocalNotificationSchema = {
       title: "HEY",
       body: "Message",
-      id: 1
+      id: 1,
+      schedule: {at: new Date(Date.now()+15000)}
     }
 
     LocalNotifications.schedule({notifications: [notification]});
