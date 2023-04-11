@@ -32,18 +32,21 @@
     </ng-container>
 
     <ng-container *ngIf="events$ | async as events">
-        <ion-toolbar class="event-filter"
-                     [style.--background]="events[0].event_type.color">
-            <ion-segment scrollable
-                         mode="md"
-                         [value]="selectedEventId$ | async"
-                         [style.background]="events[0].event_type.color">
-                <ion-segment-button *ngFor="let event of events"
-                                    (click)="onEventSelect(event.id)"
-                                    [value]="event.id">
-                    <ion-label>{{event.name}}</ion-label>
-                </ion-segment-button>
-            </ion-segment>
-        </ion-toolbar>
+        <!-- Hide event filter if only one -->
+        <ng-container *ngIf="events.length > 1">
+            <ion-toolbar class="event-filter"
+                         [style.--background]="events[0].event_type.color">
+                <ion-segment scrollable
+                             mode="md"
+                             [value]="selectedEventId$ | async"
+                             [style.background]="events[0].event_type.color">
+                    <ion-segment-button *ngFor="let event of events"
+                                        (click)="onEventSelect(event.id)"
+                                        [value]="event.id">
+                        <ion-label>{{event.name}}</ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-toolbar>
+        </ng-container>
     </ng-container>
 </div>

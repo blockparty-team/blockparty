@@ -48,16 +48,25 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
 
     this.filterEventsStateService.selectedDayId$.pipe(
-      filter(dayId => !!dayId),
-      withLatestFrom(this.mapStateService.dayMaskBounds$),
-      map(([dayId, dayMasks]) => dayMasks.find(day => day.id === dayId)),
-      filter(dayMask => !!dayMask),
-      tap((dayMask) => {
-        this.filterEventsStateService.selectEventType(null);
-        this.filterEventsStateService.selectEvent(null);
-        this.mapService.fitBounds(dayMask.bounds as LngLatBoundsLike,  80, [0, 30]);
+      withLatestFrom(
+        this.mapStateService.dayMaskBounds$,
+        this.filterEventsStateService.eventTypes$
+      ),
+      filter(([dayId, dayMasks, eventTypes]) => !!dayId && !!dayMasks && !!eventTypes),
+      map(([dayId, dayMasks, eventTypes]) => ({
+        eventTypes,
+        mask: dayMasks.find(day => day.id === dayId)
+      })),
+      tap(({ eventTypes, mask }) => {
+        this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 80, [0, 30]);
         this.mapService.removeFeatureHighlight(MapLayer.EventHighLight);
-        this.mapService.highlightFeature(MapLayer.DayEventMask, dayMask.id);
+        this.mapService.highlightFeature(MapLayer.DayEventMask, mask.id);
+
+        // Default select event type if only one
+        eventTypes.length === 1
+          ? this.filterEventsStateService.selectEventType(eventTypes[0].id)
+          : this.filterEventsStateService.selectEventType(null);
+        this.filterEventsStateService.selectEvent(null);
       }),
       takeUntil(this.abandon$)
     ).subscribe();
@@ -65,18 +74,29 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
     this.filterEventsStateService.selectedEventType$.pipe(
       withLatestFrom(
         this.filterEventsStateService.selectedDayId$,
-        this.mapStateService.dayMaskBounds$
+        this.mapStateService.dayMaskBounds$,
+        this.filterEventsStateService.events$
       ),
-      map(([selectedEventType, selectDayId, dayMasks]) => dayMasks.find(mask => mask.id === `${selectDayId}_${selectedEventType.id}`)),
-      tap(mask => {
-        this.filterEventsStateService.selectEvent(null);
+      filter(([eventType, dayId, mask, events]) => !!eventType && !!dayId && !!mask && !!events),
+      map(([eventType, dayId, dayMasks, events]) => ({
+        events,
+        mask: dayMasks
+          .find(mask => mask.id === `${dayId}_${eventType.id}`)
+      })),
+      tap(({ mask, events }) => {
         this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 80, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
+
+        // Select event if only one
+        events.length === 1
+          ? this.filterEventsStateService.selectEvent(events[0].id)
+          : this.filterEventsStateService.selectEvent(null);
       }),
       takeUntil(this.abandon$)
     ).subscribe();
 
     this.filterEventsStateService.selectedEvent$.pipe(
+      filter(event => !!event),
       tap(event => {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike, 10, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);

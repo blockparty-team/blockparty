@@ -26,7 +26,12 @@ export class TimetablePage implements OnInit, OnDestroy {
   private abandon$ = new Subject<void>();
 
   ngOnInit(): void {
-    // Default select first event type and event
+    // Default select first day, event type and event
+    this.filterEventsStateService.days$.pipe(
+      tap(days => this.filterEventsStateService.selectDay(days[0].id)),
+      takeUntil(this.abandon$)
+    ).subscribe();
+
     this.filterEventsStateService.eventTypes$.pipe(
       tap(eventTypes => this.filterEventsStateService.selectEventType(eventTypes[0].id)),
       takeUntil(this.abandon$),
