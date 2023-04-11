@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject, concat, forkJoin } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
-import { DayEventMask } from '@app/interfaces/database-entities';
+import { DayEvent, DayEventMask } from '@app/interfaces/database-entities';
 import { MapSource, MapSourceGeojson } from '@app/interfaces/map-layer';
 
 @Injectable({
@@ -64,17 +64,6 @@ export class MapStateService {
       tap(days => this.deviceStorageService.set('days', days))
     )
   ).pipe(
-    distinctUntilChanged(),
-    shareReplay(1)
-  );
-
-  events$: Observable<PartialEvent[]> = combineLatest([
-    this.days$,
-    this.selectedDayId$
-  ]).pipe(
-    filter(([days, selectedDay]) => !!days && !!selectedDay),
-    map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
-    map(day => day.event),
     distinctUntilChanged(),
     shareReplay(1)
   );
