@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest, concat, forkJoin } from 'rxjs';
-import { distinctUntilChanged, filter, map, pluck, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, shareReplay, tap, withLatestFrom } from 'rxjs/operators';
 
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
@@ -79,7 +79,7 @@ export class MapStateService {
   ]).pipe(
     filter(([days, selectedDay]) => !!days && !!selectedDay),
     map(([days, selectedDay]) => days.find(day => day.id === selectedDay)),
-    pluck('event'),
+    map(day => day.event),
     distinctUntilChanged(),
     shareReplay(1)
   );

@@ -4,7 +4,7 @@ import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
-import { distinctUntilChanged, filter, map, pluck, shareReplay, tap } from 'rxjs/operators'
+import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class TimetableStateService {
   ]).pipe(
     filter(([days, selectedDayId]) => !!days && !!selectedDayId),
     map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
-    pluck('events'),
+    map(day => day.events),
     distinctUntilChanged(),
     shareReplay()
   );

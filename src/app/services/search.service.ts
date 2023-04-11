@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { Observable } from 'rxjs';
-import { filter, map, pluck, switchMap, withLatestFrom } from 'rxjs/operators';
+import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from './geolocation.service';
 import { SupabaseService } from './supabase.service';
 import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
@@ -27,7 +27,7 @@ export class SearchService {
 
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(
-      pluck('coords'),
+      map(position => position.coords),
       switchMap(pos => this.supabase.distanceTo([pos.longitude, pos.latitude], 1000000000))
     );
   }

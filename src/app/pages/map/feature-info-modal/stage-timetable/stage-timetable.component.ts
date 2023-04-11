@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { filter, map, pluck, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { ModalController, SegmentCustomEvent } from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
@@ -78,7 +78,7 @@ export class StageTimetableComponent implements OnInit {
     );
 
     this.tickets$ = stage$.pipe(
-      pluck('properties', 'tickets'),
+      map(stage => stage.properties.tickets)
     );
 
     this.location$ = stage$.pipe(

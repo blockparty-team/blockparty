@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { StageTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
 import { TimetableStateService } from '../state/timetable-state.service';
-import { pluck } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { animations } from '@app/shared/animations';
 import { FavoritesService } from '@app/services/favorites.service';
@@ -34,7 +34,7 @@ export class TimetableListComponent implements OnInit {
 
   ngOnInit() {
     this.timetableByStage$ = this.timetableStateService.selectedEvent$.pipe(
-      pluck('stages')
+      map(event => event.stages)
     );
 
     this.timetableByTime$ = this.timetableStateService.eventTimetableByTime$
