@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { isPlatform, Platform } from '@ionic/angular';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
-import { catchError, map, pluck } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import {
   AuthChangeEvent,
   AuthSession,
@@ -120,7 +120,7 @@ export class SupabaseService {
         .eq('id', userId)
         .single()
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     );
   }
 
@@ -186,7 +186,7 @@ export class SupabaseService {
           )
       `)
     ).pipe(
-      pluck('data'),
+      map(res => res.data),
       map(days => {
         return days.map(({ day_event, ...rest }) => {
           return {
@@ -261,7 +261,7 @@ export class SupabaseService {
         .from('day_event_stage_timetable')
         .select()
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     )
   }
 
@@ -295,7 +295,7 @@ export class SupabaseService {
         .filter('stage_id', 'eq', stageId)
         .order('start_time')
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     );
   }
 
@@ -308,7 +308,7 @@ export class SupabaseService {
         _ids: ids
       })
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     );
   }
 
@@ -319,7 +319,7 @@ export class SupabaseService {
         .from(bucket)
         .download(path)
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     );
   }
 
@@ -351,7 +351,7 @@ export class SupabaseService {
         .from('map_icon')
         .select()
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     )
   }
 
@@ -360,7 +360,7 @@ export class SupabaseService {
     return from(
       this.supabase.rpc('table_as_geojson', { _tbl: table })
     ).pipe(
-      pluck('data', 'geojson')
+      map((res: any) => res.data.geojson)
     );
   }
 
@@ -368,7 +368,7 @@ export class SupabaseService {
     return from(
       this.supabase.rpc('distance_to', { lng: coords[0], lat: coords[1], search_radius: withinDistance })
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     );
   }
 
@@ -381,7 +381,7 @@ export class SupabaseService {
         )
         .limit(10)
     ).pipe(
-      pluck('data')
+      map(res => res.data)
     );
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { MapIconViewModel } from '@app/interfaces/map-icon';
 import { forkJoin, Observable } from 'rxjs';
-import { map, pluck, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
 import { imageSize } from '@app/shared/models/imageSize';
 import { getBucketAndPath } from '@app/shared/functions/storage';
@@ -39,7 +39,7 @@ export class FileService {
   allFileUrls(bucket: string): Observable<SafeResourceUrl[]> {
 
     return this.supabase.listBucketFiles(bucket).pipe(
-      pluck('data'),
+      map(res => res.data),
       switchMap(files => forkJoin(
         files.map(file => this.supabase.downloadFile(bucket, file.name))
       ).pipe(
