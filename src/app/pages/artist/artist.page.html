@@ -22,13 +22,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="main">
+<ion-content id="main" class="artist-list">
   <ng-container *ngIf="filteredArtists$ | async as artists; else loading">
-    <cdk-virtual-scroll-viewport itemSize="150"
+    <cdk-virtual-scroll-viewport itemSize="160"
                                  minBufferPx="900"
                                  maxBufferPx="1350">
       <app-artist-card *cdkVirtualFor="let artist of artists; trackBy:trackArtist; let i = index"
-                       [style.--animation-order]="i"
                        [artist]="artist">
       </app-artist-card>
     </cdk-virtual-scroll-viewport>
@@ -43,7 +42,8 @@
 
 <ion-menu side="end"
           type="overlay"
-          contentId="main">
+          contentId="main"
+          class="favorites-menu">
   <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">

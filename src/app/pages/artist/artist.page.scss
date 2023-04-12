@@ -1,30 +1,36 @@
-ion-content#main {
-    --background: var(--ion-color-medium);
-    --background: linear-gradient(180deg, var(--ion-color-medium) 50%, rgba(var(--ion-color-medium-rgb), 0.3) 100%);
-}
+.artist-list {
+    cdk-virtual-scroll-viewport {
+        height: 100%;
+        width: 100%;
+    }
 
-ion-item {
-    animation: popIn .2s calc(var(--animation-order) * 70ms) both ease-in;
-
-    ion-label {
-        outline: none;
+    .loading {
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 
-app-artist-card {
-    animation: popIn .2s calc(var(--animation-order) * 20ms) both ease-in;
-}
-
-.time {
-    margin-left: 10px;
-    opacity: 0.7;
-    font-size: small;
-}
-
-ion-menu {
+.favorites-menu {
     ion-header {
         ion-fab-button {
             --box-shadow: none;
+        }
+    }
+
+    ion-item {
+        animation: popIn .2s calc(var(--animation-order) * 70ms) both ease-in;
+
+        ion-label {
+            outline: none;
+
+            .time {
+                margin-left: 10px;
+                opacity: 0.7;
+                font-size: small;
+            }
         }
     }
 }
@@ -39,17 +45,4 @@ ion-menu {
         opacity: 1;
         transform: none;
     }
-}
-
-.loading {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-cdk-virtual-scroll-viewport {
-    height: 100%;
-    width: 100%;
 }
