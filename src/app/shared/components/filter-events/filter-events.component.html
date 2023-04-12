@@ -1,0 +1,52 @@
+<div class="filter-events-container">
+    <ng-container *ngIf="days$ | async as days">
+        <ion-toolbar>
+            <ion-segment scrollable
+                         mode="md"
+                         [value]="selectedDayId$ | async">
+                <ion-segment-button *ngFor="let day of days"
+                                    [value]="day.id"
+                                    (click)="onDaySelect(day.id)">
+                    <ion-label>{{day.name}}</ion-label>
+                </ion-segment-button>
+            </ion-segment>
+        </ion-toolbar>
+    </ng-container>
+
+    <ng-container *ngIf="eventTypes$ | async as eventTypes">
+        <ion-toolbar color="medium"
+                     class="event-type-filter">
+            <ion-segment scrollable
+                         mode="md"
+                         [value]="selectedEventTypeId$ | async">
+                <ion-segment-button *ngFor="let eventType of eventTypes"
+                                    (click)="onEventTypeSelect(eventType.id)"
+                                    [value]="eventType.id">
+                    <ion-label>{{eventType.name}}</ion-label>
+                    <span class="event-type-color"
+                          [style.background-color]="eventType.color">
+                    </span>
+                </ion-segment-button>
+            </ion-segment>
+        </ion-toolbar>
+    </ng-container>
+
+    <ng-container *ngIf="events$ | async as events">
+        <!-- Hide event filter if only one -->
+        <ng-container *ngIf="events.length > 1">
+            <ion-toolbar class="event-filter"
+                         [style.--background]="events[0].event_type.color">
+                <ion-segment scrollable
+                             mode="md"
+                             [value]="selectedEventId$ | async"
+                             [style.background]="events[0].event_type.color">
+                    <ion-segment-button *ngFor="let event of events"
+                                        (click)="onEventSelect(event.id)"
+                                        [value]="event.id">
+                        <ion-label>{{event.name}}</ion-label>
+                    </ion-segment-button>
+                </ion-segment>
+            </ion-toolbar>
+        </ng-container>
+    </ng-container>
+</div>

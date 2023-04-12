@@ -1,17 +1,21 @@
 import { Day, Event, EventType } from './database-entities';
 
+
+export interface PartialEventType {
+    id: EventType['id'];
+    name: EventType['name'];
+    color: EventType['color'];
+}
+
 export interface PartialEvent {
     id: Event['id'];
     name: Event['name'];
     bounds: Event['bounds'];
-    event_type: {
-        color: EventType['color'];
-    };
+    event_type: PartialEventType
 }
 
 export interface DayEvent {
-    id: Day['id'];
-    day: Day['day'];
-    name: Day['name'];
+    id: string;
+    name: string;
     event: PartialEvent[];
 }

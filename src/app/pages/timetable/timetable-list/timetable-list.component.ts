@@ -1,12 +1,13 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { StageTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
 import { TimetableStateService } from '../state/timetable-state.service';
-import { map } from 'rxjs/operators';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular';
 import { animations } from '@app/shared/animations';
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
+import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 
 type ListViewMode = 'byTime' | 'byStage';
 
@@ -19,6 +20,10 @@ type ListViewMode = 'byTime' | 'byStage';
 })
 export class TimetableListComponent implements OnInit {
 
+  private filterEventsStateService = inject(FilterEventsStateService);
+  private timetableStateService = inject(TimetableStateService);
+  private favoritesSerive = inject(FavoritesService);
+
   routeName = RouteName;
 
   timetableByStage$: Observable<StageTimetable[]>;
@@ -27,22 +32,38 @@ export class TimetableListComponent implements OnInit {
   private _listViewMode$ = new BehaviorSubject<ListViewMode>('byTime');
   listViewMode$: Observable<ListViewMode> = this._listViewMode$.asObservable();
 
-  constructor(
-    private timetableStateService: TimetableStateService,
-    private favoritesSerive: FavoritesService
-  ) { }
-
   ngOnInit() {
-    this.timetableByStage$ = this.timetableStateService.selectedEvent$.pipe(
-      map(event => event.stages)
+
+    const event$ = combineLatest([
+      this.timetableStateService.timetableWithFavorites$,
+      this.filterEventsStateService.selectedDayId$,
+      this.filterEventsStateService.selectedEventId$
+    ]).pipe(
+      filter(([timetableDays, selectedDayId, eventId]) => !!timetableDays && !!selectedDayId && !!eventId),
+      map(([timetableDays, selectedDayId, eventId]) => timetableDays
+        .find(day => day.id === selectedDayId)?.events
+        .find(event => event.event_id === eventId)
+      )
     );
 
-    this.timetableByTime$ = this.timetableStateService.eventTimetableByTime$
+    this.timetableByTime$ = event$.pipe(
+      map(event => event?.stages
+        .flatMap(stage => stage.timetable
+          .flatMap(timetable => ({ stageName: stage.stage_name, ...timetable }))
+        )
+        .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
+        ?? null
+      )
+    )
+
+    this.timetableByStage$ = event$.pipe(
+      map(event => event?.stages ?? null)
+    );
   }
 
   onChangeListViewMode(event: Event): void {
     const mode = (event as SegmentCustomEvent).detail.value as ListViewMode;
-      this._listViewMode$.next(mode);
+    this._listViewMode$.next(mode);
   }
 
   onToggleFavorite(id: string): void {

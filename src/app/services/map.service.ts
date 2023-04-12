@@ -139,12 +139,15 @@ export class MapService {
     ).subscribe()
   }
 
-  public fitBounds(bounds: LngLatBoundsLike): void {
+  public fitBounds(bounds: LngLatBoundsLike, padding: number = 10, offset: PointLike = [0, 0]): void {
     this.mapStateService.mapLoaded$.pipe(
       filter(mapLoaded => mapLoaded),
       first(),
       tap(() => {
-        this.map.fitBounds(bounds, { padding: 10 });
+        this.map.fitBounds(
+          bounds,
+          { padding, offset }
+        );
       })
     ).subscribe()
   }

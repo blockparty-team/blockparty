@@ -16,7 +16,7 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
-import { Favorite, FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
+import { FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { DayEvent } from '@app/interfaces/day-event';
 import { MapSource } from '@app/interfaces/map-layer';
@@ -180,6 +180,8 @@ export class SupabaseService {
               name,
               bounds,
               event_type(
+                id, 
+                name,
                 color
               )
             )
@@ -259,9 +261,9 @@ export class SupabaseService {
     return from(
       this.supabase
         .from('day_event_stage_timetable')
-        .select()
+        .select('*')
     ).pipe(
-      map(res => res.data)
+      map(res => res.data as DayEventStageTimetable[])
     )
   }
 
@@ -269,7 +271,7 @@ export class SupabaseService {
     return from(
       this.supabase
         .from('artist')
-        .select()
+        .select('*')
         .textSearch('ts', searchTerm, {
           config: 'english',
           type: 'plain'
@@ -349,9 +351,9 @@ export class SupabaseService {
     return from(
       this.supabase
         .from('map_icon')
-        .select()
+        .select('*')
     ).pipe(
-      map(res => res.data)
+      map(res => res.data as MapIcon[ ])
     )
   }
 

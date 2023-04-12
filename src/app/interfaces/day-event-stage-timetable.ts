@@ -17,10 +17,13 @@ export interface StageTimetable {
     first_start_time: Date;
 }
 
+
 export interface EventTimetable {
     stages: StageTimetable[];
     event_id: string;
     event_name: string;
+    event_type_id: string;
+    event_type_name: string;
     last_end_time: Date;
     first_start_time: Date;
 }
@@ -31,6 +34,11 @@ export interface DayEventStageTimetable {
     first_start_time: Date;
     last_end_time: Date;
     events: EventTimetable[];
+}
+
+export interface EventTypeViewModel {
+    event_type_id: string,
+    event_type_name: string
 }
 
 // View Models for Timetable grid

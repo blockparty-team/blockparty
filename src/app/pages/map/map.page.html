@@ -1,35 +1,6 @@
 <ion-header>
-  <ng-container *ngIf="days$ | async as days">
-    <ion-toolbar>
-      <ion-segment scrollable
-                   mode="md"
-                   [value]="selectedDayId$ | async">
-        <ion-segment-button *ngFor="let day of days"
-                            (click)="onDayFilterSelect(day.id)"
-                            [value]="day.id">
-          <ion-label>{{day.name}}</ion-label>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-  </ng-container>
+  <app-filter-events class="filter-events"></app-filter-events>
 
-  <ng-container *ngIf="events$ | async as events">
-    <ion-toolbar class="event-filter"
-                 color="medium">
-      <ion-segment scrollable
-                   mode="md"
-                   [value]="selectedEventId$ | async">
-        <ion-segment-button *ngFor="let event of events"
-                            (click)="onEventFilterSelect(event.id)"
-                            [value]="event.id">
-          <ion-label>{{event.name}}</ion-label>
-          <span class="event-color"
-                [style.background-color]="event.event_type.color">
-          </span>
-        </ion-segment-button>
-      </ion-segment>
-    </ion-toolbar>
-  </ng-container>
 </ion-header>
 
 <ion-content>

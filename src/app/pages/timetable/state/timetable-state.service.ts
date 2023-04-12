@@ -1,23 +1,22 @@
-import { Injectable } from '@angular/core';
-import { DayEventStageTimetable, EventTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
+import { Injectable, inject } from '@angular/core';
+import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
-import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators'
+import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
+import { Observable, combineLatest, concat } from 'rxjs';
+import { filter, map, shareReplay, tap } from 'rxjs/operators'
 
-@Injectable({
-  providedIn: 'root'
-})
+
+@Injectable()
 export class TimetableStateService {
 
-  private _selectedDayId$ = new BehaviorSubject<string>(null);
-  selectedDayId$: Observable<string> = this._selectedDayId$.asObservable();
+  private supabase = inject(SupabaseService);
+  private deviceStorageService = inject(DeviceStorageService);
+  private favoritesService = inject(FavoritesService);
+  private filterEventsStateService = inject(FilterEventsStateService);
 
-  private _selectedEventId$ = new BehaviorSubject<string>(null);
-  selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
-  
-  days$: Observable<DayEventStageTimetable[]> = concat(
+  private timetables$: Observable<DayEventStageTimetable[]> = concat(
     this.deviceStorageService.get('timetable').pipe(
       filter(timetables => !!timetables)
     ),
@@ -27,69 +26,85 @@ export class TimetableStateService {
     )
   ).pipe(
     filter(days => !!days),
-    distinctUntilChanged(),
     shareReplay(1)
   );
 
-  events$: Observable<EventTimetable[]> = combineLatest([
-    this.days$,
-    this.selectedDayId$,
-  ]).pipe(
-    filter(([days, selectedDayId]) => !!days && !!selectedDayId),
-    map(([days, selectedDayId]) => days.find(day => day.id === selectedDayId)),
-    map(day => day.events),
-    distinctUntilChanged(),
-    shareReplay()
-  );
-
-  selectedEvent$: Observable<EventTimetable> = combineLatest([
-    this.events$,
-    this.selectedEventId$,
+  timetableWithFavorites$: Observable<DayEventStageTimetable[]> = combineLatest([
+    this.timetables$,
     this.favoritesService.favorites$
   ]).pipe(
-    filter(([events, selectedEventId, ]) => !!events && !!selectedEventId),
-    map(([events, selectedEventId, ]) => events.find(event => event.event_id === selectedEventId)),
-    filter(event => !!event),
-    map(event => {
-      // Add favorites
-      const stages = event.stages.map(stage => ({
-        ...stage,
-        timetable: stage.timetable.map(timetable => ({
-          ...timetable,
-          isFavorite: this.favoritesService.isFavorite('artist', timetable.artist_id)
-        }))
-      }));
+    map(([days, favorites]) => {
 
-      return {
-        ...event,
-        stages
-      }
+      const daysWithFavorites = days
+        .map(day => ({
+          ...day, events: day.events
+            .map(event => ({
+              ...event, stages: event.stages
+                .map(stage => ({
+                  ...stage, timetable: stage.timetable
+                    .map(act => ({
+                      ...act,
+                      isFavorite: favorites
+                        .find(favorite => favorite.entity === 'artist').ids
+                        .includes(act.artist_id)
+                    }))
+                }))
+            }))
+        }));
+
+      return daysWithFavorites
     }),
-    distinctUntilChanged(),
-    shareReplay()
+    shareReplay(1)
   )
 
-  eventTimetableByTime$: Observable<TimetableWithStageName[]> = this.selectedEvent$.pipe(
-    filter(event => !!event),
-    map(event => event.stages
-      .flatMap(stage => stage.timetable
-        .flatMap(timetable => ({ stageName: stage.stage_name, ...timetable }))
-      )
-      .sort((a, b) => new Date(a.start_time).getTime() - new Date(b.start_time).getTime())
-    )
+  dayEvents$: Observable<DayEventStageTimetable> = combineLatest([
+    this.timetableWithFavorites$,
+    this.filterEventsStateService.selectedDayId$,
+    this.filterEventsStateService.selectedEventTypeId$,
+    this.filterEventsStateService.selectedEventId$,
+  ]).pipe(
+    filter(([timetableDays, selectedDayId, selectedEventTypeId, selectedEventId]) => (
+      !!selectedDayId
+      && !!timetableDays
+      && (!!selectedEventTypeId || !!selectedEventId)
+    )),
+    // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
+    map(([timetableDays, selectedDayId, selectedEventTypeId, selectedEventId]) => {
+      const timetableDay: DayEventStageTimetable = timetableDays
+        .find(day => day.id === selectedDayId);
+      if (!timetableDay) return null;
+
+      const timetableEvents = timetableDay.events
+        .filter(event => {
+          if (selectedEventId) {
+            return event.event_id === selectedEventId
+          }
+
+          if (selectedEventTypeId) {
+            return event.event_type_id === selectedEventTypeId
+          }
+        })
+      if (timetableEvents.length === 0) return null;
+
+      // Find first and last time for events
+      const timeSpan = timetableEvents.reduce((acc, val) => {
+        acc[0] = (acc[0] === undefined || val.first_start_time < acc[0]) ? val.first_start_time : acc[0]
+        acc[1] = (acc[1] === undefined || val.last_end_time > acc[1]) ? val.last_end_time : acc[1]
+        return acc;
+      }, []);
+
+      return {
+        ...timetableDay,
+        events: timetableEvents,
+        // First last time is overwritten based on selected events
+        first_start_time: timeSpan[0],
+        last_end_time: timeSpan[1]
+      };
+    })
+  )
+
+  eventTypeColor$: Observable<string> = this.filterEventsStateService.selectedEventType$.pipe(
+    map(eventType => eventType.color)
   );
 
-  constructor(
-    private supabase: SupabaseService,
-    private deviceStorageService: DeviceStorageService,
-    private favoritesService: FavoritesService
-  ) { }
-
-  selectDayId(dayId: string): void {
-    this._selectedDayId$.next(dayId);
-  }
-
-  selectEventId(eventId: string): void {
-    this._selectedEventId$.next(eventId);
-  }
 }

@@ -1,11 +1,10 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { combineLatest, EMPTY, interval, Observable } from 'rxjs';
-import { catchError, distinctUntilChanged, filter, map, shareReplay, startWith, take, tap } from 'rxjs/operators';
+import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { combineLatest, interval, Observable } from 'rxjs';
+import { filter, map, shareReplay, startWith, take, tap } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { TimetableStateService } from '../state/timetable-state.service';
-import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel, EventTimetable } from '@app/interfaces/day-event-stage-timetable';
-import { ActivatedRoute } from '@angular/router';
+import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel } from '@app/interfaces/day-event-stage-timetable';
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
 
@@ -18,64 +17,28 @@ import { RouteName } from '@app/shared/models/routeName';
 })
 export class TimetableGanttComponent implements OnInit {
 
+  private timetableStateService = inject(TimetableStateService);
+  private favoritesService = inject(FavoritesService);
+
   routeName = RouteName;
 
   @ViewChild('timetable') timetableElement: ElementRef;
 
-  days$: Observable<DayEventStageTimetable[]>;
-  events$: Observable<EventTimetable[]>;
-  selectedDayId$: Observable<string>;
-  selectedEventId$: Observable<string>;
   timetableConfig$: Observable<DayTimetableViewModel>;
   currentTimeColumn$: Observable<number>;
+  eventTypeColor$ = this.timetableStateService.eventTypeColor$;
+
 
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1
   COLUMN_SIZE = 2.5 // 1min = COLUMN_SIZE - Defined in CSS
 
-  constructor(
-    private timetableStateService: TimetableStateService,
-    private favoritesService: FavoritesService,
-    private route: ActivatedRoute,
-  ) { }
-
   ngOnInit(): void {
-    this.selectedDayId$ = this.timetableStateService.selectedDayId$;
-    this.selectedEventId$ = this.timetableStateService.selectedEventId$;
-    this.days$ = this.timetableStateService.days$;
-    this.events$ = this.timetableStateService.events$;
 
-    this.timetableConfig$ = combineLatest([
-      this.timetableStateService.days$,
-      this.timetableStateService.selectedDayId$,
-      this.timetableStateService.selectedEvent$,
-      this.favoritesService.favorites$
-    ]).pipe(
-      filter(([days, dayId,,]) => !!dayId && !!days),
-      // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
-      map(([days, dayId, event,]) => {
-        const day: DayEventStageTimetable = days.find(day => day.id === dayId);
-
-        if (event) {
-          return {
-            ...day,
-            events: [event],
-            first_start_time: event.first_start_time,
-            last_end_time: event.last_end_time
-          };
-        }
-
-        return day;
-
-      }),
+    this.timetableConfig$ = this.timetableStateService.dayEvents$.pipe(
       map(day => this.timetableGridConfig(day)),
-      catchError(err => {
-        console.log(err);
-        return EMPTY;
-      }),
-      distinctUntilChanged(),
-      shareReplay()
+      shareReplay(1)
     );
 
     this.currentTimeColumn$ = combineLatest([
@@ -92,9 +55,8 @@ export class TimetableGanttComponent implements OnInit {
           return differenceInMinutes(now, firstActStart);
         }
       }),
-      shareReplay()
-    )
-
+      shareReplay(1)
+    );
   }
 
   ionViewDidEnter(): void {
@@ -114,7 +76,8 @@ export class TimetableGanttComponent implements OnInit {
     ).subscribe()
   }
 
-  timeLables(firstStartTime: Date, lastEndTime: Date): TimeLabel[] {
+  private timeLables(firstStartTime: Date, lastEndTime: Date): TimeLabel[] {
+
     return eachHourOfInterval({
       start: firstStartTime.getTime(),
       end: lastEndTime.getTime()
@@ -125,7 +88,7 @@ export class TimetableGanttComponent implements OnInit {
     }));
   }
 
-  stageTimetableToGrid(
+  private stageTimetableToGrid(
     stage: StageTimetable,
     firstStartTime: Date,
     rowStart: number,
@@ -155,10 +118,11 @@ export class TimetableGanttComponent implements OnInit {
     }
   }
 
-  timetableGridConfig(day: DayEventStageTimetable): DayTimetableViewModel {
+  private timetableGridConfig(day: DayEventStageTimetable): DayTimetableViewModel {
 
-    let row = 1; // First row is time labels
+    if (!day) return;
 
+    let row = 0; // First row is time labels
     const firstStartTime = new Date(day.first_start_time);
     const lastEndTime = new Date(day.last_end_time);
 
@@ -181,7 +145,7 @@ export class TimetableGanttComponent implements OnInit {
       row += row === 1 ? 1 : this.EVENT_ROW_GAP;
 
       return eventConfig
-    })
+    });
 
     return {
       dayId: day.id,
@@ -191,10 +155,9 @@ export class TimetableGanttComponent implements OnInit {
       timeLabels,
       events
     }
-
   }
 
-  toggleArtistFavorite(id: string): void {
+  onToggleArtistFavorite(id: string): void {
     this.favoritesService.toggleFavorite('artist', id);
   }
 
