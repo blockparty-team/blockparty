@@ -11,13 +11,13 @@ export class FilterEventsStateService {
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
 
-  private _selectedDayId$ = new BehaviorSubject<string | null>(null);
+  private _selectedDayId$ = new BehaviorSubject<string>('');
   selectedDayId$: Observable<string> = this._selectedDayId$.asObservable();
 
-  private _selectedEventTypeId$ = new BehaviorSubject<string | null>(null);
+  private _selectedEventTypeId$ = new BehaviorSubject<string>('');
   selectedEventTypeId$: Observable<string> = this._selectedEventTypeId$.asObservable();
 
-  private _selectedEventId$ = new BehaviorSubject<string | null>(null);
+  private _selectedEventId$ = new BehaviorSubject<string>('');
   selectedEventId$: Observable<string> = this._selectedEventId$.asObservable();
 
   days$: Observable<DayEvent[]> = concat(
@@ -42,7 +42,7 @@ export class FilterEventsStateService {
     map(day => day.event),
     map(events => events
       .map(event => event.event_type)
-      .filter((v, i, a) => a.findIndex(v2 => (v2.id === v.id)) === i)
+      .filter((eventType, index, eventTypes) => eventTypes.findIndex(v2 => (v2.id === eventType.id)) === index)
     ),
     shareReplay(1),
   );

@@ -65,32 +65,32 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         // Default select event type if only one
         eventTypes.length === 1
           ? this.filterEventsStateService.selectEventType(eventTypes[0].id)
-          : this.filterEventsStateService.selectEventType(null);
-        this.filterEventsStateService.selectEvent(null);
+          : this.filterEventsStateService.selectEventType('');
+        this.filterEventsStateService.selectEvent('');
       }),
       takeUntil(this.abandon$)
     ).subscribe();
 
-    this.filterEventsStateService.selectedEventType$.pipe(
+    this.filterEventsStateService.selectedEventTypeId$.pipe(
       withLatestFrom(
         this.filterEventsStateService.selectedDayId$,
         this.mapStateService.dayMaskBounds$,
         this.filterEventsStateService.events$
       ),
-      filter(([eventType, dayId, mask, events]) => !!eventType && !!dayId && !!mask && !!events),
-      map(([eventType, dayId, dayMasks, events]) => ({
+      filter(([eventTypeId, dayId, mask, events]) => !!eventTypeId && !!dayId && !!mask && !!events),
+      map(([eventTypeId, dayId, dayMasks, events]) => ({
         events,
         mask: dayMasks
-          .find(mask => mask.id === `${dayId}_${eventType.id}`)
+          .find(mask => mask.id === `${dayId}_${eventTypeId}`)
       })),
       tap(({ mask, events }) => {
         this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 80, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
 
         // Select event if only one
-        events.length === 1
+        events.length === 0
           ? this.filterEventsStateService.selectEvent(events[0].id)
-          : this.filterEventsStateService.selectEvent(null);
+          : this.filterEventsStateService.selectEvent('');
       }),
       takeUntil(this.abandon$)
     ).subscribe();
