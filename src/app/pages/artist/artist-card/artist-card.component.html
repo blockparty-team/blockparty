@@ -29,7 +29,7 @@
     <div slot="end"
          class="card-actions">
       <ion-icon slot="icon-only"
-                [color]="artist.isFavorite ? 'primary' : ''"
+                [color]="artist.isFavorite ? 'danger' : ''"
                 [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
                 (click)="toggleFavorite(artist.id)">
       </ion-icon>

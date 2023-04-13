@@ -3,26 +3,26 @@
 
 /** Ionic CSS Variables **/
 :root {
-	--ion-color-primary: #FF7800;
-	--ion-color-primary-rgb: 255,120,0;
+	--ion-color-primary: #E2CAF9;
+	--ion-color-primary-rgb: 226,202,249;
 	--ion-color-primary-contrast: #000000;
 	--ion-color-primary-contrast-rgb: 0,0,0;
-	--ion-color-primary-shade: #e06a00;
-	--ion-color-primary-tint: #ff861a;
+	--ion-color-primary-shade: #c7b2db;
+	--ion-color-primary-tint: #e5cffa;
 
-	--ion-color-secondary: #B2DF00;
-	--ion-color-secondary-rgb: 178,223,0;
-	--ion-color-secondary-contrast: #000000;
-	--ion-color-secondary-contrast-rgb: 0,0,0;
-	--ion-color-secondary-shade: #9dc400;
-	--ion-color-secondary-tint: #bae21a;
+	--ion-color-secondary: #C2435F;
+	--ion-color-secondary-rgb: 194,67,95;
+	--ion-color-secondary-contrast: #ffffff;
+	--ion-color-secondary-contrast-rgb: 255,255,255;
+	--ion-color-secondary-shade: #ab3b54;
+	--ion-color-secondary-tint: #c8566f;
 
-	--ion-color-tertiary: #00FFCD;
-	--ion-color-tertiary-rgb: 0,255,205;
+	--ion-color-tertiary: #f6ffb3;
+	--ion-color-tertiary-rgb: 246,255,179;
 	--ion-color-tertiary-contrast: #000000;
 	--ion-color-tertiary-contrast-rgb: 0,0,0;
-	--ion-color-tertiary-shade: #00e0b4;
-	--ion-color-tertiary-tint: #1affd2;
+	--ion-color-tertiary-shade: #d8e09e;
+	--ion-color-tertiary-tint: #f7ffbb;
 
 	--ion-color-success: #008632;
 	--ion-color-success-rgb: 0,134,50;
@@ -45,12 +45,12 @@
   --ion-color-danger-shade: #e07e8b;
   --ion-color-danger-tint: #ff9aa8;
 
-	--ion-color-medium: #5a5c63;
-	--ion-color-medium-rgb: 90,92,99;
+	--ion-color-medium: #403352;
+	--ion-color-medium-rgb: 64,51,82;
 	--ion-color-medium-contrast: #ffffff;
 	--ion-color-medium-contrast-rgb: 255,255,255;
-	--ion-color-medium-shade: #4f5157;
-	--ion-color-medium-tint: #6b6c73;
+	--ion-color-medium-shade: #382d48;
+	--ion-color-medium-tint: #534763;
 
   --ion-color-light: #f4f5f8;
   --ion-color-light-rgb: 244, 245, 248;
@@ -60,7 +60,7 @@
   --ion-color-light-tint: #f5f6f9;
 
   // Background
-  --ion-background-color: #443f3f;
+  --ion-background-color: #2d2438;
   --ion-background-color-rgb: 68, 63, 63;
 
   --ion-font-family: 'Source Sans Pro', sans-serif;
@@ -87,11 +87,11 @@
   --ion-color-step-900: #ececec;
   --ion-color-step-950: #f6f5f5;
 
-  --ion-item-background: #443f3f;
+  --ion-item-background: #332940;
 
-  --ion-toolbar-background: #454545;
+  --ion-toolbar-background: #332940;
 
-  --ion-tab-bar-background: #443f3f;
+  --ion-tab-bar-background: #332940;
 }
 
 // @media (prefers-color-scheme: dark) {
