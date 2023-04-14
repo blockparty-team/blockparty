@@ -75,17 +75,22 @@
                   (click)="toggleFavorite(artist.id)">
         </ion-icon>
       </h1>
-      <div class="acts ion-text-center">
-        <ion-badge mode="ios"
-                   color="light"
-                   *ngFor="let act of artist.timetable"
-                   (click)="goToStageOnMap(act.stage.geom)">
-          <ion-icon name="location"></ion-icon>
-          {{act.day.name}} |
-          {{act.start_time | date:'HH:mm'}} -
-          {{act.end_time | date:'HH:mm'}} |
-          {{act.stage.name}}
-        </ion-badge>
+      <div class="acts">
+        <div class="act"
+             *ngFor="let act of artist.timetable">
+          <span>
+              {{act.day.name}} |
+              {{act.start_time | date:'HH:mm'}} -
+              {{act.end_time | date:'HH:mm'}} |
+              {{act.stage.name}}
+          </span>
+          <ion-fab-button size="small"
+                          color="secondary">
+            <ion-icon name="map-outline"
+                      (click)="goToStageOnMap(act.stage.geom)">
+            </ion-icon>
+          </ion-fab-button>
+        </div>
       </div>
       <p class="description">{{artist.description}}</p>
     </section>
