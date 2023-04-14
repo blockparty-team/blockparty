@@ -8,8 +8,9 @@
     </ion-buttons>
     <ion-title class="ion-text-center">Artists</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="toggleFavoritesSideBar()">
-        favorites
+      <ion-button (click)="toggleFavoritesSideBar()"
+                  mode="md">
+        Favorites
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -22,7 +23,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="main" class="artist-list">
+<ion-content id="main"
+             class="artist-list">
   <ng-container *ngIf="filteredArtists$ | async as artists; else loading">
     <cdk-virtual-scroll-viewport itemSize="160"
                                  minBufferPx="900"

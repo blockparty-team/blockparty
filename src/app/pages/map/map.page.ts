@@ -130,7 +130,10 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.mapService.initMap();
+    // Prevent map partial div rendering on init
+    setTimeout(() => {
+      this.mapService.initMap();
+    }, 50);
   }
 
   ngOnDestroy(): void {
