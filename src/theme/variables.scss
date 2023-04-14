@@ -10,19 +10,19 @@
 	--ion-color-primary-shade: #00b194;
 	--ion-color-primary-tint: #1aceb1;
 
-	--ion-color-secondary: #E2CAF9;
-	--ion-color-secondary-rgb: 226,202,249;
+	--ion-color-secondary: #FFFADE;
+	--ion-color-secondary-rgb: 255,250,222;
 	--ion-color-secondary-contrast: #000000;
 	--ion-color-secondary-contrast-rgb: 0,0,0;
-	--ion-color-secondary-shade: #c7b2db;
-	--ion-color-secondary-tint: #e5cffa;
+	--ion-color-secondary-shade: #e0dcc3;
+	--ion-color-secondary-tint: #fffbe1;
 
-	--ion-color-tertiary: #FFFADE;
-	--ion-color-tertiary-rgb: 255,250,222;
+	--ion-color-tertiary: #E2CAF9;
+	--ion-color-tertiary-rgb: 226,202,249;
 	--ion-color-tertiary-contrast: #000000;
 	--ion-color-tertiary-contrast-rgb: 0,0,0;
-	--ion-color-tertiary-shade: #e0dcc3;
-	--ion-color-tertiary-tint: #fffbe1;
+	--ion-color-tertiary-shade: #c7b2db;
+	--ion-color-tertiary-tint: #e5cffa;
 
 	--ion-color-success: #008632;
 	--ion-color-success-rgb: 0,134,50;
@@ -45,12 +45,12 @@
   --ion-color-danger-shade: #e07e8b;
   --ion-color-danger-tint: #ff9aa8;
 
-	--ion-color-medium: #403352;
-	--ion-color-medium-rgb: 64,51,82;
+	--ion-color-medium: #48395b;
+	--ion-color-medium-rgb: 72,57,91;
 	--ion-color-medium-contrast: #ffffff;
 	--ion-color-medium-contrast-rgb: 255,255,255;
-	--ion-color-medium-shade: #382d48;
-	--ion-color-medium-tint: #534763;
+	--ion-color-medium-shade: #3f3250;
+	--ion-color-medium-tint: #5a4d6b;
 
   --ion-color-light: #f4f5f8;
   --ion-color-light-rgb: 244, 245, 248;
@@ -59,8 +59,15 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
+	--ion-color-favorite: #ff7f7f;
+	--ion-color-favorite-rgb: 255,127,127;
+	--ion-color-favorite-contrast: #000000;
+	--ion-color-favorite-contrast-rgb: 0,0,0;
+	--ion-color-favorite-shade: #e07070;
+	--ion-color-favorite-tint: #ff8c8c;
+
   // Background
-  --ion-background-color: #2d2438;
+  --ion-background-color: #332940;
   --ion-background-color-rgb: 68, 63, 63;
 
   --ion-font-family: 'Source Sans Pro', sans-serif;
@@ -92,6 +99,15 @@
   --ion-toolbar-background: #332940;
 
   --ion-tab-bar-background: #332940;
+}
+
+.ion-color-favorite {
+  --ion-color-base: var(--ion-color-favorite);
+  --ion-color-base-rgb: var(--ion-color-favorite-rgb);
+  --ion-color-contrast: var(--ion-color-favorite-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-favorite-contrast-rgb);
+  --ion-color-shade: var(--ion-color-favorite-shade);
+  --ion-color-tint: var(--ion-color-favorite-tint);
 }
 
 // @media (prefers-color-scheme: dark) {
