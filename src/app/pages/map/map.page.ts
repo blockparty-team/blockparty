@@ -52,10 +52,10 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         this.mapStateService.dayMaskBounds$,
         this.filterEventsStateService.eventTypes$
       ),
-      filter(([dayId, dayMasks, eventTypes]) => !!dayId && !!dayMasks && !!eventTypes),
-      map(([dayId, dayMasks, eventTypes]) => ({
+      filter(([dayId, masks, eventTypes]) => !!dayId && !!masks && !!eventTypes),
+      map(([dayId, masks, eventTypes]) => ({
         eventTypes,
-        mask: dayMasks.find(day => day.id === dayId)
+        mask: masks.find(mask => mask.id === dayId)
       })),
       tap(({ eventTypes, mask }) => {
         this.mapService.fitBounds(mask.bounds as LngLatBoundsLike, 80, [0, 30]);
@@ -77,10 +77,10 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         this.mapStateService.dayMaskBounds$,
         this.filterEventsStateService.events$
       ),
-      filter(([eventTypeId, dayId, mask, events]) => !!eventTypeId && !!dayId && !!mask && !!events),
-      map(([eventTypeId, dayId, dayMasks, events]) => ({
+      filter(([eventTypeId, dayId, masks, events]) => !!eventTypeId && !!dayId && !!masks && !!events),
+      map(([eventTypeId, dayId, masks, events]) => ({
         events,
-        mask: dayMasks
+        mask: masks
           .find(mask => mask.id === `${dayId}_${eventTypeId}`)
       })),
       tap(({ mask, events }) => {

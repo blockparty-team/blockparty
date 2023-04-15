@@ -4,8 +4,8 @@ import { Observable, BehaviorSubject, concat, forkJoin } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
-import { DayEvent, DayEventMask } from '@app/interfaces/database-entities';
 import { MapSource, MapSourceGeojson } from '@app/interfaces/map-layer';
+import { MaskGeojsonProperties } from '@app/interfaces/mask-geojson-properties';
 
 @Injectable({
   providedIn: 'root'
@@ -51,25 +51,12 @@ export class MapStateService {
       tap(layers => this.deviceStorageService.set('mapLayers', layers))
     )
   ).pipe(
-    distinctUntilChanged(),
     shareReplay(1)
   )
 
-  days$: Observable<DayEvent[]> = concat(
-    this.deviceStorageService.get('days').pipe(
-      filter(days => !!days)
-    ),
-    this.supabase.days$.pipe(
-      filter(days => !!days),
-      tap(days => this.deviceStorageService.set('days', days))
-    )
-  ).pipe(
-    distinctUntilChanged(),
-    shareReplay(1)
-  );
-
-  dayMaskBounds$: Observable<DayEventMask[]> = this.supabase.dayMaskBounds$.pipe(
-    shareReplay(1)
+  dayMaskBounds$: Observable<MaskGeojsonProperties[]> = this.mapLayers$.pipe(
+    map(layers => layers.find(layer => layer.mapSource === 'day_event_mask')),
+    map(layer => layer.geojson.features.map(feature => feature.properties) as MaskGeojsonProperties[])
   );
 
   selectMapFeatures(features: MapClickedFeature<GeojsonProperties>[]): void {
