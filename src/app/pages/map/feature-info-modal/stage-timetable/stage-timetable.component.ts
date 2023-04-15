@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
@@ -19,6 +19,10 @@ import { Ticket } from '@app/interfaces/event';
 })
 export class StageTimetableComponent implements OnInit {
 
+  private mapStateService = inject(MapStateService);
+  private modalCtrl = inject(ModalController);
+  private router = inject(Router); 
+
   stageName$: Observable<string>;
   stageDescription$: Observable<string>;
   tickets$: Observable<Ticket[]>;
@@ -29,12 +33,6 @@ export class StageTimetableComponent implements OnInit {
 
   private _selectedDay$ = new BehaviorSubject<string>(null);
   selectedDay$: Observable<string> = this._selectedDay$.asObservable();
-
-  constructor(
-    private mapStateService: MapStateService,
-    private modalCtrl: ModalController,
-    private router: Router
-  ) { }
 
   ngOnInit() {
 
