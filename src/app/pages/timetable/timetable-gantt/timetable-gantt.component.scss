@@ -49,11 +49,14 @@
     }
 
     .act {
-        // background-color: var(--ion-color-tertiary);
         color: black;
         border-radius: 25px;
         grid-column: var(--act-column-start) / var(--act-column-end);
         grid-row: var(--act-row-start) / span 2;
+
+        &.favorite {
+            filter: brightness(115%);
+        }
 
         .act-content {
             height: 100%;
