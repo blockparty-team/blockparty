@@ -29,23 +29,24 @@
         </div>
 
         <div class="act"
-             *ngFor="let timetable of stage.timetable"
-             [style.--act-column-start]="timetable.columnStart"
-             [style.--act-column-end]="timetable.columnEnd"
-             [style.--act-row-start]="timetable.rowStart"
-             [style.background-color]="eventTypeColor$ | async">
+             *ngFor="let act of stage.timetable"
+             [style.--act-column-start]="act.columnStart"
+             [style.--act-column-end]="act.columnEnd"
+             [style.--act-row-start]="act.rowStart"
+             [style.background-color]="eventTypeColor$ | async"
+             [ngClass]="{'favorite': act.isFavorite}">
           <div class="act-content">
             <div class="act-sticky">
-              <div [routerLink]="['/tabs', routeName.Artist, timetable.artist_name]">
+              <div [routerLink]="['/tabs', routeName.Artist, act.artist_name]">
                 <h6>
-                  {{timetable.artist_name}}
+                  {{act.artist_name}}
                 </h6>
-                <p>{{timetable.start_time | date:'HH:mm'}}-{{timetable.end_time | date:'HH:mm'}}</p>
+                <p>{{act.start_time | date:'HH:mm'}}-{{act.end_time | date:'HH:mm'}}</p>
               </div>
 
               <ion-icon slot="icon-only"
-                        [name]="timetable.isFavorite ? 'heart' : 'heart-outline'"
-                        (click)="onToggleArtistFavorite(timetable.artist_id)">
+                        [name]="act.isFavorite ? 'heart' : 'heart-outline'"
+                        (click)="onToggleArtistFavorite(act.artist_id)">
               </ion-icon>
             </div>
           </div>
