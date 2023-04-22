@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Tab } from '@app/interfaces/tab';
 import { MenuController } from '@ionic/angular';
 import { TabsStateService } from './state/tabs-state.service';
 import { RouteName } from '@app/shared/models/routeName';
+import { Observable } from 'rxjs';
 
 interface TabsChanged {
   tab: string;
@@ -16,12 +17,13 @@ interface TabsChanged {
 })
 export class TabsPage {
 
-  routeName = RouteName;
+  private tabStateService = inject(TabsStateService);
+  private menu = inject(MenuController);
 
-  constructor(
-    private tabStateService: TabsStateService,
-    private menu: MenuController
-  ) { }
+  tabName = Tab;
+  routeName = RouteName;
+  
+  currentTab$: Observable<Tab> = this.tabStateService.currentTab$;
 
   onTabChange(tab: TabsChanged): void {
     this.tabStateService.updateCurrentTab((tab.tab as Tab));

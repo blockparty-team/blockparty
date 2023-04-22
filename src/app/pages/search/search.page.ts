@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
@@ -13,6 +13,7 @@ import { debounceTime, distinctUntilChanged, filter, map, switchMap } from 'rxjs
 import { SupabaseService } from '../../services/supabase.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { EntityBadgeColor } from './entity-badge-color';
+import { RouteHistoryService } from '@app/services/routeHistory.service';
 
 enum Entity {
   artist = 'artist',
@@ -32,7 +33,13 @@ enum SearchMode {
   styleUrls: ['./search.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SearchPage implements OnInit {
+export class SearchPage {
+
+  private router = inject(Router);
+  private supabase = inject(SupabaseService);
+  private searchService = inject(SearchService);
+  private mapService = inject(MapService);
+  private routeHistoryService = inject(RouteHistoryService);
 
   routeName = RouteName;
   entity = Entity;
@@ -40,43 +47,35 @@ export class SearchPage implements OnInit {
   badgeColor = EntityBadgeColor;
 
   searchTerm = new FormControl('');
-  @ViewChild('search') searchElement: IonSearchbar;
+  @ViewChild(IonSearchbar) searchElement: IonSearchbar;
 
   private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(SearchMode.FreeText);
   selectedSearchMode$: Observable<SearchMode> = this._selectedSearchMode$.asObservable();
 
-  searchResults$: Observable<EntityFreeTextSearchResult[]>;
-  nearBy$: Observable<EntityDistanceSearchResult[]>;
+  previousRoute$ = this.routeHistoryService.history$.pipe(
+    map(history => history.previous ? history.previous : '/')
+  );
 
-  constructor(
-    private router: Router,
-    private supabase: SupabaseService,
-    private searchService: SearchService,
-    private mapService: MapService,
-  ) { }
+  searchResults$: Observable<EntityFreeTextSearchResult[]> = this.searchTerm.valueChanges.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    switchMap(term => this.searchService.textSearch(term))
+  );
 
-  ngOnInit() {
-    this.searchResults$ = this.searchTerm.valueChanges.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      switchMap(term => this.searchService.textSearch(term))
-    );
-
-    this.nearBy$ = combineLatest([
-      this.searchService.nearBy$,
-      this._selectedSearchMode$
-    ]).pipe(
-      filter(([, mode]) => mode === SearchMode.NearBy),
-      map(([nearBy,]) => nearBy)
-    );
-  }
+  nearBy$: Observable<EntityDistanceSearchResult[]> = combineLatest([
+    this.searchService.nearBy$,
+    this._selectedSearchMode$
+  ]).pipe(
+    filter(([, mode]) => mode === SearchMode.NearBy),
+    map(([nearBy,]) => nearBy)
+  );
 
   ionViewDidEnter(): void {
     if (this._selectedSearchMode$.value === SearchMode.FreeText) {
       setTimeout(() => {
         this.searchElement.setFocus();
       }, 150);
-    } 
+    }
   }
 
   imgUrl(storagePath: string): string {

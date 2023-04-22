@@ -1,19 +1,20 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { RouteName } from '@app/shared/models/routeName';
 
 const routes: Routes = [
   {
-    path: 'tabs',
+    path: RouteName.Tabs,
     component: TabsPage,
     children: [
       {
-        path: 'map',
+        path: RouteName.Map,
         title: 'Map',
         loadChildren: () => import('../map/map.module').then(m => m.MapPageModule)
       },
       {
-        path: 'artist',
+        path: RouteName.Artist,
         title: 'Artist',
         children: [
           {
@@ -27,14 +28,13 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'timetable',
+        path: RouteName.Timetable,
         title: 'Timetable',
         loadChildren: () => import('../timetable/timetable.module').then(m => m.TimetablePageModule)
       },
       {
-        path: 'search',
-        title: 'Search',
-        loadChildren: () => import('../search/search.module').then(m => m.SearchPageModule)
+        path: RouteName.Favorite,
+        loadChildren: () => import('../favorite/favorite.module').then( m => m.FavoritePageModule)
       },
       {
         path: '',
