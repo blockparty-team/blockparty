@@ -16,7 +16,13 @@
       <ion-list>
         <ion-item *ngFor="let artist of favoriteArtists; let i = index ; trackBy:trackArtist"
                   [style.--animation-order]="i">
+
+          <ion-avatar slot="start">
+            <img [src]="artist.imgUrl" />
+          </ion-avatar>
+
           <ion-label [routerLink]="['/tabs', 'artist', artist.name]">{{artist.name}}</ion-label>
+
           <div slot="end"
                (click)="toggleFavorite(artist.id)">
             <ion-icon slot="icon-only"
@@ -40,6 +46,11 @@
           <ion-label>{{group.day.name}}</ion-label>
         </ion-item-divider>
         <ion-item *ngFor="let artist of group.artists; trackBy:trackArtist">
+
+          <ion-avatar slot="start">
+            <img [src]="artist.imgUrl" />
+          </ion-avatar>
+
           <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
             <span class="artist-name">{{artist.name}}</span>
             <span class="time">
@@ -47,6 +58,7 @@
               {{artist.timetable[0]?.end_time | date:'HH:mm'}}
             </span>
           </ion-label>
+
           <div slot="end"
                (click)="toggleFavorite(artist.id)">
             <ion-icon slot="icon-only"
