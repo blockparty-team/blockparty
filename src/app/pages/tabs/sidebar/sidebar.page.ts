@@ -61,6 +61,11 @@ export class SidebarPage implements OnInit {
       routeName: RouteName.Settings
     },
     {
+      name: 'Search',
+      icon: 'search',
+      routeName: RouteName.Search
+    },
+    {
       name: 'Profile',
       icon: 'person-circle-outline',
       routeName: RouteName.Profile

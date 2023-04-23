@@ -46,20 +46,29 @@ const routes: Routes = [
   },
   {
     path: RouteName.Playlists,
+    title: 'Playlists',
     loadChildren: () => import('./pages/playlist/playlist.module').then(m => m.PlaylistPageModule)
   },
   {
     path: RouteName.Settings,
+    title: 'Settings',
     loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
   },
   {
-    path: 'merch',
+    path: RouteName.Merch,
+    title: 'Merch',
     loadChildren: () => import('./pages/merch/merch.module').then(m => m.MerchPageModule)
   },
   {
     path: RouteName.Tickets,
+    title: 'Tickets',
     loadChildren: () => import('./pages/tickets/tickets.module').then(m => m.TicketsPageModule)
-  }
+  },
+  {
+    path: RouteName.Search,
+    title: 'Search',
+    loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
+  },
 ];
 @NgModule({
   imports: [

@@ -1,28 +1,3 @@
-ion-header {
-    ion-toolbar {
-        .search-mode {
-            width: 100%;
-        }
-    }
-}
-
-ion-content {
-
-    ion-list {
-        background: none;
-
-        ion-item {
-            --background: none;
-        }
-    }
-
-    .filter-badges {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-
-        ion-badge {
-            margin: 5px;
-        }
-    }
+.search-mode {
+    padding-right: 12px;
 }

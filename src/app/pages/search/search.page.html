@@ -1,6 +1,11 @@
 <ion-header>
-  <ion-toolbar class="ion-text-center">
-    <div class="search-mode ion-padding">
+  <ion-toolbar>
+    <ion-back-button defaultHref="/tabs/map"
+                     icon="chevron-back"
+                     slot="start">
+    </ion-back-button>
+
+    <div class="search-mode">
       <ion-segment mode="ios"
                    [value]="selectedSearchMode$ | async"
                    (ionChange)="onSearchModeChange($event)">
@@ -16,8 +21,7 @@
   </ion-toolbar>
 
   <ion-toolbar *ngIf="(selectedSearchMode$ | async) === searchMode.FreeText">
-    <ion-searchbar #search
-                   mode="ios"
+    <ion-searchbar mode="ios"
                    debounce="0"
                    [formControl]="searchTerm"
                    animated="true">
@@ -26,7 +30,6 @@
 </ion-header>
 
 <ion-content fullscreen="true">
-
   <ng-container *ngIf="(selectedSearchMode$ | async) === searchMode.NearBy">
     <ng-container *ngIf="nearBy$ | async as nearBy; else loading">
 
@@ -88,15 +91,8 @@
 
   <ng-template #intro>
     <div class="ion-padding ion-text-center">
-      <p>Search or find things near by you</p>
-      <ion-badge [color]="badgeColor.artist"
-                 class="ion-margin">artists</ion-badge>
-      <ion-badge [color]="badgeColor.stage"
-                 class="ion-margin">stages</ion-badge>
-      <ion-badge [color]="badgeColor.asset"
-                 class="ion-margin">bars</ion-badge>
-      <ion-badge [color]="badgeColor.event"
-                 class="ion-margin">events</ion-badge>
+      <p>Search for Artists, Stages, Bars or Events</p>
+      <p>or find things Near By</p>
     </div>
   </ng-template>
 </ion-content>

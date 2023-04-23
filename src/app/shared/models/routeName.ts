@@ -1,4 +1,5 @@
 export enum RouteName {
+    Tabs = 'tabs',
     Map = 'map',
     Artist = 'artist',
     Timetable = 'timetable',
@@ -11,5 +12,6 @@ export enum RouteName {
     Settings = 'settings',
     Tickets = 'tickets',
     Playlists = 'playlists',
-    Merch = 'merch'
+    Merch = 'merch',
+    Favorite = 'favorite'
 }
