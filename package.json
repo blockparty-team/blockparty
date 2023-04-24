@@ -36,7 +36,7 @@
     "@capacitor/share": "4.1.1",
     "@capacitor/status-bar": "^4.1.0",
     "@ionic/angular": "7.0.3",
-    "@supabase/supabase-js": "2.18.0",
+    "@supabase/supabase-js": "2.21.0",
     "date-fns": "^2.29.3",
     "geojson": "^0.5.0",
     "lottie-web": "^5.10.1",
