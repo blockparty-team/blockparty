@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnInit, inject } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
 import { SupabaseService } from './services/supabase.service';
@@ -7,6 +7,10 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
 import { PushNotificationService } from './services/push-notification.service';
+import { AppService } from './services/app.service';
+import { Platform } from '@ionic/angular';
+import { FavoritesService } from './services/favorites.service';
+import { TimetableStateService } from './pages/timetable/state/timetable-state.service';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +20,16 @@ import { PushNotificationService } from './services/push-notification.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-    private zone: NgZone,
-    private router: Router,
-    private supabase: SupabaseService,
-    private routeHistoryService: RouteHistoryService,
-    private pushNotificationService: PushNotificationService
-  ) {
+  private appService = inject(AppService);
+  private zone = inject(NgZone);
+  private router = inject(Router);
+  private supabase = inject(SupabaseService);
+  private routeHistoryService = inject(RouteHistoryService);
+  private pushNotificationService = inject(PushNotificationService);
+  private platform = inject(Platform);
+  private favoritesService = inject(FavoritesService);
+
+  constructor() {
     this.setupAppUrlOpenListener();
   }
 
@@ -51,6 +58,13 @@ export class AppComponent implements OnInit {
         this.supabase.setSession(null);
       }
     });
+
+    this.platform.ready().then(() => {
+      // this.favoritesService.rescheduleFavoriteNotifications()
+      console.log('ready')
+      this.appService.appInitialized()
+    });
+    this.platform.resume.subscribe(() => this.appService.appInitialized());
 
     this.routeHistoryService.init();
   }

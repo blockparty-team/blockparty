@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
+import { ArtistNotification } from '@app/interfaces/favorite-notification';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FavoritesService } from '@app/services/favorites.service';
 import { SupabaseService } from '@app/services/supabase.service';
@@ -56,6 +57,24 @@ export class TimetableStateService {
     }),
     shareReplay(1)
   )
+
+  timetableArtistNotification$: Observable<ArtistNotification[]> = this.timetables$.pipe(
+    map(days => days
+      .flatMap(day => day.events
+        .flatMap(event => event.stages
+          .flatMap(stage => stage.timetable
+            .flatMap(act => ({
+              artistId: act.artist_id,
+              artistName: act.artist_name,
+              startTime: act.start_time,
+              stageName: stage.stage_name,
+              eventName: event.event_name
+            }))
+          )
+        )
+      )
+    )
+  );
 
   dayEvents$: Observable<DayEventStageTimetable> = combineLatest([
     this.timetableWithFavorites$,
