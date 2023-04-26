@@ -51,6 +51,11 @@ export class SidebarPage implements OnInit {
     //   routeName: RouteName.Merch
     // },
     {
+      name: 'Transport',
+      icon: 'car-outline',
+      routeName: RouteName.Transport
+    },
+    {
       name: 'About',
       icon: 'information-circle-outline',
       routeName: RouteName.About

@@ -1,0 +1,40 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button [defaultHref]="previousRoute$ | async"
+                     icon="chevron-back"
+                     slot="start">
+    </ion-back-button>
+    <ion-title>Transport</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="transport-container">
+    <img src="assets/partners/viggo.webp"
+         alt="Viggo taxa logo">
+    <div class="text">
+      <p>Get back home save driving <ion-text color="primary">green</ion-text> with Viggo.</p>
+      <p>Use voucher code below to get a discount.</p>
+    </div>
+    <ion-button (click)="onCopyVoucherCode()"
+                id="copy-voucher"
+                color="secondary">
+      {{viggoVoucherCode}}
+      <ion-icon name="copy-outline"></ion-icon>
+    </ion-button>
+    <br>
+    <br>
+    <ion-button href="https://www.viggo.com/">
+      Go to Viggo
+    </ion-button>
+  </div>
+
+  <ion-toast color="secondary"
+             position="top"
+             icon="copy-outline"
+             trigger="copy-voucher"
+             message="Vourcher code copied to clipboard"
+             [duration]="5000">
+  </ion-toast>
+
+</ion-content>
