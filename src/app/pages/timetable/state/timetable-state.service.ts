@@ -9,7 +9,9 @@ import { Observable, combineLatest, concat } from 'rxjs';
 import { filter, map, shareReplay, tap } from 'rxjs/operators'
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class TimetableStateService {
 
   private supabase = inject(SupabaseService);
@@ -58,6 +60,7 @@ export class TimetableStateService {
     shareReplay(1)
   )
 
+  // Flattened timetables for rescheduling notificationens
   timetableArtistNotification$: Observable<ArtistNotification[]> = this.timetables$.pipe(
     map(days => days
       .flatMap(day => day.events

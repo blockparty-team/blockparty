@@ -7,10 +7,8 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
 import { PushNotificationService } from './services/push-notification.service';
-import { AppService } from './services/app.service';
 import { Platform } from '@ionic/angular';
-import { FavoritesService } from './services/favorites.service';
-import { TimetableStateService } from './pages/timetable/state/timetable-state.service';
+import { NotificationSchedulingService } from './services/notification-scheduling.service';
 
 @Component({
   selector: 'app-root',
@@ -20,14 +18,13 @@ import { TimetableStateService } from './pages/timetable/state/timetable-state.s
 })
 export class AppComponent implements OnInit {
 
-  private appService = inject(AppService);
   private zone = inject(NgZone);
   private router = inject(Router);
   private supabase = inject(SupabaseService);
   private routeHistoryService = inject(RouteHistoryService);
   private pushNotificationService = inject(PushNotificationService);
   private platform = inject(Platform);
-  private favoritesService = inject(FavoritesService);
+  private notificationSchedulingService = inject(NotificationSchedulingService);
 
   constructor() {
     this.setupAppUrlOpenListener();
@@ -59,12 +56,8 @@ export class AppComponent implements OnInit {
       }
     });
 
-    this.platform.ready().then(() => {
-      // this.favoritesService.rescheduleFavoriteNotifications()
-      console.log('ready')
-      this.appService.appInitialized()
-    });
-    this.platform.resume.subscribe(() => this.appService.appInitialized());
+    this.notificationSchedulingService.rescheduleAllArtistNotifications();
+    this.platform.resume.subscribe(() => this.notificationSchedulingService.rescheduleAllArtistNotifications());
 
     this.routeHistoryService.init();
   }
