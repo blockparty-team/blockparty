@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, combineLatest, concat, merge } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject, Observable, Subject, combineLatest, concat, merge } from 'rxjs';
 import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { Favorite, FavoriteEntity } from '@app/interfaces/database-entities';
 import { DeviceStorageService } from './device-storage.service';
 import { SupabaseService } from './supabase.service';
 import { DeviceService } from './device.service';
 import { LocalNotificationsService } from './local-notifications.service';
+import { TimetableStateService } from '@app/pages/timetable/state/timetable-state.service';
+import { ArtistFavorite } from '@app/interfaces/artist';
 
 const initialState: Pick<Favorite, 'entity' | 'ids'>[] = [
   {
@@ -18,6 +20,16 @@ const initialState: Pick<Favorite, 'entity' | 'ids'>[] = [
   providedIn: 'root'
 })
 export class FavoritesService {
+
+  // private timetableService = inject(TimetableStateService);
+  private deviceStorageService = inject(DeviceStorageService);
+  private deviceService = inject(DeviceService);
+  private supabase = inject(SupabaseService);
+  private localNotifications = inject(LocalNotificationsService);
+  
+
+  private _artistFavoriteChanged$ = new Subject<ArtistFavorite>();
+  public artistFavoriteChanged$ = this._artistFavoriteChanged$.asObservable();
 
   private _favorites$ = new BehaviorSubject<Partial<Favorite>[]>(initialState);
   public favorites$: Observable<Favorite[]> = concat(
@@ -36,17 +48,30 @@ export class FavoritesService {
     )
   );
 
-  constructor(
-    private deviceStorageService: DeviceStorageService,
-    private deviceService: DeviceService,
-    private supabase: SupabaseService,
-    private localNotifications: LocalNotificationsService
-  ) { }
+  scheduleNotification(): void {
+
+  }
+
+  removeNotification(artist_id: string): void {
+    this.localNotifications.getNotificationIdFromArtistId(artist_id).then(id => 
+      this.localNotifications.cancelNotification(id))
+
+  } 
+
+  createNotificationMessage(): void {
+    
+  }
 
   toggleFavorite(entity: FavoriteEntity, id: string) {
 
     let update: Partial<Favorite>[];
+    let isFavorite: boolean;
 
+    isFavorite = this._favorites$.value.find(favorite => favorite.entity === entity).ids?.includes(id);
+    this._artistFavoriteChanged$.next({"artist_id": id, isFavorite: !isFavorite})  
+
+    // let message = this.createNotificationMessage();
+    // this.localNotifications.scheduleNotification("1", "HEY", new Date(Date.now()+ 15000));
     if (this._favorites$.value.length === 0) {
       update = [{ entity, ids: [id] }];
     } else {
@@ -58,8 +83,7 @@ export class FavoritesService {
             : [...favorite.ids, id]
         }
         : favorite
-      );
-      this.localNotifications.scheduleNotification("1", "HEY");
+        );
     }
 
     this._favorites$.next(update);
@@ -74,6 +98,12 @@ export class FavoritesService {
           'artist',
           favoriteIds,
         )
+      })
+    ).subscribe()
+
+    this.artistFavoriteChanged$.pipe(
+      map(artistFavorite => {
+        console.log(artistFavorite);
       })
     ).subscribe()
   }
