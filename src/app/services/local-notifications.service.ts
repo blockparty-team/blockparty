@@ -35,6 +35,11 @@ export class LocalNotificationsService {
     return LocalNotifications.schedule({notifications})
   }
 
+  public async getAllNotifications(): Promise<void> {
+    const pending: PendingResult = await LocalNotifications.getPending();
+    console.log(pending.notifications);
+  }
+
   public async cancelNotification(id: number): Promise<void> {
     await LocalNotifications.cancel({ notifications: [{ id }] });
   }
