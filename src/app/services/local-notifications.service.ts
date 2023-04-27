@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ArtistNotification } from '@app/interfaces/favorite-notification';
 import { LocalNotifications, LocalNotificationSchema, LocalNotificationDescriptor, PendingResult, ScheduleResult } from '@capacitor/local-notifications';
-import { sub } from 'date-fns'
+import { sub, add } from 'date-fns'
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +32,7 @@ export class LocalNotificationsService {
   }
 
   public schedule(notifications: LocalNotificationSchema[]): Promise<ScheduleResult> {
-    return LocalNotifications.schedule({notifications})
+    return LocalNotifications.schedule({ notifications })
   }
 
   public async getAllNotifications(): Promise<void> {
@@ -49,7 +49,7 @@ export class LocalNotificationsService {
     const cancelIds: LocalNotificationDescriptor[] = pending.notifications
       .map(notification => ({ id: notification.id }));
 
-    LocalNotifications.cancel({ notifications: cancelIds });
+    if (cancelIds.length > 0) LocalNotifications.cancel({ notifications: cancelIds });
   }
 
   public async getNotificationIdFromArtistId(artistId: string): Promise<number> {
@@ -60,8 +60,8 @@ export class LocalNotificationsService {
   }
 
   public artistNotificationPayload(
-    artistAct: ArtistNotification,
     id: number,
+    artistAct: ArtistNotification,
     minutesBefore: number = 60
   ): LocalNotificationSchema {
 
@@ -70,8 +70,9 @@ export class LocalNotificationsService {
     return {
       id,
       title: `${artistAct.artistName} is playing in ${minutesBefore} minutes`,
-      body: `${artistAct.artistName} is playing at ${artistAct.stageName} stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString}`,
-      schedule: { at: sub(startTime, { minutes: minutesBefore }) }, // Is this taking timezone into account?
+      body: `${artistAct.artistName} is playing at ${artistAct.stageName} stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`,
+      // schedule: {at: add(new Date(),  {seconds: 15})}, // For testing
+      schedule: { at: sub(startTime, { minutes: minutesBefore }) },
       extra: { id: artistAct.artistId },
     }
   }
