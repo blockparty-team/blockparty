@@ -8,8 +8,5 @@
 			"smallIcon": "splash",
 			"iconColor": "#488AFF"
 		}
-	},
-	"server": {
-		"url": "http://192.168.0.10:8100"
 	}
 }
