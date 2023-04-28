@@ -44,9 +44,13 @@ export class LocalNotificationsService {
     await LocalNotifications.cancel({ notifications: [{ id }] });
   }
 
-  public async cancelAllNotifications(): Promise<void> {
+  public async cancelAllNotifications(minutesBefore: number = 60): Promise<void> {
+
+    const now = new Date();
     const pending: PendingResult = await LocalNotifications.getPending();
     const cancelIds: LocalNotificationDescriptor[] = pending.notifications
+      // Find non-exceeded pending notifications 
+      .filter(notification => sub(notification.schedule.at, { minutes: minutesBefore }) >= now)
       .map(notification => ({ id: notification.id }));
 
     if (cancelIds.length > 0) LocalNotifications.cancel({ notifications: cancelIds });
@@ -70,10 +74,10 @@ export class LocalNotificationsService {
     return {
       id,
       title: `${artistAct.artistName} is playing in ${minutesBefore} minutes`,
-      body: `${artistAct.artistName} is playing at ${artistAct.stageName} stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`,
-      // schedule: {at: add(new Date(),  {seconds: 5})}, // For testing
+      body: `${artistAct.artistName} is playing at ${artistAct.stageName} stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
+      // schedule: {at: add(new Date(),  {seconds: 10})}, // For testing
       schedule: { at: sub(startTime, { minutes: minutesBefore }) },
-      extra: { id: artistAct.artistId, artistName: artistAct.artistName},
+      extra: { id: artistAct.artistId, artistName: artistAct.artistName },
     }
   }
 }
