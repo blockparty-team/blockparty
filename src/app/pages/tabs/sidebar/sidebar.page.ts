@@ -35,31 +35,31 @@ export class SidebarPage implements OnInit {
       icon: 'musical-notes-outline',
       routeName: RouteName.Event
     },
-    {
-      name: 'Playlists',
-      icon: 'play-outline',
-      routeName: RouteName.Playlists
-    },
-    {
-      name: 'Sponsors & Partners',
-      icon: 'rocket-outline',
-      routeName: RouteName.Partners
-    },
-    {
-      name: 'Merch',
-      icon: 'cash-outline',
-      routeName: RouteName.Merch
-    },
+    // {
+    //   name: 'Playlists',
+    //   icon: 'play-outline',
+    //   routeName: RouteName.Playlists
+    // },
+    // {
+    //   name: 'Sponsors & Partners',
+    //   icon: 'rocket-outline',
+    //   routeName: RouteName.Partners
+    // },
+    // {
+    //   name: 'Merch',
+    //   icon: 'cash-outline',
+    //   routeName: RouteName.Merch
+    // },
     {
       name: 'About',
       icon: 'information-circle-outline',
       routeName: RouteName.About
     },
-    {
-      name: 'Settings',
-      icon: 'settings-outline',
-      routeName: RouteName.Settings
-    },
+    // {
+    //   name: 'Settings',
+    //   icon: 'settings-outline',
+    //   routeName: RouteName.Settings
+    // },
     {
       name: 'Search',
       icon: 'search',
