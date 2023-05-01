@@ -3,6 +3,7 @@ import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
 import { SupabaseService } from './services/supabase.service';
 import { App, URLOpenListenerEvent } from "@capacitor/app";
+import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
 import { PushNotificationService } from './services/push-notification.service';
@@ -26,6 +27,13 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    SplashScreen.show({
+      showDuration: 2000,
+      autoHide: true,
+      fadeOutDuration: 300
+    });
+
     Device.getInfo().then(info => {
       if (info.platform !== 'web') {
         StatusBar.setBackgroundColor({ color: '#443f3f' });
