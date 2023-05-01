@@ -1,8 +1,8 @@
 <ion-content>
   <ng-container *ngIf="(listViewMode$ | async) === 'byStage'">
-    <ng-container *ngIf="timetableByStage$ | async as stages">
+    <ng-container *ngIf="timetableByStage$ | async as timetableByStage; else noTimetable">
       <ion-list>
-        <ion-item-group *ngFor="let stage of stages">
+        <ion-item-group *ngFor="let stage of timetableByStage">
           <ion-item-divider sticky="true"
                             color="primary">
             <ion-label>{{stage.stage_name}}</ion-label>
@@ -31,33 +31,36 @@
   </ng-container>
 
   <ng-container *ngIf="(listViewMode$ | async) === 'byTime'">
-    <ion-list>
-      <ion-item *ngFor="let artist of timetableByTime$ | async">
-        <ion-label>
-          <div class="timeslot">
-            <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
-            <span class="end-time">{{artist.end_time | date:'HH:mm'}}</span>
-          </div>
-          <div class="artist-stage">
-            <span class="artist-name"
-                  [routerLink]="['/tabs', routeName.Artist, artist.artist_name]">
-              {{artist.artist_name}}
-            </span>
-            <span class="stage-name">
-              {{artist.stageName}}
-            </span>
-          </div>
+    <ng-container *ngIf="timetableByTime$ | async as timetableByTime; else noTimetable">
+      <ion-list>
+        <ion-item *ngFor="let artist of timetableByTime">
+          <ion-label>
+            <div class="timeslot">
+              <span class="start-time">{{artist.start_time | date:'HH:mm'}}</span>
+              <span class="end-time">{{artist.end_time | date:'HH:mm'}}</span>
+            </div>
+            <div class="artist-stage">
+              <span class="artist-name"
+                    [routerLink]="['/tabs', routeName.Artist, artist.artist_name]">
+                {{artist.artist_name}}
+              </span>
+              <span class="stage-name">
+                {{artist.stageName}}
+              </span>
+            </div>
 
-          <div class="favorite">
-            <ion-icon slot="icon-only"
-                      [color]="artist.isFavorite ? 'primary' : ''"
-                      [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
-                      (click)="onToggleFavorite(artist.artist_id)"></ion-icon>
-          </div>
+            <div class="favorite">
+              <ion-icon slot="icon-only"
+                        [color]="artist.isFavorite ? 'primary' : ''"
+                        [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
+                        (click)="onToggleFavorite(artist.artist_id)"></ion-icon>
+            </div>
 
-        </ion-label>
-      </ion-item>
-    </ion-list>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
   </ng-container>
 </ion-content>
 
@@ -73,3 +76,17 @@
     <ion-label>By time</ion-label>
   </ion-segment-button>
 </ion-segment>
+
+<ng-template #noTimetable>
+  <div class="no-timetable">
+    <ion-icon size="large"
+              color="secondary"
+              name="sad-outline">
+    </ion-icon>
+    <h5>
+      <ion-text color="secondary">
+        No timetable available for this event
+      </ion-text>
+    </h5>
+  </div>
+</ng-template>
