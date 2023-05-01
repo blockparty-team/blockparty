@@ -343,6 +343,7 @@ export interface Database {
           inserted_at: string
           name: string
           public: boolean | null
+          rank: number
           ts: unknown | null
         }
         Insert: {
@@ -354,6 +355,7 @@ export interface Database {
           inserted_at?: string
           name: string
           public?: boolean | null
+          rank?: number
           ts?: unknown | null
         }
         Update: {
@@ -365,6 +367,7 @@ export interface Database {
           inserted_at?: string
           name?: string
           public?: boolean | null
+          rank?: number
           ts?: unknown | null
         }
       }
