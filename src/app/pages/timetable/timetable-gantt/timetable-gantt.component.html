@@ -1,4 +1,4 @@
-<ng-container *ngIf="timetableConfig$ | async as config">
+<ng-container *ngIf="timetableConfig$ | async as config; else noTimetable">
   <div class="timetable"
        #timetable
        [style.--template-columns]="config.gridTemplateColumns"
@@ -55,3 +55,17 @@
     </ng-container>
   </div>
 </ng-container>
+
+<ng-template #noTimetable>
+  <div class="no-timetable">
+    <ion-icon size="large"
+              color="secondary"
+              name="sad-outline">
+    </ion-icon>
+    <h5>
+      <ion-text color="secondary">
+        No timetable available for this event
+      </ion-text>
+    </h5>
+  </div>
+</ng-template>
