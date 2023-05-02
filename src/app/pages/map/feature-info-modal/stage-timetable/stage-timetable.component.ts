@@ -6,7 +6,7 @@ import { ModalController, SegmentCustomEvent } from '@ionic/angular';
 import { Browser } from '@capacitor/browser';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapLayer } from '@app/interfaces/map-layer';
-import { Day, StageGeojsonProperties, Timetable, TimetableDay } from '@app/interfaces/stage-geojson-properties';
+import { Day, StageGeojsonProperties, Timetable } from '@app/interfaces/stage-geojson-properties';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { RouteName } from '@app/shared/models/routeName';
 import { Ticket } from '@app/interfaces/event';
@@ -21,7 +21,7 @@ export class StageTimetableComponent implements OnInit {
 
   private mapStateService = inject(MapStateService);
   private modalCtrl = inject(ModalController);
-  private router = inject(Router); 
+  private router = inject(Router);
 
   stageName$: Observable<string>;
   stageDescription$: Observable<string>;
