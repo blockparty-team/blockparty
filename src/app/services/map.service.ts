@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { concat, EMPTY, Observable } from 'rxjs';
-import { catchError, filter, first, tap } from 'rxjs/operators';
+import { concat, EMPTY, forkJoin, Observable } from 'rxjs';
+import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { AttributionControl, FilterSpecification, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, PointLike } from 'maplibre-gl';
 import { Device } from '@capacitor/device';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
@@ -321,6 +321,8 @@ export class MapService {
             'circle-stroke-color': 'white',
             'circle-stroke-width': [
               'interpolate', ['linear'], ['zoom'],
+              10, 0,
+              14, 0,
               15, 2,
               15.5, 0
             ],
@@ -350,8 +352,8 @@ export class MapService {
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
               13, 0.1,
-              18, 0.6,
-              22, 1.5
+              18, 0.4,
+              22, 1
             ],
             'icon-allow-overlap': true,
             'text-allow-overlap': true,
@@ -382,7 +384,7 @@ export class MapService {
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
               15, 0,
-              15.5, 0.6
+              15.5, 0.5
             ],
             'icon-allow-overlap': true
           }
@@ -424,20 +426,30 @@ export class MapService {
   //   });
   // }
 
-  private get loadMapIcons$(): Observable<MapIconViewModel[]> {
+  private addImage(fileUrl: string): Observable<HTMLImageElement | ImageBitmap> {
+    return new Observable(observer => {
+      this.map.loadImage(fileUrl, (error, image) => {
+        if (error) {
+          observer.error(error);
+          return;
+        }
+
+        observer.next(image);
+        observer.complete();
+      });
+    });
+  }
+
+  private get loadMapIcons$(): Observable<unknown> {
     return this.fileService.mapIconUrls$.pipe(
       filter(icons => !!icons),
-      tap(icons => icons.forEach(icon => {
-        this.map.loadImage(icon.fileUrl, (error, img) => {
-
-          if (error) {
-            throw error;
-          };
-
-          this.map.addImage(icon.name, img);
-        })
-      }))
-    )
+      switchMap(icons => forkJoin(icons.map(icon => this.addImage(icon.fileUrl))).pipe(
+        map(images => icons.map((icon, i) => ({name: icon.name, image: images[i]})))
+      )),
+      tap((icons: {name: string, image: HTMLImageElement | ImageBitmap}[]) => {
+        icons.forEach(icon => this.map.addImage(icon.name, icon.image))
+      })
+    );
   }
 
   private addMapData(): void {
