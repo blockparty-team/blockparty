@@ -292,6 +292,7 @@ export interface Database {
       }
       icon: {
         Row: {
+          color: string | null
           id: string
           inserted_at: string
           name: string
@@ -299,6 +300,7 @@ export interface Database {
           storage_path: string | null
         }
         Insert: {
+          color?: string | null
           id?: string
           inserted_at?: string
           name: string
@@ -306,6 +308,7 @@ export interface Database {
           storage_path?: string | null
         }
         Update: {
+          color?: string | null
           id?: string
           inserted_at?: string
           name?: string
@@ -407,6 +410,7 @@ export interface Database {
     Views: {
       asset_geojson: {
         Row: {
+          color: string | null
           description: string | null
           geom: unknown | null
           icon: string | null
@@ -588,6 +592,7 @@ export interface Database {
           owner: string | null
           path_tokens: string[] | null
           updated_at: string | null
+          version: string | null
         }
         Insert: {
           bucket_id?: string | null
@@ -599,6 +604,7 @@ export interface Database {
           owner?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
+          version?: string | null
         }
         Update: {
           bucket_id?: string | null
@@ -610,6 +616,7 @@ export interface Database {
           owner?: string | null
           path_tokens?: string[] | null
           updated_at?: string | null
+          version?: string | null
         }
       }
     }
@@ -617,6 +624,15 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      can_insert_object: {
+        Args: {
+          bucketid: string
+          name: string
+          owner: string
+          metadata: Json
+        }
+        Returns: undefined
+      }
       extension: {
         Args: {
           name: string
