@@ -7,6 +7,7 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
 import { FileService } from '@app/services/file.service';
+import { FavoriteStateService } from '@app/pages/favorite/state/favorite-state.service';
 
 
 @Injectable({
@@ -30,7 +31,7 @@ export class ArtistStateService {
   // Enriched artist with favorite status and img/srcset
   artists$: Observable<ArtistViewModel[]> = combineLatest([
     this._artists$,
-    this.favoritesService.artistIds$
+    this.favoriteStateService.artistIds$
   ]).pipe(
     filter(([artists, favoriteArtistIds]) => !!artists && !!favoriteArtistIds),
     map(([artists, favoriteArtistIds]) => artists.map(artist => {
@@ -59,6 +60,7 @@ export class ArtistStateService {
     private supabase: SupabaseService,
     private deviceStorageService: DeviceStorageService,
     private favoritesService: FavoritesService,
+    private favoriteStateService: FavoriteStateService,
     private fileService: FileService
   ) { }
 

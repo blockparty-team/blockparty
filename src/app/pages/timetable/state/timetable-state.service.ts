@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ArtistNotification } from '@app/interfaces/favorite-notification';
 import { DeviceStorageService } from '@app/services/device-storage.service';
-import { FavoritesService } from '@app/services/favorites.service';
+import { FavoriteStateService } from '@app/pages/favorite/state/favorite-state.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { Observable, combineLatest, concat } from 'rxjs';
@@ -16,7 +16,7 @@ export class TimetableStateService {
 
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
-  private favoritesService = inject(FavoritesService);
+  private favoriteStateService = inject(FavoriteStateService);
   private filterEventsStateService = inject(FilterEventsStateService);
 
   private timetables$: Observable<DayEventStageTimetable[]> = concat(
@@ -32,9 +32,9 @@ export class TimetableStateService {
     shareReplay(1)
   );
 
-  timetableWithFavorites$: Observable<DayEventStageTimetable[]> = combineLatest([
+ timetableWithFavorites$: Observable<DayEventStageTimetable[]> = combineLatest([
     this.timetables$,
-    this.favoritesService.favorites$
+    this.favoriteStateService.favorites$
   ]).pipe(
     map(([days, favorites]) => {
 

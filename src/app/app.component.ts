@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
 import { PushNotificationService } from './services/push-notification.service';
 import { Platform } from '@ionic/angular';
+// import { FavoritesService } from './services/favorites.service';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from './shared/models/routeName';

@@ -35,9 +35,9 @@ export class LocalNotificationsService {
     return LocalNotifications.schedule({ notifications })
   }
 
-  public async getAllNotifications(): Promise<void> {
+  public async getAllNotifications(): Promise<PendingResult> {
     const pending: PendingResult = await LocalNotifications.getPending();
-    console.log(pending.notifications);
+    return pending;
   }
 
   public async cancelNotification(id: number): Promise<void> {
@@ -46,21 +46,27 @@ export class LocalNotificationsService {
 
   public async cancelAllNotifications(minutesBefore: number = 60): Promise<void> {
 
-    const now = new Date();
-    const pending: PendingResult = await LocalNotifications.getPending();
-    const cancelIds: LocalNotificationDescriptor[] = pending.notifications
-      // Find non-exceeded pending notifications 
-      .filter(notification => sub(notification.schedule.at, { minutes: minutesBefore }) >= now)
-      .map(notification => ({ id: notification.id }));
+    // const now = new Date();
+    // const pending: PendingResult = await LocalNotifications.getPending();
+    // const cancelIds: LocalNotificationDescriptor[] = pending.notifications
+    //   // Find non-exceeded pending notifications 
+    //   .filter(notification => sub(notification.schedule.at, { minutes: minutesBefore }) >= now)
+    //   .map(notification => ({ id: notification.id }));
+    // console.log("Cancelling: ", cancelIds)
 
-    if (cancelIds.length > 0) LocalNotifications.cancel({ notifications: cancelIds });
+    // if (cancelIds.length > 0) LocalNotifications.cancel({ notifications: cancelIds });
+    LocalNotifications.getPending().then(pending => {
+      const now = new Date();
+      LocalNotifications.cancel({
+        notifications: pending.notifications
+        .filter(notification => sub(notification.schedule.at, { minutes: minutesBefore }) >= now)
+        .map(notification => ({ id: notification.id }))})
+      })
   }
 
   public async getNotificationIdFromArtistId(artistId: string): Promise<number> {
-    let id: number;
-    id = await LocalNotifications.getPending().then(pending =>
-      pending.notifications.map(notification => notification.extra).find(extra => extra.id === artistId));
-    return id;
+    return LocalNotifications.getPending().then(pending =>
+      pending.notifications.find(notification => notification.extra.id === artistId).id);
   }
 
   public artistNotificationPayload(
@@ -70,7 +76,6 @@ export class LocalNotificationsService {
   ): LocalNotificationSchema {
 
     const startTime = new Date(artistAct.startTime);
-
     return {
       id,
       title: `${artistAct.artistName} is playing in ${minutesBefore} minutes`,

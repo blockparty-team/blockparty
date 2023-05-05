@@ -17,7 +17,7 @@ interface Timetable {
 }
 
 export interface ArtistFavorite {
-    artist_id: string;
+    artistId: string;
     isFavorite: boolean;
 }
 
