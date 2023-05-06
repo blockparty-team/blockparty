@@ -339,7 +339,7 @@ export class MapService {
             'text-justify': 'auto',
             'text-transform': 'uppercase',
             'text-size': 11,
-            'icon-image': 'stage',
+            'icon-image': ['get', 'icon'],
             'icon-anchor': 'bottom',
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
