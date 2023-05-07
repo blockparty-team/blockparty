@@ -335,7 +335,7 @@ export class MapService {
           minzoom: 13,
           layout: {
             'text-field': ['get', 'name'],
-            'text-offset': [0, -0.5],
+            'text-offset': [0, 0.5],
             'text-justify': 'auto',
             'text-transform': 'uppercase',
             'text-size': 11,
@@ -344,7 +344,7 @@ export class MapService {
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
               13, 0.1,
-              18, 0.4,
+              18, 0.5,
               22, 1
             ],
             'icon-allow-overlap': true,
@@ -356,6 +356,11 @@ export class MapService {
             "text-halo-color": getCssVariable('--ion-background-color'),
             "text-halo-width": 3,
             'icon-halo-blur': 10,
+            'icon-opacity': [
+              'interpolate', ['linear'], ['zoom'],
+              13, 0,
+              14, 1
+            ],
             'text-opacity': [
               'interpolate', ['linear'], ['zoom'],
               16.4, 0,
@@ -371,12 +376,12 @@ export class MapService {
           minzoom: 15,
           layout: {
             'icon-anchor': 'bottom',
-            'icon-offset': [9.5, 0],
             'icon-image': ['get', 'icon'],
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
               15, 0,
-              15.5, 0.5
+              16, 0.5,
+              20, 1
             ],
             'icon-allow-overlap': true
           }
