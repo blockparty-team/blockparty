@@ -64,10 +64,14 @@ export class LocalNotificationsService {
       })
   }
 
-  public async getNotificationIdFromArtistId(artistId: string): Promise<number> {
-    return LocalNotifications.getPending().then(pending =>
-      pending.notifications.find(notification => notification.extra.id === artistId).id);
-  }
+  public async getNotificationIdFromArtistId(artistId: string): Promise<number | null> {
+    return LocalNotifications.getPending().then(pending => {
+      let notification = pending.notifications.find(notification => notification.extra.id === artistId);
+      if (!!notification) {
+        return notification.id;
+      }
+    })
+    }
 
   public artistNotificationPayload(
     id: number,

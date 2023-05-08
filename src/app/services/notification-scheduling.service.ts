@@ -31,6 +31,7 @@ export class NotificationSchedulingService implements OnDestroy {
             // TODO: Need to check for undefined startTime
             switchMap(id => this.timetableStateService.timetableArtistNotification$.pipe(
               map( artistNotifications  => artistNotifications.find(artist => artist.artistId === artistId && artist.startTime != undefined)),
+              filter(artistNotificaton => !!artistNotificaton),
               map( artistNotification => [this.localNotificationService.artistNotificationPayload(
                   id, artistNotification, 60)]),
               mergeMap(notifications => this.localNotificationService.schedule(notifications)),
@@ -41,9 +42,7 @@ export class NotificationSchedulingService implements OnDestroy {
             switchMap(notificationId => this.localNotificationService.cancelNotification(notificationId)),
           )
         }}
-      ),
-      switchMap(_ => from(this.localNotificationService.getAllNotifications())),
-      tap(console.log)
+      )
     ).subscribe();
   }
   
