@@ -28,7 +28,6 @@ export class NotificationSchedulingService implements OnDestroy {
       switchMap(({ artistId, isFavorite }) => {
         if (isFavorite) {
           return from(this.localNotificationService.getNextId()).pipe(
-            // TODO: Need to check for undefined startTime
             switchMap(id => this.timetableStateService.timetableArtistNotification$.pipe(
               map( artistNotifications  => artistNotifications.find(artist => artist.artistId === artistId && artist.startTime != undefined)),
               filter(artistNotificaton => !!artistNotificaton),
