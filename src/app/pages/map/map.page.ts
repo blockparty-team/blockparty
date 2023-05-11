@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
-import { from, Subject } from 'rxjs';
+import { merge, from, Subject } from 'rxjs';
 import { filter, map, switchMap, tap, withLatestFrom, delay, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@app/services/map.service';
@@ -12,6 +12,8 @@ import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
 import { AnimationOptions } from 'ngx-lottie';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
+import { RouteHistoryService } from '@app/services/routeHistory.service';
+import { RouteName } from '@app/shared/models/routeName';
 
 @Component({
   selector: 'app-map',
@@ -31,6 +33,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private filterEventsStateService = inject(FilterEventsStateService);
   private tabStateService = inject(TabsStateService);
   private modalCtrl = inject(ModalController);
+  private routeHistoryService = inject(RouteHistoryService);
 
   mapLoaded$ = this.mapStateService.mapLoaded$;
   mapIdle$ = this.mapStateService.mapIdle$;
@@ -119,12 +122,24 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe();
 
     // Resize map when navigating to map page, to prevent map not fitting container
-    this.tabStateService.currentTab$.pipe(
-      distinctUntilChanged(),
-      filter(tab => tab === Tab.Map),
+    merge(
+      this.tabStateService.currentTab$.pipe(
+        distinctUntilChanged(),
+        filter(tab => tab === Tab.Map)
+      ),
+      this.routeHistoryService.history$.pipe(
+        map(history => history.current === `/${RouteName.Tabs}/${RouteName.Map}`),
+        filter(isMapRoute => isMapRoute)
+      )
+    ).pipe(
       withLatestFrom(this.mapStateService.mapLoaded$),
       filter(([, mapLoaded]) => mapLoaded),
-      tap(() => this.mapService.resize()),
+      tap(() => {
+        // Using timeout because of animation
+        setTimeout(() => {
+          this.mapService.resize()
+        }, 200);
+      }),
       takeUntil(this.abandon$)
     ).subscribe()
   }
@@ -133,7 +148,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
     // Prevent map partial div rendering on init
     setTimeout(() => {
       this.mapService.initMap();
-    }, 50);
+    }, 200);
   }
 
   ngOnDestroy(): void {
