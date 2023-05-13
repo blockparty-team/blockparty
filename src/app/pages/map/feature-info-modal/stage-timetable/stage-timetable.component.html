@@ -104,9 +104,25 @@
 <div *ngIf="!(timetable$ | async)"
      class="description">
   <div class="no-timetable ion-margin">
-    <ion-badge color="warning">
-      No timetable available for this stage
-    </ion-badge>
+
+    <ng-container *ngIf="tags$ | async as tags">
+      <ion-badge color="tertiary"
+                 *ngFor="let tag of tags"
+                 class="tag">
+        {{tag}}
+      </ion-badge>
+    </ng-container>
   </div>
-  <p>{{stageDescription$ | async}}</p>
+  
+  <ng-container *ngIf="stageDescription$ | async as description; else noTimetable">
+    <p>{{description}}</p>
+  </ng-container>
+
+  <ng-template #noTimetable>
+    <div class="no-timetable ion-margin">
+      <ion-badge color="medium">
+        No timetable available for this stage
+      </ion-badge>
+    </div>
+  </ng-template>
 </div>

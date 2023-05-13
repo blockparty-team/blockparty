@@ -30,6 +30,7 @@ export class StageTimetableComponent implements OnInit {
   timetable$: Observable<Timetable[]>;
   hasTimetable$: Observable<boolean>;
   location$: Observable<[number, number]>;
+  tags$: Observable<string[]>;
 
   private _selectedDay$ = new BehaviorSubject<string>(null);
   selectedDay$: Observable<string> = this._selectedDay$.asObservable();
@@ -77,6 +78,10 @@ export class StageTimetableComponent implements OnInit {
 
     this.tickets$ = stage$.pipe(
       map(stage => stage.properties.tickets)
+    );
+
+    this.tags$ = stage$.pipe(
+      map(stage => stage.properties.tags)
     );
 
     this.location$ = stage$.pipe(
