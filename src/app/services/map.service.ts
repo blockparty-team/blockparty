@@ -104,7 +104,8 @@ export class MapService {
             // Since stages has timetables and tickets properties represented as objects, 
             // these are parsed to get the back to original objects.
             timetables: JSON.parse(feature.properties.timetables),
-            tickets: feature.properties.tickets ? JSON.parse(feature.properties.tickets) : null
+            tickets: feature.properties.tickets ? JSON.parse(feature.properties.tickets) : null,
+            tags: feature.properties.tags ? JSON.parse(feature.properties.tags) : null
           } as StageGeojsonProperties
           : feature.properties,
         geometry: feature.geometry as Point

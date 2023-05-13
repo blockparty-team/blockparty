@@ -347,6 +347,7 @@ export interface Database {
           name: string
           public: boolean | null
           rank: number
+          tags: string[] | null
           ts: unknown | null
         }
         Insert: {
@@ -359,6 +360,7 @@ export interface Database {
           name: string
           public?: boolean | null
           rank?: number
+          tags?: string[] | null
           ts?: unknown | null
         }
         Update: {
@@ -371,6 +373,7 @@ export interface Database {
           name?: string
           public?: boolean | null
           rank?: number
+          tags?: string[] | null
           ts?: unknown | null
         }
       }
@@ -470,6 +473,7 @@ export interface Database {
           icon: string | null
           id: string | null
           name: string | null
+          tags: string[] | null
           tickets: Json | null
           timetables: Json | null
         }
