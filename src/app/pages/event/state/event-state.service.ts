@@ -43,13 +43,13 @@ export class EventStateService {
 
       const srcset = bucket && path
         ? this.fileService.imageSrcset(bucket, path)
-        : 'assets/distortion_logo.png';
+        : null;
 
       return {
         ...event,
         imgUrl: bucket && path
           ? this.supabase.publicImageUrl(bucket, path)
-          : 'assets/distortion_logo.png',
+          : null,
         srcset
       }
     })),
