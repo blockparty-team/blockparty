@@ -11,20 +11,24 @@
 
 <ion-content>
   <ng-container *ngIf="event$ | async as event">
-    <ion-fab vertical="top"
+    <ion-fab slot="fixed"
+             vertical="top"
              horizontal="end">
 
-      <ion-fab-button (click)="onZoomToEventOnMap(event.id, event.bounds)">
+      <ion-fab-button color="secondary"
+                      (click)="onZoomToEventOnMap(event.id, event.bounds)">
         <ion-icon name="map-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab-button id="event-detail-open-tickets-modal"
+      <ion-fab-button color="secondary"
+                      id="event-detail-open-tickets-modal"
                       *ngIf="event.tickets"
                       class="margin-top">
         <ion-icon name="ticket-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab-button *ngIf="canShare$ | async"
+      <ion-fab-button color="secondary"
+                      *ngIf="canShare$ | async"
                       class="margin-top"
                       (click)="share(event)">
         <ion-icon name="share-social-outline"></ion-icon>
@@ -32,9 +36,12 @@
 
     </ion-fab>
 
-    <img [src]="event.imgUrl"
-         alt="Image of {{event.name}}"
-         [srcset]="event.srcset">
+    <ng-container *ngIf="event.imgUrl">
+      <img [src]="event.imgUrl"
+           alt="Image of {{event.name}}"
+           [srcset]="event.srcset">
+    </ng-container>
+
 
     <div class="ion-padding">
       <header class="ion-text-center">

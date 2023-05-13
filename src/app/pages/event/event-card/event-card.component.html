@@ -1,8 +1,11 @@
-<ion-card [routerLink]="['./', event.id]">
+<ion-card [routerLink]="['./', event.id]"
+          [style.background-color]="event.event_type?.color">
 
-  <img [src]="event.imgUrl"
-       alt="Image of {{event.name}}"
-       [srcset]="event.srcset">
+  <ng-container *ngIf="event.imgUrl">
+    <img [src]="event.imgUrl"
+         alt="Image of {{event.name}}"
+         [srcset]="event.srcset">
+  </ng-container>
 
   <div class="card-content">
     <div class="card-text">
