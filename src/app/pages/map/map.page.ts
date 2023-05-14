@@ -23,7 +23,8 @@ import { RouteName } from '@app/shared/models/routeName';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     ...animations.slideInOut,
-    ...animations.fadeInOut
+    ...animations.fadeInOut,
+    ...animations.slideUpDown
   ]
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
@@ -35,11 +36,11 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private modalCtrl = inject(ModalController);
   private routeHistoryService = inject(RouteHistoryService);
 
+  private modal: HTMLIonModalElement;
   mapLoaded$ = this.mapStateService.mapLoaded$;
   mapIdle$ = this.mapStateService.mapIdle$;
   hideHeader$ = this.mapStateService.mapInteraction$.pipe(
-    map(interaction => !interaction),
-    delay(200)
+    map(interaction => !interaction)
   );
 
   private abandon$ = new Subject<void>();
@@ -107,7 +108,6 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       takeUntil(this.abandon$)
     ).subscribe();
 
-    // Open modal based on clicked map feature
     this.mapStateService.selectedMapFeature$.pipe(
       switchMap(feature => {
         if (feature.mapLayer === MapLayer.Stage) {
@@ -118,6 +118,13 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           return this.openFeatureInfoModal(0.3, [0, 0.3, 0.6])
         }
       }),
+      takeUntil(this.abandon$)
+    ).subscribe();
+
+    // Remove modal on map interaction
+    this.mapStateService.mapInteraction$.pipe(
+      filter(mapInteraction => mapInteraction && !!this.modal),
+      tap(() => this.modal.dismiss()),
       takeUntil(this.abandon$)
     ).subscribe();
 
@@ -164,10 +171,16 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       this.modalCtrl.create({
         component: FeatureInfoModalComponent,
         initialBreakpoint,
-        breakpoints
+        breakpoints,
+        backdropDismiss: false,
+        showBackdrop: false,
+        backdropBreakpoint: initialBreakpoint
       })
     ).pipe(
-      tap(modal => modal.present())
+      tap(modal => {
+        this.modal = modal;
+        modal.present();
+      })
     );
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { concat, EMPTY, forkJoin, Observable, of } from 'rxjs';
 import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
 import { AttributionControl, FilterSpecification, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, PointLike } from 'maplibre-gl';
@@ -10,7 +10,6 @@ import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { GeolocationService } from './geolocation.service';
 import { FileService } from './file.service';
-import { MapIconViewModel } from '@app/interfaces/map-icon';
 import { Point } from 'geojson';
 import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
 
@@ -19,13 +18,11 @@ import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties
 })
 export class MapService {
 
-  private map: Map;
+  private mapStateService = inject(MapStateService);
+  private geolocationService = inject(GeolocationService);
+  private fileService = inject(FileService);
 
-  constructor(
-    private mapStateService: MapStateService,
-    private geolocationService: GeolocationService,
-    private fileService: FileService
-  ) { }
+  private map: Map;
 
   public initMap(): void {
     this.map = new Map({
@@ -52,8 +49,8 @@ export class MapService {
       this.addClickBehaviourToLayer(MapLayer.Asset);
       this.addClickBehaviourToLayer(MapLayer.AssetIcon);
 
-      this.map.on('movestart', () => this.mapStateService.updateMapInteraction(true));
-      this.map.on('moveend', () => this.mapStateService.updateMapInteraction(false));
+      this.map.on('touchstart', () => this.mapStateService.updateMapInteraction(true));
+      this.map.on('touchend', () => this.mapStateService.updateMapInteraction(false));
     });
 
     this.map.once('idle', () => this.mapStateService.updateMapIdle(false));
