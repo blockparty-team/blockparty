@@ -353,6 +353,7 @@ export interface Database {
           rank: number
           tags: string[] | null
           ts: unknown | null
+          url: string | null
         }
         Insert: {
           description?: string | null
@@ -367,6 +368,7 @@ export interface Database {
           rank?: number
           tags?: string[] | null
           ts?: unknown | null
+          url?: string | null
         }
         Update: {
           description?: string | null
@@ -381,6 +383,7 @@ export interface Database {
           rank?: number
           tags?: string[] | null
           ts?: unknown | null
+          url?: string | null
         }
       }
       timetable: {
