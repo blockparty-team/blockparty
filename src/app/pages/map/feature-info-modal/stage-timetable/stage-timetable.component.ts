@@ -31,6 +31,7 @@ export class StageTimetableComponent implements OnInit {
   hasTimetable$: Observable<boolean>;
   location$: Observable<[number, number]>;
   tags$: Observable<string[]>;
+  url$: Observable<string>;
 
   private _selectedDay$ = new BehaviorSubject<string>(null);
   selectedDay$: Observable<string> = this._selectedDay$.asObservable();
@@ -48,6 +49,10 @@ export class StageTimetableComponent implements OnInit {
 
     this.stageDescription$ = stage$.pipe(
       map(stage => stage.properties.description)
+    );
+
+    this.url$ = stage$.pipe(
+      map(stage => stage.properties.url)
     );
 
     this.days$ = stage$.pipe(
@@ -98,9 +103,9 @@ export class StageTimetableComponent implements OnInit {
     this.router.navigate(['/tabs', RouteName.Artist, name]);
   }
 
-  onGoToTicket(ticketUrl: string): void {
+  onGoToUrl(url: string): void {
     Browser.open({
-      url: ticketUrl
+      url
     })
   }
 

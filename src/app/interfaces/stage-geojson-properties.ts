@@ -28,4 +28,5 @@ export interface StageGeojsonProperties {
     timetables: TimetableDay[];
     imgUrl?: string;
     tags?: Stage['tags'];
+    url?: Stage['url'];
 }
