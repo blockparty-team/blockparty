@@ -111,6 +111,7 @@ export interface Database {
           icon_id: string | null
           id: string
           inserted_at: string
+          meta: string | null
           public: boolean | null
         }
         Insert: {
@@ -121,6 +122,7 @@ export interface Database {
           icon_id?: string | null
           id?: string
           inserted_at?: string
+          meta?: string | null
           public?: boolean | null
         }
         Update: {
@@ -131,6 +133,7 @@ export interface Database {
           icon_id?: string | null
           id?: string
           inserted_at?: string
+          meta?: string | null
           public?: boolean | null
         }
       }
@@ -344,6 +347,7 @@ export interface Database {
           icon_id: string | null
           id: string
           inserted_at: string
+          meta: string | null
           name: string
           public: boolean | null
           rank: number
@@ -357,6 +361,7 @@ export interface Database {
           icon_id?: string | null
           id?: string
           inserted_at?: string
+          meta?: string | null
           name: string
           public?: boolean | null
           rank?: number
@@ -370,6 +375,7 @@ export interface Database {
           icon_id?: string | null
           id?: string
           inserted_at?: string
+          meta?: string | null
           name?: string
           public?: boolean | null
           rank?: number
