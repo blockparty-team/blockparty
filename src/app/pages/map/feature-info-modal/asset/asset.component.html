@@ -6,11 +6,10 @@
         {{asset.properties.name}}
       </ion-title>
 
-      <ion-buttons slot="end">  
+      <ion-buttons slot="end">
         <ng-container *ngIf="location$ | async as location">
           <ion-button (click)="onOpenGoogleMapsDirections(location)">
-            <ion-icon slot="icon-only"
-                      name="compass-outline"></ion-icon>
+            Directions
           </ion-button>
         </ng-container>
       </ion-buttons>

@@ -19,8 +19,7 @@
 
       <ng-container *ngIf="location$ | async as location">
         <ion-button (click)="onOpenGoogleMapsDirections(location)">
-          <ion-icon slot="icon-only"
-                    name="compass-outline"></ion-icon>
+          Directions
         </ion-button>
       </ng-container>
 
@@ -113,10 +112,18 @@
       </ion-badge>
     </ng-container>
   </div>
-  
+
   <ng-container *ngIf="stageDescription$ | async as description; else noTimetable">
     <p>{{description}}</p>
   </ng-container>
+
+  <ng-container *ngIf="url$ | async as url">
+    <div class="ion-text-center">
+      <ion-button color="primary"
+                  (click)="onGoToUrl(url)">More info</ion-button>
+    </div>
+  </ng-container>
+
 
   <ng-template #noTimetable>
     <div class="no-timetable ion-margin">
