@@ -18,7 +18,9 @@
       </ion-button>
 
       <ng-container *ngIf="location$ | async as location">
-        <ion-button (click)="onOpenGoogleMapsDirections(location)">
+        <ion-button color="primary"
+                    fill="outline"
+                    (click)="onOpenGoogleMapsDirections(location)">
           Directions
         </ion-button>
       </ng-container>
@@ -120,7 +122,9 @@
   <ng-container *ngIf="url$ | async as url">
     <div class="ion-text-center">
       <ion-button color="primary"
-                  (click)="onGoToUrl(url)">More info</ion-button>
+                  (click)="onGoToUrl(url)">
+        More info
+      </ion-button>
     </div>
   </ng-container>
 
