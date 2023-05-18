@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ArtistNotification } from '@app/interfaces/favorite-notification';
-import { LocalNotifications, LocalNotificationSchema, LocalNotificationDescriptor, PendingResult, ScheduleResult } from '@capacitor/local-notifications';
+import { LocalNotifications, LocalNotificationSchema, LocalNotificationDescriptor, PendingResult, ScheduleResult, ScheduleOptions } from '@capacitor/local-notifications';
 import { sub, add } from 'date-fns'
 
 @Injectable({
@@ -31,8 +31,10 @@ export class LocalNotificationsService {
     })
   }
 
-  public schedule(notifications: LocalNotificationSchema[]): Promise<ScheduleResult> {
-    return LocalNotifications.schedule({ notifications })
+  public async schedule(notifications: LocalNotificationSchema[]): Promise<ScheduleResult> {
+    console.log("Scheduling: ", {notifications: notifications} as ScheduleOptions)
+    
+    return await LocalNotifications.schedule({notifications: notifications})
   }
 
   public async getAllNotifications(): Promise<PendingResult> {
@@ -55,13 +57,9 @@ export class LocalNotificationsService {
     // console.log("Cancelling: ", cancelIds)
 
     // if (cancelIds.length > 0) LocalNotifications.cancel({ notifications: cancelIds });
-    LocalNotifications.getPending().then(pending => {
-      const now = new Date();
-      LocalNotifications.cancel({
-        notifications: pending.notifications
-        .filter(notification => sub(notification.schedule.at, { minutes: minutesBefore }) >= now)
-        .map(notification => ({ id: notification.id }))})
-      })
+    let pending = await LocalNotifications.getPending()
+    await LocalNotifications.cancel({
+        notifications: pending.notifications})
   }
 
   public async getNotificationIdFromArtistId(artistId: string): Promise<number | null> {

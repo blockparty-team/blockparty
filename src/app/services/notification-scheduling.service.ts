@@ -55,8 +55,8 @@ export class NotificationSchedulingService implements OnDestroy {
   };
 
 
-  rescheduleAllArtistNotifications() {
-    return combineLatest([
+  rescheduleAllArtistNotifications(): void {
+    combineLatest([
       this.timetableStateService.timetableArtistNotification$,
       this.favoritesStateService.favorites$.pipe(map(favs => favs.find(fav => fav.entity === 'artist').ids))
     ]).pipe(
@@ -64,29 +64,24 @@ export class NotificationSchedulingService implements OnDestroy {
       skip(1),
       take(1),
       filter(([artists, favoriteIds]) => !!artists && !!favoriteIds),
-      map(([artists, favoriteIds]) => artists.filter(artist => favoriteIds.includes(artist.artistId))),
-      tap(artists => {
-        // Cancel all notifications
-        this.localNotificationService.cancelAllNotifications(this.MINUTES_BEFORE);
-
-        // Reschedule notifications
-        const now = new Date();
-        const notifications = artists
-          .map((artist, index) => this.localNotificationService.artistNotificationPayload(index, artist, this.MINUTES_BEFORE))
-          .filter(n => sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now);
-
-        if (notifications.length > 0) this.localNotificationService.schedule(notifications);
-
-        // console.log("Dev-mode:", isDevMode());
-        // if (isDevMode()) {
-        //   const now = new Date();
-        //   const notifications = artists
-        //     .map((artist, index) => this.localNotificationService.artistNotificationPayload(index, artist, this.MINUTES_BEFORE))
-        //     .filter(n => sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now);
-
-        //   if (notifications.length > 0) this.localNotificationService.schedule(notifications);
-        // }
-      })
-    ).subscribe()
-  }
+      switchMap(([artists, favoriteIds]) =>
+        from(this.localNotificationService.cancelAllNotifications(this.MINUTES_BEFORE)).pipe(
+          switchMap(_ => {
+            let favoriteArtists = artists.filter(artist => favoriteIds.includes(artist.artistId));
+            console.log("Favorite artists: ", favoriteArtists);
+            const now = new Date();
+            const notifications = favoriteArtists
+              .map((artist, index) => this.localNotificationService.artistNotificationPayload(index, artist, this.MINUTES_BEFORE))
+              .filter(n => {
+                console.log(sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now);
+                return sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now
+              });
+            if (notifications.length > 0) {
+              this.localNotificationService.schedule(notifications).then(result => {
+                this.localNotificationService.getAllNotifications().then(notifications => console.log("HEY", notifications))
+              })
+            }
+            return ([favoriteArtists, favoriteIds])
+          })))).subscribe(d => d)
+  };
 }

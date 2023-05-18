@@ -53,8 +53,6 @@ export class FavoriteStateService {
     
         this.setArtistFavoriteStateChange(id, !isFavorite);
     
-        // let message = this.createNotificationMessage();
-        // this.localNotifications.scheduleNotification("1", "HEY", new Date(Date.now()+ 15000));
         if (this._favorites$.value.length === 0) {
           update = [{ entity, ids: [id] }];
         } else {
