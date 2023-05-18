@@ -9,6 +9,8 @@ import { RouteHistoryService as RouteHistoryService } from './services/routeHist
 import { PushNotificationService } from './services/push-notification.service';
 import { Platform } from '@ionic/angular';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { RouteName } from './shared/models/routeName';
 
 @Component({
   selector: 'app-root',
@@ -60,6 +62,11 @@ export class AppComponent implements OnInit {
     this.platform.resume.subscribe(() => this.notificationSchedulingService.rescheduleAllArtistNotifications());
 
     this.routeHistoryService.init();
+
+    // Navigate to artist from local notification
+    LocalNotifications.addListener('localNotificationActionPerformed', action => {
+      this.router.navigate(['tabs', RouteName.Artist, action.notification.extra.artistName]);
+    });
   }
 
   // Url listener extracting tokens when getting auth redirect on ios/android native 
