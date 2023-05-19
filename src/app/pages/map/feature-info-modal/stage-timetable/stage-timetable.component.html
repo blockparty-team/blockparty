@@ -54,7 +54,7 @@
 
   <ion-modal trigger="open-description-modal"
              [initialBreakpoint]="0.4"
-             [breakpoints]="[0.4, 0.75]">
+             [breakpoints]="[0.4, 0.75, 1]">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -69,7 +69,7 @@
       </ion-header>
       <ion-content class="ion-padding">
         <h3>{{stageName$ | async}}</h3>
-        <p>{{stageDescription$ | async}}</p>
+        <p class="stage-description">{{stageDescription$ | async}}</p>
       </ion-content>
     </ng-template>
   </ion-modal>
@@ -116,7 +116,7 @@
   </div>
 
   <ng-container *ngIf="stageDescription$ | async as description; else noTimetable">
-    <p>{{description}}</p>
+    <p class="stage-description">{{description}}</p>
   </ng-container>
 
   <ng-container *ngIf="url$ | async as url">
@@ -132,7 +132,7 @@
   <ng-template #noTimetable>
     <div class="no-timetable ion-margin">
       <ion-badge color="medium">
-        No timetable available for this stage
+        No description or timetable available for this stage
       </ion-badge>
     </div>
   </ng-template>
