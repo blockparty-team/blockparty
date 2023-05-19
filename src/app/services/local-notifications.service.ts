@@ -82,7 +82,6 @@ export class LocalNotificationsService {
       id,
       title: `${artistAct.artistName} is playing in ${minutesBefore} minutes`,
       body: `${artistAct.artistName} is playing at ${artistAct.stageName} stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
-      // schedule: {at: add(new Date(),  {seconds: 10})}, // For testing
       schedule: { at: sub(startTime, { minutes: minutesBefore }) },
       extra: { id: artistAct.artistId, artistName: artistAct.artistName },
     }
