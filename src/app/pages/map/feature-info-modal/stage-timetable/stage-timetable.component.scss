@@ -7,11 +7,15 @@ ion-item {
 
     .no-timetable {
         text-align: center;
-        
+
         .tag {
             margin: 5px;
         }
     }
+}
+
+.stage-description {
+    white-space: pre-wrap;
 }
 
 @keyframes popIn {
