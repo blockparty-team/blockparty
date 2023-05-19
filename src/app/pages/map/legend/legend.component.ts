@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapIconViewModel } from '@app/interfaces/map-icon';
-import { FileService } from '@app/services/file.service';
 import { ToggleCustomEvent } from '@ionic/angular';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
@@ -25,12 +24,11 @@ export class LegendComponent implements OnInit {
   constructor(
     private mapService: MapService,
     private mapStateService: MapStateService,
-    private fileService: FileService,
   ) { }
 
   ngOnInit() {
     this.iconsWithToggleState$ = combineLatest([
-      this.fileService.mapIconUrls$,
+      this.mapStateService.mapIcons$,
       this.mapStateService.removedAssetIconNames$
     ]).pipe(
       map(([assets, removed]) => assets

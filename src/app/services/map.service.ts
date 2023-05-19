@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
-import { concat, EMPTY, forkJoin, Observable, of } from 'rxjs';
-import { catchError, filter, first, map, switchMap, tap } from 'rxjs/operators';
-import { AttributionControl, FilterSpecification, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, PointLike } from 'maplibre-gl';
+import { concat, EMPTY, Observable } from 'rxjs';
+import { catchError, filter, first, tap } from 'rxjs/operators';
 import { Device } from '@capacitor/device';
+import { AttributionControl, FilterSpecification, GeolocateControl, LngLatBoundsLike, LngLatLike, Map, PointLike } from 'maplibre-gl';
+import { Point } from 'geojson';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { getCssVariable } from '@app/shared/colors';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
-import { MapLayer, MapSource } from '@app/interfaces/map-layer';
-import { environment } from '@env/environment';
-import { GeolocationService } from './geolocation.service';
-import { FileService } from './file.service';
-import { Point } from 'geojson';
+import { GeolocationService } from '@app/services/geolocation.service';
 import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
+import { MapLayer, MapSource } from '@app/interfaces/map-layer';
+import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
+import { MapIconViewModel } from '@app/interfaces/map-icon';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,6 @@ export class MapService {
 
   private mapStateService = inject(MapStateService);
   private geolocationService = inject(GeolocationService);
-  private fileService = inject(FileService);
 
   private map: Map;
 
@@ -421,37 +420,18 @@ export class MapService {
   //   });
   // }
 
-  private addImage(fileUrl: string): Observable<HTMLImageElement | ImageBitmap> {
-    return new Observable(observer => {
-      this.map.loadImage(fileUrl, (error, image) => {
-        if (error) {
-          observer.error(error);
-          return;
-        }
-
-        observer.next(image);
-        observer.complete();
-      });
-    });
-  }
-
   private get loadMapIcons$(): Observable<unknown> {
-    return this.fileService.mapIconUrls$.pipe(
-      filter(icons => !!icons),
-      switchMap(icons => forkJoin(
-        icons.map(icon => this.addImage(icon.fileUrl).pipe(
-          // Catch error to prevent all images loads to fail.
-          catchError(error => {
-            console.error('map loadImage failed:', error);
-            return of(null);
-          })
-        ))).pipe(
-          map(images => icons.map((icon, i) => ({ name: icon.name, image: images[i] })))
-        )),
-      tap((icons: { name: string, image: HTMLImageElement | ImageBitmap }[]) => {
+    return this.mapStateService.mapIcons$.pipe(
+      // Add images to MapLibre map object
+      tap((icons: MapIconViewModel[]) => {
         icons
           .filter(icon => !!icon.image)
-          .forEach(icon => this.map.addImage(icon.name, icon.image))
+          .forEach(icon => {
+            if (this.map.hasImage(icon.name)) {
+              this.map.removeImage(icon.name);
+            };
+            this.map.addImage(icon.name, icon.image)
+          })
       })
     );
   }

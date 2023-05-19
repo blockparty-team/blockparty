@@ -10,7 +10,8 @@ export type StorageKeys =
   'timetable' |
   'events' |
   'eventsGroupedByType' |
-  'mapLayers';
+  'mapLayers'| 
+  'mapIcons';
 
 @Injectable({
   providedIn: 'root'

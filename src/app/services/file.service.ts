@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { MapIconViewModel } from '@app/interfaces/map-icon';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from './supabase.service';
 import { imageSize } from '@app/shared/models/imageSize';
-import { getBucketAndPath } from '@app/shared/functions/storage';
+import { MapStateService } from '@app/pages/map/state/map-state.service';
 
 interface File {
   fileName: string;
@@ -17,24 +16,9 @@ interface File {
 })
 export class FileService {
 
-  constructor(
-    private supabase: SupabaseService,
-    private readonly sanitizer: DomSanitizer
-  ) { }
-
-  get mapIconUrls$(): Observable<MapIconViewModel[]> {
-    return this.supabase.mapIcons$.pipe(
-      map(mapIcons => mapIcons.map(mapIcon => {
-
-        const [bucket, path] = getBucketAndPath(mapIcon.storage_path);
-
-        return {
-          ...mapIcon,
-          fileUrl: this.supabase.publicImageUrl(bucket, path)
-        }
-      }))
-    )
-  }
+  private sanitizer = inject(DomSanitizer);
+  private mapStateService = inject(MapStateService);
+  private supabase = inject(SupabaseService);
 
   allFileUrls(bucket: string): Observable<SafeResourceUrl[]> {
 
