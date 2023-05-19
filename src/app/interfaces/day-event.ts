@@ -16,6 +16,7 @@ export interface PartialEvent {
 
 export interface DayEvent {
     id: string;
+    day: string;
     name: string;
     event: PartialEvent[];
 }

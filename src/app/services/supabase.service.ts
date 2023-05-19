@@ -18,7 +18,6 @@ import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
 import { FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
 import { ArtistViewModel } from '@app/interfaces/artist';
-import { DayEvent } from '@app/interfaces/day-event';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
@@ -166,7 +165,7 @@ export class SupabaseService {
     );
   }
 
-  get days$(): Observable<DayEvent[]> {
+  get days$() {
     return from(
       this.supabase
         .from('day')
@@ -188,15 +187,7 @@ export class SupabaseService {
           )
       `)
     ).pipe(
-      map(res => res.data),
-      map(days => {
-        return days.map(({ day_event, ...rest }) => {
-          return {
-            ...rest,
-            event: (day_event as any[]).map(events => events.event)
-          }
-        })
-      })
+      map(res => res.data)
     );
   }
 
