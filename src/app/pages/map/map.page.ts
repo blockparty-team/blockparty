@@ -111,7 +111,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
     this.mapStateService.selectedMapFeature$.pipe(
       switchMap(feature => {
         if (feature.mapLayer === MapLayer.Stage) {
-          return this.openFeatureInfoModal(0.5, [0, 0.5, 1])
+          return this.openFeatureInfoModal(0.5, [0, 0.5, 0.75, 1])
         }
 
         if (feature.mapLayer === MapLayer.Asset || feature.mapLayer === MapLayer.AssetIcon) {
