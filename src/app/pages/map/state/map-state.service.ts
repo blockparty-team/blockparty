@@ -72,7 +72,6 @@ export class MapStateService {
         fileUrl: this.supabase.publicImageUrl(bucket, path)
       }
     })),
-    filter(icons => !!icons),
     // Add HTML image element based on fileUrl
     switchMap(icons =>
       forkJoin(icons.map(icon => imgFromUrl(icon.fileUrl)))
