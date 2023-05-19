@@ -68,12 +68,10 @@ export class NotificationSchedulingService implements OnDestroy {
         from(this.localNotificationService.cancelAllNotifications(this.MINUTES_BEFORE)).pipe(
           switchMap(_ => {
             let favoriteArtists = artists.filter(artist => favoriteIds.includes(artist.artistId));
-            console.log("Favorite artists: ", favoriteArtists);
             const now = new Date();
             const notifications = favoriteArtists
               .map((artist, index) => this.localNotificationService.artistNotificationPayload(index, artist, this.MINUTES_BEFORE))
               .filter(n => {
-                console.log(sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now);
                 return sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now
               });
             if (notifications.length > 0) {
