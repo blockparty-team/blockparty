@@ -26,6 +26,15 @@ export class FilterEventsStateService {
     ),
     this.supabase.days$.pipe(
       filter(days => !!days),
+      // Modify object for event filter
+      map(days => {
+        return days.map(({ day_event, ...rest }) => {
+          return {
+            ...rest,
+            event: (day_event as any[]).map(events => events.event)
+          };
+        }) as DayEvent[];
+      }),
       tap(days => this.deviceStorageService.set('days', days))
     )
   ).pipe(
