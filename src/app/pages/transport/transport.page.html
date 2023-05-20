@@ -10,23 +10,51 @@
 
 <ion-content [fullscreen]="true">
   <div class="transport-container">
-    <img src="assets/partners/viggo.webp"
-         alt="Viggo taxa logo">
-    <div class="text">
-      <p>Get back home save driving <ion-text color="primary">green</ion-text> with Viggo.</p>
-      <p>Use voucher code below to get a discount.</p>
+
+    <div class="content">
+      <div class="logo">
+        <img src="assets/partners/viggo.webp"
+             alt="Viggo taxa logo">
+      </div>
+  
+      <div class="text">
+        <h4>Get 50 DKK for your first Viggo-ride💰
+          by using voucher code below. <ion-text color="primary">*</ion-text>
+        </h4>
+        <br>
+        <br>
+        <p>⚡100% electric cars</p>
+        <p>📱Fixed prices in app</p>
+        <p>👨‍✈️Rate your driver</p>
+        <br>
+        <p>Driving Distortion <span>Green</span> 💚</p>
+      </div>
     </div>
-    <ion-button (click)="onCopyVoucherCode()"
-                id="copy-voucher"
-                color="secondary">
-      {{viggoVoucherCode}}
-      <ion-icon name="copy-outline"></ion-icon>
-    </ion-button>
-    <br>
-    <br>
-    <ion-button href="https://www.viggo.com/">
-      Go to Viggo
-    </ion-button>
+
+    <div class="action-buttons">
+      <ion-button (click)="onCopyVoucherCode()"
+                  id="copy-voucher"
+                  class="voucher"
+                  color="secondary"
+                  fill="outline">
+        {{viggoVoucherCode}}
+        <ion-icon name="copy-outline"></ion-icon>
+      </ion-button>
+
+      <br>
+
+      <ion-button class="cta-button"
+                  (click)="onGoToViggo()">
+        Ride with Viggo
+      </ion-button>
+    </div>
+
+    <div class="terms">
+      <p>
+        <ion-text color="primary">*</ion-text> Voucher code can only be used once per signup.
+      </p>
+    </div>
+
   </div>
 
   <ion-toast color="secondary"
