@@ -11,6 +11,7 @@ import { Platform } from '@ionic/angular';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from './shared/models/routeName';
+import { environment } from '@env/environment';
 
 @Component({
   selector: 'app-root',
@@ -73,15 +74,27 @@ export class AppComponent implements OnInit {
   setupAppUrlOpenListener() {
     App.addListener("appUrlOpen", async (urlData: URLOpenListenerEvent) => {
       const openUrl = urlData.url;
-      const access = openUrl.split("#access_token=").pop().split("&")[0];
-      const refresh = openUrl.split("&refresh_token=").pop().split("&")[0];
 
-      const { data, error } = await this.supabase.externalSetSession(access, refresh);
-      this.supabase.setSession(data.session);
+      // url scheme "distortion://" is used for native app.  
+      const slug = openUrl.split('distortion://').pop()
 
       this.zone.run(() => {
-        this.router.navigateByUrl("/tabs/map", { replaceUrl: true });
+        this.router.navigateByUrl(`/${slug}`, { replaceUrl: true });
       });
+
+      if (environment.featureToggle.enableLogin) {
+        const access = openUrl.split("#access_token=").pop().split("&")[0];
+        const refresh = openUrl.split("&refresh_token=").pop().split("&")[0];
+  
+        if (!access && !refresh) return;
+        
+        const { data, error } = await this.supabase.externalSetSession(access, refresh);
+        this.supabase.setSession(data.session);
+  
+        this.zone.run(() => {
+          this.router.navigateByUrl("/tabs/map", { replaceUrl: true });
+        });
+      }
     });
   }
 }
