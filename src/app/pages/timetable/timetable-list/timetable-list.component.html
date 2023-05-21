@@ -4,7 +4,7 @@
       <ion-list>
         <ion-item-group *ngFor="let stage of timetableByStage">
           <ion-item-divider sticky="true"
-                            color="primary">
+                            color="medium">
             <ion-label>{{stage.stage_name}}</ion-label>
           </ion-item-divider>
           <ion-item *ngFor="let artist of stage.timetable">
@@ -19,7 +19,7 @@
               </div>
               <div class="favorite">
                 <ion-icon slot="icon-only"
-                          [color]="artist.isFavorite ? 'primary' : ''"
+                          [color]="artist.isFavorite ? 'favorite' : ''"
                           [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
                           (click)="onToggleFavorite(artist.artist_id)"></ion-icon>
               </div>
@@ -51,7 +51,7 @@
 
             <div class="favorite">
               <ion-icon slot="icon-only"
-                        [color]="artist.isFavorite ? 'primary' : ''"
+                        [color]="artist.isFavorite ? 'favorite' : ''"
                         [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
                         (click)="onToggleFavorite(artist.artist_id)"></ion-icon>
             </div>
