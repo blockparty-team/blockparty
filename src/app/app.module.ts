@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 
 import { environment } from '@env/environment';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { FilterEventsStateService } from './shared/components/filter-events/filter-events-state.service';
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
@@ -32,7 +33,9 @@ export function playerFactory() {
     }),
     LottieModule.forRoot({ player: playerFactory })
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FilterEventsStateService
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

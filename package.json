@@ -33,6 +33,7 @@
     "@capacitor/geolocation": "^4.1.0",
     "@capacitor/ios": "4.7.3",
     "@capacitor/keyboard": "4.1.1",
+    "@capacitor/local-notifications": "^4.1.5",
     "@capacitor/preferences": "^4.0.2",
     "@capacitor/share": "4.1.1",
     "@capacitor/splash-screen": "^4.2.0",

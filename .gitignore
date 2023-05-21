@@ -30,6 +30,7 @@ npm-debug.log*
 /plugins
 /www
 
+**/environment.local.ts
 .envrc
 resources/android/**/*
 resources/ios/**/*

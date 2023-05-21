@@ -55,11 +55,11 @@ export class SidebarPage implements OnInit {
       icon: 'information-circle-outline',
       routeName: RouteName.About
     },
-    // {
-    //   name: 'Settings',
-    //   icon: 'settings-outline',
-    //   routeName: RouteName.Settings
-    // },
+    {
+      name: 'Settings',
+      icon: 'settings-outline',
+      routeName: RouteName.Settings,
+    },
     {
       name: 'Search',
       icon: 'search',
@@ -75,7 +75,11 @@ export class SidebarPage implements OnInit {
     && navItem.routeName === RouteName.Profile
     ? false
     : true
-  )
+  ).filter(navItem => environment.production 
+    && navItem.routeName === RouteName.Settings 
+    ? false 
+    : true
+  ) // Show settings menu item when not in production
 
   constructor(
     private authService: AuthService,

@@ -11,4 +11,10 @@
 
 <ion-content>
   <h1 class="ion-text-center">Coming...</h1>
+  <ion-button (click)="getNotifications()">Show notifications</ion-button>
+  <ion-content *ngIf="localNotifications$ | async as notifications">
+    <ion-item *ngFor="let notification of notifications">
+      <ion-label>{{ notification.title }} <br> {{ notification.schedule.at }}</ion-label>
+    </ion-item>
+  </ion-content> 
 </ion-content>

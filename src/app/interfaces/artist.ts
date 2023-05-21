@@ -16,6 +16,11 @@ interface Timetable {
     };
 }
 
+export interface ArtistFavorite {
+    artistId: string;
+    isFavorite: boolean;
+}
+
 export interface ArtistViewModel extends Partial<Artist> {
     timetable: Timetable[];
     isFavorite: boolean;

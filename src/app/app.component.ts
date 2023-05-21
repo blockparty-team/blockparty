@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, OnInit, inject } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar'
 import { Device } from '@capacitor/device';
 import { SupabaseService } from './services/supabase.service';
@@ -7,6 +7,10 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
 import { PushNotificationService } from './services/push-notification.service';
+import { Platform } from '@ionic/angular';
+import { NotificationSchedulingService } from './services/notification-scheduling.service';
+import { LocalNotifications } from '@capacitor/local-notifications';
+import { RouteName } from './shared/models/routeName';
 
 @Component({
   selector: 'app-root',
@@ -16,13 +20,15 @@ import { PushNotificationService } from './services/push-notification.service';
 })
 export class AppComponent implements OnInit {
 
-  constructor(
-    private zone: NgZone,
-    private router: Router,
-    private supabase: SupabaseService,
-    private routeHistoryService: RouteHistoryService,
-    private pushNotificationService: PushNotificationService
-  ) {
+  private zone = inject(NgZone);
+  private router = inject(Router);
+  private supabase = inject(SupabaseService);
+  private routeHistoryService = inject(RouteHistoryService);
+  private pushNotificationService = inject(PushNotificationService);
+  private platform = inject(Platform);
+  private notificationSchedulingService = inject(NotificationSchedulingService);
+
+  constructor() {
     this.setupAppUrlOpenListener();
   }
 
@@ -52,7 +58,15 @@ export class AppComponent implements OnInit {
       }
     });
 
+    this.notificationSchedulingService.rescheduleAllArtistNotifications();
+    this.platform.resume.subscribe(() => this.notificationSchedulingService.rescheduleAllArtistNotifications());
+
     this.routeHistoryService.init();
+
+    // Navigate to artist from local notification
+    LocalNotifications.addListener('localNotificationActionPerformed', action => {
+      this.router.navigate(['tabs', RouteName.Artist, action.notification.extra.artistName]);
+    });
   }
 
   // Url listener extracting tokens when getting auth redirect on ios/android native 
