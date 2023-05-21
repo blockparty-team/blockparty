@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { DayEvent, PartialEvent, PartialEventType } from '@app/interfaces/day-event';
-import { DeviceStorageService } from '@app/services/device-storage.service';
-import { SupabaseService } from '@app/services/supabase.service';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
 import { filter, map, shareReplay, tap } from 'rxjs/operators';
+import { isSameDay } from 'date-fns';
+import { SupabaseService } from '@app/services/supabase.service';
+import { DeviceStorageService } from '@app/services/device-storage.service';
+import { DayEvent, PartialEvent, PartialEventType } from '@app/interfaces/day-event';
 
 @Injectable()
 export class FilterEventsStateService {
@@ -35,7 +36,13 @@ export class FilterEventsStateService {
           };
         }) as DayEvent[];
       }),
-      tap(days => this.deviceStorageService.set('days', days))
+      tap(days => this.deviceStorageService.set('days', days)),
+      tap(days => {
+        const now = new Date();
+        const day = days.find(day => isSameDay(now, new Date(day.day)));
+
+        if (day) this.selectDay(day.id);
+      })
     )
   ).pipe(
     filter(days => !!days),

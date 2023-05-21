@@ -170,7 +170,9 @@ export class MapService {
   }
 
   public removeFeatureHighlight(layerName: MapLayer): void {
-    this.map.setFilter(layerName, ['==', 'id', '']);
+    if (this.map.getLayer(layerName)) {
+      this.map.setFilter(layerName, ['==', 'id', '']);
+    }
   }
 
   public filterLayer(layer: MapLayer, property: string, values: string[]) {
@@ -329,7 +331,7 @@ export class MapService {
           id: MapLayer.Stage,
           type: 'symbol',
           source: MapSource.Stage,
-          minzoom: 13,
+          minzoom: 11,
           layout: {
             'text-field': ['get', 'name'],
             'text-offset': [0, 0.5],
@@ -340,8 +342,9 @@ export class MapService {
             'icon-anchor': 'bottom',
             'icon-size': [
               'interpolate', ['linear'], ['zoom'],
-              13, 0.1,
-              18, 0.5,
+              11, 0.01,
+              15, 0.2,
+              17, 0.4,
               22, 1
             ],
             'icon-allow-overlap': true,
@@ -355,8 +358,8 @@ export class MapService {
             'icon-halo-blur': 10,
             'icon-opacity': [
               'interpolate', ['linear'], ['zoom'],
-              13, 0,
-              14, 1
+              11, 0,
+              12, 1
             ],
             'text-opacity': [
               'interpolate', ['linear'], ['zoom'],

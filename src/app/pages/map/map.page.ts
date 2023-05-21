@@ -1,8 +1,8 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { ModalController } from '@ionic/angular';
-import { merge, from, Subject } from 'rxjs';
-import { filter, map, switchMap, tap, withLatestFrom, delay, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { merge, from, Subject, EMPTY } from 'rxjs';
+import { filter, map, switchMap, tap, withLatestFrom, distinctUntilChanged, takeUntil, catchError } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@app/services/map.service';
 import { MapLayer } from '@app/interfaces/map-layer';
@@ -72,7 +72,11 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           : this.filterEventsStateService.selectEventType('');
         this.filterEventsStateService.selectEvent('');
       }),
-      takeUntil(this.abandon$)
+      takeUntil(this.abandon$),
+      catchError(err => {
+        console.log(err);
+        return EMPTY
+      })
     ).subscribe();
 
     this.filterEventsStateService.selectedEventTypeId$.pipe(
@@ -96,7 +100,11 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           ? this.filterEventsStateService.selectEvent(events[0].id)
           : this.filterEventsStateService.selectEvent('');
       }),
-      takeUntil(this.abandon$)
+      takeUntil(this.abandon$),
+      catchError(err => {
+        console.log(err);
+        return EMPTY
+      })
     ).subscribe();
 
     this.filterEventsStateService.selectedEvent$.pipe(
@@ -105,7 +113,11 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         this.mapService.fitBounds(event.bounds as LngLatBoundsLike, 10, [0, 30]);
         this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
       }),
-      takeUntil(this.abandon$)
+      takeUntil(this.abandon$),
+      catchError(err => {
+        console.log(err);
+        return EMPTY
+      })
     ).subscribe();
 
     this.mapStateService.selectedMapFeature$.pipe(
@@ -118,7 +130,11 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           return this.openFeatureInfoModal(0.3, [0, 0.3, 0.6])
         }
       }),
-      takeUntil(this.abandon$)
+      takeUntil(this.abandon$),
+      catchError(err => {
+        console.log(err);
+        return EMPTY
+      })
     ).subscribe();
 
     // Remove modal on map interaction

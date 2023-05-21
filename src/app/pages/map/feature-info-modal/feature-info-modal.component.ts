@@ -28,7 +28,7 @@ export class FeatureInfoModalComponent implements OnInit {
     this.selectedFeature$ = this.mapStateService.selectedMapFeature$.pipe(
       tap(feature => this.mapService.flyTo(
         feature.geometry.coordinates as [number, number],
-        [0, -100]
+        [0, -60]
       ))
     );
   }
