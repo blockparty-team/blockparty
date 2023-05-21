@@ -42,7 +42,8 @@
     <ng-container *ngIf="showDayGroupedFavorites$ | async">
       <ion-item-group *ngFor="let group of dayGroupedFavorites; let i = index; trackBy:trackDay"
                       [style.--animation-order]="i">
-        <ion-item-divider sticky="true">
+        <ion-item-divider sticky="true"
+                          color="medium">
           <ion-label>{{group.day.name}}</ion-label>
         </ion-item-divider>
         <ion-item *ngFor="let artist of group.artists; trackBy:trackArtist">
@@ -52,17 +53,21 @@
           </ion-avatar>
 
           <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
-            <span class="artist-name">{{artist.name}}</span>
-            <span class="time">
-              {{artist.timetable[0]?.start_time | date:'HH:mm'}} -
-              {{artist.timetable[0]?.end_time | date:'HH:mm'}}
-            </span>
+            <h3>
+              <span class="artist-name">{{artist.name}}</span>
+              <span class="time">
+                {{artist.timetable[0]?.start_time | date:'HH:mm'}} -
+                {{artist.timetable[0]?.end_time | date:'HH:mm'}}
+              </span>
+            </h3>
+            <p *ngIf="artist.timetable[0] as timetable">{{timetable.stage.event.name}} | {{timetable.stage.name}}</p>
           </ion-label>
 
           <div slot="end"
                (click)="toggleFavorite(artist.id)">
             <ion-icon slot="icon-only"
-                      name="close"></ion-icon>
+                      name="close">
+            </ion-icon>
           </div>
         </ion-item>
       </ion-item-group>
