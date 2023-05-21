@@ -53,9 +53,10 @@
         border-radius: 25px;
         grid-column: var(--act-column-start) / var(--act-column-end);
         grid-row: var(--act-row-start) / span 2;
+        filter: brightness(115%);
 
         &.favorite {
-            filter: brightness(115%);
+            filter: brightness(150%);
         }
 
         .act-content {
