@@ -1,11 +1,11 @@
 import { Injectable, OnDestroy, inject, isDevMode } from "@angular/core";
-import { TimetableStateService } from "@app/pages/timetable/state/timetable-state.service";
 import { FavoriteStateService } from "@app/pages/favorite/state/favorite-state.service";
 import { Observable, Subject, combineLatest, defer, from } from "rxjs";
 import { filter, find, map, mergeMap, skip, switchMap, take, takeUntil, tap, withLatestFrom } from "rxjs/operators";
 import { LocalNotificationsService } from "./local-notifications.service";
 import { sub } from 'date-fns'
 import { enableProdMode } from "@angular/core";
+import { TimetableSharedStateService } from "@app/pages/timetable/state/timetable-shared-state.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class NotificationSchedulingService implements OnDestroy {
   // Later this could retrieved from settings state
   private MINUTES_BEFORE = 60;
 
-  private timetableStateService = inject(TimetableStateService);
+  private timetableSharedStateService = inject(TimetableSharedStateService);
   private favoritesStateService = inject(FavoriteStateService);
   private localNotificationService = inject(LocalNotificationsService);
 
@@ -28,7 +28,7 @@ export class NotificationSchedulingService implements OnDestroy {
       switchMap(({ artistId, isFavorite }) => {
         if (isFavorite) {
           return from(this.localNotificationService.getNextId()).pipe(
-            switchMap(id => this.timetableStateService.timetableArtistNotification$.pipe(
+            switchMap(id => this.timetableSharedStateService.timetableArtistNotification$.pipe(
               map( artistNotifications  => artistNotifications.find(artist => artist.artistId === artistId && artist.startTime != undefined)),
               filter(artistNotificaton => !!artistNotificaton),
               map( artistNotification => [this.localNotificationService.artistNotificationPayload(
@@ -57,7 +57,7 @@ export class NotificationSchedulingService implements OnDestroy {
 
   rescheduleAllArtistNotifications(): void {
     combineLatest([
-      this.timetableStateService.timetableArtistNotification$,
+      this.timetableSharedStateService.timetableArtistNotification$,
       this.favoritesStateService.favorites$.pipe(map(favs => favs.find(fav => fav.entity === 'artist').ids))
     ]).pipe(
       // Skip first coming from local storage

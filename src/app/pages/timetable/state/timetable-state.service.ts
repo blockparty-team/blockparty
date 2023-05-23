@@ -1,12 +1,10 @@
 import { Injectable, inject } from '@angular/core';
-import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
-import { ArtistNotification } from '@app/interfaces/favorite-notification';
-import { DeviceStorageService } from '@app/services/device-storage.service';
+import { Observable, combineLatest } from 'rxjs';
+import { filter, map, shareReplay } from 'rxjs/operators'
 import { FavoriteStateService } from '@app/pages/favorite/state/favorite-state.service';
-import { SupabaseService } from '@app/services/supabase.service';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
-import { Observable, combineLatest, concat } from 'rxjs';
-import { filter, map, shareReplay, tap } from 'rxjs/operators'
+import { TimetableSharedStateService } from './timetable-shared-state.service';
+import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 
 
 @Injectable({
@@ -14,26 +12,12 @@ import { filter, map, shareReplay, tap } from 'rxjs/operators'
 })
 export class TimetableStateService {
 
-  private supabase = inject(SupabaseService);
-  private deviceStorageService = inject(DeviceStorageService);
   private favoriteStateService = inject(FavoriteStateService);
+  private timetableSharedStateService = inject(TimetableSharedStateService);
   private filterEventsStateService = inject(FilterEventsStateService);
 
-  private timetables$: Observable<DayEventStageTimetable[]> = concat(
-    this.deviceStorageService.get('timetable').pipe(
-      filter(timetables => !!timetables)
-    ),
-    this.supabase.timetables$.pipe(
-      filter(timetables => !!timetables),
-      tap(timetables => this.deviceStorageService.set('timetable', timetables))
-    )
-  ).pipe(
-    filter(days => !!days),
-    shareReplay(1)
-  );
-
  timetableWithFavorites$: Observable<DayEventStageTimetable[]> = combineLatest([
-    this.timetables$,
+    this.timetableSharedStateService.timetables$,
     this.favoriteStateService.favorites$
   ]).pipe(
     map(([days, favorites]) => {
@@ -59,25 +43,6 @@ export class TimetableStateService {
     }),
     shareReplay(1)
   )
-
-  // Flattened timetables for rescheduling notificationens
-  timetableArtistNotification$: Observable<ArtistNotification[]> = this.timetables$.pipe(
-    map(days => days
-      .flatMap(day => day.events
-        .flatMap(event => event.stages
-          .flatMap(stage => stage.timetable
-            .flatMap(act => ({
-              artistId: act.artist_id,
-              artistName: act.artist_name,
-              startTime: act.start_time,
-              stageName: stage.stage_name,
-              eventName: event.event_name
-            }))
-          )
-        )
-      )
-    )
-  );
 
   dayEvents$: Observable<DayEventStageTimetable> = combineLatest([
     this.timetableWithFavorites$,
