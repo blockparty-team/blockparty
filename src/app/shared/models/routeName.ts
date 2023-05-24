@@ -13,5 +13,6 @@ export enum RouteName {
     Tickets = 'tickets',
     Playlists = 'playlists',
     Merch = 'merch',
-    Favorite = 'favorite'
+    Favorite = 'favorite',
+    Transport = 'transport'
 }

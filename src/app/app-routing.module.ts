@@ -69,6 +69,11 @@ const routes: Routes = [
     title: 'Search',
     loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
   },
+  {
+    path: RouteName.Transport,
+    title: 'transport',
+    loadChildren: () => import('./pages/transport/transport.module').then( m => m.TransportPageModule)
+  },
 ];
 @NgModule({
   imports: [
