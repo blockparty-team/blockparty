@@ -20,11 +20,18 @@ ion-content {
                 height: 150px;
                 display: flex;
                 align-items: flex-end;
-                // margin: 20px 0;
 
-                img {
-                    height: 45px;
+                div {
+                    img {
+                        height: 45px;
+                        display: block;
+                    }
+    
+                    p {
+                        color: lightgray;
+                    }
                 }
+
             }
 
             .text {

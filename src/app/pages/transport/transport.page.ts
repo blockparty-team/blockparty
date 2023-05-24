@@ -12,7 +12,7 @@ import { Browser } from '@capacitor/browser';
 })
 export class TransportPage {
 
-  viggoVoucherCode = 'distortion2023';
+  viggoVoucherCode = 'DISTORTION23';
 
   private routeHistoryService = inject(RouteHistoryService);
 
