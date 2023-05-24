@@ -34,11 +34,11 @@ export const animations = {
     slideUpDown: [
         trigger('slideUpDown', [
             transition(':enter', [
-                style({ transform: 'translateY(-100%)' }),
-                animate('300ms ease-in', style({ transform: 'translateY(0%)' }))
+                style({ transform: 'translateY(100%)' }),
+                animate('200ms ease-in', style({ transform: 'translateY(0%)' }))
             ]),
-            transition('* => void', [
-                animate(300, style({ transform: 'translateY(100%)' }))
+            transition(':leave', [
+                animate('200ms ease-in', style({ transform: 'translateY(100%)' }))
             ])
         ])
     ]
