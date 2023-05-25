@@ -80,8 +80,10 @@
              *ngFor="let act of artist.timetable">
           <span>
               {{act.day.name}} |
-              {{act.start_time | date:'HH:mm'}} -
-              {{act.end_time | date:'HH:mm'}} |
+              <ng-container *ngIf="act.start_time">
+                {{act.start_time | date:'HH:mm'}} -
+                {{act.end_time | date:'HH:mm'}} |
+              </ng-container>
               {{act.stage.name}}
           </span>
           <ion-fab-button size="small"

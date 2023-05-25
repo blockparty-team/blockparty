@@ -21,8 +21,10 @@
       <p *ngFor="let act of artist.timetable"
          class="act">
         {{act.stage.event.name}} |
-        {{act.day.name}} |
-        {{act.start_time | date:'HH:mm'}}
+        {{act.day.name}}
+        <ng-container *ngIf="act.start_time">
+          | {{act.start_time | date:'HH:mm'}}
+        </ng-container>
       </p>
     </div>
 

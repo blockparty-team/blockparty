@@ -43,9 +43,15 @@
   <ng-container *ngIf="timetable$ | async as timetable">
     <ion-item *ngFor="let act of timetable; let i = index"
               [style.--animation-order]="i">
-      <span slot="start">
+
+      <span slot="start"
+            *ngIf="act.start_time; else noSlot">
         {{act.start_time | date:'HH:mm'}} - {{act?.end_time | date:'HH:mm'}}
       </span>
+      <ng-template #noSlot>
+        <span slot="start">N/A</span>
+      </ng-template>
+
       <ion-label (click)="onGoToArtist(act?.name)">
         {{act?.name}}
       </ion-label>
