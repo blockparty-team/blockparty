@@ -36,7 +36,7 @@ export class FavoritePage {
           // If artist is not assigned to timetable show TBA - future day is for sorting last
           const day = artist.timetable[0]?.day ?
             artist.timetable[0].day :
-            { name: 'TBA', day: '2070-01-01' };
+            { name: 'N/A', day: '2070-01-01' };
 
           if (acc.find(group => group.day.name === day.name) === undefined) {
             acc.push({ day, artists: [] })
