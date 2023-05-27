@@ -188,7 +188,8 @@ export class MapService {
         `https://api.maptiler.com/tiles/32951a70-ebdd-4640-a35b-b070263ab0ca/{z}/{x}/{y}.png?key=${environment.maptilerApiKey}`
       ],
       tileSize: 256,
-      minzoom: 15
+      minzoom: 14,
+      bounds: [12.615040, 55.689367, 12.620842, 55.691206]
     });
 
     this.map.addLayer({
@@ -204,9 +205,9 @@ export class MapService {
           [
             "zoom"
           ],
-          15,
+          14,
           0,
-          16,
+          15,
           0.9
         ]
       },
