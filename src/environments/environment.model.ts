@@ -5,6 +5,7 @@ export interface Environment {
     supabaseUrl: string;
     supabaseAnonKey: string;
     maptilerStyleJson: string;
+    maptilerApiKey?: string;
     oneSignalAppId: string;
     mapView: {
       center: [number, number];
