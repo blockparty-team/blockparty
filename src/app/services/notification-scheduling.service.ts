@@ -5,6 +5,7 @@ import { filter, find, map, mergeMap, skip, switchMap, take, takeUntil, tap, wit
 import { LocalNotificationsService } from "./local-notifications.service";
 import { sub } from 'date-fns'
 import { enableProdMode } from "@angular/core";
+import { ArtistStateService } from "@app/pages/artist/state/artist-state.service";
 import { TimetableSharedStateService } from "@app/pages/timetable/state/timetable-shared-state.service";
 
 @Injectable({
@@ -29,10 +30,10 @@ export class NotificationSchedulingService implements OnDestroy {
         if (isFavorite) {
           return from(this.localNotificationService.getNextId()).pipe(
             switchMap(id => this.timetableSharedStateService.timetableArtistNotification$.pipe(
-              map( artistNotifications  => artistNotifications.find(artist => artist.artistId === artistId && artist.startTime != undefined)),
+              map(artistNotifications => artistNotifications.find(artist => artist.artistId === artistId && artist.startTime != undefined)),
               filter(artistNotificaton => !!artistNotificaton),
-              map( artistNotification => [this.localNotificationService.artistNotificationPayload(
-                  id, artistNotification, 60)]),
+              map(artistNotification => [this.localNotificationService.artistNotificationPayload(
+                id, artistNotification, 60)]),
               mergeMap(notifications => this.localNotificationService.schedule(notifications)),
             ))
           );
@@ -40,20 +41,16 @@ export class NotificationSchedulingService implements OnDestroy {
           return from(this.localNotificationService.getNotificationIdFromArtistId(artistId)).pipe(
             switchMap(notificationId => this.localNotificationService.cancelNotification(notificationId)),
           )
-        }}
+        }
+      }
       )
     ).subscribe();
   }
-  
+
   ngOnDestroy(): void {
     this.destroyed$.next();
-    this.destroyed$.complete();  
+    this.destroyed$.complete();
   }
-
-  private init(): void {
-    
-  };
-
 
   rescheduleAllArtistNotifications(): void {
     combineLatest([
@@ -75,11 +72,11 @@ export class NotificationSchedulingService implements OnDestroy {
                 return sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now
               });
             if (notifications.length > 0) {
-              this.localNotificationService.schedule(notifications).then(result => {
-                this.localNotificationService.getAllNotifications().then(notifications => console.log("HEY", notifications))
+              this.localNotificationService.schedule(notifications).then(() => {
+                this.localNotificationService.getAllNotifications().then(notifications => console.info("Rescheduled notifications:", notifications))
               })
             }
             return ([favoriteArtists, favoriteIds])
-          })))).subscribe(d => d)
+          })))).subscribe()
   };
 }

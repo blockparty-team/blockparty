@@ -7,7 +7,7 @@ const config: CapacitorConfig = {
   bundledWebRuntime: false,
   plugins: {
     LocalNotifications: {
-      smallIcon: "splash",
+      smallIcon: "ic_launcher",
       iconColor: "#488AFF",
     }
   }

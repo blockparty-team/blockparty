@@ -5,6 +5,8 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ArtistNotification } from '@app/interfaces/favorite-notification';
+import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistSharedStateService } from '@app/pages/artist/state/artist-shared-state.service';
 
 
 @Injectable({
@@ -14,6 +16,7 @@ export class TimetableSharedStateService {
 
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
+  private artistSharedStateService = inject(ArtistSharedStateService);
 
   timetables$: Observable<DayEventStageTimetable[]> = concat(
     this.deviceStorageService.get('timetable').pipe(
@@ -29,23 +32,18 @@ export class TimetableSharedStateService {
   );
 
   // Flattened timetables for rescheduling local notifications
-  timetableArtistNotification$: Observable<ArtistNotification[]> = this.timetables$.pipe(
-    map(days => days
-      .flatMap(day => day.events
-        .flatMap(event => event.stages
-          .flatMap(stage => stage.timetable
-            .flatMap(act => ({
-              artistId: act.artist_id,
-              artistName: act.artist_name,
-              startTime: act.start_time,
-              stageName: stage.stage_name,
-              eventName: event.event_name
-            }))
-          )
+  timetableArtistNotification$: Observable<ArtistNotification[]> = this.artistSharedStateService.artists$.pipe(
+      map((artists: ArtistViewModel[]) => artists
+        .flatMap(artist => artist.timetable
+          .flatMap(timetable => ({
+            artistId: artist.id,
+            artistName: artist.name,
+            startTime: timetable.start_time,
+            stageName: timetable.stage.name,
+            eventName: timetable.stage.event.name
+          } as any))
         )
-      )
-    ),
-    shareReplay(1)
-  );
-
+      ),
+      shareReplay(1)
+    );
 }
