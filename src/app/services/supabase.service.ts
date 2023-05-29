@@ -247,6 +247,7 @@ export class SupabaseService {
       map(({ data, }) => data as EventsGroupedByType[])
     )
   }
+  
 
   get timetables$(): Observable<DayEventStageTimetable[]> {
     return from(

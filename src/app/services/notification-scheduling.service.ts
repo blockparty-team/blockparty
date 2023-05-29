@@ -5,6 +5,7 @@ import { filter, find, map, mergeMap, skip, switchMap, take, takeUntil, tap, wit
 import { LocalNotificationsService } from "./local-notifications.service";
 import { sub } from 'date-fns'
 import { enableProdMode } from "@angular/core";
+import { ArtistStateService } from "@app/pages/artist/state/artist-state.service";
 import { TimetableSharedStateService } from "@app/pages/timetable/state/timetable-shared-state.service";
 
 @Injectable({
@@ -50,10 +51,6 @@ export class NotificationSchedulingService implements OnDestroy {
     this.destroyed$.complete();  
   }
 
-  private init(): void {
-    
-  };
-
 
   rescheduleAllArtistNotifications(): void {
     combineLatest([
@@ -75,6 +72,7 @@ export class NotificationSchedulingService implements OnDestroy {
                 return sub(n.schedule.at, { minutes: this.MINUTES_BEFORE }) >= now
               });
             if (notifications.length > 0) {
+              console.log(notifications);
               this.localNotificationService.schedule(notifications).then(result => {
                 this.localNotificationService.getAllNotifications().then(notifications => console.log("HEY", notifications))
               })

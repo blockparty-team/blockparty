@@ -15,7 +15,7 @@ export class TimetableSharedStateService {
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
 
-  timetables$: Observable<DayEventStageTimetable[]> = concat(
+    timetables$: Observable<DayEventStageTimetable[]> = concat(
     this.deviceStorageService.get('timetable').pipe(
       filter(timetables => !!timetables)
     ),
@@ -29,23 +29,27 @@ export class TimetableSharedStateService {
   );
 
   // Flattened timetables for rescheduling local notifications
-  timetableArtistNotification$: Observable<ArtistNotification[]> = this.timetables$.pipe(
-    map(days => days
-      .flatMap(day => day.events
-        .flatMap(event => event.stages
-          .flatMap(stage => stage.timetable
-            .flatMap(act => ({
-              artistId: act.artist_id,
-              artistName: act.artist_name,
-              startTime: act.start_time,
-              stageName: stage.stage_name,
-              eventName: event.event_name
-            }))
-          )
-        )
-      )
+  timetableArtistNotification$: Observable<ArtistNotification[]> = 
+  concat(
+    this.deviceStorageService.get('artists').pipe(
+      filter(artists => !!artists)
     ),
+    this.supabase.artists$.pipe(
+      filter(artists => !!artists),
+      tap(artists => this.deviceStorageService.set('artists', artists))
+    )
+  ).pipe(
+    map(artists => artists
+      .flatMap(artist => artist.timetable
+        .flatMap(timetable => ({
+          artistId: artist.id,
+          artistName: artist.name,
+          startTime: timetable.start_time,
+          stageName: timetable.stage.name,
+          eventName: timetable.stage.event.name
+          }))
+          )
+        ),
     shareReplay(1)
   );
-
 }

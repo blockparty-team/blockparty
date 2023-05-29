@@ -31,9 +31,7 @@ export class LocalNotificationsService {
     })
   }
 
-  public async schedule(notifications: LocalNotificationSchema[]): Promise<ScheduleResult> {
-    console.log("Scheduling: ", {notifications: notifications} as ScheduleOptions)
-    
+  public async schedule(notifications: LocalNotificationSchema[]): Promise<ScheduleResult> {  
     return await LocalNotifications.schedule({notifications: notifications})
   }
 
@@ -84,6 +82,8 @@ export class LocalNotificationsService {
       body: `${artistAct.artistName} is playing at ${artistAct.stageName} stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`,
       schedule: { at: sub(startTime, { minutes: minutesBefore }) },
       extra: { id: artistAct.artistId, artistName: artistAct.artistName },
+      largeIcon: "ic_launcher",
+      smallIcon: "ic_launcher"
     }
   }
 }
