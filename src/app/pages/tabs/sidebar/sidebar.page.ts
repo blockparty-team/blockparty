@@ -56,6 +56,11 @@ export class SidebarPage implements OnInit {
       routeName: RouteName.Transport
     },
     {
+      name: 'Gadearmbånd - support us!',
+      icon: 'thumbs-up-outline',
+      routeName: RouteName.Gadearmbaand
+    },
+    {
       name: 'About',
       icon: 'information-circle-outline',
       routeName: RouteName.About

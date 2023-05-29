@@ -74,6 +74,10 @@ const routes: Routes = [
     title: 'transport',
     loadChildren: () => import('./pages/transport/transport.module').then( m => m.TransportPageModule)
   },
+  {
+    path: RouteName.Gadearmbaand,
+    loadChildren: () => import('./pages/gadearmbaand/gadearmbaand.module').then( m => m.GadearmbaandPageModule)
+  },
 ];
 @NgModule({
   imports: [
