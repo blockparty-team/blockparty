@@ -5,6 +5,8 @@ import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ArtistNotification } from '@app/interfaces/favorite-notification';
+import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistSharedStateService } from '@app/pages/artist/state/artist-shared-state.service';
 
 
 @Injectable({
@@ -14,8 +16,9 @@ export class TimetableSharedStateService {
 
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
+  private artistSharedStateService = inject(ArtistSharedStateService);
 
-    timetables$: Observable<DayEventStageTimetable[]> = concat(
+  timetables$: Observable<DayEventStageTimetable[]> = concat(
     this.deviceStorageService.get('timetable').pipe(
       filter(timetables => !!timetables)
     ),
@@ -29,27 +32,18 @@ export class TimetableSharedStateService {
   );
 
   // Flattened timetables for rescheduling local notifications
-  timetableArtistNotification$: Observable<ArtistNotification[]> = 
-  concat(
-    this.deviceStorageService.get('artists').pipe(
-      filter(artists => !!artists)
-    ),
-    this.supabase.artists$.pipe(
-      filter(artists => !!artists),
-      tap(artists => this.deviceStorageService.set('artists', artists))
-    )
-  ).pipe(
-    map(artists => artists
-      .flatMap(artist => artist.timetable
-        .flatMap(timetable => ({
-          artistId: artist.id,
-          artistName: artist.name,
-          startTime: timetable.start_time,
-          stageName: timetable.stage.name,
-          eventName: timetable.stage.event.name
-          }))
-          )
-        ),
-    shareReplay(1)
-  );
+  timetableArtistNotification$: Observable<ArtistNotification[]> = this.artistSharedStateService.artists$.pipe(
+      map((artists: ArtistViewModel[]) => artists
+        .flatMap(artist => artist.timetable
+          .flatMap(timetable => ({
+            artistId: artist.id,
+            artistName: artist.name,
+            startTime: timetable.start_time,
+            stageName: timetable.stage.name,
+            eventName: timetable.stage.event.name
+          } as any))
+        )
+      ),
+      shareReplay(1)
+    );
 }
