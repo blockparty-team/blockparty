@@ -6,8 +6,8 @@ import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FileService } from '@app/services/file.service';
 import { SupabaseService } from '@app/services/supabase.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
-import { BehaviorSubject, concat, Observable } from 'rxjs';
-import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
+import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
+import { catchError, distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -33,6 +33,7 @@ export class EventStateService {
         ...rest,
         artists: stage
           .flatMap(stage => stage.timetable.map(t => t.artist))
+          .filter(artist => !!artist)
           .sort((a, b) => a.name.localeCompare(b.name)),
         days: day_event.map(day => day.day.name)
       }
@@ -54,6 +55,10 @@ export class EventStateService {
       }
     })),
     distinctUntilChanged(),
+    catchError(err => {
+      console.error(err);
+      return EMPTY;
+    }),
     shareReplay(1)
   )
 
