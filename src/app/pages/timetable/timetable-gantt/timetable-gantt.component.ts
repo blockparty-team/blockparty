@@ -32,7 +32,7 @@ export class TimetableGanttComponent implements OnInit {
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1
-  COLUMN_SIZE = 2.5 // 1min = COLUMN_SIZE - Defined in CSS
+  COLUMN_SIZE = 3.5 // 1min = COLUMN_SIZE - Defined in CSS
 
   ngOnInit(): void {
 
