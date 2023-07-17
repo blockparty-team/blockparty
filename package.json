@@ -44,7 +44,7 @@
     "date-fns": "^2.29.3",
     "geojson": "^0.5.0",
     "lottie-web": "^5.10.1",
-    "maplibre-gl": "^2.4.0",
+    "maplibre-gl": "^3.2.0",
     "ngx-lottie": "^10.0.0",
     "onesignal-cordova-plugin": "3.3.1",
     "onesignal-ngx": "^1.0.2",
