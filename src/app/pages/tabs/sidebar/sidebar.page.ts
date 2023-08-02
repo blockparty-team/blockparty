@@ -30,11 +30,11 @@ export class SidebarPage implements OnInit {
       icon: 'ticket-outline',
       routeName: RouteName.Tickets
     },
-    {
-      name: 'Events',
-      icon: 'musical-notes-outline',
-      routeName: RouteName.Event
-    },
+    // {
+    //   name: 'Events',
+    //   icon: 'musical-notes-outline',
+    //   routeName: RouteName.Event
+    // },
     // {
     //   name: 'Playlists',
     //   icon: 'play-outline',
@@ -50,16 +50,16 @@ export class SidebarPage implements OnInit {
     //   icon: 'cash-outline',
     //   routeName: RouteName.Merch
     // },
-    {
-      name: 'Transport - book a Viggo',
-      icon: 'car-outline',
-      routeName: RouteName.Transport
-    },
-    {
-      name: 'Gadearmbånd - support us!',
-      icon: 'thumbs-up-outline',
-      routeName: RouteName.Gadearmbaand
-    },
+    // {
+    //   name: 'Transport - book a Viggo',
+    //   icon: 'car-outline',
+    //   routeName: RouteName.Transport
+    // },
+    // {
+    //   name: 'Gadearmbånd - support us!',
+    //   icon: 'thumbs-up-outline',
+    //   routeName: RouteName.Gadearmbaand
+    // },
     {
       name: 'About',
       icon: 'information-circle-outline',
