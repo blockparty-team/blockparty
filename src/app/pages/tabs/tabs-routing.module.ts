@@ -38,14 +38,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/map',
+        redirectTo: RouteName.Artist,
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/map',
+    redirectTo: RouteName.Artist,
     pathMatch: 'full'
   }
 ];

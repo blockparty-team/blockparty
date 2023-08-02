@@ -2,11 +2,6 @@
           id="tabs">
 
   <ion-tab-bar slot="bottom">
-    <ion-tab-button [tab]="routeName.Map">
-      <ion-icon [name]="(currentTab$ | async) === tabName.Map ? 'location' : 'location-outline'"></ion-icon>
-      <ion-label>Map</ion-label>
-    </ion-tab-button>
-
     <ion-tab-button [tab]="routeName.Artist">
       <ion-icon [name]="(currentTab$ | async) === tabName.Artist ? 'musical-notes' : 'musical-notes-outline'"></ion-icon>
       <ion-label>Artists</ion-label>
@@ -20,6 +15,11 @@
     <ion-tab-button [tab]="routeName.Favorite">
       <ion-icon [name]="(currentTab$ | async) === tabName.Favorite ? 'heart' : 'heart-outline'"></ion-icon>
       <ion-label>Favorites</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button [tab]="routeName.Map">
+      <ion-icon [name]="(currentTab$ | async) === tabName.Map ? 'location' : 'location-outline'"></ion-icon>
+      <ion-label>Map</ion-label>
     </ion-tab-button>
 
     <ion-tab-button (click)="openSidebar()">
