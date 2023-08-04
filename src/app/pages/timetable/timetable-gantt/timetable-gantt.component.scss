@@ -43,8 +43,8 @@
             border-radius: 10px 10px 2px 2px;
             position: sticky;
             left: 10px;
-            color: var(--ion-color-medium-contrast);
-            background-color: var(--ion-color-medium-tint);
+            color: var(--ion-color-tertiary-contrast);
+            background-color: var(--ion-color-tertiary-tint);
         }
     }
 
@@ -53,10 +53,10 @@
         border-radius: 25px;
         grid-column: var(--act-column-start) / var(--act-column-end);
         grid-row: var(--act-row-start) / span 2;
-        filter: brightness(115%);
+        filter: brightness(110%);
 
         &.favorite {
-            filter: brightness(150%);
+            filter: brightness(120%);
         }
 
         .act-content {
