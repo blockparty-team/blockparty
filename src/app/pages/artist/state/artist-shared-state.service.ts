@@ -44,13 +44,13 @@ export class ArtistSharedStateService {
 
       const srcset = bucket && path
         ? this.fileService.imageSrcset(bucket, path)
-        : 'assets/distortion_logo.png';
+        : 'assets/karrusel_logo.png';
 
       return {
         ...artist,
         imgUrl: bucket && path
           ? this.supabase.publicImageUrl(bucket, path)
-          : 'assets/distortion_logo.png',
+          : 'assets/karrusel_logo.png',
         srcset,
         // Favorites only exists if user added artists to favorites
         isFavorite: favoriteArtistIds.includes(artist.id)

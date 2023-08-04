@@ -7,15 +7,17 @@ import { Environment } from "./environment.model";
 // The list of file replacements can be found in `angular.json`.
 export const environment: Environment = {
   production: false,
-  festivalName: 'Distortion Festival',
+  festivalName: 'Karrusel Festival',
   appUrl: 'http://localhost:8100',
-  supabaseUrl: 'http://localhost:54321',
-  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
-  maptilerStyleJson: 'https://api.maptiler.com/maps/62517ef6-259e-4ecc-a9df-6b330f8b5092/style.json?key=IFNEgQuIP7z1PzGMheNY',
+  supabaseUrl: 'https://ystloacekpukmliuuvrr.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlzdGxvYWNla3B1a21saXV1dnJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTA5MTM2NTUsImV4cCI6MjAwNjQ4OTY1NX0.Nda_3UWl_Atu3Y7ogfKtVR2sDwAgyZjOPCA7Nedt-7c',
+  // supabaseUrl: 'http://localhost:54321',
+  // supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0',
+  maptilerStyleJson: 'https://api.maptiler.com/maps/decadbf9-1a07-4b7b-9726-fed2f003b673/style.json?key=MZCjtFvEvhy0zEdhtmhp',
   maptilerApiKey: 'IFNEgQuIP7z1PzGMheNY',
   mapView: {
-    center: [12.57632, 55.68215],
-    zoom: 11.5,
+    center: [12.618371, 55.690323],
+    zoom: 15,
     pitch: 0
   },
   oneSignalAppId: 'e5df19f0-b1e1-4e2d-bbc0-3e7c8437fdc4',

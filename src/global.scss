@@ -29,12 +29,21 @@
 @import "~maplibre-gl/dist/maplibre-gl.css";
 
 // Font
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Source+Sans+Pro&family=Fredericka+the+Great&display=swap');
 
 h1,
 h2,
 h3 {
   font-family: 'Roboto Slab', serif;
+}
+
+ion-header {
+  ion-toolbar {
+    ion-title {
+      font-family: 'Fredericka the Great', cursive;
+      text-transform: uppercase;
+    }
+  }
 }
 
 .maplibregl-ctrl-group button {

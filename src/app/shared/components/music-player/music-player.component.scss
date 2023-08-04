@@ -16,7 +16,7 @@ $actions-height: 42px;
 
         ion-segment {
             width: unset;
-            --background: #303030;
+            --background: white;
             border-radius: 15px 15px 0 0;
 
             ion-segment-button {
@@ -26,7 +26,7 @@ $actions-height: 42px;
         }
 
         .close-player {
-            background-color: #303030;
+            background-color: white;
             border-radius: 15px 15px 0 0;
             padding: 5px;
             right: 3px;

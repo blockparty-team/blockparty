@@ -9,11 +9,6 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: RouteName.Map,
-        title: 'Map',
-        loadChildren: () => import('../map/map.module').then(m => m.MapPageModule)
-      },
-      {
         path: RouteName.Artist,
         title: 'Artist',
         children: [
@@ -37,15 +32,20 @@ const routes: Routes = [
         loadChildren: () => import('../favorite/favorite.module').then( m => m.FavoritePageModule)
       },
       {
+        path: RouteName.Map,
+        title: 'Map',
+        loadChildren: () => import('../map/map.module').then(m => m.MapPageModule)
+      },
+      {
         path: '',
-        redirectTo: '/tabs/map',
+        redirectTo: RouteName.Artist,
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/map',
+    redirectTo: RouteName.Tabs,
     pathMatch: 'full'
   }
 ];
