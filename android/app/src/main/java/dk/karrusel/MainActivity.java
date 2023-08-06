@@ -1,4 +1,4 @@
-package dk.cphdistortion.app;
+package dk.karrusel;
 
 import com.getcapacitor.BridgeActivity;
 

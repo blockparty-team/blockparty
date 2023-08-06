@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'dk.cphdistortion.app',
-  appName: 'Distortion',
+  appId: 'dk.karrusel',
+  appName: 'Karrusel',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {
