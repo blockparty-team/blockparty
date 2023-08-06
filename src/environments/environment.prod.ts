@@ -10,7 +10,7 @@ export const environment: Environment = {
   maptilerApiKey: 'IFNEgQuIP7z1PzGMheNY',
   mapView: {
     center: [12.618371, 55.690323],
-    zoom: 16.5,
+    zoom: 15.5,
     pitch: 0
   },
   oneSignalAppId: '1c3348ed-5747-4c3d-89f1-f6ad3049c0a0',
