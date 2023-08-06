@@ -83,7 +83,7 @@ export class SupabaseService {
       this.supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: isPlatform('capacitor') ? 'distortion://login' : `${window.location.origin}${redirectTo}`
+          redirectTo: isPlatform('capacitor') ? 'karrusel://login' : `${window.location.origin}${redirectTo}`
         }
       })
     ).pipe(

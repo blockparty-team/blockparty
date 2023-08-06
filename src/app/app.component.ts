@@ -75,8 +75,8 @@ export class AppComponent implements OnInit {
     App.addListener("appUrlOpen", async (urlData: URLOpenListenerEvent) => {
       const openUrl = urlData.url;
 
-      // url scheme "distortion://" is used for native app.  
-      const slug = openUrl.split('distortion://').pop()
+      // url scheme "karrusel://" is used for native app.  
+      const slug = openUrl.split('karrusel://').pop()
 
       this.zone.run(() => {
         this.router.navigateByUrl(`/${slug}`, { replaceUrl: true });
