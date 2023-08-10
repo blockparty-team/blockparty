@@ -54,7 +54,7 @@
         border-left: 2px solid white;
         grid-column: var(--act-column-start) / var(--act-column-end);
         grid-row: var(--act-row-start) / span 2;
-        filter: brightness(110%);
+        filter: brightness(100%);
 
         &.favorite {
             filter: brightness(120%);
