@@ -10,12 +10,12 @@
 	--ion-color-primary-shade: #df7c12;
 	--ion-color-primary-tint: #fd982c;
 
-	--ion-color-secondary: #C51605;
-	--ion-color-secondary-rgb: 197,22,5;
+	--ion-color-secondary: #CD2716;
+	--ion-color-secondary-rgb: 205,39,22;
 	--ion-color-secondary-contrast: #ffffff;
 	--ion-color-secondary-contrast-rgb: 255,255,255;
-	--ion-color-secondary-shade: #ad1304;
-	--ion-color-secondary-tint: #cb2d1e;
+	--ion-color-secondary-shade: #b42213;
+	--ion-color-secondary-tint: #d23d2d;
 
 	--ion-color-tertiary: #CECE5A;
 	--ion-color-tertiary-rgb: 206,206,90;
@@ -45,12 +45,12 @@
 	--ion-color-danger-shade: #cf3c4f;
 	--ion-color-danger-tint: #ed576b;
 
-	--ion-color-medium: #FD8D14;
-	--ion-color-medium-rgb: 253,141,20;
-	--ion-color-medium-contrast: #000000;
-	--ion-color-medium-contrast-rgb: 0,0,0;
-	--ion-color-medium-shade: #df7c12;
-	--ion-color-medium-tint: #fd982c;
+	--ion-color-medium: #737478;
+	--ion-color-medium-rgb: 115,116,120;
+	--ion-color-medium-contrast: #ffffff;
+	--ion-color-medium-contrast-rgb: 255,255,255;
+	--ion-color-medium-shade: #65666a;
+	--ion-color-medium-tint: #818286;
 
   --ion-color-light: #f4f5f8;
   --ion-color-light-rgb: 244, 245, 248;
@@ -67,12 +67,12 @@
 	--ion-color-favorite-tint: #cb2d1e;
 
   // Background
-  --ion-background-color: #FEEFC7;
-  --ion-background-color-rgb: 254, 239, 199;
+  --ion-background-color: #e0dfdf;
+  --ion-background-color-rgb: 229, 229, 229;
 
-  --ion-font-family: 'Source Sans Pro', sans-serif;
-  --ion-text-color: #401414;
-  --ion-text-color-rgb: 64, 20, 20;
+  --ion-font-family: 'Roboto', sans-serif;;
+  --ion-text-color: #45110F;
+  --ion-text-color-rgb: 69, 17, 15;
 
   --ion-color-step-50: #4d4949;
   --ion-color-step-100: #575252;
@@ -94,11 +94,11 @@
   --ion-color-step-900: #ececec;
   --ion-color-step-950: #f6f5f5;
 
-  --ion-item-background: #FEEFC7;
+//   --ion-item-background: #E5E5E5;
 
-  --ion-toolbar-background: #FEEFC7;
+  --ion-toolbar-background: #E5E5E5;
 
-  --ion-tab-bar-background: #FEEFC7;
+  --ion-tab-bar-background: #E5E5E5;
 }
 
 .ion-color-favorite {

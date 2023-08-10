@@ -29,18 +29,19 @@
 @import "~maplibre-gl/dist/maplibre-gl.css";
 
 // Font
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Source+Sans+Pro&family=Fredericka+the+Great&display=swap');
+// @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Source+Sans+Pro&family=Fredericka+the+Great&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&family=Roboto:wght@400&display=swap');
 
 h1,
 h2,
 h3 {
-  font-family: 'Roboto Slab', serif;
+  font-family: 'Roboto Mono', monospace;
 }
 
 ion-header {
   ion-toolbar {
     ion-title {
-      font-family: 'Fredericka the Great', cursive;
+      font-family: 'Roboto Mono', monospace;
       text-transform: uppercase;
     }
   }
@@ -52,7 +53,7 @@ ion-header {
 }
 
 .maplibregl-ctrl-group {
-  background-color: var(--ion-color-secondary);
+  background-color: var(--ion-color-tertiary);
   border-radius: 50%;
   box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !important;
 }

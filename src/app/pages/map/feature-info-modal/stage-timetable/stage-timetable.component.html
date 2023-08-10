@@ -11,14 +11,14 @@
         </ion-button>
       </ng-container>
 
-      <ion-button id="open-description-modal"
+      <!-- <ion-button id="open-description-modal"
                   *ngIf="hasTimetable$ | async">
         <ion-icon slot="icon-only"
                   name="information-outline"></ion-icon>
-      </ion-button>
+      </ion-button> -->
 
       <ng-container *ngIf="location$ | async as location">
-        <ion-button color="primary"
+        <ion-button color="secondary"
                     fill="outline"
                     (click)="onOpenGoogleMapsDirections(location)">
           Directions
@@ -79,7 +79,7 @@
 
   <ng-container *ngIf="url$ | async as url">
     <div class="ion-text-center">
-      <ion-button color="primary"
+      <ion-button color="secondary"
                   (click)="onGoToUrl(url)">
         More info
       </ion-button>
