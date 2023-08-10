@@ -185,7 +185,7 @@ export class MapService {
     this.map.addSource('custom-base-map', {
       "type": "raster",
       "tiles": [
-        `https://api.maptiler.com/tiles/32951a70-ebdd-4640-a35b-b070263ab0ca/{z}/{x}/{y}.png?key=${environment.maptilerApiKey}`
+        `https://api.maptiler.com/tiles/0e73b874-eea7-4d49-afb7-6291e7744f2a/{z}/{x}/{y}.png?key=${environment.maptilerApiKey}`
       ],
       tileSize: 256,
       minzoom: 14,

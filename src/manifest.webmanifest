@@ -1,7 +1,7 @@
 {
   "name": "Karrusel",
-  "short_name": "Karrysel",
-  "theme_color": "#FEEFC7",
+  "short_name": "Karrusel",
+  "theme_color": "#E5E5E5",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",

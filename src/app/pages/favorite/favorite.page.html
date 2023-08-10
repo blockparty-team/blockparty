@@ -46,7 +46,7 @@
                           color="medium">
           <ion-label>{{group.day.name}}</ion-label>
         </ion-item-divider>
-        <ion-item *ngFor="let artist of group.artists; trackBy:trackArtist">
+        <ion-item *ngFor="let artist of group.artists; trackBy:trackArtist" lines="none">
 
           <ion-avatar slot="start">
             <img [src]="artist.imgUrl" />
@@ -60,7 +60,7 @@
                 {{artist.timetable[0]?.end_time | date:'HH:mm'}}
               </span>
             </h3>
-            <p *ngIf="artist.timetable[0] as timetable">{{timetable.stage.event.name}} | {{timetable.stage.name}}</p>
+            <p *ngIf="artist.timetable[0] as timetable" style="color: rgb(110, 110, 110)">{{timetable.stage.name}}</p>
           </ion-label>
 
           <div slot="end"
