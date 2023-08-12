@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
 import { filter, map, shareReplay, tap } from 'rxjs/operators';
-import { isSameDay } from 'date-fns';
+import { isSameDay, sub } from 'date-fns';
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { TimetableSharedStateService } from '@app/pages/timetable/state/timetable-shared-state.service';
@@ -58,7 +58,8 @@ export class FilterEventsStateService {
   ).pipe(
     filter(days => !!days),
     tap(days => {
-      const now = new Date();
+      // Change day at 6am next day (for events running during nighttime)
+      const now = sub(new Date(), { hours: 6 });
       const day = days.find(day => isSameDay(now, new Date(day.day)));
 
       if (day) this.selectDay(day.id);
