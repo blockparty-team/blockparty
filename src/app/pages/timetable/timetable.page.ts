@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { isSameDay, sub } from 'date-fns';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { TimetableStateService } from './state/timetable-state.service';
 import { filter, takeUntil, tap } from 'rxjs/operators';
@@ -28,7 +29,17 @@ export class TimetablePage implements OnInit, OnDestroy {
   ngOnInit(): void {
     // Default select first day, event type and event
     this.filterEventsStateService.days$.pipe(
-      tap(days => this.filterEventsStateService.selectDay(days[0].id)),
+      tap(days => {
+        // Change day at 6am next day (for events running during nighttime)
+        const now = sub(new Date(), { hours: 6 });
+        const day = days.find(day => isSameDay(now, new Date(day.day)));
+
+        if (day) {
+          this.filterEventsStateService.selectDay(day.id);
+        } else {
+          this.filterEventsStateService.selectDay(days[0].id);
+        }
+      }),
       takeUntil(this.abandon$)
     ).subscribe();
 
