@@ -72,7 +72,7 @@ export class SidebarPage implements OnInit {
     },
     {
       name: 'Search',
-      icon: 'search',
+      icon: 'search-outline',
       routeName: RouteName.Search
     },
     {
