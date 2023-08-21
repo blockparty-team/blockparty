@@ -17,7 +17,7 @@ export const environment: Environment = {
     zoom: 16.5,
     pitch: 0
   },
-  oneSignalAppId: 'e5df19f0-b1e1-4e2d-bbc0-3e7c8437fdc4',
+  oneSignalAppId: '663546ff-5912-40a5-885b-e77fdeb9dc82',
   featureToggle: {
     enableLogin: false
   }
