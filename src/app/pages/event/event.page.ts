@@ -36,8 +36,9 @@ export class EventPage implements OnInit {
   }
 
   onEventTypeFilterChange(event: Event): void {
-    this.eventStateService.selectEventTypeId((event as SegmentCustomEvent).detail.value);
+    this.eventStateService.selectEventTypeId((event as SegmentCustomEvent).detail.value.toString());
   }
+
 
   dismiss() {
     this.modal.dismiss(null, 'cancel');

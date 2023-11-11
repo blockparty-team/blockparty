@@ -95,7 +95,7 @@ export class StageTimetableComponent implements OnInit {
   }
 
   onSelectDay(event: Event): void {
-    this._selectedDay$.next((event as SegmentCustomEvent).detail.value);
+    this._selectedDay$.next((event as SegmentCustomEvent).detail.value.toString());
   }
 
   onGoToArtist(name: string): void {
