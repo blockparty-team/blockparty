@@ -225,7 +225,7 @@ export class SupabaseService {
         .order('name')
     ).pipe(
       // TODO: Trouble with type, hence this cast
-      map(({ data, }) => data as EventWithRelations[])
+      map(({ data, }) => data as unknown as EventWithRelations[])
     )
   }
 
