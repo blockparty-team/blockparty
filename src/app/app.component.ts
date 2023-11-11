@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
     });
 
     Device.getId().then(deviceId => {
-      this.pushNotificationService.initOneSignal(deviceId.uuid);
+      this.pushNotificationService.initOneSignal(deviceId.identifier);
     })
 
     this.supabase.authChanges((event, session) => {
