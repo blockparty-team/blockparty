@@ -22,7 +22,7 @@ export class FilesystemService {
     );
   }
 
-  public readFile(path: string): Observable<string> {
+  public readFile(path: string): Observable<string | Blob> {
     return from(Filesystem.readFile({
       directory: Directory.Cache,
       path
