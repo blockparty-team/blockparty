@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { CanLoad, Route, Router } from '@angular/router';
+import { Route, Router } from '@angular/router';
 import { RouteName } from '@app/shared/models/routeName';
 import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CanLoadLoginGuard implements CanLoad {
+export class CanLoadLoginGuard  {
 
   constructor(
     private router: Router
