@@ -123,7 +123,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
     this.mapStateService.selectedMapFeature$.pipe(
       switchMap(feature => {
         if (feature.mapLayer === MapLayer.Stage) {
-          return this.openFeatureInfoModal(0.5, [0, 0.5, 0.75, 1])
+          return this.openFeatureInfoModal(0.5, [0, 0.5, 0.75, 0.9])
         }
 
         if (feature.mapLayer === MapLayer.Asset || feature.mapLayer === MapLayer.AssetIcon) {
@@ -181,7 +181,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 
   openFeatureInfoModal(
     initialBreakpoint: number = 0.4,
-    breakpoints: number[] = [0.2, 0.4, 0.7, 1]
+    breakpoints: number[] = [0.2, 0.4, 0.7, 0.9]
   ) {
     return from(
       this.modalCtrl.create({
