@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 interface DayGroupedFavorites {
@@ -19,9 +19,7 @@ export class FavoritePage {
 
   private artistStateService = inject(ArtistStateService);
 
-  private _showDayGroupedFavorites$ = new BehaviorSubject<boolean>(true);
-  showDayGroupedFavorites$: Observable<boolean> = this._showDayGroupedFavorites$.asObservable();
-
+  public showDayGroupedFavorites = signal<boolean>(true);
 
   favoriteArtists$: Observable<ArtistViewModel[]> = this.artistStateService.artists$.pipe(
     map(artists => artists.filter(artist => artist.isFavorite))
@@ -63,15 +61,7 @@ export class FavoritePage {
   }
 
   toggleDayGroupedFavorites(): void {
-    this._showDayGroupedFavorites$.next(!this._showDayGroupedFavorites$.value);
-  }
-
-  trackArtist(index: number, item: ArtistViewModel) {
-    return item.id;
-  }
-
-  trackDay(index: number, item: DayGroupedFavorites) {
-    return item.day.day;
+    this.showDayGroupedFavorites.update(show => !show);
   }
 
 }
