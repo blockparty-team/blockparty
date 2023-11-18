@@ -14,7 +14,6 @@ import { NotificationSchedulingService } from './services/notification-schedulin
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@app/shared/models/routeName';
 import { environment } from '@env/environment';
-import { add } from 'date-fns';
 import { icons } from './shared/icons';
 
 @Component({
