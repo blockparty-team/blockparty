@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { EventViewModel } from '@app/interfaces/event';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
@@ -8,8 +8,6 @@ import { EventsGroupedByType } from '@app/interfaces/event-type';
 import { RouteName } from '@app/shared/models/routeName';
 import { EventCardComponent } from './event-card/event-card.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { close } from "ionicons/icons";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonButton, IonTitle, IonContent, IonModal, IonIcon, IonAccordionGroup, IonAccordion, IonItem, IonLabel } from "@ionic/angular/standalone";
 
 @Component({
@@ -39,18 +37,14 @@ import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonButton, IonTitle, 
 })
 export class EventPage implements OnInit {
 
+  private eventStateService = inject(EventStateService);
+  private router = inject(Router);
+
   @ViewChild(IonModal) modal: IonModal;
 
   events$: Observable<EventViewModel[]>;
   eventTypes$: Observable<EventsGroupedByType[]>;
   selectedEventTypeId$: Observable<string>;
-
-  constructor(
-    private eventStateService: EventStateService,
-    private router: Router
-  ) {
-    addIcons({ close });
-  }
 
   ngOnInit() {
     this.events$ = this.eventStateService.events$;

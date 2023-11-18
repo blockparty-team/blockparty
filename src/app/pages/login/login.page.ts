@@ -1,10 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@app/services/auth.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { first, switchMap } from 'rxjs/operators';
-import { addIcons } from "ionicons";
-import { logoGoogle, logoFacebook, logoApple } from "ionicons/icons";
 import { IonContent, IonFab, IonBackButton, IonButton, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
@@ -17,15 +15,11 @@ import { IonContent, IonFab, IonBackButton, IonButton, IonIcon } from "@ionic/an
 })
 export class LoginPage implements OnInit {
 
-  credentials: FormGroup;
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private routeHistoryService = inject(RouteHistoryService);
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private routeHistoryService: RouteHistoryService
-  ) {
-    addIcons({ logoGoogle, logoFacebook, logoApple });
-  }
+  credentials: FormGroup;
 
   ngOnInit() {
     this.credentials = this.fb.group({

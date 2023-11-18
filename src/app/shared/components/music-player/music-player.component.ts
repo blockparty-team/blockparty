@@ -1,11 +1,9 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { animations } from '@app/shared/animations';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { BehaviorSubject } from 'rxjs';
 import { IframeSrcDirective } from '../../directives/iframe-src.directive';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { logoSoundcloud, closeCircleOutline } from "ionicons/icons";
 import { IonSegment, IonSegmentButton, IonIcon, IonSpinner } from "@ionic/angular/standalone";
 
 type PlayerSource = 'soundcloud' | 'bandcamp' | null;
@@ -25,10 +23,6 @@ export class MusicPlayerComponent implements OnInit {
   @Input() showPlayer$: BehaviorSubject<boolean>;
 
   selectedSource: PlayerSource;
-
-  constructor() {
-    addIcons({ logoSoundcloud, closeCircleOutline });
-  }
 
   ngOnInit(): void {
     if (this.soundcloudUrl && this.bandcampUrl) {

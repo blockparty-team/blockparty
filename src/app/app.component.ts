@@ -9,10 +9,13 @@ import { RouteHistoryService as RouteHistoryService } from './services/routeHist
 import { PushNotificationService } from './services/push-notification.service';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@app/shared/models/routeName';
 import { environment } from '@env/environment';
+import { add } from 'date-fns';
+import { icons } from './shared/icons';
 
 @Component({
   selector: 'app-root',
@@ -34,6 +37,7 @@ export class AppComponent implements OnInit {
 
   constructor() {
     this.setupAppUrlOpenListener();
+    addIcons(icons)
   }
 
   ngOnInit(): void {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
 import { MenuController } from '@ionic/angular/standalone';
@@ -7,17 +7,6 @@ import { first, tap } from 'rxjs/operators';
 import { environment } from '@env/environment'
 import { RouteName } from '@app/shared/models/routeName';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import {
-  ticketOutline,
-  musicalNotesOutline,
-  carOutline,
-  thumbsUpOutline,
-  informationCircleOutline,
-  settingsOutline,
-  search,
-  chevronBack,
-} from "ionicons/icons";
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonLabel, IonFooter } from "@ionic/angular/standalone";
 
 interface NavigationItem {
@@ -49,6 +38,10 @@ interface NavigationItem {
   ],
 })
 export class SidebarPage implements OnInit {
+
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private menu = inject(MenuController);
 
   showLogin: boolean = environment.featureToggle.enableLogin;
 
@@ -120,23 +113,6 @@ export class SidebarPage implements OnInit {
     ? false
     : true
   ) // Show settings menu item when not in production
-
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private menu: MenuController
-  ) {
-    addIcons({
-      ticketOutline,
-      musicalNotesOutline,
-      carOutline,
-      thumbsUpOutline,
-      informationCircleOutline,
-      settingsOutline,
-      search,
-      chevronBack,
-    });
-  }
 
   ngOnInit() {
     this.authenticated$ = this.authService.authenticated$

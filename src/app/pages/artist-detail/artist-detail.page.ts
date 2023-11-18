@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
@@ -13,8 +13,6 @@ import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { RouteName } from '@app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { shareSocialOutline, openOutline, musicalNoteOutline, mapOutline, logoInstagram } from "ionicons/icons";
 import { IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner } from "@ionic/angular/standalone";
 
 interface SoMeIcon {
@@ -45,6 +43,12 @@ const soMeIcons: SoMeIcon[] = [
 })
 export class ArtistDetailPage implements OnInit {
 
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+  artistStateService = inject(ArtistStateService);
+  mapService = inject(MapService);
+  routeHistoryService = inject(RouteHistoryService);
+
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
   showMusicPlayer$ = new BehaviorSubject<boolean>(false);
@@ -66,16 +70,6 @@ export class ArtistDetailPage implements OnInit {
     // Image heght is defined for 250 in css
     map(titleDistanceTop => titleDistanceTop < 250 ? false : true)
   );
-
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private artistStateService: ArtistStateService,
-    private mapService: MapService,
-    private routeHistoryService: RouteHistoryService
-  ) {
-    addIcons({ shareSocialOutline, openOutline, musicalNoteOutline, mapOutline, logoInstagram });
-  }
 
   ngOnInit() {
     this.artist$ = this.activatedRoute.paramMap.pipe(

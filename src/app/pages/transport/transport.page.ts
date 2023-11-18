@@ -4,8 +4,6 @@ import { map } from 'rxjs';
 import { Clipboard } from '@capacitor/clipboard';
 import { Browser } from '@capacitor/browser';
 import { AsyncPipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { copyOutline } from "ionicons/icons";
 import { IonHeader, IonToolbar, IonBackButton, IonTitle, IonContent, IonText, IonButton, IonIcon, IonToast } from "@ionic/angular/standalone";
 
 @Component({
@@ -24,10 +22,6 @@ export class TransportPage {
   previousRoute$ = this.routeHistoryService.history$.pipe(
     map(history => history.previous ? history.previous : '/')
   );
-
-  constructor() {
-    addIcons({ copyOutline });
-  }
 
   onCopyVoucherCode() {
     Clipboard.write({ string: this.viggoVoucherCode });

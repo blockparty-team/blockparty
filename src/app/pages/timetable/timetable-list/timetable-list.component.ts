@@ -10,8 +10,6 @@ import { RouteName } from '@app/shared/models/routeName';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { sadOutline } from "ionicons/icons";
 import { IonContent, IonList, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonIcon, IonSegment, IonSegmentButton, IonText } from "@ionic/angular/standalone";
 
 type ListViewMode = 'byTime' | 'byStage';
@@ -38,10 +36,6 @@ export class TimetableListComponent implements OnInit {
 
   private _listViewMode$ = new BehaviorSubject<ListViewMode>('byTime');
   listViewMode$: Observable<ListViewMode> = this._listViewMode$.asObservable();
-
-  constructor() {
-    addIcons({ sadOutline });
-  }
 
   ngOnInit() {
 

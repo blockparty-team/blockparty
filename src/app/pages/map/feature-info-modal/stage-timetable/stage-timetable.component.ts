@@ -11,8 +11,6 @@ import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { RouteName } from '@app/shared/models/routeName';
 import { Ticket } from '@app/interfaces/event';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { ticketOutline, informationOutline, close } from "ionicons/icons";
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonSegment, IonSegmentButton, IonLabel, IonItem, IonBadge, IonModal, IonContent, IonList } from "@ionic/angular/standalone";
 
 @Component({
@@ -41,10 +39,6 @@ export class StageTimetableComponent implements OnInit {
 
   private _selectedDay$ = new BehaviorSubject<string>(null);
   selectedDay$: Observable<string> = this._selectedDay$.asObservable();
-
-  constructor() {
-    addIcons({ ticketOutline, informationOutline, close });
-  }
 
   ngOnInit() {
 

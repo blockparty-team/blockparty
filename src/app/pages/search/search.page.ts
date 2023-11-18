@@ -19,8 +19,6 @@ import { EventItemComponent } from './event-item/event-item.component';
 import { ArtistItemComponent } from './artist-item/artist-item.component';
 import { NgIf, NgFor, NgSwitch, NgSwitchCase, AsyncPipe } from '@angular/common';
 import { IonHeader, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonSearchbar, IonContent, IonList, IonItem, IonBadge, IonIcon, IonSpinner } from "@ionic/angular/standalone";
-import { addIcons } from "ionicons";
-import { chevronBack } from "ionicons/icons";
 
 enum Entity {
   artist = 'artist',
@@ -78,10 +76,6 @@ export class SearchPage {
     filter(([, mode]) => mode === SearchMode.NearBy),
     map(([nearBy,]) => nearBy)
   );
-
-  constructor() {
-    addIcons({ chevronBack })
-  }
 
   ionViewDidEnter(): void {
     if (this._selectedSearchMode$.value === SearchMode.FreeText) {

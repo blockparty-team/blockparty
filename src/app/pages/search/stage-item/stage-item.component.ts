@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
@@ -7,8 +7,6 @@ import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapService } from '@app/services/map.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { Feature, Point } from 'geojson';
-import { addIcons } from "ionicons";
-import { map } from "ionicons/icons";
 import { IonItem, IonThumbnail, IonLabel, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
@@ -20,15 +18,12 @@ import { IonItem, IonThumbnail, IonLabel, IonIcon } from "@ionic/angular/standal
   imports: [IonItem, IonThumbnail, IonLabel, IonIcon]
 })
 export class StageItemComponent {
-  @Input() stage: Feature<Point, StageGeojsonProperties>;
 
-  constructor(
-    private router: Router,
-    private mapService: MapService,
-    private mapStateService: MapStateService
-  ) {
-    addIcons({ map });
-  }
+  private router = inject(Router);
+  private mapService = inject(MapService);
+  private mapStateService = inject(MapStateService);
+
+  @Input() stage: Feature<Point, StageGeojsonProperties>;
 
   onShowOnMap() {
     this.router.navigate(['/tabs', RouteName.Map])

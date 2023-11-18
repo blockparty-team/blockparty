@@ -9,8 +9,6 @@ import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.compo
 import { NgIf, AsyncPipe } from '@angular/common';
 import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
 import { IonHeader, IonContent, IonFab, IonFabButton, IonIcon } from "@ionic/angular/standalone";
-import { addIcons } from "ionicons";
-import { list } from "ionicons/icons";
 
 type TimeTableViewMode = 'gantt' | 'list'
 
@@ -34,10 +32,6 @@ export class TimetablePage implements OnInit, OnDestroy {
   timetableViewMode$: Observable<TimeTableViewMode> = this._timetableViewMode$.asObservable();
 
   private abandon$ = new Subject<void>();
-
-  constructor() {
-    addIcons({ list })
-  }
 
   ngOnInit(): void {
     // Default select first day, event type and event

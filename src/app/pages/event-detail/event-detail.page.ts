@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -13,8 +13,6 @@ import { environment } from '@env/environment';
 import { RouteName } from '@app/shared/models/routeName';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { mapOutline, ticketOutline, shareSocialOutline, close } from "ionicons/icons";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, IonBadge, IonModal, IonButton, IonList, IonItem } from "@ionic/angular/standalone";
 
 @Component({
@@ -45,22 +43,18 @@ import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent,
 })
 export class EventDetailPage implements OnInit {
 
+  private activatedRoute = inject(ActivatedRoute);
+  private modalCtrl = inject(ModalController);
+  private eventStateService = inject(EventStateService);
+  private mapService = inject(MapService);
+  private router = inject(Router);
+
   routeName = RouteName;
 
   event$: Observable<EventViewModel>
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController,
-    private eventStateService: EventStateService,
-    private mapService: MapService,
-    private router: Router
-  ) {
-    addIcons({ mapOutline, ticketOutline, shareSocialOutline, close });
-  }
 
   ngOnInit() {
     this.event$ = this.activatedRoute.paramMap.pipe(

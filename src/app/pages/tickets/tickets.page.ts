@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketsStateService } from './state/tickets-state.service';
 import { Browser } from '@capacitor/browser';
 import { EventsGroupedByType } from '@app/interfaces/event-type';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { ticket } from "ionicons/icons";
 import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonList, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
@@ -33,13 +31,9 @@ import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent,
 })
 export class TicketsPage implements OnInit {
 
-  eventsGroupedByType$: Observable<EventsGroupedByType[]>;
+  private ticketStateService = inject(TicketsStateService);
 
-  constructor(
-    private ticketStateService: TicketsStateService,
-  ) {
-    addIcons({ ticket });
-  }
+  eventsGroupedByType$: Observable<EventsGroupedByType[]>;
 
   ngOnInit() {
     this.eventsGroupedByType$ = this.ticketStateService.eventsGroupedByType$;

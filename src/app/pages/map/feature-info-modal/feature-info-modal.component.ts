@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { Observable } from 'rxjs';
@@ -19,16 +19,14 @@ import { IonContent } from "@ionic/angular/standalone";
   imports: [NgIf, StageTimetableComponent, AssetComponent, AsyncPipe, IonContent]
 })
 export class FeatureInfoModalComponent implements OnInit {
+
+  private mapStateService = inject(MapStateService);
+  private mapService = inject(MapService);
+
   selectedFeature$: Observable<MapClickedFeature<GeojsonProperties>>;
   mapLayer = MapLayer;
 
-  constructor(
-    private mapStateService: MapStateService,
-    private mapService: MapService
-  ) { }
-
-  ngOnInit(
-  ) {
+  ngOnInit() {
     this.selectedFeature$ = this.mapStateService.selectedMapFeature$.pipe(
       tap(feature => this.mapService.flyTo(
         feature.geometry.coordinates as [number, number],

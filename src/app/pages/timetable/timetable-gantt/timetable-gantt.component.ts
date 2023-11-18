@@ -9,8 +9,6 @@ import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
-import { addIcons } from "ionicons";
-import { sadOutline } from "ionicons/icons";
 import { IonIcon, IonText } from "@ionic/angular/standalone";
 
 @Component({
@@ -34,15 +32,10 @@ export class TimetableGanttComponent implements OnInit {
   currentTimeColumn$: Observable<number>;
   eventTypeColor$ = this.timetableStateService.eventTypeColor$;
 
-
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1
   COLUMN_SIZE = 3.5 // 1min = COLUMN_SIZE - Defined in CSS
-
-  constructor() {
-    addIcons({ sadOutline });
-  }
 
   ngOnInit(): void {
 
