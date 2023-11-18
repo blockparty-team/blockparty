@@ -6,7 +6,7 @@ import { MapService } from '@app/services/map.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { EntityBadgeColor } from '../entity-badge-color';
-import { IonItem, IonBadge, IonLabel, IonIcon } from "@ionic/angular/standalone";
+import { IonItem, IonBadge, IonLabel, IonIcon, IonRouterLink } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-event-item',
@@ -14,7 +14,7 @@ import { IonItem, IonBadge, IonLabel, IonIcon } from "@ionic/angular/standalone"
   styleUrls: ['./event-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RouterLink, IonItem, IonBadge, IonLabel, IonIcon]
+  imports: [RouterLink, IonItem, IonBadge, IonLabel, IonIcon, IonRouterLink]
 })
 export class EventItemComponent {
 

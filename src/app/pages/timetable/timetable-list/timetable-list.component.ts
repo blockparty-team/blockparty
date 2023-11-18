@@ -10,7 +10,7 @@ import { RouteName } from '@app/shared/models/routeName';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
-import { IonContent, IonList, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonIcon, IonSegment, IonSegmentButton, IonText } from "@ionic/angular/standalone";
+import { IonContent, IonList, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonIcon, IonSegment, IonSegmentButton, IonText, IonRouterLink } from "@ionic/angular/standalone";
 
 type ListViewMode = 'byTime' | 'byStage';
 
@@ -21,7 +21,7 @@ type ListViewMode = 'byTime' | 'byStage';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animations.slideLeft,
   standalone: true,
-  imports: [NgIf, NgFor, RouterLink, AsyncPipe, DatePipe, IonContent, IonList, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonIcon, IonSegment, IonSegmentButton, IonText]
+  imports: [NgIf, NgFor, RouterLink, AsyncPipe, DatePipe, IonContent, IonList, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonIcon, IonSegment, IonSegmentButton, IonText, IonRouterLink]
 })
 export class TimetableListComponent implements OnInit {
 

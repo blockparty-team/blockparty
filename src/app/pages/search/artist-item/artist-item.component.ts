@@ -3,7 +3,7 @@ import { ArtistViewModel } from '@app/interfaces/artist';
 import { RouteName } from '@app/shared/models/routeName';
 import { NgFor, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { IonItem, IonAvatar, IonLabel } from "@ionic/angular/standalone";
+import { IonItem, IonAvatar, IonLabel, IonRouterLink } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-artist-item',
@@ -11,7 +11,7 @@ import { IonItem, IonAvatar, IonLabel } from "@ionic/angular/standalone";
   styleUrls: ['./artist-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [RouterLink, NgFor, DatePipe, IonItem, IonAvatar, IonLabel]
+  imports: [RouterLink, NgFor, DatePipe, IonItem, IonAvatar, IonLabel, IonRouterLink]
 })
 export class ArtistItemComponent {
   @Input() artist: ArtistViewModel;

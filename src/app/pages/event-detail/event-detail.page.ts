@@ -13,7 +13,7 @@ import { environment } from '@env/environment';
 import { RouteName } from '@app/shared/models/routeName';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, IonBadge, IonModal, IonButton, IonList, IonItem } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, IonBadge, IonModal, IonButton, IonList, IonItem, IonRouterLink } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-event-detail',
@@ -38,7 +38,8 @@ import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent,
     IonModal,
     IonButton,
     IonList,
-    IonItem
+    IonItem,
+    IonRouterLink,
   ],
 })
 export class EventDetailPage implements OnInit {

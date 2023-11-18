@@ -9,7 +9,7 @@ import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
-import { IonIcon, IonText } from "@ionic/angular/standalone";
+import { IonIcon, IonText, IonRouterLink } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-timetable-gantt',
@@ -17,7 +17,7 @@ import { IonIcon, IonText } from "@ionic/angular/standalone";
   styleUrls: ['./timetable-gantt.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, RouterLink, AsyncPipe, DatePipe, IonIcon, IonText]
+  imports: [NgIf, NgFor, NgClass, RouterLink, AsyncPipe, DatePipe, IonIcon, IonText, IonRouterLink]
 })
 export class TimetableGanttComponent implements OnInit {
 
