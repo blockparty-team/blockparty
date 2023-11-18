@@ -11,16 +11,14 @@ import { MusicPlayerComponent } from '@app/shared/components/music-player/music-
 import { IframeSrcDirective } from '@app/shared/directives/iframe-src.directive';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ArtistDetailPageRoutingModule
-  ],
-  declarations: [
-    ArtistDetailPage,
-    MusicPlayerComponent,
-    IframeSrcDirective
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ArtistDetailPageRoutingModule,
+        ArtistDetailPage,
+        MusicPlayerComponent,
+        IframeSrcDirective
+    ]
 })
 export class ArtistDetailPageModule { }

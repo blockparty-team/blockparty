@@ -9,12 +9,12 @@ import { TransportPageRoutingModule } from './transport-routing.module';
 import { TransportPage } from './transport.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TransportPageRoutingModule
-  ],
-  declarations: [TransportPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TransportPageRoutingModule,
+        TransportPage
+    ]
 })
 export class TransportPageModule {}

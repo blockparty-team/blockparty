@@ -11,24 +11,21 @@ import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-mod
 import { AssetComponent } from './feature-info-modal/asset/asset.component';
 import { LegendComponent } from './legend/legend.component';
 import { SafePipe } from '@app/shared/pipes/safe.pipe';
-import { FilterEventsModule } from '@app/shared/components/filter-events/filter-events.module';
+
 
 @NgModule({
-  imports: [
+    imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     MapPageRoutingModule,
     LottieModule,
-    FilterEventsModule
-  ],
-  declarations: [
     MapPage,
     FeatureInfoModalComponent,
     StageTimetableComponent,
     AssetComponent,
     LegendComponent,
     SafePipe
-  ]
+]
 })
 export class MapPageModule { }

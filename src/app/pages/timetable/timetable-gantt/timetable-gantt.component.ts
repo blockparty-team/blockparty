@@ -7,13 +7,18 @@ import { TimetableStateService } from '../state/timetable-state.service';
 import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel } from '@app/interfaces/day-event-stage-timetable';
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
+import { RouterLink } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 
 
 @Component({
-  selector: 'app-timetable-gantt',
-  templateUrl: './timetable-gantt.component.html',
-  styleUrls: ['./timetable-gantt.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-timetable-gantt',
+    templateUrl: './timetable-gantt.component.html',
+    styleUrls: ['./timetable-gantt.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgIf, NgFor, NgClass, IonicModule, RouterLink, AsyncPipe, DatePipe]
 })
 export class TimetableGanttComponent implements OnInit {
 

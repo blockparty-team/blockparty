@@ -7,20 +7,17 @@ import { TimetablePage } from './timetable.page';
 import { TimetablePageRoutingModule } from './timetable-routing.module';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
-import { FilterEventsModule } from '@app/shared/components/filter-events/filter-events.module';
+
 
 @NgModule({
-  imports: [
+    imports: [
     IonicModule,
     CommonModule,
     FormsModule,
     TimetablePageRoutingModule,
-    FilterEventsModule
-  ],
-  declarations: [
-    TimetablePage, 
+    TimetablePage,
     TimetableGanttComponent,
     TimetableListComponent
-  ]
+]
 })
 export class TimetablePageModule {}

@@ -3,20 +3,24 @@ import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { StageTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
 import { TimetableStateService } from '../state/timetable-state.service';
 import { filter, map, withLatestFrom } from 'rxjs/operators';
-import { SegmentCustomEvent } from '@ionic/angular';
+import { SegmentCustomEvent, IonicModule } from '@ionic/angular';
 import { animations } from '@app/shared/animations';
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 
 type ListViewMode = 'byTime' | 'byStage';
 
 @Component({
-  selector: 'app-timetable-list',
-  templateUrl: './timetable-list.component.html',
-  styleUrls: ['./timetable-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: animations.slideLeft
+    selector: 'app-timetable-list',
+    templateUrl: './timetable-list.component.html',
+    styleUrls: ['./timetable-list.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: animations.slideLeft,
+    standalone: true,
+    imports: [IonicModule, NgIf, NgFor, RouterLink, AsyncPipe, DatePipe]
 })
 export class TimetableListComponent implements OnInit {
 

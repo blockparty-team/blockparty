@@ -2,10 +2,19 @@ import { Component, OnInit, inject } from '@angular/core';
 import { LocalNotificationsService } from '@app/services/local-notifications.service';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { LocalNotifications, LocalNotificationSchema, LocalNotificationDescriptor, PendingResult, ScheduleResult } from '@capacitor/local-notifications';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss'],
+    selector: 'app-settings',
+    templateUrl: './settings.page.html',
+    styleUrls: ['./settings.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        NgFor,
+        AsyncPipe,
+    ],
 })
 export class SettingsPage implements OnInit {
 

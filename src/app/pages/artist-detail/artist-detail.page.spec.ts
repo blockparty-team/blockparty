@@ -9,9 +9,8 @@ describe('ArtistDetailPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ ArtistDetailPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), ArtistDetailPage]
+}).compileComponents();
 
     fixture = TestBed.createComponent(ArtistDetailPage);
     component = fixture.componentInstance;

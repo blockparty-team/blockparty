@@ -11,13 +11,13 @@ import { ArtistPage } from './artist.page';
 import { ArtistCardComponent } from './artist-card/artist-card.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    ScrollingModule,
-    IonicModule,
-    ArtistPageRoutingModule
-  ],
-  declarations: [ArtistPage, ArtistCardComponent]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        ScrollingModule,
+        IonicModule,
+        ArtistPageRoutingModule,
+        ArtistPage, ArtistCardComponent
+    ]
 })
 export class ArtistPageModule { }

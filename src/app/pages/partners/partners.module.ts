@@ -9,12 +9,12 @@ import { PartnersPageRoutingModule } from './partners-routing.module';
 import { PartnersPage } from './partners.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PartnersPageRoutingModule
-  ],
-  declarations: [PartnersPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        PartnersPageRoutingModule,
+        PartnersPage
+    ]
 })
 export class PartnersPageModule {}

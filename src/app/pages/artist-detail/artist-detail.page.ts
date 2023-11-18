@@ -9,8 +9,10 @@ import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
-import { ScrollCustomEvent } from '@ionic/angular';
+import { ScrollCustomEvent, IonicModule } from '@ionic/angular';
 import { RouteName } from '@app/shared/models/routeName';
+import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
+import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 
 interface SoMeIcon {
   column: string;
@@ -32,9 +34,11 @@ const soMeIcons: SoMeIcon[] = [
 ]
 
 @Component({
-  templateUrl: './artist-detail.page.html',
-  styleUrls: ['./artist-detail.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    templateUrl: './artist-detail.page.html',
+    styleUrls: ['./artist-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgIf, IonicModule, NgFor, NgClass, MusicPlayerComponent, AsyncPipe, DatePipe]
 })
 export class ArtistDetailPage implements OnInit {
 

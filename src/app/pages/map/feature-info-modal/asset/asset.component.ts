@@ -4,12 +4,16 @@ import { MapLayer } from '@app/interfaces/map-layer';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MapStateService } from '../../state/map-state.service';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-asset',
-  templateUrl: './asset.component.html',
-  styleUrls: ['./asset.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-asset',
+    templateUrl: './asset.component.html',
+    styleUrls: ['./asset.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgIf, IonicModule, AsyncPipe]
 })
 export class AssetComponent {
 

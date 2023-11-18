@@ -7,12 +7,15 @@ import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapService } from '@app/services/map.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { Feature, Point } from 'geojson';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-stage-item',
-  templateUrl: './stage-item.component.html',
-  styleUrls: ['./stage-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-stage-item',
+    templateUrl: './stage-item.component.html',
+    styleUrls: ['./stage-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [IonicModule]
 })
 export class StageItemComponent {
   @Input() stage: Feature<Point, StageGeojsonProperties>;

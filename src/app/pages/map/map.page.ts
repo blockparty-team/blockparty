@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
 import { merge, from, Subject, EMPTY } from 'rxjs';
 import { filter, map, switchMap, tap, withLatestFrom, distinctUntilChanged, takeUntil, catchError } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
@@ -10,22 +10,26 @@ import { animations } from '@app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
-import { AnimationOptions } from 'ngx-lottie';
+import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { RouteName } from '@app/shared/models/routeName';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: 'map.page.html',
-  styleUrls: ['map.page.scss'],
-  providers: [FilterEventsStateService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    ...animations.slideInOut,
-    ...animations.fadeInOut,
-    ...animations.slideUpDown
-  ]
+    selector: 'app-map',
+    templateUrl: 'map.page.html',
+    styleUrls: ['map.page.scss'],
+    providers: [FilterEventsStateService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        ...animations.slideInOut,
+        ...animations.fadeInOut,
+        ...animations.slideUpDown
+    ],
+    standalone: true,
+    imports: [IonicModule, FilterEventsComponent, NgIf, LottieComponent, AsyncPipe]
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 

@@ -9,12 +9,12 @@ import { GadearmbaandPageRoutingModule } from './gadearmbaand-routing.module';
 import { GadearmbaandPage } from './gadearmbaand.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    GadearmbaandPageRoutingModule
-  ],
-  declarations: [GadearmbaandPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        GadearmbaandPageRoutingModule,
+        GadearmbaandPage
+    ]
 })
 export class GadearmbaandPageModule {}

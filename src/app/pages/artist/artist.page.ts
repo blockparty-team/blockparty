@@ -2,15 +2,20 @@ import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistViewModel } from '@app/interfaces/artist';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArtistStateService } from './state/artist-state.service';
-import { IonSearchbar } from '@ionic/angular';
+import { IonSearchbar, IonicModule } from '@ionic/angular';
+import { ArtistCardComponent } from './artist-card/artist-card.component';
+import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from '@angular/cdk/scrolling';
+import { NgIf, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-artist',
-  styleUrls: ['./artist.page.scss'],
-  templateUrl: './artist.page.html',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-artist',
+    styleUrls: ['./artist.page.scss'],
+    templateUrl: './artist.page.html',
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [IonicModule, NgIf, FormsModule, ReactiveFormsModule, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, ArtistCardComponent, AsyncPipe]
 })
 export class ArtistPage {
 

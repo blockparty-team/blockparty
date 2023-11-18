@@ -9,12 +9,12 @@ import { MerchPageRoutingModule } from './merch-routing.module';
 import { MerchPage } from './merch.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MerchPageRoutingModule
-  ],
-  declarations: [MerchPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        MerchPageRoutingModule,
+        MerchPage
+    ]
 })
 export class MerchPageModule {}

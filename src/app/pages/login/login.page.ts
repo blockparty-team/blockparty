@@ -4,12 +4,15 @@ import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { filter, first, mergeMap, pairwise, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [IonicModule]
 })
 export class LoginPage implements OnInit {
 

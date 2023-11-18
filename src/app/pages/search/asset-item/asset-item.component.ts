@@ -4,12 +4,15 @@ import { Feature, Point, Position } from 'geojson';
 import { RouteName } from '@app/shared/models/routeName';
 import { MapService } from '@app/services/map.service';
 import { AssetGeojsonProperties } from '@app/interfaces/asset-geojson-properties';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
-  selector: 'app-asset-item',
-  templateUrl: './asset-item.component.html',
-  styleUrls: ['./asset-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-asset-item',
+    templateUrl: './asset-item.component.html',
+    styleUrls: ['./asset-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [IonicModule]
 })
 export class AssetItemComponent {
   @Input() asset: Feature<Point, AssetGeojsonProperties>

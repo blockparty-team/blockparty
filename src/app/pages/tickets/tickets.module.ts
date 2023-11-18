@@ -9,12 +9,12 @@ import { TicketsPageRoutingModule } from './tickets-routing.module';
 import { TicketsPage } from './tickets.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TicketsPageRoutingModule
-  ],
-  declarations: [TicketsPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TicketsPageRoutingModule,
+        TicketsPage
+    ]
 })
 export class TicketsPageModule {}

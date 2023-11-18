@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
-import { MenuController } from '@ionic/angular';
+import { MenuController, IonicModule } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { environment } from '@env/environment'
 import { RouteName } from '@app/shared/models/routeName';
+import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 
 interface NavigationItem {
   name: string,
@@ -14,9 +15,16 @@ interface NavigationItem {
 }
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.page.html',
-  styleUrls: ['./sidebar.page.scss'],
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.page.html',
+    styleUrls: ['./sidebar.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgFor,
+        NgIf,
+        AsyncPipe,
+    ],
 })
 export class SidebarPage implements OnInit {
 

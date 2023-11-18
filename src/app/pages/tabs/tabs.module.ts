@@ -10,13 +10,13 @@ import { SidebarPage } from './sidebar/sidebar.page';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    RouterModule,
-    TabsPageRoutingModule
-  ],
-  declarations: [TabsPage, SidebarPage]
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        RouterModule,
+        TabsPageRoutingModule,
+        TabsPage, SidebarPage
+    ]
 })
 export class TabsPageModule {}

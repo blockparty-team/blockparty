@@ -4,18 +4,25 @@ import { isSameDay, sub } from 'date-fns';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { TimetableStateService } from './state/timetable-state.service';
 import { filter, takeUntil, tap } from 'rxjs/operators';
+import { TimetableListComponent } from './timetable-list/timetable-list.component';
+import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
+import { IonicModule } from '@ionic/angular';
 
 type TimeTableViewMode = 'gantt' | 'list'
 
 @Component({
-  selector: 'app-timetable',
-  templateUrl: 'timetable.page.html',
-  styleUrls: ['timetable.page.scss'],
-  providers: [
-    TimetableStateService,
-    FilterEventsStateService
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-timetable',
+    templateUrl: 'timetable.page.html',
+    styleUrls: ['timetable.page.scss'],
+    providers: [
+        TimetableStateService,
+        FilterEventsStateService
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [IonicModule, FilterEventsComponent, NgIf, TimetableGanttComponent, TimetableListComponent, AsyncPipe]
 })
 export class TimetablePage implements OnInit, OnDestroy {
 

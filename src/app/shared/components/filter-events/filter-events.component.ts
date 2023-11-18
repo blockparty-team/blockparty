@@ -1,11 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FilterEventsStateService } from './filter-events-state.service';
+import { IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
     selector: 'app-filter-events',
     templateUrl: './filter-events.component.html',
     styleUrls: ['./filter-events.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [NgIf, IonicModule, NgFor, AsyncPipe]
 })
 
 export class FilterEventsComponent {

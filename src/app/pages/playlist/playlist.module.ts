@@ -9,12 +9,12 @@ import { PlaylistPageRoutingModule } from './playlist-routing.module';
 import { PlaylistPage } from './playlist.page';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PlaylistPageRoutingModule
-  ],
-  declarations: [PlaylistPage]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        PlaylistPageRoutingModule,
+        PlaylistPage
+    ]
 })
 export class PlaylistPageModule {}

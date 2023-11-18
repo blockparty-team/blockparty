@@ -10,15 +10,13 @@ import { EventPage } from './event.page';
 import { EventCardComponent } from './event-card/event-card.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    EventPageRoutingModule
-  ],
-  declarations: [
-    EventPage,
-    EventCardComponent
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        EventPageRoutingModule,
+        EventPage,
+        EventCardComponent
+    ]
 })
 export class EventPageModule { }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
@@ -11,12 +11,21 @@ import { EventViewModel } from '@app/interfaces/event';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { RouteName } from '@app/shared/models/routeName';
-import { ModalController } from '@ionic/angular';
+import { ModalController, IonicModule } from '@ionic/angular';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-event-detail',
-  templateUrl: './event-detail.page.html',
-  styleUrls: ['./event-detail.page.scss'],
+    selector: 'app-event-detail',
+    templateUrl: './event-detail.page.html',
+    styleUrls: ['./event-detail.page.scss'],
+    standalone: true,
+    imports: [
+        IonicModule,
+        NgIf,
+        NgFor,
+        RouterLink,
+        AsyncPipe,
+    ],
 })
 export class EventDetailPage implements OnInit {
 

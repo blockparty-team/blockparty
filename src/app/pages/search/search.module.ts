@@ -13,18 +13,16 @@ import { StageItemComponent } from './stage-item/stage-item.component';
 import { AssetItemComponent } from './asset-item/asset-item.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    IonicModule,
-    SearchPageRoutingModule
-  ],
-  declarations: [
-    SearchPage,
-    ArtistItemComponent,
-    EventItemComponent,
-    StageItemComponent,
-    AssetItemComponent
-  ]
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        IonicModule,
+        SearchPageRoutingModule,
+        SearchPage,
+        ArtistItemComponent,
+        EventItemComponent,
+        StageItemComponent,
+        AssetItemComponent
+    ]
 })
 export class SearchPageModule {}
