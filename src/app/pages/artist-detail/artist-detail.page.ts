@@ -14,7 +14,7 @@ import { RouteName } from '@app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { addIcons } from "ionicons";
-import { shareSocialOutline, openOutline, musicalNoteOutline, mapOutline } from "ionicons/icons";
+import { shareSocialOutline, openOutline, musicalNoteOutline, mapOutline, logoInstagram } from "ionicons/icons";
 import { IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner } from "@ionic/angular/standalone";
 
 interface SoMeIcon {
@@ -74,7 +74,7 @@ export class ArtistDetailPage implements OnInit {
     private mapService: MapService,
     private routeHistoryService: RouteHistoryService
   ) {
-    addIcons({ shareSocialOutline, openOutline, musicalNoteOutline, mapOutline });
+    addIcons({ shareSocialOutline, openOutline, musicalNoteOutline, mapOutline, logoInstagram });
   }
 
   ngOnInit() {

@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Route } from '@angular/router';
 import { TabsPage } from './tabs.page';
 import { RouteName } from '@app/shared/models/routeName';
 
-const routes: Routes = [
+export const routes: Route[] = [
   {
     path: RouteName.Tabs,
     component: TabsPage,
@@ -11,7 +10,7 @@ const routes: Routes = [
       {
         path: RouteName.Map,
         title: 'Map',
-        loadChildren: () => import('../map/map.module').then(m => m.MapPageModule)
+        loadChildren: () => import('../map/routes').then(m => m.routes)
       },
       {
         path: RouteName.Artist,
@@ -19,22 +18,22 @@ const routes: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('../artist/artist.module').then(m => m.ArtistPageModule)
+            loadChildren: () => import('../artist/routes').then(m => m.routes)
           },
           {
             path: ':name',
-            loadChildren: () => import('../artist-detail/artist-detail.module').then(m => m.ArtistDetailPageModule)
+            loadChildren: () => import('../artist-detail/routes').then(m => m.routes)
           }
         ]
       },
       {
         path: RouteName.Timetable,
         title: 'Timetable',
-        loadChildren: () => import('../timetable/timetable.module').then(m => m.TimetablePageModule)
+        loadChildren: () => import('../timetable/routes').then(m => m.routes)
       },
       {
         path: RouteName.Favorite,
-        loadChildren: () => import('../favorite/favorite.module').then( m => m.FavoritePageModule)
+        loadChildren: () => import('../favorite/routes').then(m => m.routes)
       },
       {
         path: '',
@@ -49,8 +48,3 @@ const routes: Routes = [
     pathMatch: 'full'
   }
 ];
-
-@NgModule({
-  imports: [RouterModule.forChild(routes)],
-})
-export class TabsPageRoutingModule { }

@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { CanLoadLoginGuard } from './guards/can-load.guard';
-import { RouteName } from './shared/models/routeName';
+import { Route } from '@angular/router';
+import { RouteName } from '@app/shared/models/routeName';
+import { CanLoadLoginGuard } from '@app/guards/can-load.guard';
 
-const routes: Routes = [
+export const ROUTES: Route[] = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./pages/tabs/routes').then(m => m.routes)
   },
   {
     path: RouteName.Partners,
@@ -28,7 +27,7 @@ const routes: Routes = [
   {
     path: RouteName.About,
     title: 'About',
-    loadChildren: () => import('./pages/about/about.module').then(m => m.AboutPageModule)
+    loadChildren: () => import('./pages/about/routes').then(m => m.routes)
   },
   {
     path: RouteName.Event,
@@ -36,11 +35,11 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./pages/event/event.module').then(m => m.EventPageModule)
+        loadChildren: () => import('./pages/event/routes').then(m => m.routes)
       },
       {
         path: ':id',
-        loadChildren: () => import('./pages/event-detail/event-detail.module').then(m => m.EventDetailPageModule)
+        loadChildren: () => import('./pages/event-detail/routes').then(m => m.routes)
       }
     ]
   },
@@ -62,27 +61,20 @@ const routes: Routes = [
   {
     path: RouteName.Tickets,
     title: 'Tickets',
-    loadChildren: () => import('./pages/tickets/tickets.module').then(m => m.TicketsPageModule)
+    loadChildren: () => import('./pages/tickets/routes').then(m => m.routes)
   },
   {
     path: RouteName.Search,
     title: 'Search',
-    loadChildren: () => import('./pages/search/search.module').then(m => m.SearchPageModule)
+    loadChildren: () => import('./pages/search/routes').then(m => m.routes)
   },
   {
     path: RouteName.Transport,
     title: 'transport',
-    loadChildren: () => import('./pages/transport/transport.module').then( m => m.TransportPageModule)
+    loadChildren: () => import('./pages/transport/transport.module').then(m => m.TransportPageModule)
   },
   {
     path: RouteName.Gadearmbaand,
-    loadChildren: () => import('./pages/gadearmbaand/gadearmbaand.module').then( m => m.GadearmbaandPageModule)
+    loadChildren: () => import('./pages/gadearmbaand/routes').then(m => m.routes)
   },
 ];
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
