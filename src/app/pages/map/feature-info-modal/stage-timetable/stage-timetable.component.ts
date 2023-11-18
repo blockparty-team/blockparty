@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { ModalController, SegmentCustomEvent } from '@ionic/angular';
+import { ModalController, SegmentCustomEvent } from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapLayer } from '@app/interfaces/map-layer';
@@ -10,12 +10,16 @@ import { Day, StageGeojsonProperties, Timetable } from '@app/interfaces/stage-ge
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { RouteName } from '@app/shared/models/routeName';
 import { Ticket } from '@app/interfaces/event';
+import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonSegment, IonSegmentButton, IonLabel, IonItem, IonBadge, IonModal, IonContent, IonList } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-stage-timetable',
   templateUrl: './stage-timetable.component.html',
   styleUrls: ['./stage-timetable.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe, DatePipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonSegment, IonSegmentButton, IonLabel, IonItem, IonBadge, IonModal, IonContent, IonList]
 })
 export class StageTimetableComponent implements OnInit {
 

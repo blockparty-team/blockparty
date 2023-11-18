@@ -1,11 +1,14 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { MapIconViewModel } from '@app/interfaces/map-icon';
-import { ToggleCustomEvent } from '@ionic/angular';
+import { ToggleCustomEvent } from '@ionic/angular/standalone';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@app/services/map.service';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { MapStateService } from '../state/map-state.service';
+import { SafePipe } from '@app/shared/pipes/safe.pipe';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonTitle, IonList, IonItem, IonThumbnail, IonLabel, IonToggle } from "@ionic/angular/standalone";
 
 interface IconsViewModel extends MapIconViewModel {
   visible: boolean;
@@ -15,7 +18,9 @@ interface IconsViewModel extends MapIconViewModel {
   selector: 'app-legend',
   templateUrl: './legend.component.html',
   styleUrls: ['./legend.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, NgFor, AsyncPipe, SafePipe, IonHeader, IonToolbar, IonTitle, IonList, IonItem, IonThumbnail, IonLabel, IonToggle]
 })
 export class LegendComponent implements OnInit {
 

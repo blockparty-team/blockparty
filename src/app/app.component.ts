@@ -7,17 +7,22 @@ import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
 import { PushNotificationService } from './services/push-notification.service';
-import { Platform } from '@ionic/angular';
+import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
+import { Platform } from '@ionic/angular/standalone';
+import { addIcons } from 'ionicons';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { RouteName } from './shared/models/routeName';
+import { RouteName } from '@app/shared/models/routeName';
 import { environment } from '@env/environment';
+import { icons } from './shared/icons';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IonApp, IonRouterOutlet]
 })
 export class AppComponent implements OnInit {
 
@@ -31,6 +36,7 @@ export class AppComponent implements OnInit {
 
   constructor() {
     this.setupAppUrlOpenListener();
+    addIcons(icons)
   }
 
   ngOnInit(): void {
@@ -85,12 +91,12 @@ export class AppComponent implements OnInit {
       if (environment.featureToggle.enableLogin) {
         const access = openUrl.split("#access_token=").pop().split("&")[0];
         const refresh = openUrl.split("&refresh_token=").pop().split("&")[0];
-  
+
         if (!access && !refresh) return;
-        
+
         const { data, error } = await this.supabase.externalSetSession(access, refresh);
         this.supabase.setSession(data.session);
-  
+
         this.zone.run(() => {
           this.router.navigateByUrl("/tabs/map", { replaceUrl: true });
         });

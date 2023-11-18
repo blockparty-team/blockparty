@@ -7,13 +7,17 @@ import { TimetableStateService } from '../state/timetable-state.service';
 import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel, StageTimetable, StageTimetableViewModel, TimetableViewModel, TimeLabel } from '@app/interfaces/day-event-stage-timetable';
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
-
+import { RouterLink } from '@angular/router';
+import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
+import { IonIcon, IonText, IonRouterLink } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-timetable-gantt',
   templateUrl: './timetable-gantt.component.html',
   styleUrls: ['./timetable-gantt.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, RouterLink, AsyncPipe, DatePipe, IonIcon, IonText, IonRouterLink]
 })
 export class TimetableGanttComponent implements OnInit {
 
@@ -27,7 +31,6 @@ export class TimetableGanttComponent implements OnInit {
   timetableConfig$: Observable<DayTimetableViewModel>;
   currentTimeColumn$: Observable<number>;
   eventTypeColor$ = this.timetableStateService.eventTypeColor$;
-
 
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;
@@ -160,5 +163,4 @@ export class TimetableGanttComponent implements OnInit {
   onToggleArtistFavorite(id: string): void {
     this.favoritesService.toggleFavorite('artist', id);
   }
-
 }

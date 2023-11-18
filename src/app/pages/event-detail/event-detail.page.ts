@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
@@ -11,14 +11,44 @@ import { EventViewModel } from '@app/interfaces/event';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { RouteName } from '@app/shared/models/routeName';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
+import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, IonBadge, IonModal, IonButton, IonList, IonItem, IonRouterLink } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-event-detail',
   templateUrl: './event-detail.page.html',
   styleUrls: ['./event-detail.page.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    RouterLink,
+    AsyncPipe,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonBadge,
+    IonModal,
+    IonButton,
+    IonList,
+    IonItem,
+    IonRouterLink,
+  ],
 })
 export class EventDetailPage implements OnInit {
+
+  private activatedRoute = inject(ActivatedRoute);
+  private modalCtrl = inject(ModalController);
+  private eventStateService = inject(EventStateService);
+  private mapService = inject(MapService);
+  private router = inject(Router);
 
   routeName = RouteName;
 
@@ -26,14 +56,6 @@ export class EventDetailPage implements OnInit {
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );
-
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private modalCtrl: ModalController,
-    private eventStateService: EventStateService,
-    private mapService: MapService,
-    private router: Router
-  ) { }
 
   ngOnInit() {
     this.event$ = this.activatedRoute.paramMap.pipe(

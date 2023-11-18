@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
@@ -9,8 +9,11 @@ import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
-import { ScrollCustomEvent } from '@ionic/angular';
+import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { RouteName } from '@app/shared/models/routeName';
+import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
+import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
+import { IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner } from "@ionic/angular/standalone";
 
 interface SoMeIcon {
   column: string;
@@ -34,9 +37,17 @@ const soMeIcons: SoMeIcon[] = [
 @Component({
   templateUrl: './artist-detail.page.html',
   styleUrls: ['./artist-detail.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, MusicPlayerComponent, AsyncPipe, DatePipe, IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner]
 })
 export class ArtistDetailPage implements OnInit {
+
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
+  artistStateService = inject(ArtistStateService);
+  mapService = inject(MapService);
+  routeHistoryService = inject(RouteHistoryService);
 
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
@@ -59,14 +70,6 @@ export class ArtistDetailPage implements OnInit {
     // Image heght is defined for 250 in css
     map(titleDistanceTop => titleDistanceTop < 250 ? false : true)
   );
-
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private artistStateService: ArtistStateService,
-    private mapService: MapService,
-    private routeHistoryService: RouteHistoryService
-  ) { }
 
   ngOnInit() {
     this.artist$ = this.activatedRoute.paramMap.pipe(

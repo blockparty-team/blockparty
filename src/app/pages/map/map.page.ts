@@ -1,6 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 import { merge, from, Subject, EMPTY } from 'rxjs';
 import { filter, map, switchMap, tap, withLatestFrom, distinctUntilChanged, takeUntil, catchError } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
@@ -10,10 +10,13 @@ import { animations } from '@app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@app/interfaces/tab';
-import { AnimationOptions } from 'ngx-lottie';
+import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { RouteName } from '@app/shared/models/routeName';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
+import { IonHeader, IonContent } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-map',
@@ -25,7 +28,9 @@ import { RouteName } from '@app/shared/models/routeName';
     ...animations.slideInOut,
     ...animations.fadeInOut,
     ...animations.slideUpDown
-  ]
+  ],
+  standalone: true,
+  imports: [FilterEventsComponent, NgIf, LottieComponent, AsyncPipe, IonHeader, IonContent]
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 

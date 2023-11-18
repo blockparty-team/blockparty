@@ -3,11 +3,15 @@ import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { map } from 'rxjs';
 import { Clipboard } from '@capacitor/clipboard';
 import { Browser } from '@capacitor/browser';
+import { AsyncPipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonBackButton, IonTitle, IonContent, IonText, IonButton, IonIcon, IonToast } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-transport',
   templateUrl: './transport.page.html',
   styleUrls: ['./transport.page.scss'],
+  standalone: true,
+  imports: [AsyncPipe, IonHeader, IonToolbar, IonBackButton, IonTitle, IonContent, IonText, IonButton, IonIcon, IonToast],
 })
 export class TransportPage {
 

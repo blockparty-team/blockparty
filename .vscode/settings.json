@@ -1,4 +1,11 @@
 {
-    "deno.enable": false,
-    "deno.unstable": false
+  "deno.enable": false,
+  "deno.unstable": false,
+  "typescript.preferences.autoImportFileExcludePatterns": [
+    "@ionic/angular/common",
+    "@ionic/angular"
+  ],
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.formatOnSave": true
 }

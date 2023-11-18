@@ -3,6 +3,9 @@ import { ArtistViewModel } from '@app/interfaces/artist';
 import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
+import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent, IonList, IonAvatar, IonIcon, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonRouterLink } from '@ionic/angular/standalone';
 
 interface DayGroupedFavorites {
   day: { name: string, day: string };
@@ -13,7 +16,9 @@ interface DayGroupedFavorites {
   selector: 'app-favorite',
   templateUrl: './favorite.page.html',
   styleUrls: ['./favorite.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, RouterLink, AsyncPipe, DatePipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent, IonList, IonAvatar, IonIcon, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonRouterLink]
 })
 export class FavoritePage {
 

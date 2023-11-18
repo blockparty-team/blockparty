@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { isPlatform, Platform } from '@ionic/angular';
+import { isPlatform, Platform } from '@ionic/angular/standalone';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -247,7 +247,6 @@ export class SupabaseService {
       map(({ data, }) => data as EventsGroupedByType[])
     )
   }
-  
 
   get timetables$(): Observable<DayEventStageTimetable[]> {
     return from(
@@ -345,7 +344,7 @@ export class SupabaseService {
         .from('map_icon')
         .select('*')
     ).pipe(
-      map(res => res.data as MapIcon[ ])
+      map(res => res.data as MapIcon[])
     )
   }
 

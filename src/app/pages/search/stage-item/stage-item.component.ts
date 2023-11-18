@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
@@ -7,21 +7,23 @@ import { MapStateService } from '@app/pages/map/state/map-state.service';
 import { MapService } from '@app/services/map.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { Feature, Point } from 'geojson';
+import { IonItem, IonThumbnail, IonLabel, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-stage-item',
   templateUrl: './stage-item.component.html',
   styleUrls: ['./stage-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IonItem, IonThumbnail, IonLabel, IonIcon]
 })
 export class StageItemComponent {
-  @Input() stage: Feature<Point, StageGeojsonProperties>;
 
-  constructor(
-    private router: Router,
-    private mapService: MapService,
-    private mapStateService: MapStateService
-  ) { }
+  private router = inject(Router);
+  private mapService = inject(MapService);
+  private mapStateService = inject(MapStateService);
+
+  @Input() stage: Feature<Point, StageGeojsonProperties>;
 
   onShowOnMap() {
     this.router.navigate(['/tabs', RouteName.Map])
@@ -31,7 +33,7 @@ export class StageItemComponent {
       id: this.stage.properties.id,
       mapLayer: MapLayer.Stage,
       properties: {
-        ...this.stage.properties, 
+        ...this.stage.properties,
         timetables: this.stage.properties.timetables,
         tickets: this.stage.properties.tickets
       },

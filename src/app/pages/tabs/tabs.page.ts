@@ -1,9 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Tab } from '@app/interfaces/tab';
-import { MenuController } from '@ionic/angular';
+import { MenuController } from '@ionic/angular/standalone';
 import { TabsStateService } from './state/tabs-state.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { SidebarPage } from './sidebar/sidebar.page';
+import { IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonMenu } from "@ionic/angular/standalone";
 
 interface TabsChanged {
   tab: string;
@@ -13,7 +16,9 @@ interface TabsChanged {
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [SidebarPage, AsyncPipe, IonTabs, IonTabBar, IonTabButton, IonIcon, IonLabel, IonMenu]
 })
 export class TabsPage {
 
@@ -22,7 +27,7 @@ export class TabsPage {
 
   tabName = Tab;
   routeName = RouteName;
-  
+
   currentTab$: Observable<Tab> = this.tabStateService.currentTab$;
 
   onTabChange(tab: TabsChanged): void {

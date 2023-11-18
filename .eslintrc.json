@@ -22,6 +22,7 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
+        "semi": ["error", "always"],
         "@angular-eslint/component-class-suffix": [
           "error",
           {

@@ -1,7 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { animations } from '@app/shared/animations';
-import { SegmentCustomEvent } from '@ionic/angular';
+import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { BehaviorSubject } from 'rxjs';
+import { IframeSrcDirective } from '../../directives/iframe-src.directive';
+import { NgIf, AsyncPipe } from '@angular/common';
+import { IonSegment, IonSegmentButton, IonIcon, IonSpinner } from "@ionic/angular/standalone";
 
 type PlayerSource = 'soundcloud' | 'bandcamp' | null;
 
@@ -10,7 +13,9 @@ type PlayerSource = 'soundcloud' | 'bandcamp' | null;
   templateUrl: './music-player.component.html',
   styleUrls: ['./music-player.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: animations.slideUpDown
+  animations: animations.slideUpDown,
+  standalone: true,
+  imports: [NgIf, IframeSrcDirective, AsyncPipe, IonSegment, IonSegmentButton, IonIcon, IonSpinner]
 })
 export class MusicPlayerComponent implements OnInit {
   @Input() soundcloudUrl: string;
@@ -19,7 +24,7 @@ export class MusicPlayerComponent implements OnInit {
 
   selectedSource: PlayerSource;
 
-  ngOnInit(): void {  
+  ngOnInit(): void {
     if (this.soundcloudUrl && this.bandcampUrl) {
       this.selectedSource = 'soundcloud';
     } else if (this.soundcloudUrl) {

@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, ViewChild, inject } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
 import { MapService } from '@app/services/map.service';
 import { SearchService } from '@app/services/search.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
-import { IonSearchbar } from '@ionic/angular';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -14,6 +13,12 @@ import { SupabaseService } from '../../services/supabase.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
+import { AssetItemComponent } from './asset-item/asset-item.component';
+import { StageItemComponent } from './stage-item/stage-item.component';
+import { EventItemComponent } from './event-item/event-item.component';
+import { ArtistItemComponent } from './artist-item/artist-item.component';
+import { NgIf, NgFor, NgSwitch, NgSwitchCase, AsyncPipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonSearchbar, IonContent, IonList, IonItem, IonBadge, IonIcon, IonSpinner } from "@ionic/angular/standalone";
 
 enum Entity {
   artist = 'artist',
@@ -31,7 +36,9 @@ enum SearchMode {
   selector: 'app-search',
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, NgSwitch, NgSwitchCase, ArtistItemComponent, EventItemComponent, StageItemComponent, AssetItemComponent, AsyncPipe, IonHeader, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonSearchbar, IonContent, IonList, IonItem, IonBadge, IonIcon, IonSpinner]
 })
 export class SearchPage {
 
@@ -86,7 +93,7 @@ export class SearchPage {
   onSearchModeChange(ev: Event): void {
     this._selectedSearchMode$.next(
       (ev as SegmentCustomEvent).detail.value as SearchMode
-    )
+    );
   }
 
   onShowOnMap(geom: Point) {
