@@ -10,18 +10,18 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.Partners,
     title: 'Partners',
-    loadChildren: () => import('./pages/partners/partners.module').then(m => m.PartnersPageModule)
+    loadChildren: () => import('./pages/partners/routes').then(m => m.routes)
   },
   {
     path: RouteName.Login,
     title: 'Login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
+    loadChildren: () => import('./pages/login/routes').then(m => m.routes),
     canLoad: [CanLoadLoginGuard]
   },
   {
     path: RouteName.Profile,
     title: 'Profile',
-    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule),
+    loadChildren: () => import('./pages/profile/routes').then(m => m.routes),
     canLoad: [CanLoadLoginGuard]
   },
   {
@@ -46,17 +46,17 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.Playlists,
     title: 'Playlists',
-    loadChildren: () => import('./pages/playlist/playlist.module').then(m => m.PlaylistPageModule)
+    loadChildren: () => import('./pages/playlist/routes').then(m => m.routes)
   },
   {
     path: RouteName.Settings,
     title: 'Settings',
-    loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsPageModule)
+    loadChildren: () => import('./pages/settings/routes').then(m => m.routes)
   },
   {
     path: RouteName.Merch,
     title: 'Merch',
-    loadChildren: () => import('./pages/merch/merch.module').then(m => m.MerchPageModule)
+    loadChildren: () => import('./pages/merch/routes').then(m => m.routes)
   },
   {
     path: RouteName.Tickets,
@@ -71,7 +71,7 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.Transport,
     title: 'transport',
-    loadChildren: () => import('./pages/transport/transport.module').then(m => m.TransportPageModule)
+    loadChildren: () => import('./pages/transport/routes').then(m => m.routes)
   },
   {
     path: RouteName.Gadearmbaand,
