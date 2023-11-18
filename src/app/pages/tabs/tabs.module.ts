@@ -1,4 +1,3 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,13 +9,12 @@ import { SidebarPage } from './sidebar/sidebar.page';
 import { RouterModule } from '@angular/router';
 
 @NgModule({
-    imports: [
-        IonicModule,
-        CommonModule,
-        FormsModule,
-        RouterModule,
-        TabsPageRoutingModule,
-        TabsPage, SidebarPage
-    ]
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    TabsPageRoutingModule,
+    TabsPage, SidebarPage
+  ]
 })
-export class TabsPageModule {}
+export class TabsPageModule { }

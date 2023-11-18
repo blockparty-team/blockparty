@@ -6,15 +6,17 @@ import { MapService } from '@app/services/map.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { EntityBadgeColor } from '../entity-badge-color';
-import { IonicModule } from '@ionic/angular';
+import { addIcons } from "ionicons";
+import { map } from "ionicons/icons";
+import { IonItem, IonBadge, IonLabel, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-event-item',
-    templateUrl: './event-item.component.html',
-    styleUrls: ['./event-item.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IonicModule, RouterLink]
+  selector: 'app-event-item',
+  templateUrl: './event-item.component.html',
+  styleUrls: ['./event-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [RouterLink, IonItem, IonBadge, IonLabel, IonIcon]
 })
 export class EventItemComponent {
   @Input() event: EventViewModel;
@@ -25,7 +27,9 @@ export class EventItemComponent {
   constructor(
     private router: Router,
     private mapService: MapService
-  ) { }
+  ) {
+    addIcons({ map });
+  }
 
   onZoomToEventOnMap(id: string, bounds: number[]) {
     this.router.navigate(['/tabs', RouteName.Map]);

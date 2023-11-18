@@ -5,7 +5,6 @@ import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/int
 import { MapService } from '@app/services/map.service';
 import { SearchService } from '@app/services/search.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
-import { IonSearchbar, IonicModule } from '@ionic/angular';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -19,6 +18,9 @@ import { StageItemComponent } from './stage-item/stage-item.component';
 import { EventItemComponent } from './event-item/event-item.component';
 import { ArtistItemComponent } from './artist-item/artist-item.component';
 import { NgIf, NgFor, NgSwitch, NgSwitchCase, AsyncPipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonSearchbar, IonContent, IonList, IonItem, IonBadge, IonIcon, IonSpinner } from "@ionic/angular/standalone";
+import { addIcons } from "ionicons";
+import { chevronBack } from "ionicons/icons";
 
 enum Entity {
   artist = 'artist',
@@ -33,12 +35,12 @@ enum SearchMode {
 }
 
 @Component({
-    selector: 'app-search',
-    templateUrl: './search.page.html',
-    styleUrls: ['./search.page.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IonicModule, NgIf, FormsModule, ReactiveFormsModule, NgFor, NgSwitch, NgSwitchCase, ArtistItemComponent, EventItemComponent, StageItemComponent, AssetItemComponent, AsyncPipe]
+  selector: 'app-search',
+  templateUrl: './search.page.html',
+  styleUrls: ['./search.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, FormsModule, ReactiveFormsModule, NgFor, NgSwitch, NgSwitchCase, ArtistItemComponent, EventItemComponent, StageItemComponent, AssetItemComponent, AsyncPipe, IonHeader, IonToolbar, IonBackButton, IonSegment, IonSegmentButton, IonLabel, IonSearchbar, IonContent, IonList, IonItem, IonBadge, IonIcon, IonSpinner]
 })
 export class SearchPage {
 
@@ -77,6 +79,10 @@ export class SearchPage {
     map(([nearBy,]) => nearBy)
   );
 
+  constructor() {
+    addIcons({ chevronBack })
+  }
+
   ionViewDidEnter(): void {
     if (this._selectedSearchMode$.value === SearchMode.FreeText) {
       setTimeout(() => {
@@ -93,7 +99,7 @@ export class SearchPage {
   onSearchModeChange(ev: Event): void {
     this._selectedSearchMode$.next(
       (ev as SegmentCustomEvent).detail.value as SearchMode
-    )
+    );
   }
 
   onShowOnMap(geom: Point) {

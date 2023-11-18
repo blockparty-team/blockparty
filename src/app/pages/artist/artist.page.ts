@@ -4,10 +4,12 @@ import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArtistStateService } from './state/artist-state.service';
-import { IonSearchbar, IonicModule } from '@ionic/angular';
 import { ArtistCardComponent } from './artist-card/artist-card.component';
 import { CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf } from '@angular/cdk/scrolling';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { addIcons } from "ionicons";
+import { search } from "ionicons/icons";
+import { IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonTitle, IonSearchbar, IonContent, IonSpinner } from "@ionic/angular/standalone";
 
 @Component({
     selector: 'app-artist',
@@ -15,52 +17,55 @@ import { NgIf, AsyncPipe } from '@angular/common';
     templateUrl: './artist.page.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
     standalone: true,
-    imports: [IonicModule, NgIf, FormsModule, ReactiveFormsModule, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, ArtistCardComponent, AsyncPipe]
+    imports: [NgIf, FormsModule, ReactiveFormsModule, CdkVirtualScrollViewport, CdkFixedSizeVirtualScroll, CdkVirtualForOf, ArtistCardComponent, AsyncPipe, IonHeader, IonToolbar, IonButtons, IonButton, IonIcon, IonTitle, IonSearchbar, IonContent, IonSpinner]
 })
 export class ArtistPage {
 
-  private artistStateService = inject(ArtistStateService);
-  
-  @ViewChild(IonSearchbar) searchElement: IonSearchbar;
+    private artistStateService = inject(ArtistStateService);
 
-  showSearch$ = new BehaviorSubject(false);
+    @ViewChild(IonSearchbar) searchElement: IonSearchbar;
 
-  searchTerm = new FormControl('');
+    showSearch$ = new BehaviorSubject(false);
 
-  filteredArtists$: Observable<ArtistViewModel[]> = combineLatest([
-    this.artistStateService.artists$,
-    this.searchTerm.valueChanges.pipe(startWith('')),
-  ]).pipe(
-    debounceTime(100),
-    filter(([artists, ,]) => !!artists),
-    map(([artists, term]) => artists
-      // Only show visible artist but include all on search
-      .filter(artist => !!term ? true : artist.is_visible)
-      .filter(artist => artist.name.toLowerCase()
-        .includes(term.toLowerCase())
-      )
-    )
-  );
+    searchTerm = new FormControl('');
 
-  toggleSearch(): void {
-    this.showSearch$.next(!this.showSearch$.value)
+    filteredArtists$: Observable<ArtistViewModel[]> = combineLatest([
+        this.artistStateService.artists$,
+        this.searchTerm.valueChanges.pipe(startWith('')),
+    ]).pipe(
+        debounceTime(100),
+        filter(([artists, ,]) => !!artists),
+        map(([artists, term]) => artists
+            // Only show visible artist but include all on search
+            .filter(artist => !!term ? true : artist.is_visible)
+            .filter(artist => artist.name.toLowerCase()
+                .includes(term.toLowerCase())
+            )
+        )
+    );
 
-    // reset filter when search is removed and focus if shown
-    if (!this.showSearch$.value) {
-      this.searchTerm.setValue('');
-    } else {
-      setTimeout(() => {
-        this.searchElement.setFocus();
-      }, 150);
+    toggleSearch(): void {
+        this.showSearch$.next(!this.showSearch$.value)
+
+        // reset filter when search is removed and focus if shown
+        if (!this.showSearch$.value) {
+            this.searchTerm.setValue('');
+        } else {
+            setTimeout(() => {
+                this.searchElement.setFocus();
+            }, 150);
+        }
     }
-  }
 
-  toggleFavorite(id: string): void {
-    this.artistStateService.toggleArtistFavorite(id);
-  }
+    toggleFavorite(id: string): void {
+        this.artistStateService.toggleArtistFavorite(id);
+    }
 
-  trackArtist(index: number, item: ArtistViewModel) {
-    return item.id;
-  }
+    trackArtist(index: number, item: ArtistViewModel) {
+        return item.id;
+    }
 
+    constructor() {
+        addIcons({ search });
+    }
 }

@@ -1,28 +1,26 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AssetGeojson } from '@app/interfaces/database-entities';
 import { GeojsonProperties, MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapLayer } from '@app/interfaces/map-layer';
-import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MapStateService } from '../state/map-state.service';
 import { MapService } from '@app/services/map.service';
 import { AssetComponent } from './asset/asset.component';
 import { StageTimetableComponent } from './stage-timetable/stage-timetable.component';
-import { IonicModule } from '@ionic/angular';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { IonContent } from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-feature-info-modal',
-    templateUrl: './feature-info-modal.component.html',
-    styleUrls: ['./feature-info-modal.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [NgIf, IonicModule, StageTimetableComponent, AssetComponent, AsyncPipe]
+  selector: 'app-feature-info-modal',
+  templateUrl: './feature-info-modal.component.html',
+  styleUrls: ['./feature-info-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, StageTimetableComponent, AssetComponent, AsyncPipe, IonContent]
 })
 export class FeatureInfoModalComponent implements OnInit {
   selectedFeature$: Observable<MapClickedFeature<GeojsonProperties>>;
-  mapLayer = MapLayer
+  mapLayer = MapLayer;
 
   constructor(
     private mapStateService: MapStateService,

@@ -8,21 +8,23 @@ import { TimetableListComponent } from './timetable-list/timetable-list.componen
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
-import { IonicModule } from '@ionic/angular';
+import { IonHeader, IonContent, IonFab, IonFabButton, IonIcon } from "@ionic/angular/standalone";
+import { addIcons } from "ionicons";
+import { list } from "ionicons/icons";
 
 type TimeTableViewMode = 'gantt' | 'list'
 
 @Component({
-    selector: 'app-timetable',
-    templateUrl: 'timetable.page.html',
-    styleUrls: ['timetable.page.scss'],
-    providers: [
-        TimetableStateService,
-        FilterEventsStateService
-    ],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IonicModule, FilterEventsComponent, NgIf, TimetableGanttComponent, TimetableListComponent, AsyncPipe]
+  selector: 'app-timetable',
+  templateUrl: 'timetable.page.html',
+  styleUrls: ['timetable.page.scss'],
+  providers: [
+    TimetableStateService,
+    FilterEventsStateService
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [FilterEventsComponent, NgIf, TimetableGanttComponent, TimetableListComponent, AsyncPipe, IonHeader, IonContent, IonFab, IonFabButton, IonIcon]
 })
 export class TimetablePage implements OnInit, OnDestroy {
 
@@ -32,6 +34,10 @@ export class TimetablePage implements OnInit, OnDestroy {
   timetableViewMode$: Observable<TimeTableViewMode> = this._timetableViewMode$.asObservable();
 
   private abandon$ = new Subject<void>();
+
+  constructor() {
+    addIcons({ list })
+  }
 
   ngOnInit(): void {
     // Default select first day, event type and event

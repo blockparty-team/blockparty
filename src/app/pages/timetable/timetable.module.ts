@@ -1,4 +1,3 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,14 +9,13 @@ import { TimetableListComponent } from './timetable-list/timetable-list.componen
 
 
 @NgModule({
-    imports: [
-    IonicModule,
+  imports: [
     CommonModule,
     FormsModule,
     TimetablePageRoutingModule,
     TimetablePage,
     TimetableGanttComponent,
     TimetableListComponent
-]
+  ]
 })
-export class TimetablePageModule {}
+export class TimetablePageModule { }

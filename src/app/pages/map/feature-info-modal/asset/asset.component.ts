@@ -4,16 +4,16 @@ import { MapLayer } from '@app/interfaces/map-layer';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MapStateService } from '../../state/map-state.service';
-import { IonicModule } from '@ionic/angular';
 import { NgIf, AsyncPipe } from '@angular/common';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent } from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-asset',
-    templateUrl: './asset.component.html',
-    styleUrls: ['./asset.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [NgIf, IonicModule, AsyncPipe]
+  selector: 'app-asset',
+  templateUrl: './asset.component.html',
+  styleUrls: ['./asset.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, AsyncPipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent]
 })
 export class AssetComponent {
 

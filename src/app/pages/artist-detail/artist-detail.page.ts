@@ -9,10 +9,13 @@ import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
 import { environment } from '@env/environment';
-import { ScrollCustomEvent, IonicModule } from '@ionic/angular';
+import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { RouteName } from '@app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
+import { addIcons } from "ionicons";
+import { shareSocialOutline, openOutline, musicalNoteOutline, mapOutline } from "ionicons/icons";
+import { IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner } from "@ionic/angular/standalone";
 
 interface SoMeIcon {
   column: string;
@@ -34,11 +37,11 @@ const soMeIcons: SoMeIcon[] = [
 ]
 
 @Component({
-    templateUrl: './artist-detail.page.html',
-    styleUrls: ['./artist-detail.page.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [NgIf, IonicModule, NgFor, NgClass, MusicPlayerComponent, AsyncPipe, DatePipe]
+  templateUrl: './artist-detail.page.html',
+  styleUrls: ['./artist-detail.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, MusicPlayerComponent, AsyncPipe, DatePipe, IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner]
 })
 export class ArtistDetailPage implements OnInit {
 
@@ -70,7 +73,9 @@ export class ArtistDetailPage implements OnInit {
     private artistStateService: ArtistStateService,
     private mapService: MapService,
     private routeHistoryService: RouteHistoryService
-  ) { }
+  ) {
+    addIcons({ shareSocialOutline, openOutline, musicalNoteOutline, mapOutline });
+  }
 
   ngOnInit() {
     this.artist$ = this.activatedRoute.paramMap.pipe(

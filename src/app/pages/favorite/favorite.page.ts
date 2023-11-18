@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
 import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent, IonList, IonAvatar, IonIcon, IonItemGroup, IonItemDivider, IonLabel, IonItem } from '@ionic/angular/standalone';
+import { addIcons } from "ionicons";
+import { close, listOutline } from "ionicons/icons";
 
 interface DayGroupedFavorites {
   day: { name: string, day: string };
@@ -13,12 +15,12 @@ interface DayGroupedFavorites {
 }
 
 @Component({
-    selector: 'app-favorite',
-    templateUrl: './favorite.page.html',
-    styleUrls: ['./favorite.page.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IonicModule, NgIf, RouterLink, AsyncPipe, DatePipe]
+  selector: 'app-favorite',
+  templateUrl: './favorite.page.html',
+  styleUrls: ['./favorite.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, RouterLink, AsyncPipe, DatePipe, IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonContent, IonList, IonAvatar, IonIcon, IonItemGroup, IonItemDivider, IonLabel, IonItem,]
 })
 export class FavoritePage {
 
@@ -60,6 +62,10 @@ export class FavoritePage {
         .sort((a, b) => new Date(a.day.day).getTime() - new Date(b.day.day).getTime())
     })
   );
+
+  constructor() {
+    addIcons({ close, listOutline });
+  }
 
   toggleFavorite(id: string): void {
     this.artistStateService.toggleArtistFavorite(id);

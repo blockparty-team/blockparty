@@ -1,18 +1,19 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavigationEnd, Router, RoutesRecognized } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
-import { filter, first, mergeMap, pairwise, switchMap, tap, withLatestFrom } from 'rxjs/operators';
-import { IonicModule } from '@ionic/angular';
+import { first, switchMap } from 'rxjs/operators';
+import { addIcons } from "ionicons";
+import { logoGoogle, logoFacebook, logoApple } from "ionicons/icons";
+import { IonContent, IonFab, IonBackButton, IonButton, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-login',
-    templateUrl: './login.page.html',
-    styleUrls: ['./login.page.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [IonicModule]
+  selector: 'app-login',
+  templateUrl: './login.page.html',
+  styleUrls: ['./login.page.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [IonContent, IonFab, IonBackButton, IonButton, IonIcon]
 })
 export class LoginPage implements OnInit {
 
@@ -22,7 +23,9 @@ export class LoginPage implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private routeHistoryService: RouteHistoryService
-  ) { }
+  ) {
+    addIcons({ logoGoogle, logoFacebook, logoApple });
+  }
 
   ngOnInit() {
     this.credentials = this.fb.group({

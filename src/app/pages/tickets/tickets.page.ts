@@ -4,19 +4,32 @@ import { TicketsStateService } from './state/tickets-state.service';
 import { Browser } from '@capacitor/browser';
 import { EventsGroupedByType } from '@app/interfaces/event-type';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { addIcons } from "ionicons";
+import { ticket } from "ionicons/icons";
+import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonAccordionGroup, IonAccordion, IonItem, IonLabel, IonList, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-tickets',
-    templateUrl: './tickets.page.html',
-    styleUrls: ['./tickets.page.scss'],
-    standalone: true,
-    imports: [
-        IonicModule,
-        NgIf,
-        NgFor,
-        AsyncPipe,
-    ],
+  selector: 'app-tickets',
+  templateUrl: './tickets.page.html',
+  styleUrls: ['./tickets.page.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    AsyncPipe,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonAccordionGroup,
+    IonAccordion,
+    IonItem,
+    IonLabel,
+    IonList,
+    IonIcon
+  ],
 })
 export class TicketsPage implements OnInit {
 
@@ -24,7 +37,9 @@ export class TicketsPage implements OnInit {
 
   constructor(
     private ticketStateService: TicketsStateService,
-  ) { }
+  ) {
+    addIcons({ ticket });
+  }
 
   ngOnInit() {
     this.eventsGroupedByType$ = this.ticketStateService.eventsGroupedByType$;

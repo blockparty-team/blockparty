@@ -1,4 +1,3 @@
-import { IonicModule } from '@ionic/angular';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,8 +13,7 @@ import { SafePipe } from '@app/shared/pipes/safe.pipe';
 
 
 @NgModule({
-    imports: [
-    IonicModule,
+  imports: [
     CommonModule,
     FormsModule,
     MapPageRoutingModule,
@@ -26,6 +24,6 @@ import { SafePipe } from '@app/shared/pipes/safe.pipe';
     AssetComponent,
     LegendComponent,
     SafePipe
-]
+  ]
 })
 export class MapPageModule { }

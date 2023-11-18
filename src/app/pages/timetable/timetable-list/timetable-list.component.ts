@@ -2,25 +2,28 @@ import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/cor
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { StageTimetable, TimetableWithStageName } from '@app/interfaces/day-event-stage-timetable';
 import { TimetableStateService } from '../state/timetable-state.service';
-import { filter, map, withLatestFrom } from 'rxjs/operators';
-import { SegmentCustomEvent, IonicModule } from '@ionic/angular';
+import { filter, map } from 'rxjs/operators';
+import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@app/shared/animations';
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { addIcons } from "ionicons";
+import { sadOutline } from "ionicons/icons";
+import { IonContent, IonList, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonIcon, IonSegment, IonSegmentButton, IonText } from "@ionic/angular/standalone";
 
 type ListViewMode = 'byTime' | 'byStage';
 
 @Component({
-    selector: 'app-timetable-list',
-    templateUrl: './timetable-list.component.html',
-    styleUrls: ['./timetable-list.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    animations: animations.slideLeft,
-    standalone: true,
-    imports: [IonicModule, NgIf, NgFor, RouterLink, AsyncPipe, DatePipe]
+  selector: 'app-timetable-list',
+  templateUrl: './timetable-list.component.html',
+  styleUrls: ['./timetable-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: animations.slideLeft,
+  standalone: true,
+  imports: [NgIf, NgFor, RouterLink, AsyncPipe, DatePipe, IonContent, IonList, IonItemGroup, IonItemDivider, IonLabel, IonItem, IonIcon, IonSegment, IonSegmentButton, IonText]
 })
 export class TimetableListComponent implements OnInit {
 
@@ -35,6 +38,10 @@ export class TimetableListComponent implements OnInit {
 
   private _listViewMode$ = new BehaviorSubject<ListViewMode>('byTime');
   listViewMode$: Observable<ListViewMode> = this._listViewMode$.asObservable();
+
+  constructor() {
+    addIcons({ sadOutline });
+  }
 
   ngOnInit() {
 

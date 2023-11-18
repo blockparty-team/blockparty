@@ -1,12 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@app/services/auth.service';
-import { MenuController, IonicModule } from '@ionic/angular';
+import { MenuController } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { environment } from '@env/environment'
 import { RouteName } from '@app/shared/models/routeName';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { addIcons } from "ionicons";
+import {
+  ticketOutline,
+  musicalNotesOutline,
+  carOutline,
+  thumbsUpOutline,
+  informationCircleOutline,
+  settingsOutline,
+  search,
+  chevronBack,
+} from "ionicons/icons";
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonIcon, IonContent, IonList, IonItem, IonLabel, IonFooter } from "@ionic/angular/standalone";
 
 interface NavigationItem {
   name: string,
@@ -15,16 +27,26 @@ interface NavigationItem {
 }
 
 @Component({
-    selector: 'app-sidebar',
-    templateUrl: './sidebar.page.html',
-    styleUrls: ['./sidebar.page.scss'],
-    standalone: true,
-    imports: [
-        IonicModule,
-        NgFor,
-        NgIf,
-        AsyncPipe,
-    ],
+  selector: 'app-sidebar',
+  templateUrl: './sidebar.page.html',
+  styleUrls: ['./sidebar.page.scss'],
+  standalone: true,
+  imports: [
+    NgFor,
+    NgIf,
+    AsyncPipe,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonFooter
+  ],
 })
 export class SidebarPage implements OnInit {
 
@@ -93,9 +115,9 @@ export class SidebarPage implements OnInit {
     && navItem.routeName === RouteName.Profile
     ? false
     : true
-  ).filter(navItem => environment.production 
-    && navItem.routeName === RouteName.Settings 
-    ? false 
+  ).filter(navItem => environment.production
+    && navItem.routeName === RouteName.Settings
+    ? false
     : true
   ) // Show settings menu item when not in production
 
@@ -103,7 +125,18 @@ export class SidebarPage implements OnInit {
     private authService: AuthService,
     private router: Router,
     private menu: MenuController
-  ) { }
+  ) {
+    addIcons({
+      ticketOutline,
+      musicalNotesOutline,
+      carOutline,
+      thumbsUpOutline,
+      informationCircleOutline,
+      settingsOutline,
+      search,
+      chevronBack,
+    });
+  }
 
   ngOnInit() {
     this.authenticated$ = this.authService.authenticated$

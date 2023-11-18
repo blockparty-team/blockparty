@@ -1,9 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
-import { IonicModule } from '@ionic/angular';
-
 import { SearchPageRoutingModule } from './search-routing.module';
 
 import { SearchPage } from './search.page';
@@ -13,16 +10,15 @@ import { StageItemComponent } from './stage-item/stage-item.component';
 import { AssetItemComponent } from './asset-item/asset-item.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        IonicModule,
-        SearchPageRoutingModule,
-        SearchPage,
-        ArtistItemComponent,
-        EventItemComponent,
-        StageItemComponent,
-        AssetItemComponent
-    ]
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    SearchPageRoutingModule,
+    SearchPage,
+    ArtistItemComponent,
+    EventItemComponent,
+    StageItemComponent,
+    AssetItemComponent
+  ]
 })
-export class SearchPageModule {}
+export class SearchPageModule { }

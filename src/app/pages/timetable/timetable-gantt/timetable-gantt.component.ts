@@ -8,17 +8,18 @@ import { DayEventStageTimetable, DayTimetableViewModel, EventTimetableViewModel,
 import { FavoritesService } from '@app/services/favorites.service';
 import { RouteName } from '@app/shared/models/routeName';
 import { RouterLink } from '@angular/router';
-import { IonicModule } from '@ionic/angular';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
-
+import { addIcons } from "ionicons";
+import { sadOutline } from "ionicons/icons";
+import { IonIcon, IonText } from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-timetable-gantt',
-    templateUrl: './timetable-gantt.component.html',
-    styleUrls: ['./timetable-gantt.component.scss'],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [NgIf, NgFor, NgClass, IonicModule, RouterLink, AsyncPipe, DatePipe]
+  selector: 'app-timetable-gantt',
+  templateUrl: './timetable-gantt.component.html',
+  styleUrls: ['./timetable-gantt.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
+  imports: [NgIf, NgFor, NgClass, RouterLink, AsyncPipe, DatePipe, IonIcon, IonText]
 })
 export class TimetableGanttComponent implements OnInit {
 
@@ -38,6 +39,10 @@ export class TimetableGanttComponent implements OnInit {
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1
   COLUMN_SIZE = 3.5 // 1min = COLUMN_SIZE - Defined in CSS
+
+  constructor() {
+    addIcons({ sadOutline });
+  }
 
   ngOnInit(): void {
 
@@ -165,5 +170,4 @@ export class TimetableGanttComponent implements OnInit {
   onToggleArtistFavorite(id: string): void {
     this.favoritesService.toggleFavorite('artist', id);
   }
-
 }

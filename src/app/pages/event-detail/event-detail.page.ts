@@ -11,21 +11,37 @@ import { EventViewModel } from '@app/interfaces/event';
 import { MapLayer } from '@app/interfaces/map-layer';
 import { environment } from '@env/environment';
 import { RouteName } from '@app/shared/models/routeName';
-import { ModalController, IonicModule } from '@ionic/angular';
+import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { addIcons } from "ionicons";
+import { mapOutline, ticketOutline, shareSocialOutline, close } from "ionicons/icons";
+import { IonHeader, IonToolbar, IonButtons, IonBackButton, IonTitle, IonContent, IonFab, IonFabButton, IonIcon, IonBadge, IonModal, IonButton, IonList, IonItem } from "@ionic/angular/standalone";
 
 @Component({
-    selector: 'app-event-detail',
-    templateUrl: './event-detail.page.html',
-    styleUrls: ['./event-detail.page.scss'],
-    standalone: true,
-    imports: [
-        IonicModule,
-        NgIf,
-        NgFor,
-        RouterLink,
-        AsyncPipe,
-    ],
+  selector: 'app-event-detail',
+  templateUrl: './event-detail.page.html',
+  styleUrls: ['./event-detail.page.scss'],
+  standalone: true,
+  imports: [
+    NgIf,
+    NgFor,
+    RouterLink,
+    AsyncPipe,
+    IonHeader,
+    IonToolbar,
+    IonButtons,
+    IonBackButton,
+    IonTitle,
+    IonContent,
+    IonFab,
+    IonFabButton,
+    IonIcon,
+    IonBadge,
+    IonModal,
+    IonButton,
+    IonList,
+    IonItem
+  ],
 })
 export class EventDetailPage implements OnInit {
 
@@ -42,7 +58,9 @@ export class EventDetailPage implements OnInit {
     private eventStateService: EventStateService,
     private mapService: MapService,
     private router: Router
-  ) { }
+  ) {
+    addIcons({ mapOutline, ticketOutline, shareSocialOutline, close });
+  }
 
   ngOnInit() {
     this.event$ = this.activatedRoute.paramMap.pipe(
