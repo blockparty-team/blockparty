@@ -1,6 +1,4 @@
 <ng-container *ngIf="selectedFeature$ | async as f">
-    <ion-content>
-        <app-stage-timetable *ngIf="f.mapLayer === mapLayer.Stage"></app-stage-timetable>
-        <app-asset *ngIf="f.mapLayer === mapLayer.Asset || f.mapLayer === mapLayer.AssetIcon"></app-asset>
-    </ion-content>
+  <app-stage-timetable *ngIf="f.mapLayer === mapLayer.Stage"></app-stage-timetable>
+  <app-asset *ngIf="f.mapLayer === mapLayer.Asset || f.mapLayer === mapLayer.AssetIcon"></app-asset>
 </ng-container>
