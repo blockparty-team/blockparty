@@ -1,95 +1,101 @@
 <ng-container *ngIf="artist$ | async as artist; else loading">
-
-  <ion-content scrollEvents="true"
-               (ionScroll)="onScroll($event)">
+  <ion-content scrollEvents="true" (ionScroll)="onScroll($event)">
     <header>
-      <div *ngIf="coverIosStatusBar$ | async"
-           class="ios-status-bar-background">
-      </div>
+      <div
+        *ngIf="coverIosStatusBar$ | async"
+        class="ios-status-bar-background"
+      ></div>
 
-      <img [src]="artist.imgUrl"
-           alt="Image of {{artist.name}}"
-           [srcset]="artist.srcset"
-           [style.transform]="imageScale$ | async"
-           [style.filter]="imageBlur$ | async">
+      <img
+        [src]="artist.imgUrl"
+        alt="Image of {{artist.name}}"
+        [srcset]="artist.srcset"
+        [style.transform]="imageScale$ | async"
+        [style.filter]="imageBlur$ | async"
+      />
     </header>
 
-    <ion-back-button [defaultHref]="previousRoute$ | async"
-                     icon="chevron-back"
-                     mode="md">
+    <ion-back-button
+      [defaultHref]="previousRoute$ | async"
+      icon="chevron-back"
+      mode="md"
+    >
     </ion-back-button>
 
     <div class="fab-actions">
-      <ion-fab-button *ngIf="canShare$ | async"
-                      size="small"
-                      class="share"
-                      color="secondary"
-                      (click)="share(artist)">
+      <ion-fab-button
+        *ngIf="canShare$ | async"
+        size="small"
+        class="share"
+        color="secondary"
+        (click)="share(artist)"
+      >
         <ion-icon name="share-social-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab *ngIf="(soMeLinks$ | async).length > 0"
-               class="so-me">
-        <ion-fab-button color="secondary"
-                        size="small">
+      <ion-fab *ngIf="(soMeLinks$ | async).length > 0" class="so-me">
+        <ion-fab-button color="secondary" size="small">
           <ion-icon name="open-outline"></ion-icon>
         </ion-fab-button>
 
         <ion-fab-list side="bottom">
-          <ion-fab-button *ngFor="let soMe of soMeLinks$ | async"
-                          color="secondary"
-                          (click)="openUrl(soMe.url)">
-            <ion-icon *ngIf="soMe.icon"
-                      size="large"
-                      [name]="soMe.icon">
+          <ion-fab-button
+            *ngFor="let soMe of soMeLinks$ | async"
+            color="secondary"
+            (click)="openUrl(soMe.url)"
+          >
+            <ion-icon *ngIf="soMe.icon" size="large" [name]="soMe.icon">
             </ion-icon>
-            <ion-icon *ngIf="soMe.svg"
-                      size="large"
-                      [src]="soMe.svg">
+            <ion-icon *ngIf="soMe.svg" size="large" [src]="soMe.svg">
             </ion-icon>
           </ion-fab-button>
         </ion-fab-list>
       </ion-fab>
 
-      <ion-fab-button class="toggle-player"
-                      size="small"
-                      color="secondary"
-                      *ngIf="(artist.bandcamp_iframe || artist.soundcloud_iframe) && !(showMusicPlayer$ | async)"
-                      (click)="toggleMusicPlayer()">
+      <ion-fab-button
+        class="toggle-player"
+        size="small"
+        color="secondary"
+        *ngIf="(artist.bandcamp_iframe || artist.soundcloud_iframe) && !showMusicPlayer()"
+        (click)="toggleMusicPlayer()"
+      >
         <ion-icon name="musical-note-outline"></ion-icon>
       </ion-fab-button>
     </div>
 
-    <section class="artist-info"
-             [ngClass]="{'music-player-padding': (showMusicPlayer$ | async)}">
+    <section
+      class="artist-info"
+      [ngClass]="{'music-player-padding': showMusicPlayer()}"
+    >
       <h1 class="artist-title">
         {{artist.name}}
-        <span *ngIf="artist.country"
-              class="country">
+        <span *ngIf="artist.country" class="country">
           ({{artist.country}})
         </span>
-        <ion-icon slot="icon-only"
-                  class="favorite-icon"
-                  [color]="artist.isFavorite ? 'favorite' : ''"
-                  [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
-                  (click)="toggleFavorite(artist.id)">
+        <ion-icon
+          slot="icon-only"
+          class="favorite-icon"
+          [color]="artist.isFavorite ? 'favorite' : ''"
+          [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
+          (click)="toggleFavorite(artist.id)"
+        >
         </ion-icon>
       </h1>
       <div class="acts">
-        <div class="act"
-             *ngFor="let act of artist.timetable">
+        <div class="act" *ngFor="let act of artist.timetable">
           <span>
-              {{act.day.name}} |
-              <ng-container *ngIf="act.start_time">
-                {{act.start_time | date:'HH:mm'}} -
-                {{act.end_time | date:'HH:mm'}} |
-              </ng-container>
-              {{act.stage.name}}
+            {{act.day.name}} |
+            <ng-container *ngIf="act.start_time">
+              {{act.start_time | date:'HH:mm'}} - {{act.end_time |
+              date:'HH:mm'}} |
+            </ng-container>
+            {{act.stage.name}}
           </span>
-          <ion-fab-button size="small"
-                          color="secondary">
-            <ion-icon name="map-outline"
-                      (click)="goToStageOnMap(act.stage.geom)">
+          <ion-fab-button size="small" color="secondary">
+            <ion-icon
+              name="map-outline"
+              (click)="goToStageOnMap(act.stage.geom)"
+            >
             </ion-icon>
           </ion-fab-button>
         </div>
@@ -97,9 +103,11 @@
       <p class="description">{{artist.description}}</p>
     </section>
 
-    <app-music-player [showPlayer$]="showMusicPlayer$"
-                      [soundcloudUrl]="artist.soundcloud_iframe"
-                      [bandcampUrl]="artist.bandcamp_iframe">
+    <app-music-player
+      [showPlayer]="showMusicPlayer"
+      [soundcloudUrl]="artist.soundcloud_iframe"
+      [bandcampUrl]="artist.bandcamp_iframe"
+    >
     </app-music-player>
   </ion-content>
 </ng-container>

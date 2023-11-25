@@ -1,12 +1,14 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Signal, WritableSignal, signal } from '@angular/core';
 import { animations } from '@app/shared/animations';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
-import { BehaviorSubject } from 'rxjs';
 import { IframeSrcDirective } from '../../directives/iframe-src.directive';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { IonSegment, IonSegmentButton, IonIcon, IonSpinner } from "@ionic/angular/standalone";
+import { IonHeader, IonSegment, IonSegmentButton, IonIcon, IonSpinner } from "@ionic/angular/standalone";
 
-type PlayerSource = 'soundcloud' | 'bandcamp' | null;
+enum PlayerSource {
+  Soundcloud = 'soundcloud',
+  Bandcamp = 'bandcamp'
+}
 
 @Component({
   selector: 'app-music-player',
@@ -15,31 +17,32 @@ type PlayerSource = 'soundcloud' | 'bandcamp' | null;
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animations.slideUpDown,
   standalone: true,
-  imports: [NgIf, IframeSrcDirective, AsyncPipe, IonSegment, IonSegmentButton, IonIcon, IonSpinner]
+  imports: [NgIf, IframeSrcDirective, AsyncPipe, IonHeader, IonSegment, IonSegmentButton, IonIcon, IonSpinner]
 })
 export class MusicPlayerComponent implements OnInit {
   @Input() soundcloudUrl: string;
   @Input() bandcampUrl: string;
-  @Input() showPlayer$: BehaviorSubject<boolean>;
+  @Input() showPlayer: WritableSignal<boolean>;
 
-  selectedSource: PlayerSource;
+  public selectedSource = signal<PlayerSource>(PlayerSource.Soundcloud);
+  public playerSource = PlayerSource;
 
   ngOnInit(): void {
     if (this.soundcloudUrl && this.bandcampUrl) {
-      this.selectedSource = 'soundcloud';
+      this.selectedSource.set(PlayerSource.Soundcloud);
     } else if (this.soundcloudUrl) {
-      this.selectedSource = 'soundcloud';
+      this.selectedSource.set(PlayerSource.Soundcloud);
     } else {
-      this.selectedSource = 'bandcamp';
+      this.selectedSource.set(PlayerSource.Bandcamp);
     }
   }
 
-  onChangePlayerSource(event: Event): void {
-    const source = (event as SegmentCustomEvent).target.value as PlayerSource;
-    this.selectedSource = source;
+  onChangePlayerSource(event: SegmentCustomEvent): void {
+    const source = event.target.value as PlayerSource;
+    this.selectedSource.set(source);
   }
 
   close(): void {
-    this.showPlayer$.next(false);
+    this.showPlayer.set(false);
   }
 }
