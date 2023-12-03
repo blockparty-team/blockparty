@@ -27,3 +27,9 @@ export interface ArtistViewModel extends Partial<Artist> {
     imgUrl: string;
     srcset: string;
 };
+
+export interface SimilarArtist {
+    id: string;
+    name: string;
+    similarity: number;
+}

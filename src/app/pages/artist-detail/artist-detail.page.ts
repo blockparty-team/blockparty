@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
-import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistViewModel, SimilarArtist } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
 import { BehaviorSubject, Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { RouteName } from '@app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
-import { IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner } from "@ionic/angular/standalone";
+import { IonText, IonRouterLink, IonList, IonLabel, IonItem, IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner } from "@ionic/angular/standalone";
 
 interface SoMeIcon {
   column: string;
@@ -39,7 +39,7 @@ const soMeIcons: SoMeIcon[] = [
   styleUrls: ['./artist-detail.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIf, NgFor, NgClass, MusicPlayerComponent, AsyncPipe, DatePipe, IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner]
+  imports: [RouterLink, NgIf, NgFor, NgClass, MusicPlayerComponent, AsyncPipe, DatePipe, IonRouterLink, IonContent, IonBackButton, IonFabButton, IonIcon, IonFab, IonFabList, IonSpinner, IonList, IonItem, IonLabel, IonText]
 })
 export class ArtistDetailPage implements OnInit {
 
@@ -49,7 +49,10 @@ export class ArtistDetailPage implements OnInit {
   mapService = inject(MapService);
   routeHistoryService = inject(RouteHistoryService);
 
+  routeName = RouteName;
+
   artist$: Observable<ArtistViewModel>;
+  simlarArtists$: Observable<SimilarArtist[]>;
   soMeLinks$: Observable<SoMeIcon[]>;
   showMusicPlayer$ = new BehaviorSubject<boolean>(false);
   canShare$ = from(Share.canShare()).pipe(
@@ -77,6 +80,10 @@ export class ArtistDetailPage implements OnInit {
       switchMap(name => this.artistStateService.artists$.pipe(
         map(artists => artists.find(artist => artist.name === name))
       ))
+    );
+
+    this.simlarArtists$ = this.artist$.pipe(
+      switchMap(artist => this.artistStateService.similarArtists(artist.id))
     );
 
     this.soMeLinks$ = this.artist$.pipe(

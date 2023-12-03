@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { combineLatest, concat, Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map, shareReplay, tap } from 'rxjs/operators';
-import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistViewModel, SimilarArtist } from '@app/interfaces/artist';
 import { SupabaseService } from '@app/services/supabase.service';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
@@ -59,5 +59,11 @@ export class ArtistSharedStateService {
     distinctUntilChanged(),
     shareReplay(1)
   );
+
+  similarArtists(artistId: string): Observable<SimilarArtist[]> {
+    return this.supabase.similarArtists(artistId).pipe(
+      shareReplay(1)
+    );
+  }
 
 }

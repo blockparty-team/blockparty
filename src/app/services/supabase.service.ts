@@ -17,7 +17,7 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { environment } from '@env/environment';
 import { Database } from '@app/interfaces/database-definitions';
 import { FavoriteEntity, MapIcon, Profile } from '@app/interfaces/database-entities';
-import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistViewModel, SimilarArtist } from '@app/interfaces/artist';
 import { MapSource } from '@app/interfaces/map-layer';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { EntityDistanceSearchResult, EntityFreeTextSearchResult } from '@app/interfaces/entity-search-result';
@@ -373,6 +373,16 @@ export class SupabaseService {
           'rank.gt.0,similarity.gt.0.1'
         )
         .limit(10)
+    ).pipe(
+      map(res => res.data)
+    );
+  }
+
+  similarArtists(artistId: string): Observable<SimilarArtist[]> {
+    return from(
+      this.supabase
+        .rpc('similar_artists', { 'artist_id': artistId })
+        .returns<SimilarArtist[]>()
     ).pipe(
       map(res => res.data)
     );
