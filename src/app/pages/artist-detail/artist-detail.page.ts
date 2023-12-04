@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { MapService } from '@app/services/map.service';
-import { BehaviorSubject, Observable, Subject, from } from 'rxjs';
+import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
@@ -51,7 +51,7 @@ export class ArtistDetailPage implements OnInit {
 
   artist$: Observable<ArtistViewModel>;
   soMeLinks$: Observable<SoMeIcon[]>;
-  showMusicPlayer$ = new BehaviorSubject<boolean>(false);
+  showMusicPlayer = signal<boolean>(false);
   canShare$ = from(Share.canShare()).pipe(
     map(res => res.value)
   );
@@ -135,7 +135,7 @@ export class ArtistDetailPage implements OnInit {
   }
 
   toggleMusicPlayer(): void {
-    this.showMusicPlayer$.next(!this.showMusicPlayer$.value);
+    this.showMusicPlayer.update(show => !show);
   }
 
 }
