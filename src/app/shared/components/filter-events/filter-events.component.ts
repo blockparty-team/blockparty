@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FilterEventsStateService } from './filter-events-state.service';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
-import { IonToolbar, IonSegment, IonSegmentButton, IonLabel } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonSegment, IonSegmentButton, IonLabel } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-filter-events',
@@ -9,7 +9,7 @@ import { IonToolbar, IonSegment, IonSegmentButton, IonLabel } from "@ionic/angul
   styleUrls: ['./filter-events.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [NgIf, NgFor, AsyncPipe, IonToolbar, IonSegment, IonSegmentButton, IonLabel]
+  imports: [NgIf, NgFor, AsyncPipe, IonHeader, IonToolbar, IonSegment, IonSegmentButton, IonLabel]
 })
 
 export class FilterEventsComponent {
