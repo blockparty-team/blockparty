@@ -1,0 +1,17 @@
+<ion-item>
+  <ion-thumbnail slot="start">
+    <img [src]="asset.properties.imgUrl" />
+  </ion-thumbnail>
+
+  <ion-label>
+    <h2>{{ asset.properties.name }}</h2>
+    <p>{{ asset.properties.description }}</p>
+  </ion-label>
+
+  <ion-icon
+    slot="end"
+    name="map"
+    (click)="onShowOnMap(asset.geometry.coordinates)"
+  >
+  </ion-icon>
+</ion-item>

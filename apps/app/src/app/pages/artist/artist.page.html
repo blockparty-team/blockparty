@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleSearch()">
+        <ion-icon slot="icon-only" name="search"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Artists</ion-title>
+  </ion-toolbar>
+  <ion-toolbar *ngIf="showSearch$ | async">
+    <ion-searchbar
+      mode="ios"
+      debounce="0"
+      [formControl]="searchTerm"
+      animated="true"
+    >
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content id="main" class="artist-list">
+  <ng-container *ngIf="filteredArtists$ | async as artists; else loading">
+    <cdk-virtual-scroll-viewport
+      itemSize="160"
+      minBufferPx="900"
+      maxBufferPx="1350"
+    >
+      <app-artist-card
+        *cdkVirtualFor="let artist of artists; trackBy:trackArtist; let i = index"
+        [artist]="artist"
+      >
+      </app-artist-card>
+    </cdk-virtual-scroll-viewport>
+  </ng-container>
+
+  <ng-template #loading>
+    <div class="loading">
+      <ion-spinner></ion-spinner>
+    </div>
+  </ng-template>
+</ion-content>

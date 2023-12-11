@@ -1,0 +1,80 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favorites</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="toggleDayGroupedFavorites()">
+        <ion-icon
+          slot="icon-only"
+          [name]="showDayGroupedFavorites() ? 'list-outline' : 'calendar-outline'"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="favoriteArtists$ | async as favoriteArtists">
+    <ng-container *ngIf="showDayGroupedFavorites() === false">
+      <ion-list>
+        @for (artist of favoriteArtists; track artist.id; let i = $index) {
+        <ion-item lines="none" [style.--animation-order]="i">
+          <ion-avatar slot="start">
+            <img [src]="artist.imgUrl" />
+          </ion-avatar>
+
+          <ion-label [routerLink]="['/tabs', 'artist', artist.name]"
+            >{{artist.name}}</ion-label
+          >
+
+          <div slot="end" (click)="toggleFavorite(artist.id)">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </div>
+        </ion-item>
+
+        } @empty {
+        <p class="ion-text-center">No favorites added</p>
+        }
+      </ion-list>
+    </ng-container>
+  </ng-container>
+
+  <ng-container *ngIf="dayGroupedFavorites$ | async as dayGroupedFavorites">
+    <ng-container *ngIf="showDayGroupedFavorites()">
+      @for (group of dayGroupedFavorites; track group.day.day; let i = $index) {
+      <ion-item-group [style.--animation-order]="i">
+        <ion-item-divider sticky="true" color="medium">
+          <ion-label>{{group.day.name}}</ion-label>
+        </ion-item-divider>
+
+        @for (artist of group.artists; track artist.id) {
+        <ion-item lines="none">
+          <ion-avatar slot="start">
+            <img [src]="artist.imgUrl" />
+          </ion-avatar>
+
+          <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
+            <h3>
+              <span class="artist-name">{{artist.name}}</span>
+              <span class="time">
+                {{artist.timetable[0]?.start_time | date:'HH:mm'}} -
+                {{artist.timetable[0]?.end_time | date:'HH:mm'}}
+              </span>
+            </h3>
+            <p *ngIf="artist.timetable[0] as timetable">
+              {{timetable.stage.event.name}} | {{timetable.stage.name}}
+            </p>
+          </ion-label>
+
+          <div slot="end" (click)="toggleFavorite(artist.id)">
+            <ion-icon slot="icon-only" name="close"> </ion-icon>
+          </div>
+        </ion-item>
+        }
+      </ion-item-group>
+
+      } @empty {
+      <p class="ion-text-center">No favorites added</p>
+      }
+    </ng-container>
+  </ng-container>
+</ion-content>

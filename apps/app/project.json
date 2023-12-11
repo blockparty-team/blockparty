@@ -1,0 +1,153 @@
+{
+  "name": "app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/app/src",
+  "projectType": "application",
+  "prefix": "app",
+  "generators": {},
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/app",
+        "index": "apps/app/src/index.html",
+        "main": "apps/app/src/main.ts",
+        "polyfills": "apps/app/src/polyfills.ts",
+        "tsConfig": "apps/app/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/app/src/assets",
+            "output": "assets"
+          },
+          "apps/app/src/manifest.webmanifest",
+          "apps/app/src/OneSignalSDKWorker.js"
+        ],
+        "styles": [
+          "apps/app/src/theme/variables.scss",
+          "apps/app/src/global.scss"
+        ],
+        "scripts": [],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true,
+        "serviceWorker": false,
+        "ngswConfigPath": "ngsw-config.json"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/app/src/environments/environment.ts",
+              "with": "apps/app/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        },
+        "local": {
+          "fileReplacements": [
+            {
+              "replace": "apps/app/src/environments/environment.ts",
+              "with": "apps/app/src/environments/environment.local.ts"
+            }
+          ],
+          "optimization": false,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            }
+          ]
+        },
+        "ci": {
+          "progress": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "app:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "app:build:production"
+        },
+        "local": {
+          "buildTarget": "app:build:local"
+        },
+        "ci": {
+          "progress": false
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "app:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "apps/app/src/test.ts",
+        "polyfills": "apps/app/src/polyfills.ts",
+        "tsConfig": "apps/app/tsconfig.spec.json",
+        "karmaConfig": "apps/app/karma.conf.js",
+        "styles": [],
+        "scripts": [],
+        "assets": [
+          {
+            "glob": "favicon.ico",
+            "input": "apps/app/src/",
+            "output": "/"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/app/src/assets",
+            "output": "/assets"
+          },
+          "apps/app/src/manifest.webmanifest",
+          "apps/app/src/OneSignalSDKWorker.js"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "progress": false,
+          "watch": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["apps/app/**/*.ts", "apps/app/**/*.html"]
+      }
+    }
+  }
+}

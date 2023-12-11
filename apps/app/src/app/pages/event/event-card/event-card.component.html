@@ -1,0 +1,24 @@
+<ion-card
+  [routerLink]="['./', event.id]"
+  [style.background-color]="event.event_type?.color"
+>
+  <ng-container *ngIf="event.imgUrl">
+    <img
+      [src]="event.imgUrl"
+      alt="Image of {{ event.name }}"
+      [srcset]="event.srcset"
+    />
+  </ng-container>
+
+  <div class="card-content">
+    <div class="card-text">
+      <h1>
+        {{ event.name }}
+      </h1>
+      <ion-badge [style.--background]="event.event_type?.color">{{
+        event.event_type?.name
+      }}</ion-badge>
+      <p class="days">{{ event.days.join(' | ') }}</p>
+    </div>
+  </div>
+</ion-card>

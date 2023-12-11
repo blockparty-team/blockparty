@@ -1,0 +1,138 @@
+<ion-header>
+  <ion-toolbar mode="md">
+    <ion-title>{{ stageName$ | async }}</ion-title>
+
+    <ion-buttons slot="end">
+      @if (tickets$ | async) {
+      <ion-button id="open-tickets-modal">
+        <ion-icon slot="icon-only" name="ticket-outline"></ion-icon>
+      </ion-button>
+      } @if (hasTimetable$ | async) {
+      <ion-button id="open-description-modal">
+        <ion-icon slot="icon-only" name="information-outline"></ion-icon>
+      </ion-button>
+      } @if (location$ | async; as location) {
+      <ion-button
+        color="primary"
+        fill="outline"
+        (click)="onOpenGoogleMapsDirections(location)"
+      >
+        Directions
+      </ion-button>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+
+  @if (days$ | async; as days) {
+  <ion-segment
+    scrollable
+    (ionChange)="onSelectDay($event)"
+    [value]="selectedDay$ | async"
+  >
+    @for (day of days; track day.id) {
+    <ion-segment-button [value]="day.id">
+      <ion-label>{{ day.name }}</ion-label>
+    </ion-segment-button>
+    }
+  </ion-segment>
+  }
+</ion-header>
+
+<!-- Timetable -->
+@if (timetable$ | async; as timetable) { @for (act of timetable; track
+act.artist_id; let i = $index) {
+<ion-item [style.--animation-order]="i">
+  @if (act.start_time) {
+  <span slot="start">
+    {{ act?.start_time | date : 'HH:mm' }} -
+    {{ act?.end_time | date : 'HH:mm' }}
+  </span>
+  } @else {
+  <span slot="start">N/A</span>
+  }
+
+  <ion-label (click)="onGoToArtist(act?.name)">
+    {{ act?.name }}
+  </ion-label>
+</ion-item>
+}
+<!-- Show description if no timetable is assigned to stage -->
+} @else {
+<div class="description">
+  <div class="no-timetable ion-margin">
+    @if (tags$ | async; as tags) { @for (tag of tags; track $index) {
+    <ion-badge color="tertiary" class="tag">
+      {{ tag }}
+    </ion-badge>
+    } }
+  </div>
+
+  @if (stageDescription$ | async; as description) {
+  <p class="stage-description">{{ description }}</p>
+  } @else {
+  <div class="no-timetable ion-margin">
+    <ion-badge color="medium">
+      No description or timetable available for this stage
+    </ion-badge>
+  </div>
+  } @if (url$ | async; as url) {
+  <div class="ion-text-center">
+    <ion-button color="primary" (click)="onGoToUrl(url)">
+      More info
+    </ion-button>
+  </div>
+  }
+</div>
+}
+
+<!-- Modals for tickets and description -->
+@if (hasTimetable$ | async) {
+<ion-modal
+  trigger="open-description-modal"
+  [initialBreakpoint]="0.4"
+  [breakpoints]="[0.4, 0.75, 1]"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="onCloseModal()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Stage description</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <h3>{{ stageName$ | async }}</h3>
+      <p class="stage-description">{{ stageDescription$ | async }}</p>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+} @if (tickets$ | async) {
+<ion-modal
+  trigger="open-tickets-modal"
+  [initialBreakpoint]="0.4"
+  [breakpoints]="[0.4, 0.75]"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button (click)="onCloseModal()">
+            <ion-icon slot="icon-only" name="close"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Tickets</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-list>
+        <ion-item *ngFor="let ticket of tickets$ | async" [href]="ticket.url">
+          {{ ticket.name }}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+}
