@@ -106,99 +106,7 @@
       },
       {
         "file": ".gitignore",
-        "hash": "14460617678420482301"
-      },
-      {
-        "file": ".nx/cache/cloud/2312.01.6.hotfix4/index.js",
-        "hash": "17807890174160981006"
-      },
-      {
-        "file": ".nx/cache/cloud/2312.01.6.hotfix4/lib/daemon/process-run-end.js",
-        "hash": "9178465496593350990"
-      },
-      {
-        "file": ".nx/cache/cloud/2312.01.6.hotfix4/lib/heartbeat/heartbeat-process.js",
-        "hash": "12195602358968166578"
-      },
-      {
-        "file": ".nx/cache/cloud/2312.01.6.hotfix4/package.json",
-        "hash": "11687418979936424737"
-      },
-      {
-        "file": ".nx/cache/cloud/verify.lock",
-        "hash": "10724046401108549693"
-      },
-      {
-        "file": ".nx/cache/d/server-process.json",
-        "hash": "5129156434844236082"
-      },
-      {
-        "file": ".nx/cache/file-map.json",
-        "hash": "6983535995940356393"
-      },
-      {
-        "file": ".nx/cache/lockfile.hash",
-        "hash": "7150579764849855647"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/project-graph.html",
-        "hash": "17036869540637447991"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/3rdpartylicenses.txt",
-        "hash": "12697586560952242144"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/environment.js",
-        "hash": "13361065669275601076"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/favicon.ico",
-        "hash": "9303420814833116677"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/main.js",
-        "hash": "7330850154447584074"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/polyfills.js",
-        "hash": "6398966379911214896"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/runtime.js",
-        "hash": "8062122689220335238"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/styles.css",
-        "hash": "3796034575538892208"
-      },
-      {
-        "file": ".nx/cache/nx-console-project-graph/static/styles.js",
-        "hash": "15582124937997347303"
-      },
-      {
-        "file": ".nx/cache/nx_files.nxt",
-        "hash": "16965156388089296147"
-      },
-      {
-        "file": ".nx/cache/parsed-lock-file.json",
-        "hash": "9200032080403534888"
-      },
-      {
-        "file": ".nx/cache/project-graph.json",
-        "hash": "13329161254588871925"
-      },
-      {
-        "file": ".nx/cache/run.json",
-        "hash": "4689772300820196139"
-      },
-      {
-        "file": ".nx/cache/terminalOutputs/5915058458778243318",
-        "hash": "5748941702396944930"
-      },
-      {
-        "file": ".nx/cache/terminalOutputs/7095389516319406631",
-        "hash": "1523885236814650593"
+        "hash": "12684479841688445372"
       },
       {
         "file": ".prettierignore",
@@ -207,18 +115,6 @@
       {
         "file": ".prettierrc",
         "hash": "16267754514737964994"
-      },
-      {
-        "file": ".vscode/extensions.json",
-        "hash": "17824784343261341590"
-      },
-      {
-        "file": ".vscode/launch.json",
-        "hash": "16586355814837684456"
-      },
-      {
-        "file": ".vscode/settings.json",
-        "hash": "18330772402664660672"
       },
       {
         "file": "LICENSE",
@@ -234,7 +130,7 @@
       },
       {
         "file": "package-lock.json",
-        "hash": "14032430337135377225"
+        "hash": "11035905854052060104"
       },
       {
         "file": "package.json",
@@ -411,6 +307,10 @@
       {
         "file": "tsconfig.base.json",
         "hash": "143933771126124993"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "16386137013795377810"
       }
     ],
     "projectFileMap": {
@@ -2784,7 +2684,7 @@
         },
         {
           "file": "apps/app/tsconfig.app.json",
-          "hash": "11046036041968823711"
+          "hash": "11536204496757905853"
         },
         {
           "file": "apps/app/tsconfig.spec.json",
