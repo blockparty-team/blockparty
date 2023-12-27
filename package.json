@@ -10,7 +10,7 @@
     "test": "nx test",
     "lint": "nx lint",
     "e2e": "nx e2e",
-    "update-types": "npx supabase gen types typescript --local > ${PWD}/libs/interfaces/database-definitions.ts",
+    "update-types": "npx supabase gen types typescript --local > ./libs/shared/supabase/src/lib/database-definitions.ts",
     "db-reset-local-to-prod": "npx supabase db reset && pg_dump --column-inserts --data-only --disable-trigger --schema=public postgres -h $SUPABASE_DB_HOST -U postgres | psql -h localhost -p 54322 -U postgres -d postgres"
   },
   "private": true,
@@ -91,6 +91,7 @@
     "jasmine-spec-reporter": "~7.0.0",
     "jest": "^29.4.1",
     "jest-environment-jsdom": "^29.4.1",
+    "jest-environment-node": "^29.4.1",
     "jest-preset-angular": "~13.1.4",
     "jsonc-eslint-parser": "^2.1.0",
     "karma": "6.4.2",

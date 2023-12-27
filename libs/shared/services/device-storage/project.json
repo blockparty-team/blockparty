@@ -1,0 +1,30 @@
+{
+  "name": "device-storage",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/services/device-storage/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/services/device-storage",
+        "main": "libs/shared/services/device-storage/src/index.ts",
+        "tsConfig": "libs/shared/services/device-storage/tsconfig.lib.json",
+        "assets": ["libs/shared/services/device-storage/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/shared/services/device-storage/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
