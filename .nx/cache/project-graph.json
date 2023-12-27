@@ -1,57 +1,5 @@
 {
   "nodes": {
-    "config": {
-      "name": "config",
-      "type": "lib",
-      "data": {
-        "root": "libs/services/config",
-        "name": "config",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "libs/services/config/src",
-        "prefix": "lib",
-        "tags": [],
-        "projectType": "library",
-        "targets": {
-          "test": {
-            "cache": true,
-            "inputs": [
-              "default",
-              "^production",
-              "{workspaceRoot}/jest.preset.js"
-            ],
-            "executor": "@nx/jest:jest",
-            "outputs": [
-              "{workspaceRoot}/coverage/{projectRoot}"
-            ],
-            "options": {
-              "passWithNoTests": true,
-              "jestConfig": "libs/services/config/jest.config.ts"
-            },
-            "configurations": {
-              "ci": {
-                "ci": true,
-                "codeCoverage": true
-              }
-            }
-          },
-          "lint": {
-            "inputs": [
-              "default",
-              "{workspaceRoot}/.eslintrc.json",
-              "{workspaceRoot}/eslint.config.js"
-            ],
-            "cache": true,
-            "executor": "@nx/eslint:lint",
-            "outputs": [
-              "{options.outputFile}"
-            ],
-            "options": {},
-            "configurations": {}
-          }
-        },
-        "implicitDependencies": []
-      }
-    },
     "app-e2e": {
       "name": "app-e2e",
       "type": "e2e",
@@ -286,6 +234,58 @@
         },
         "implicitDependencies": [],
         "tags": []
+      }
+    },
+    "supbase": {
+      "name": "supbase",
+      "type": "lib",
+      "data": {
+        "root": "supbase",
+        "name": "supbase",
+        "$schema": "../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "supbase/src",
+        "prefix": "lib",
+        "tags": [],
+        "projectType": "library",
+        "targets": {
+          "test": {
+            "cache": true,
+            "inputs": [
+              "default",
+              "^production",
+              "{workspaceRoot}/jest.preset.js"
+            ],
+            "executor": "@nx/jest:jest",
+            "outputs": [
+              "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+              "passWithNoTests": true,
+              "jestConfig": "supbase/jest.config.ts"
+            },
+            "configurations": {
+              "ci": {
+                "ci": true,
+                "codeCoverage": true
+              }
+            }
+          },
+          "lint": {
+            "inputs": [
+              "default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{workspaceRoot}/eslint.config.js"
+            ],
+            "cache": true,
+            "executor": "@nx/eslint:lint",
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "options": {},
+            "configurations": {}
+          }
+        },
+        "implicitDependencies": []
       }
     }
   },
@@ -14827,18 +14827,6 @@
     }
   },
   "dependencies": {
-    "config": [
-      {
-        "source": "config",
-        "target": "npm:@angular/core",
-        "type": "static"
-      },
-      {
-        "source": "config",
-        "target": "npm:@angular/common",
-        "type": "static"
-      }
-    ],
     "app-e2e": [
       {
         "source": "app-e2e",
@@ -15050,6 +15038,23 @@
       {
         "source": "app",
         "target": "npm:@angular/platform-browser-dynamic",
+        "type": "static"
+      }
+    ],
+    "supbase": [
+      {
+        "source": "supbase",
+        "target": "npm:@angular/core",
+        "type": "static"
+      },
+      {
+        "source": "supbase",
+        "target": "npm:@angular/common",
+        "type": "static"
+      },
+      {
+        "source": "supbase",
+        "target": "npm:jest-preset-angular",
         "type": "static"
       }
     ],

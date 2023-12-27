@@ -14,7 +14,10 @@
     "lib": ["es2018", "es2019", "dom"],
     "skipLibCheck": true,
     "useDefineForClassFields": false,
-    "rootDir": "."
+    "rootDir": ".",
+    "paths": {
+      "supbase": ["supbase/src/index.ts"]
+    }
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

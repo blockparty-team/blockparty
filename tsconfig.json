@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "paths": {
-      "@app/*": ["./apps/app/src/app/*"],
-      "@assets/*": ["./apps/app/src/assets/*"],
-      "@env/*": ["./apps/app/src/environments/*"]
-    }
-  }
-}

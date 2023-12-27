@@ -92,40 +92,36 @@
     "typescript": "5.2.2"
   },
   "pathMappings": {
-    "config": [
-      "libs/services/config/src/index.ts"
+    "supbase": [
+      "supbase/src/index.ts"
     ]
   },
   "nxJsonPlugins": [],
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": "supabase/migrations/20230505114836_add_color_column_to_icon.sql",
-        "hash": "13902222599715490785"
-      },
-      {
         "file": ".editorconfig",
         "hash": "6686520031028425313"
       },
       {
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "14441831849847174456"
+      },
+      {
+        "file": ".github/dependabot.yml",
+        "hash": "16823707678868197118"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "12603328425440148972"
+      },
+      {
         "file": ".prettierignore",
         "hash": "3395189204293871444"
-      },
-      {
-        "file": "supabase/migrations/20221019231153_rls_for_authenticated_users.sql",
-        "hash": "3367983037716347326"
-      },
-      {
-        "file": "supabase/migrations/20231127181248_create_editor_role.sql",
-        "hash": "10382043739032016908"
-      },
-      {
-        "file": "libs/.gitkeep",
-        "hash": "3244421341483603138"
-      },
-      {
-        "file": "supabase/migrations/20221009200022_added_bounds_to_event.sql",
-        "hash": "13135141541377304288"
       },
       {
         "file": ".prettierrc",
@@ -136,34 +132,6 @@
         "hash": "14432631599251719505"
       },
       {
-        "file": "supabase/migrations/20230331051149_add_country_column_to_artist.sql",
-        "hash": "3493440843490302750"
-      },
-      {
-        "file": "supabase/migrations/20230203181721_create_event_geojson_view.sql",
-        "hash": "9502881446217628596"
-      },
-      {
-        "file": "libs/interfaces/database-definitions.ts",
-        "hash": "3574950507654995921"
-      },
-      {
-        "file": "supabase/migrations/20230316194623_favorites_table_uses_device_id_as_pk_and_related_upsert_adjusted.sql",
-        "hash": "17250193795493717933"
-      },
-      {
-        "file": "supabase/migrations/20230305222146_remove_ticket_url_and_add_tickets_column_to_event_table_fix_dependend_view.sql",
-        "hash": "10361668566565585274"
-      },
-      {
-        "file": "supabase/README.md",
-        "hash": "1576630725826229268"
-      },
-      {
-        "file": "supabase/migrations/20230402073314_add_event_type_mask_and_bounds_to_day_event_mask_view.sql",
-        "hash": "11898237576223148698"
-      },
-      {
         "file": "jest.config.ts",
         "hash": "12333515226966617182"
       },
@@ -172,239 +140,203 @@
         "hash": "9430166341120122740"
       },
       {
-        "file": "supabase/migrations/20230129064111_added_description_to_stage_geojson_view.sql",
-        "hash": "6564642612748607925"
+        "file": "libs/.gitkeep",
+        "hash": "3244421341483603138"
       },
       {
-        "file": "supabase/migrations/20221019233717_rls_for_day_event.sql",
-        "hash": "16155929562826848136"
-      },
-      {
-        "file": "supabase/migrations/20221023081534_authenticated_can_read_storage_objects.sql",
-        "hash": "12391875224439278652"
-      },
-      {
-        "file": "supabase/migrations/20230217203639_added_event_to_free_text_search.sql",
-        "hash": "1185925792508097650"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "2072272394556774690"
-      },
-      {
-        "file": ".eslintrc.json",
-        "hash": "14441831849847174456"
-      },
-      {
-        "file": "supabase/migrations/20221013205506_map_icon_view.sql",
-        "hash": "8931374594058240224"
-      },
-      {
-        "file": "supabase/migrations/20221029093541_trigger_on_auth.user_to_insert_profile.sql",
-        "hash": "12788668724409807121"
-      },
-      {
-        "file": "supabase/migrations/20230525042811_nullable_start_and_end_time_on_timetable.sql",
-        "hash": "5171528827344350967"
-      },
-      {
-        "file": "tools/tsconfig.tools.json",
-        "hash": "16088922570277978783"
-      },
-      {
-        "file": "supabase/migrations/20230104203904_artist_unique_constraint_on_name.sql",
-        "hash": "2949648257665539659"
-      },
-      {
-        "file": "supabase/migrations/20221021070726_added_storage_path_event_table.sql",
-        "hash": "18085860794347993495"
-      },
-      {
-        "file": "package.json",
-        "hash": "14787885602370277265"
-      },
-      {
-        "file": "supabase/config.toml",
-        "hash": "14959918065308515934"
-      },
-      {
-        "file": "supabase/migrations/20230207193104_added_is_visible_column_to_artist.sql",
-        "hash": "17300617138728112861"
-      },
-      {
-        "file": "supabase/.gitignore",
-        "hash": "16363690224957492637"
-      },
-      {
-        "file": ".github/dependabot.yml",
-        "hash": "16823707678868197118"
-      },
-      {
-        "file": "supabase/migrations/20230515094334_add_meta_column_to_asset_and_stage.sql",
-        "hash": "998158837856010344"
-      },
-      {
-        "file": "supabase/migrations/20220906195851_init.sql",
-        "hash": "11327010178775605928"
-      },
-      {
-        "file": "supabase/migrations/20230528182257_timetable_visible_bool_on_stage_and_timetable.sql",
-        "hash": "11956322229969518647"
+        "file": "libs/interfaces/database-definitions.ts",
+        "hash": "3574950507654995921"
       },
       {
         "file": "nx.json",
         "hash": "18277150670297804746"
       },
       {
-        "file": "supabase/migrations/20230516043007_add_url_column_to_stage_geojson_view.sql",
-        "hash": "15201026846553333924"
+        "file": "package-lock.json",
+        "hash": "12397914091971285801"
       },
       {
-        "file": "supabase/migrations/20230129210442_added_ticket_url_column_to_event.sql",
-        "hash": "4238872180546736732"
+        "file": "package.json",
+        "hash": "14787885602370277265"
       },
       {
-        "file": "supabase/migrations/20221030201017_create_event_type_and_add_reference_in_event.sql",
-        "hash": "15221424147248853800"
+        "file": "supabase/.gitignore",
+        "hash": "16363690224957492637"
       },
       {
-        "file": "supabase/migrations/20230219125313_alter_day_event_stage_timetable_view_add_event_types.sql",
-        "hash": "17253558804497244430"
+        "file": "supabase/README.md",
+        "hash": "1576630725826229268"
       },
       {
-        "file": ".gitignore",
-        "hash": "12603328425440148972"
+        "file": "supabase/config.toml",
+        "hash": "14959918065308515934"
       },
       {
-        "file": "tools/generators/.gitkeep",
-        "hash": "3244421341483603138"
+        "file": "supabase/migrations/20220906195851_init.sql",
+        "hash": "11327010178775605928"
       },
       {
         "file": "supabase/migrations/20221009194941_removed_bounds_col_from_event.sql",
         "hash": "1239538858156064490"
       },
       {
-        "file": "tsconfig.json",
-        "hash": "16386137013795377810"
+        "file": "supabase/migrations/20221009200022_added_bounds_to_event.sql",
+        "hash": "13135141541377304288"
       },
       {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
-      },
-      {
-        "file": "supabase/migrations/20221024192320_favorite_table.sql",
-        "hash": "15723590799665036385"
-      },
-      {
-        "file": "supabase/migrations/20230318063136_favorites_table_anon_can_select.sql",
-        "hash": "9670807621757972052"
-      },
-      {
-        "file": "supabase/migrations/20230202204121_added_ticket_url_to_stage_geojson_view.sql",
-        "hash": "10470482803085300914"
-      },
-      {
-        "file": "supabase/migrations/20230509191130_favorite_alter_device_id_column_type.sql",
-        "hash": "4878235946906192588"
-      },
-      {
-        "file": "supabase/migrations/20230501094603_add_rank_column_to_stage.sql",
-        "hash": "1846643062914241383"
-      },
-      {
-        "file": "supabase/migrations/20230513091139_add_tags_column_to_stage.sql",
-        "hash": "12795717794835843822"
-      },
-      {
-        "file": "supabase/migrations/20230127204816_added_soundcloud_ifrmae_column_to_artist.sql",
-        "hash": "2880416680712059469"
+        "file": "supabase/migrations/20221013205506_map_icon_view.sql",
+        "hash": "8931374594058240224"
       },
       {
         "file": "supabase/migrations/20221015182457_timetable_order_by_start_time.sql",
         "hash": "18242516912376420500"
       },
       {
+        "file": "supabase/migrations/20221019231153_rls_for_authenticated_users.sql",
+        "hash": "3367983037716347326"
+      },
+      {
+        "file": "supabase/migrations/20221019233717_rls_for_day_event.sql",
+        "hash": "16155929562826848136"
+      },
+      {
+        "file": "supabase/migrations/20221021070726_added_storage_path_event_table.sql",
+        "hash": "18085860794347993495"
+      },
+      {
+        "file": "supabase/migrations/20221023081534_authenticated_can_read_storage_objects.sql",
+        "hash": "12391875224439278652"
+      },
+      {
+        "file": "supabase/migrations/20221024192320_favorite_table.sql",
+        "hash": "15723590799665036385"
+      },
+      {
+        "file": "supabase/migrations/20221029093541_trigger_on_auth.user_to_insert_profile.sql",
+        "hash": "12788668724409807121"
+      },
+      {
+        "file": "supabase/migrations/20221030201017_create_event_type_and_add_reference_in_event.sql",
+        "hash": "15221424147248853800"
+      },
+      {
+        "file": "supabase/migrations/20230104203904_artist_unique_constraint_on_name.sql",
+        "hash": "2949648257665539659"
+      },
+      {
+        "file": "supabase/migrations/20230127204816_added_soundcloud_ifrmae_column_to_artist.sql",
+        "hash": "2880416680712059469"
+      },
+      {
+        "file": "supabase/migrations/20230129064111_added_description_to_stage_geojson_view.sql",
+        "hash": "6564642612748607925"
+      },
+      {
+        "file": "supabase/migrations/20230129210442_added_ticket_url_column_to_event.sql",
+        "hash": "4238872180546736732"
+      },
+      {
+        "file": "supabase/migrations/20230202204121_added_ticket_url_to_stage_geojson_view.sql",
+        "hash": "10470482803085300914"
+      },
+      {
+        "file": "supabase/migrations/20230203181721_create_event_geojson_view.sql",
+        "hash": "9502881446217628596"
+      },
+      {
+        "file": "supabase/migrations/20230207193104_added_is_visible_column_to_artist.sql",
+        "hash": "17300617138728112861"
+      },
+      {
+        "file": "supabase/migrations/20230217203639_added_event_to_free_text_search.sql",
+        "hash": "1185925792508097650"
+      },
+      {
+        "file": "supabase/migrations/20230219125313_alter_day_event_stage_timetable_view_add_event_types.sql",
+        "hash": "17253558804497244430"
+      },
+      {
+        "file": "supabase/migrations/20230305222146_remove_ticket_url_and_add_tickets_column_to_event_table_fix_dependend_view.sql",
+        "hash": "10361668566565585274"
+      },
+      {
+        "file": "supabase/migrations/20230316194623_favorites_table_uses_device_id_as_pk_and_related_upsert_adjusted.sql",
+        "hash": "17250193795493717933"
+      },
+      {
+        "file": "supabase/migrations/20230318063136_favorites_table_anon_can_select.sql",
+        "hash": "9670807621757972052"
+      },
+      {
+        "file": "supabase/migrations/20230331051149_add_country_column_to_artist.sql",
+        "hash": "3493440843490302750"
+      },
+      {
+        "file": "supabase/migrations/20230402073314_add_event_type_mask_and_bounds_to_day_event_mask_view.sql",
+        "hash": "11898237576223148698"
+      },
+      {
+        "file": "supabase/migrations/20230501094603_add_rank_column_to_stage.sql",
+        "hash": "1846643062914241383"
+      },
+      {
+        "file": "supabase/migrations/20230505114836_add_color_column_to_icon.sql",
+        "hash": "13902222599715490785"
+      },
+      {
+        "file": "supabase/migrations/20230509191130_favorite_alter_device_id_column_type.sql",
+        "hash": "4878235946906192588"
+      },
+      {
+        "file": "supabase/migrations/20230513091139_add_tags_column_to_stage.sql",
+        "hash": "12795717794835843822"
+      },
+      {
+        "file": "supabase/migrations/20230515094334_add_meta_column_to_asset_and_stage.sql",
+        "hash": "998158837856010344"
+      },
+      {
         "file": "supabase/migrations/20230515095448_add_url_column_to_stage.sql",
         "hash": "8880438518044110476"
+      },
+      {
+        "file": "supabase/migrations/20230516043007_add_url_column_to_stage_geojson_view.sql",
+        "hash": "15201026846553333924"
+      },
+      {
+        "file": "supabase/migrations/20230525042811_nullable_start_and_end_time_on_timetable.sql",
+        "hash": "5171528827344350967"
       },
       {
         "file": "supabase/migrations/20230525045036_timetable_view_only_returns_acts_with_start_and_end_time.sql",
         "hash": "16006777380810944876"
       },
       {
+        "file": "supabase/migrations/20230528182257_timetable_visible_bool_on_stage_and_timetable.sql",
+        "hash": "11956322229969518647"
+      },
+      {
+        "file": "supabase/migrations/20231127181248_create_editor_role.sql",
+        "hash": "10382043739032016908"
+      },
+      {
         "file": "supabase/migrations/20231226065158_day_rls_for_authenticated.sql",
         "hash": "13300475795067989087"
       },
       {
-        "file": "package-lock.json",
-        "hash": "12397914091971285801"
+        "file": "tools/generators/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "tools/tsconfig.tools.json",
+        "hash": "16088922570277978783"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "9817668836935012370"
       }
     ],
     "projectFileMap": {
-      "config": [
-        {
-          "file": "libs/services/config/.eslintrc.json",
-          "hash": "16743967055319191231"
-        },
-        {
-          "file": "libs/services/config/README.md",
-          "hash": "6927527366573205507"
-        },
-        {
-          "file": "libs/services/config/jest.config.ts",
-          "hash": "1539092778264274678"
-        },
-        {
-          "file": "libs/services/config/project.json",
-          "hash": "12768960186320052587"
-        },
-        {
-          "file": "libs/services/config/src/index.ts",
-          "hash": "10645621880460093910"
-        },
-        {
-          "file": "libs/services/config/src/lib/config/config.component.html",
-          "hash": "1010369085612070054"
-        },
-        {
-          "file": "libs/services/config/src/lib/config/config.component.scss",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "libs/services/config/src/lib/config/config.component.spec.ts",
-          "hash": "7830091660882916415",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "libs/services/config/src/lib/config/config.component.ts",
-          "hash": "15845127676039014720",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common"
-          ]
-        },
-        {
-          "file": "libs/services/config/src/test-setup.ts",
-          "hash": "12935735732682149507",
-          "deps": [
-            "npm:jest-preset-angular/setup-jest"
-          ]
-        },
-        {
-          "file": "libs/services/config/tsconfig.json",
-          "hash": "8526453262384300416"
-        },
-        {
-          "file": "libs/services/config/tsconfig.lib.json",
-          "hash": "6020606002228403423"
-        },
-        {
-          "file": "libs/services/config/tsconfig.spec.json",
-          "hash": "7159729809249402441"
-        }
-      ],
       "app-e2e": [
         {
           "file": "apps/app-e2e/.eslintrc.json",
@@ -437,6 +369,70 @@
         {
           "file": "apps/app-e2e/tsconfig.json",
           "hash": "13779243334866446835"
+        }
+      ],
+      "supbase": [
+        {
+          "file": "supbase/.eslintrc.json",
+          "hash": "13179335397355282534"
+        },
+        {
+          "file": "supbase/README.md",
+          "hash": "9929149460782512585"
+        },
+        {
+          "file": "supbase/jest.config.ts",
+          "hash": "14940070521512258846"
+        },
+        {
+          "file": "supbase/project.json",
+          "hash": "4840317230387619755"
+        },
+        {
+          "file": "supbase/src/index.ts",
+          "hash": "15365847939687988310"
+        },
+        {
+          "file": "supbase/src/lib/supbase/supbase.component.html",
+          "hash": "294954054167950075"
+        },
+        {
+          "file": "supbase/src/lib/supbase/supbase.component.scss",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "supbase/src/lib/supbase/supbase.component.spec.ts",
+          "hash": "7665923671821586324",
+          "deps": [
+            "npm:@angular/core"
+          ]
+        },
+        {
+          "file": "supbase/src/lib/supbase/supbase.component.ts",
+          "hash": "13991254345730468658",
+          "deps": [
+            "npm:@angular/core",
+            "npm:@angular/common"
+          ]
+        },
+        {
+          "file": "supbase/src/test-setup.ts",
+          "hash": "12935735732682149507",
+          "deps": [
+            "npm:jest-preset-angular"
+          ]
+        },
+        {
+          "file": "supbase/tsconfig.json",
+          "hash": "4881022640630122902"
+        },
+        {
+          "file": "supbase/tsconfig.lib.json",
+          "hash": "4766185256741444917"
+        },
+        {
+          "file": "supbase/tsconfig.spec.json",
+          "hash": "2129196202529263968"
         }
       ],
       "app": [
@@ -2775,7 +2771,7 @@
         },
         {
           "file": "apps/app/tsconfig.app.json",
-          "hash": "11536204496757905853"
+          "hash": "1008034337427417788"
         },
         {
           "file": "apps/app/tsconfig.spec.json",
