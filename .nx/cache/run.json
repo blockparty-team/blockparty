@@ -1,18 +1,18 @@
 {
   "run": {
-    "command": "nx run app:serve --configuration=local",
-    "startTime": "2023-12-27T18:10:25.317Z",
-    "endTime": "2023-12-27T18:10:28.319Z",
+    "command": "nx run app:serve --configuration=production",
+    "startTime": "2023-12-27T18:10:46.351Z",
+    "endTime": "2023-12-27T18:23:21.694Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "app:serve:local",
+      "taskId": "app:serve:production",
       "target": "serve",
       "projectName": "app",
-      "hash": "12279269877748861938",
-      "startTime": "2023-12-27T18:10:25.322Z",
-      "endTime": "2023-12-27T18:10:28.318Z",
+      "hash": "15345153622933639375",
+      "startTime": "2023-12-27T18:10:46.357Z",
+      "endTime": "2023-12-27T18:23:21.677Z",
       "params": "",
       "cacheStatus": "cache-miss",
       "status": 1

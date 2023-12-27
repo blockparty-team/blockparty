@@ -337,104 +337,6 @@
       }
     ],
     "projectFileMap": {
-      "app-e2e": [
-        {
-          "file": "apps/app-e2e/.eslintrc.json",
-          "hash": "13800677001662881425"
-        },
-        {
-          "file": "apps/app-e2e/project.json",
-          "hash": "10920682994801009290"
-        },
-        {
-          "file": "apps/app-e2e/protractor.conf.js",
-          "hash": "10348013618182335093",
-          "deps": [
-            "npm:jasmine-spec-reporter",
-            "npm:ts-node",
-            "npm:path"
-          ]
-        },
-        {
-          "file": "apps/app-e2e/src/app.e2e-spec.ts",
-          "hash": "4306933736634991869"
-        },
-        {
-          "file": "apps/app-e2e/src/app.po.ts",
-          "hash": "14789022671851079783",
-          "deps": [
-            "npm:protractor"
-          ]
-        },
-        {
-          "file": "apps/app-e2e/tsconfig.json",
-          "hash": "13779243334866446835"
-        }
-      ],
-      "supbase": [
-        {
-          "file": "supbase/.eslintrc.json",
-          "hash": "13179335397355282534"
-        },
-        {
-          "file": "supbase/README.md",
-          "hash": "9929149460782512585"
-        },
-        {
-          "file": "supbase/jest.config.ts",
-          "hash": "14940070521512258846"
-        },
-        {
-          "file": "supbase/project.json",
-          "hash": "4840317230387619755"
-        },
-        {
-          "file": "supbase/src/index.ts",
-          "hash": "15365847939687988310"
-        },
-        {
-          "file": "supbase/src/lib/supbase/supbase.component.html",
-          "hash": "294954054167950075"
-        },
-        {
-          "file": "supbase/src/lib/supbase/supbase.component.scss",
-          "hash": "3244421341483603138"
-        },
-        {
-          "file": "supbase/src/lib/supbase/supbase.component.spec.ts",
-          "hash": "7665923671821586324",
-          "deps": [
-            "npm:@angular/core"
-          ]
-        },
-        {
-          "file": "supbase/src/lib/supbase/supbase.component.ts",
-          "hash": "13991254345730468658",
-          "deps": [
-            "npm:@angular/core",
-            "npm:@angular/common"
-          ]
-        },
-        {
-          "file": "supbase/src/test-setup.ts",
-          "hash": "12935735732682149507",
-          "deps": [
-            "npm:jest-preset-angular"
-          ]
-        },
-        {
-          "file": "supbase/tsconfig.json",
-          "hash": "4881022640630122902"
-        },
-        {
-          "file": "supbase/tsconfig.lib.json",
-          "hash": "4766185256741444917"
-        },
-        {
-          "file": "supbase/tsconfig.spec.json",
-          "hash": "2129196202529263968"
-        }
-      ],
       "app": [
         {
           "file": "apps/app/.eslintrc.json",
@@ -2776,6 +2678,40 @@
         {
           "file": "apps/app/tsconfig.spec.json",
           "hash": "4465904727855712830"
+        }
+      ],
+      "app-e2e": [
+        {
+          "file": "apps/app-e2e/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "apps/app-e2e/project.json",
+          "hash": "10920682994801009290"
+        },
+        {
+          "file": "apps/app-e2e/protractor.conf.js",
+          "hash": "10348013618182335093",
+          "deps": [
+            "npm:jasmine-spec-reporter",
+            "npm:ts-node",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "apps/app-e2e/src/app.e2e-spec.ts",
+          "hash": "4306933736634991869"
+        },
+        {
+          "file": "apps/app-e2e/src/app.po.ts",
+          "hash": "14789022671851079783",
+          "deps": [
+            "npm:protractor"
+          ]
+        },
+        {
+          "file": "apps/app-e2e/tsconfig.json",
+          "hash": "13779243334866446835"
         }
       ]
     }
