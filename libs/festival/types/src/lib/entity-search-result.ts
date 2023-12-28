@@ -1,12 +1,12 @@
 import { Point, Feature } from 'geojson';
-import { EntityDistanceSearch, EntityTextSearch } from './database-entities';
 import { ArtistViewModel } from './artist';
 import { EventViewModel } from './event';
 import { StageGeojsonProperties } from './stage-geojson-properties';
 import { AssetGeojsonProperties } from './asset-geojson-properties';
+import { Tables } from 'supabase';
 
 export interface EntityFreeTextSearchResult
-  extends Omit<EntityTextSearch, 'ts'> {
+  extends Omit<Tables<'entity_text_search'>, 'ts'> {
   rank: number;
   similarity: number;
   artist?: ArtistViewModel;
@@ -16,7 +16,7 @@ export interface EntityFreeTextSearchResult
 }
 
 export interface EntityDistanceSearchResult
-  extends Pick<EntityDistanceSearch, 'entity' | 'id' | 'name'> {
+  extends Pick<Tables<'entity_distance_search'>, 'entity' | 'id' | 'name'> {
   distance: number;
   geom: Point;
 }

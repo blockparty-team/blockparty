@@ -17,16 +17,16 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 import { DeviceStorageService } from 'device-storage';
 import { Database, Enums, Tables } from './database-definitions';
 import { environment } from '@env/environment';
-import { ArtistViewModel } from '@app/interfaces/artist';
-import { MapSource } from '@app/interfaces/map-layer';
-import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
+import { ArtistViewModel } from 'types';
+import { MapSource } from 'types';
+import { DayEventStageTimetable } from 'types';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from '@app/interfaces/entity-search-result';
-import { EventWithRelations } from '@app/interfaces/event';
-import { EventsGroupedByType } from '@app/interfaces/event-type';
-import { TransformOptions } from '@app/shared/models/imageSize';
+} from 'types';
+import { EventWithRelations } from 'types';
+import { EventsGroupedByType } from 'types';
+import { TransformOptions } from 'types';
 
 @Injectable({
   providedIn: 'root',
@@ -158,7 +158,7 @@ export class SupabaseService {
           id,
           bounds
         `)
-    ).pipe(map((res) => res.data));
+    ).pipe(map((res) => res.data as any[]));
   }
 
   get days$() {

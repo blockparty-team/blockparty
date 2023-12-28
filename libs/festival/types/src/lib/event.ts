@@ -1,11 +1,11 @@
-import { Event, EventType } from './database-entities';
+import { Tables } from 'supabase';
 
 type PartialEvent = Pick<
-  Event,
+  Tables<'event'>,
   'id' | 'name' | 'description' | 'storage_path' | 'bounds'
 >;
 type PartialEventType = Pick<
-  EventType,
+  Tables<'event_type'>,
   'id' | 'name' | 'color' | 'description'
 >;
 
