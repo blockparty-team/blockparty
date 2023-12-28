@@ -8,7 +8,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { ArtistViewModel } from '@app/interfaces/artist';
-import { SupabaseService } from '@app/services/supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { getBucketAndPath } from '@app/shared/functions/storage';
 import { FileService } from '@app/services/file.service';

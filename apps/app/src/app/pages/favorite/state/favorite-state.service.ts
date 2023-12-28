@@ -3,7 +3,7 @@ import { ArtistFavorite } from '@app/interfaces/artist';
 import { Favorite, FavoriteEntity } from '@app/interfaces/database-entities';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { DeviceService } from '@app/services/device.service';
-import { SupabaseService } from '@app/services/supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import {
   BehaviorSubject,
   combineLatest,
@@ -73,11 +73,11 @@ export class FavoriteStateService {
       update = this._favorites$.value.map((favorite) =>
         favorite.entity === entity
           ? {
-              ...favorite,
-              ids: favorite.ids.includes(id)
-                ? favorite.ids.filter((ids) => ids !== id)
-                : [...favorite.ids, id],
-            }
+            ...favorite,
+            ids: favorite.ids.includes(id)
+              ? favorite.ids.filter((ids) => ids !== id)
+              : [...favorite.ids, id],
+          }
           : favorite
       );
     }

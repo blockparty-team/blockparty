@@ -23,7 +23,7 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators';
-import { SupabaseService } from '../../services/supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { RouteName } from '@app/shared/models/routeName';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@app/services/routeHistory.service';

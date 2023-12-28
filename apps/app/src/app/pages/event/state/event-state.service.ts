@@ -4,7 +4,7 @@ import { EventViewModel, EventWithRelations } from '@app/interfaces/event';
 import { EventsGroupedByType } from '@app/interfaces/event-type';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { FileService } from '@app/services/file.service';
-import { SupabaseService } from '@app/services/supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { getBucketAndPath } from '@app/shared/functions/storage';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {
@@ -84,7 +84,7 @@ export class EventStateService {
     private supabase: SupabaseService,
     private deviceStorageService: DeviceStorageService,
     private fileService: FileService
-  ) {}
+  ) { }
 
   selectEventTypeId(eventTypeId: string): void {
     this._selectedEventTypeId$.next(eventTypeId);

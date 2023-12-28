@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
 import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { isSameDay, sub } from 'date-fns';
-import { SupabaseService } from '@app/services/supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { TimetableSharedStateService } from '@app/pages/timetable/state/timetable-shared-state.service';
 import { TabsStateService } from '@app/pages/tabs/state/tabs-state.service';

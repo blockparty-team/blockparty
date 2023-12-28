@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { OAuthResponse, Session } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SupabaseService } from './supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService) { }
 
   get session$(): Observable<Session> {
     return this.supabase.session$;

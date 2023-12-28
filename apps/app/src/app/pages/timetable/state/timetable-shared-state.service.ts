@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, concat } from 'rxjs';
 import { filter, map, shareReplay, tap } from 'rxjs/operators';
-import { SupabaseService } from '@app/services/supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { DeviceStorageService } from '@app/services/device-storage.service';
 import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
 import { ArtistNotification } from '@app/interfaces/favorite-notification';
@@ -38,13 +38,13 @@ export class TimetableSharedStateService {
         artists.flatMap((artist) =>
           artist.timetable.flatMap(
             (timetable) =>
-              ({
-                artistId: artist.id,
-                artistName: artist.name,
-                startTime: timetable.start_time,
-                stageName: timetable.stage.name,
-                eventName: timetable.stage.event.name,
-              } as any)
+            ({
+              artistId: artist.id,
+              artistName: artist.name,
+              startTime: timetable.start_time,
+              stageName: timetable.stage.name,
+              eventName: timetable.stage.event.name,
+            } as any)
           )
         )
       ),

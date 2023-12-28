@@ -8,9 +8,9 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { SupabaseService } from '@app/services/supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { FilesystemService } from '@app/services/filesystem.service';
-import { DeviceStorageService } from '@app/services/device-storage.service';
+import { DeviceStorageService } from '@shared/data-access/device-storage';
 import { getBucketAndPath } from '@app/shared/functions/storage';
 import { imgToBase64, imgFromUrl } from '@app/shared/functions/file-utils';
 import { MapIcon } from '@app/interfaces/database-entities';

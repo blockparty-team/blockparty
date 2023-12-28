@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { SupabaseService } from './supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { imageSize } from '@app/shared/models/imageSize';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
 

@@ -6,7 +6,7 @@ import {
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from './geolocation.service';
-import { SupabaseService } from './supabase.service';
+import { SupabaseService } from '@shared/data-access/supabase';
 import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
 import { EventStateService } from '@app/pages/event/state/event-state.service';
 import { MapStateService } from '@app/pages/map/state/map-state.service';
@@ -25,7 +25,7 @@ export class SearchService {
     private artistSateService: ArtistStateService,
     private eventStateService: EventStateService,
     private mapStateService: MapStateService
-  ) {}
+  ) { }
 
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(
