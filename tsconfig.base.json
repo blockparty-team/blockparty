@@ -16,13 +16,16 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
-      "device-storage": ["libs/shared/data-access/device-storage/src/index.ts"],
-      "supabase": ["libs/shared/data-access/supabase/src/index.ts"],
-      "types": ["libs/festival/types/src/index.ts"],
       "@app/*": ["apps/app/src/app/*"],
       "@assets/*": ["apps/app/src/assets/*"],
-      "@env/*": ["apps/app/src/environments/*"]
+      "@shared/data-access/device-storage": [
+        "libs/shared/data-access/device-storage/src/index.ts"
+      ],
+      "@shared/data-access/supabase": [
+        "libs/shared/data-access/supabase/src/index.ts"
+      ],
+      "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
+      "@shared/types": ["libs/shared/types/src/index.ts"]
     }
   },
   "angularCompilerOptions": {

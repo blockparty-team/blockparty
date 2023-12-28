@@ -4,8 +4,8 @@ This library was generated with [Nx](https://nx.dev).
 
 ## Building
 
-Run `nx build supabase.service` to build the library.
+Run `nx build supabase` to build the library.
 
 ## Running unit tests
 
-Run `nx test supabase.service` to execute the unit tests via [Jest](https://jestjs.io).
+Run `nx test supabase` to execute the unit tests via [Jest](https://jestjs.io).

@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'supabase.service',
+  displayName: 'supabase',
   preset: '../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {

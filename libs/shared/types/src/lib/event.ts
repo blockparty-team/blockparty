@@ -1,4 +1,4 @@
-import { Tables } from '@shared/data-access/supabase';
+import { Tables } from '@shared/types';
 
 type PartialEvent = Pick<
   Tables<'event'>,

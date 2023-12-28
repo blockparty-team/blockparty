@@ -15,18 +15,20 @@ import {
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { DeviceStorageService } from '@shared/data-access/device-storage';
-import { Database, Enums, Tables } from './database-definitions';
-import { environment } from '@shared/environments';
-import { ArtistViewModel } from 'types';
-import { MapSource } from 'types';
-import { DayEventStageTimetable } from 'types';
 import {
+  Database,
+  Enums,
+  Tables,
+  ArtistViewModel,
+  MapSource,
+  DayEventStageTimetable,
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from 'types';
-import { EventWithRelations } from 'types';
-import { EventsGroupedByType } from 'types';
-import { TransformOptions } from 'types';
+  EventWithRelations,
+  EventsGroupedByType,
+  TransformOptions
+} from '@shared/types';
+import { environment } from '@shared/environments';
 
 @Injectable({
   providedIn: 'root',

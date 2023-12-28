@@ -10,7 +10,7 @@
     "test": "nx test",
     "lint": "nx lint",
     "e2e": "nx e2e",
-    "update-types": "npx supabase gen types typescript --local > ./libs/shared/supabase/src/lib/database-definitions.ts",
+    "update-types": "npx supabase gen types typescript --local > ./libs/shared/types/src/lib/database-definitions.ts",
     "db-reset-local-to-prod": "npx supabase db reset && pg_dump --column-inserts --data-only --disable-trigger --schema=public postgres -h $SUPABASE_DB_HOST -U postgres | psql -h localhost -p 54322 -U postgres -d postgres"
   },
   "private": true,
