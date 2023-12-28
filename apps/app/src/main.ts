@@ -10,7 +10,7 @@ import {
 
 import { RouteReuseStrategy, provideRouter } from '@angular/router';
 
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments/environment';
 import { AppComponent } from '@app/app.component';
 import { ROUTES } from '@app/routes';
 
