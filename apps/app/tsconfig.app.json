@@ -1,13 +1,8 @@
 {
-  "extends": "../../tsconfig.base.json",
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
-    "types": [],
-    "paths": {
-      "@app/*": ["./apps/app/src/app/*"],
-      "@assets/*": ["./apps/app/src/assets/*"],
-      "@env/*": ["./apps/app/src/environments/*"]
-    }
+    "types": []
   },
   "files": ["src/main.ts", "src/polyfills.ts"],
   "include": ["src/**/*.d.ts"]

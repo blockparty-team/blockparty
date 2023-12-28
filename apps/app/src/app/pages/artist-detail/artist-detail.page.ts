@@ -14,7 +14,7 @@ import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@app/services/routeHistory.service';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { RouteName } from '@app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
@@ -153,11 +153,10 @@ export class ArtistDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${artist.name}`,
           title: 'Share',
-          text: `${artist.name} is playing at ${
-            environment.festivalName
-          } ${artist.timetable
-            .map((t) => t.day.name)
-            .join(' and ')} - Check it out:`,
+          text: `${artist.name} is playing at ${environment.festivalName
+            } ${artist.timetable
+              .map((t) => t.day.name)
+              .join(' and ')} - Check it out:`,
           url: `${environment.appUrl}${this.router.url}`,
         });
       }

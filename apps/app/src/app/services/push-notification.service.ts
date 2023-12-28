@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Device } from '@capacitor/device';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 import OneSignal from 'onesignal-cordova-plugin';
 import { OneSignal as OneSignalWeb } from 'onesignal-ngx';
 
@@ -8,7 +8,7 @@ import { OneSignal as OneSignalWeb } from 'onesignal-ngx';
   providedIn: 'root',
 })
 export class PushNotificationService {
-  constructor(private oneSignalWeb: OneSignalWeb) {}
+  constructor(private oneSignalWeb: OneSignalWeb) { }
 
   private initOneSignalNative(externalUserId?: string): void {
     OneSignal.setAppId(environment.oneSignalAppId);

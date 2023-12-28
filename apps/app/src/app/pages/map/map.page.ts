@@ -181,6 +181,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           ) {
             return this.openFeatureInfoModal(0.3, [0, 0.3, 0.6]);
           }
+
+          return EMPTY;
         }),
         takeUntil(this.abandon$),
         catchError((err) => {

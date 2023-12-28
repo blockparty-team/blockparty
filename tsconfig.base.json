@@ -19,7 +19,10 @@
       "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
       "device-storage": ["libs/shared/data-access/device-storage/src/index.ts"],
       "supabase": ["libs/shared/data-access/supabase/src/index.ts"],
-      "types": ["libs/festival/types/src/index.ts"]
+      "types": ["libs/festival/types/src/index.ts"],
+      "@app/*": ["apps/app/src/app/*"],
+      "@assets/*": ["apps/app/src/assets/*"],
+      "@env/*": ["apps/app/src/environments/*"]
     }
   },
   "angularCompilerOptions": {

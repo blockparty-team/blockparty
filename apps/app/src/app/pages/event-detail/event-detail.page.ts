@@ -9,7 +9,7 @@ import { MapService } from '@app/services/map.service';
 import { EventStateService } from '../event/state/event-state.service';
 import { EventViewModel } from '@app/interfaces/event';
 import { MapLayer } from '@app/interfaces/map-layer';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 import { RouteName } from '@app/shared/models/routeName';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
@@ -93,9 +93,8 @@ export class EventDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${event.name}`,
           title: 'Share',
-          text: `Check out ${event.name} event at ${
-            environment.festivalName
-          } running ${event.days.join(' and ')}`,
+          text: `Check out ${event.name} event at ${environment.festivalName
+            } running ${event.days.join(' and ')}`,
           url: `${environment.appUrl}${this.router.url}`,
         });
       }

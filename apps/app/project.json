@@ -41,8 +41,8 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "apps/app/src/environments/environment.ts",
-              "with": "apps/app/src/environments/environment.prod.ts"
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/environment.prod.ts"
             }
           ],
           "optimization": true,
@@ -61,13 +61,7 @@
             }
           ]
         },
-        "local": {
-          "fileReplacements": [
-            {
-              "replace": "apps/app/src/environments/environment.ts",
-              "with": "apps/app/src/environments/environment.local.ts"
-            }
-          ],
+        "development": {
           "optimization": false,
           "outputHashing": "all",
           "sourceMap": false,
@@ -98,8 +92,8 @@
         "production": {
           "buildTarget": "app:build:production"
         },
-        "local": {
-          "buildTarget": "app:build:local"
+        "development": {
+          "buildTarget": "app:build:development"
         },
         "ci": {
           "progress": false
@@ -146,7 +140,10 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["apps/app/**/*.ts", "apps/app/**/*.html"]
+        "lintFilePatterns": [
+          "apps/app/**/*.ts",
+          "apps/app/**/*.html"
+        ]
       }
     }
   }

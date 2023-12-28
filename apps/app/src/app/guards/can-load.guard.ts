@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { RouteName } from '@app/shared/models/routeName';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanLoadLoginGuard {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   canLoad(route: Route) {
     if (environment.featureToggle.enableLogin === false) {

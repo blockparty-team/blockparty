@@ -14,7 +14,7 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 import { Database } from '@app/interfaces/database-definitions';
 import {
   FavoriteEntity,

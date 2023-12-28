@@ -4,7 +4,7 @@ import { AuthService } from '@app/services/auth.service';
 import { MenuController } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 import { RouteName } from '@app/shared/models/routeName';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import {
@@ -118,7 +118,7 @@ export class SidebarPage implements OnInit {
   ]
     .filter((navItem) =>
       !environment.featureToggle.enableLogin &&
-      navItem.routeName === RouteName.Profile
+        navItem.routeName === RouteName.Profile
         ? false
         : true
     )

@@ -16,7 +16,7 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { DeviceStorageService } from 'device-storage';
 import { Database, Enums, Tables } from './database-definitions';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 import { ArtistViewModel } from 'types';
 import { MapSource } from 'types';
 import { DayEventStageTimetable } from 'types';

@@ -19,7 +19,7 @@ import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties
 import { MapLayer, MapSource } from '@app/interfaces/map-layer';
 import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
 import { MapIconViewModel } from '@app/interfaces/map-icon';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -103,18 +103,18 @@ export class MapService {
         properties:
           mapLayer === MapLayer.Stage
             ? ({
-                ...feature.properties,
-                // MapLibre automaticly stringifies nested objects in geojson properties.
-                // Since stages has timetables and tickets properties represented as objects,
-                // these are parsed to get the back to original objects.
-                timetables: JSON.parse(feature.properties.timetables),
-                tickets: feature.properties.tickets
-                  ? JSON.parse(feature.properties.tickets)
-                  : null,
-                tags: feature.properties.tags
-                  ? JSON.parse(feature.properties.tags)
-                  : null,
-              } as StageGeojsonProperties)
+              ...feature.properties,
+              // MapLibre automaticly stringifies nested objects in geojson properties.
+              // Since stages has timetables and tickets properties represented as objects,
+              // these are parsed to get the back to original objects.
+              timetables: JSON.parse(feature.properties.timetables),
+              tickets: feature.properties.tickets
+                ? JSON.parse(feature.properties.tickets)
+                : null,
+              tags: feature.properties.tags
+                ? JSON.parse(feature.properties.tags)
+                : null,
+            } as StageGeojsonProperties)
             : feature.properties,
         geometry: feature.geometry as Point,
       }));

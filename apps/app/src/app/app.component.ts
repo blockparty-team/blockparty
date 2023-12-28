@@ -19,7 +19,7 @@ import { addIcons } from 'ionicons';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@app/shared/models/routeName';
-import { environment } from '@env/environment';
+import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
 
 @Component({
