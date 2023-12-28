@@ -14,8 +14,8 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
-import { Database, Enums, Tables } from './database-definitions';
 import { DeviceStorageService } from 'device-storage';
+import { Database, Enums, Tables } from './database-definitions';
 import { environment } from '@env/environment';
 import { ArtistViewModel } from '@app/interfaces/artist';
 import { MapSource } from '@app/interfaces/map-layer';

@@ -16,8 +16,9 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "device-storage": ["libs/shared/services/device-storage/src/index.ts"],
-      "supabase": ["libs/supabase/src/index.ts"]
+      "device-storage": ["libs/shared/data-access/device-storage/src/index.ts"],
+      "supabase": ["libs/shared/data-access/supabase/src/index.ts"],
+      "types": ["libs/shared/types/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
