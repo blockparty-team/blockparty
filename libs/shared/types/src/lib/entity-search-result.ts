@@ -3,7 +3,7 @@ import { ArtistViewModel } from './artist';
 import { EventViewModel } from './event';
 import { StageGeojsonProperties } from './stage-geojson-properties';
 import { AssetGeojsonProperties } from './asset-geojson-properties';
-import { Tables } from '@shared/types';
+import { Tables } from './database-definitions';
 
 export interface EntityFreeTextSearchResult
   extends Omit<Tables<'entity_text_search'>, 'ts'> {

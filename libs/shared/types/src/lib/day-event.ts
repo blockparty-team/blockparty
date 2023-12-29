@@ -1,4 +1,4 @@
-import { Tables } from '@shared/types';
+import { Tables } from './database-definitions';
 
 export interface PartialEventType {
   id: Tables<'event_type'>['id'];
