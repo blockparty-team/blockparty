@@ -8,16 +8,25 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/product/",
         "index": "apps/product//src/index.html",
         "browser": "apps/product//src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/product//tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/product//src/favicon.ico", "apps/product//src/assets"],
-        "styles": ["apps/product//src/styles.scss"],
+        "assets": [
+          "apps/product//src/favicon.ico",
+          "apps/product//src/assets"
+        ],
+        "styles": [
+          "apps/product//src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -64,11 +73,15 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "apps/product/jest.config.ts"
       }
