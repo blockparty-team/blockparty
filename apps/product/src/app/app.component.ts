@@ -34,8 +34,8 @@ export class AppComponent implements OnInit {
         'Custom map icons',
         'Tickets & direction links'
       ],
-      backgroundColor: 'bg-yellow-500',
-      color: 'text-red-400',
+      backgroundColor: 'bg-army-600',
+      color: 'text-white',
       image: 'assets/map.png',
       svgPath: 'M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z'
     },
@@ -55,12 +55,12 @@ export class AppComponent implements OnInit {
       title: 'Artists',
       bullets: [
         'Favortites',
-        'Soundclound and Bandcamo player',
+        'Soundclound and Bandcamp player',
         'Locate artist on map',
         'Share artist'
       ],
-      backgroundColor: 'bg-tertiary-400',
-      color: 'text-primary-600',
+      backgroundColor: 'bg-pink-500',
+      color: 'text-orange-900',
       image: 'assets/artists.png',
       svgPath: 'M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
     },
@@ -68,12 +68,11 @@ export class AppComponent implements OnInit {
       title: 'Editor',
       bullets: [
         'Edit app content',
-        'Soundclound and Bandcamo player',
-        'Locate artist on map',
-        'Share artist'
+        'Upload artist images',
+        'Upload map icons'
       ],
-      backgroundColor: 'bg-secondary-400',
-      color: 'text-primary-600',
+      backgroundColor: 'bg-purple-300',
+      color: 'text-purple-800',
       image: 'assets/editor.png',
       svgPath: 'm16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125'
     },
