@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
       title: 'Timetable',
       bullets: [
         'Liked artists highlighted',
+        'Notifications for upcoming artists',
         'List and gantt view',
         'Tracks current time',
       ],
