@@ -5,8 +5,8 @@ import {
   inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@app/services/auth.service';
-import { RouteHistoryService } from '@app/services/routeHistory.service';
+import { AuthService } from '@distortion/app/services/auth.service';
+import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { first, switchMap } from 'rxjs/operators';
 import {
   IonContent,

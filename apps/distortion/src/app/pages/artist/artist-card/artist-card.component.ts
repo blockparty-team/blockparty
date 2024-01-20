@@ -4,7 +4,7 @@ import {
   Input,
   inject,
 } from '@angular/core';
-import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@distortion/app/interfaces/artist';
 import { ArtistStateService } from '../state/artist-state.service';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';

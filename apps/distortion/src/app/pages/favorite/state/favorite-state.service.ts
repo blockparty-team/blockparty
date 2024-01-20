@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { ArtistFavorite } from '@app/interfaces/artist';
-import { Favorite, FavoriteEntity } from '@app/interfaces/database-entities';
-import { DeviceStorageService } from '@app/services/device-storage.service';
-import { DeviceService } from '@app/services/device.service';
+import { ArtistFavorite } from '@distortion/app/interfaces/artist';
+import { Favorite, FavoriteEntity } from '@distortion/app/interfaces/database-entities';
+import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
+import { DeviceService } from '@distortion/app/services/device.service';
 import { SupabaseService } from '@shared/data-access/supabase';
 import {
   BehaviorSubject,

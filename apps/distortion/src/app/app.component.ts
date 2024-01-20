@@ -18,7 +18,7 @@ import { Platform } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { RouteName } from '@app/shared/models/routeName';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
 

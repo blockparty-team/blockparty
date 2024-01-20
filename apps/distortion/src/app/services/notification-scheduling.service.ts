@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject, isDevMode } from '@angular/core';
-import { FavoriteStateService } from '@app/pages/favorite/state/favorite-state.service';
+import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
 import { Observable, Subject, combineLatest, defer, from } from 'rxjs';
 import {
   filter,
@@ -16,8 +16,8 @@ import {
 import { LocalNotificationsService } from './local-notifications.service';
 import { sub } from 'date-fns';
 import { enableProdMode } from '@angular/core';
-import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
-import { TimetableSharedStateService } from '@app/pages/timetable/state/timetable-shared-state.service';
+import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
+import { TimetableSharedStateService } from '@distortion/app/pages/timetable/state/timetable-shared-state.service';
 
 @Injectable({
   providedIn: 'root',

@@ -7,12 +7,12 @@ import {
   shareReplay,
   tap,
 } from 'rxjs/operators';
-import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@distortion/app/interfaces/artist';
 import { SupabaseService } from '@shared/data-access/supabase';
-import { DeviceStorageService } from '@app/services/device-storage.service';
-import { getBucketAndPath } from '@app/shared/functions/storage';
-import { FileService } from '@app/services/file.service';
-import { FavoriteStateService } from '@app/pages/favorite/state/favorite-state.service';
+import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
+import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
+import { FileService } from '@distortion/app/services/file.service';
+import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
 
 @Injectable({
   providedIn: 'root',

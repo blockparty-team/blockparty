@@ -19,9 +19,9 @@ import {
   StageTimetableViewModel,
   TimetableViewModel,
   TimeLabel,
-} from '@app/interfaces/day-event-stage-timetable';
-import { FavoritesService } from '@app/services/favorites.service';
-import { RouteName } from '@app/shared/models/routeName';
+} from '@distortion/app/interfaces/day-event-stage-timetable';
+import { FavoritesService } from '@distortion/app/services/favorites.service';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';

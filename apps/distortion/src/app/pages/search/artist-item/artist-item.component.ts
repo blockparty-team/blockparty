@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ArtistViewModel } from '@app/interfaces/artist';
-import { RouteName } from '@app/shared/models/routeName';
+import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { NgFor, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {

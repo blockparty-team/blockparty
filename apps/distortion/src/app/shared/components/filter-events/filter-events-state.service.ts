@@ -3,16 +3,16 @@ import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
 import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { isSameDay, sub } from 'date-fns';
 import { SupabaseService } from '@shared/data-access/supabase';
-import { DeviceStorageService } from '@app/services/device-storage.service';
-import { TimetableSharedStateService } from '@app/pages/timetable/state/timetable-shared-state.service';
-import { TabsStateService } from '@app/pages/tabs/state/tabs-state.service';
+import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
+import { TimetableSharedStateService } from '@distortion/app/pages/timetable/state/timetable-shared-state.service';
+import { TabsStateService } from '@distortion/app/pages/tabs/state/tabs-state.service';
 import {
   DayEvent,
   PartialEvent,
   PartialEventType,
-} from '@app/interfaces/day-event';
-import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
-import { Tab } from '@app/interfaces/tab';
+} from '@distortion/app/interfaces/day-event';
+import { DayEventStageTimetable } from '@distortion/app/interfaces/day-event-stage-timetable';
+import { Tab } from '@distortion/app/interfaces/tab';
 
 @Injectable()
 export class FilterEventsStateService {

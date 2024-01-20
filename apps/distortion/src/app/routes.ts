@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
-import { RouteName } from '@app/shared/models/routeName';
-import { CanLoadLoginGuard } from '@app/guards/can-load.guard';
+import { RouteName } from '@distortion/app/shared/models/routeName';
+import { CanLoadLoginGuard } from '@distortion/app/guards/can-load.guard';
 
 export const ROUTES: Route[] = [
   {

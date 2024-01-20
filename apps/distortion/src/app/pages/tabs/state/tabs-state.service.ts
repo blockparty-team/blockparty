@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Tab } from '@app/interfaces/tab';
+import { Tab } from '@distortion/app/interfaces/tab';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({

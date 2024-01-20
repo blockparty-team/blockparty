@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouteHistoryService } from '@app/services/routeHistory.service';
+import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { map } from 'rxjs';
 import { Clipboard } from '@capacitor/clipboard';
 import { Browser } from '@capacitor/browser';

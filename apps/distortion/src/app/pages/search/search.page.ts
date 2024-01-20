@@ -9,10 +9,10 @@ import { Router } from '@angular/router';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from '@app/interfaces/entity-search-result';
-import { MapService } from '@app/services/map.service';
-import { SearchService } from '@app/services/search.service';
-import { getBucketAndPath } from '@app/shared/functions/storage';
+} from '@distortion/app/interfaces/entity-search-result';
+import { MapService } from '@distortion/app/services/map.service';
+import { SearchService } from '@distortion/app/services/search.service';
+import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -24,9 +24,9 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { SupabaseService } from '@shared/data-access/supabase';
-import { RouteName } from '@app/shared/models/routeName';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { EntityBadgeColor } from './entity-badge-color';
-import { RouteHistoryService } from '@app/services/routeHistory.service';
+import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { AssetItemComponent } from './asset-item/asset-item.component';
 import { StageItemComponent } from './stage-item/stage-item.component';
 import { EventItemComponent } from './event-item/event-item.component';

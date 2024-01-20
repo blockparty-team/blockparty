@@ -6,7 +6,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { MapStateService } from '@app/pages/map/state/map-state.service';
+import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
 import { ModalController } from '@ionic/angular/standalone';
 import { merge, from, Subject, EMPTY } from 'rxjs';
 import {
@@ -20,16 +20,16 @@ import {
   catchError,
 } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { MapService } from '@app/services/map.service';
-import { MapLayer } from '@app/interfaces/map-layer';
-import { animations } from '@app/shared/animations';
+import { MapService } from '@distortion/app/services/map.service';
+import { MapLayer } from '@distortion/app/interfaces/map-layer';
+import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
-import { Tab } from '@app/interfaces/tab';
+import { Tab } from '@distortion/app/interfaces/tab';
 import { AnimationOptions, LottieComponent } from 'ngx-lottie';
-import { FilterEventsStateService } from '@app/shared/components/filter-events/filter-events-state.service';
-import { RouteHistoryService } from '@app/services/routeHistory.service';
-import { RouteName } from '@app/shared/models/routeName';
+import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
+import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';

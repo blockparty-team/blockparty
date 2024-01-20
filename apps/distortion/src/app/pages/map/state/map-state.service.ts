@@ -9,18 +9,18 @@ import {
   tap,
 } from 'rxjs/operators';
 import { SupabaseService } from '@shared/data-access/supabase';
-import { FilesystemService } from '@app/services/filesystem.service';
+import { FilesystemService } from '@distortion/app/services/filesystem.service';
 import { DeviceStorageService } from '@shared/data-access/device-storage';
-import { getBucketAndPath } from '@app/shared/functions/storage';
-import { imgToBase64, imgFromUrl } from '@app/shared/functions/file-utils';
-import { MapIcon } from '@app/interfaces/database-entities';
-import { MaskGeojsonProperties } from '@app/interfaces/mask-geojson-properties';
-import { MapSource, MapSourceGeojson } from '@app/interfaces/map-layer';
-import { MapIconViewModel } from '@app/interfaces/map-icon';
+import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
+import { imgToBase64, imgFromUrl } from '@distortion/app/shared/functions/file-utils';
+import { MapIcon } from '@distortion/app/interfaces/database-entities';
+import { MaskGeojsonProperties } from '@distortion/app/interfaces/mask-geojson-properties';
+import { MapSource, MapSourceGeojson } from '@distortion/app/interfaces/map-layer';
+import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
 import {
   GeojsonProperties,
   MapClickedFeature,
-} from '@app/interfaces/map-clicked-feature';
+} from '@distortion/app/interfaces/map-clicked-feature';
 
 @Injectable({
   providedIn: 'root',

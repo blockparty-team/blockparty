@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from '@app/interfaces/entity-search-result';
+} from '@distortion/app/interfaces/entity-search-result';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from './geolocation.service';
 import { SupabaseService } from '@shared/data-access/supabase';
-import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
-import { EventStateService } from '@app/pages/event/state/event-state.service';
-import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { MapSource } from '@app/interfaces/map-layer';
+import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
+import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
+import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapSource } from '@distortion/app/interfaces/map-layer';
 import { Feature, Point } from 'geojson';
-import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
-import { AssetGeojsonProperties } from '@app/interfaces/asset-geojson-properties';
+import { StageGeojsonProperties } from '@distortion/app/interfaces/stage-geojson-properties';
+import { AssetGeojsonProperties } from '@distortion/app/interfaces/asset-geojson-properties';
 
 @Injectable({
   providedIn: 'root',

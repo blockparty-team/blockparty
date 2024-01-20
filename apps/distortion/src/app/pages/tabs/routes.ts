@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { TabsPage } from './tabs.page';
-import { RouteName } from '@app/shared/models/routeName';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 
 export const routes: Route[] = [
   {

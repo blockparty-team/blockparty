@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
-import { RouteName } from '@app/shared/models/routeName';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { environment } from '@shared/environments';
 
 @Injectable({

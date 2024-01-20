@@ -5,12 +5,12 @@ import { map, switchMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { MapService } from '@app/services/map.service';
+import { MapService } from '@distortion/app/services/map.service';
 import { EventStateService } from '../event/state/event-state.service';
-import { EventViewModel } from '@app/interfaces/event';
-import { MapLayer } from '@app/interfaces/map-layer';
+import { EventViewModel } from '@distortion/app/interfaces/event';
+import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import { environment } from '@shared/environments';
-import { RouteName } from '@app/shared/models/routeName';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {

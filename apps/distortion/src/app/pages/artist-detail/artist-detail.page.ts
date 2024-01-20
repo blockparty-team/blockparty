@@ -8,15 +8,15 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
-import { ArtistViewModel } from '@app/interfaces/artist';
-import { MapService } from '@app/services/map.service';
+import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { MapService } from '@distortion/app/services/map.service';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
-import { RouteHistoryService } from '@app/services/routeHistory.service';
+import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { environment } from '@shared/environments';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
-import { RouteName } from '@app/shared/models/routeName';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import {

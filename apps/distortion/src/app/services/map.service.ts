@@ -12,13 +12,13 @@ import {
   PointLike,
 } from 'maplibre-gl';
 import { Point } from 'geojson';
-import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { getCssVariable } from '@app/shared/colors';
-import { GeolocationService } from '@app/services/geolocation.service';
-import { StageGeojsonProperties } from '@app/interfaces/stage-geojson-properties';
-import { MapLayer, MapSource } from '@app/interfaces/map-layer';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
-import { MapIconViewModel } from '@app/interfaces/map-icon';
+import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { getCssVariable } from '@distortion/app/shared/colors';
+import { GeolocationService } from '@distortion/app/services/geolocation.service';
+import { StageGeojsonProperties } from '@distortion/app/interfaces/stage-geojson-properties';
+import { MapLayer, MapSource } from '@distortion/app/interfaces/map-layer';
+import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
+import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
 import { environment } from '@shared/environments';
 
 @Injectable({

@@ -16,10 +16,10 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
-import { Favorite, FavoriteEntity } from '@app/interfaces/database-entities';
+import { Favorite, FavoriteEntity } from '@distortion/app/interfaces/database-entities';
 import { LocalNotificationsService } from './local-notifications.service';
 import { NotificationSchedulingService } from './notification-scheduling.service';
-import { FavoriteStateService } from '@app/pages/favorite/state/favorite-state.service';
+import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
 
 @Injectable({
   providedIn: 'root',

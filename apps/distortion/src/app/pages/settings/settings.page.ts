@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { LocalNotificationsService } from '@app/services/local-notifications.service';
+import { LocalNotificationsService } from '@distortion/app/services/local-notifications.service';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { LocalNotificationSchema } from '@capacitor/local-notifications';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';

@@ -5,10 +5,10 @@ import {
   inject,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { EventViewModel } from '@app/interfaces/event';
-import { MapLayer } from '@app/interfaces/map-layer';
-import { MapService } from '@app/services/map.service';
-import { RouteName } from '@app/shared/models/routeName';
+import { EventViewModel } from '@distortion/app/interfaces/event';
+import { MapLayer } from '@distortion/app/interfaces/map-layer';
+import { MapService } from '@distortion/app/services/map.service';
+import { RouteName } from '@distortion/app/shared/models/routeName';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { EntityBadgeColor } from '../entity-badge-color';
 import {

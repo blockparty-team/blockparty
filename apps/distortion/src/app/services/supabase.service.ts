@@ -15,23 +15,23 @@ import {
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 import { environment } from '@shared/environments';
-import { Database } from '@app/interfaces/database-definitions';
+import { Database } from '@distortion/app/interfaces/database-definitions';
 import {
   FavoriteEntity,
   MapIcon,
   Profile,
-} from '@app/interfaces/database-entities';
-import { ArtistViewModel } from '@app/interfaces/artist';
-import { MapSource } from '@app/interfaces/map-layer';
-import { DayEventStageTimetable } from '@app/interfaces/day-event-stage-timetable';
+} from '@distortion/app/interfaces/database-entities';
+import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { MapSource } from '@distortion/app/interfaces/map-layer';
+import { DayEventStageTimetable } from '@distortion/app/interfaces/day-event-stage-timetable';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from '@app/interfaces/entity-search-result';
-import { EventWithRelations } from '@app/interfaces/event';
-import { EventsGroupedByType } from '@app/interfaces/event-type';
+} from '@distortion/app/interfaces/entity-search-result';
+import { EventWithRelations } from '@distortion/app/interfaces/event';
+import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
 import { DeviceStorageService } from './device-storage.service';
-import { TransformOptions } from '@app/shared/models/imageSize';
+import { TransformOptions } from '@distortion/app/shared/models/imageSize';
 
 @Injectable({
   providedIn: 'root',

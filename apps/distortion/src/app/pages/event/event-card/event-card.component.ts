@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { EventViewModel } from '@app/interfaces/event';
+import { EventViewModel } from '@distortion/app/interfaces/event';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonCard, IonBadge, IonRouterLink } from '@ionic/angular/standalone';

@@ -6,9 +6,9 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Feature, Point, Position } from 'geojson';
-import { RouteName } from '@app/shared/models/routeName';
-import { MapService } from '@app/services/map.service';
-import { AssetGeojsonProperties } from '@app/interfaces/asset-geojson-properties';
+import { RouteName } from '@distortion/app/shared/models/routeName';
+import { MapService } from '@distortion/app/services/map.service';
+import { AssetGeojsonProperties } from '@distortion/app/interfaces/asset-geojson-properties';
 import {
   IonItem,
   IonThumbnail,

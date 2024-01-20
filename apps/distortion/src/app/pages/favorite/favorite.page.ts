@@ -4,8 +4,8 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ArtistViewModel } from '@app/interfaces/artist';
-import { ArtistStateService } from '@app/pages/artist/state/artist-state.service';
+import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';

@@ -3,8 +3,8 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from '@shared/data-access/supabase';
-import { imageSize } from '@app/shared/models/imageSize';
-import { MapStateService } from '@app/pages/map/state/map-state.service';
+import { imageSize } from '@distortion/app/shared/models/imageSize';
+import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
 
 interface File {
   fileName: string;

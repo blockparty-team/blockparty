@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
-import { ArtistViewModel } from '@app/interfaces/artist';
+import { ArtistViewModel } from '@distortion/app/interfaces/artist';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArtistStateService } from './state/artist-state.service';
 import { ArtistCardComponent } from './artist-card/artist-card.component';

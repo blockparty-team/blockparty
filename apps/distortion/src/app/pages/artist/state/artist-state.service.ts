@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { FavoritesService } from '@app/services/favorites.service';
+import { FavoritesService } from '@distortion/app/services/favorites.service';
 import { ArtistSharedStateService } from './artist-shared-state.service';
 
 @Injectable({

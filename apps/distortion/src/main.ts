@@ -11,8 +11,8 @@ import {
 import { RouteReuseStrategy, provideRouter } from '@angular/router';
 
 import { environment } from '@shared/environments';
-import { AppComponent } from '@app/app.component';
-import { ROUTES } from '@app/routes';
+import { AppComponent } from '@distortion/app/app.component';
+import { ROUTES } from '@distortion/app/routes';
 
 export function playerFactory() {
   return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');

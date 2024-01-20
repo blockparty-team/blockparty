@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AuthService } from '@app/services/auth.service';
+import { AuthService } from '@distortion/app/services/auth.service';
 import { UserMetadata } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';

@@ -9,16 +9,16 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { ModalController, SegmentCustomEvent } from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
-import { MapStateService } from '@app/pages/map/state/map-state.service';
-import { MapLayer } from '@app/interfaces/map-layer';
+import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import {
   Day,
   StageGeojsonProperties,
   Timetable,
-} from '@app/interfaces/stage-geojson-properties';
-import { MapClickedFeature } from '@app/interfaces/map-clicked-feature';
-import { RouteName } from '@app/shared/models/routeName';
-import { Ticket } from '@app/interfaces/event';
+} from '@distortion/app/interfaces/stage-geojson-properties';
+import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
+import { RouteName } from '@distortion/app/shared/models/routeName';
+import { Ticket } from '@distortion/app/interfaces/event';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonHeader,
