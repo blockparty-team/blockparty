@@ -1,19 +1,10 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*",
-    "src/app/interfaces/supabase.ts"
-  ],
+  "ignorePatterns": ["**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "tsconfig.json",
-          "e2e/tsconfig.json"
-        ],
         "createDefaultProgram": true
       },
       "extends": [
@@ -26,10 +17,7 @@
         "@angular-eslint/component-class-suffix": [
           "error",
           {
-            "suffixes": [
-              "Page",
-              "Component"
-            ]
+            "suffixes": ["Page", "Component"]
           }
         ],
         "@angular-eslint/component-selector": [
@@ -53,21 +41,32 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     },
     {
-      "files": [
-        "*.ts"
-      ],
-      "extends": [
-        "plugin:@ngrx/recommended"
-      ]
+      "files": ["*.ts"],
+      "extends": ["plugin:@ngrx/recommended"]
+    },
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
+              }
+            ]
+          }
+        ]
+      }
     }
-  ]
+  ],
+  "plugins": ["@nx"]
 }

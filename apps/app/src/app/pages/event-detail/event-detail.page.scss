@@ -1,0 +1,31 @@
+img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.days {
+  color: lightgray;
+}
+
+.margin-top {
+  margin-top: 10px;
+}
+
+.description {
+  white-space: pre-wrap;
+}
+
+.artists {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .artist-badge {
+    padding: 5px;
+    margin: 5px;
+    background-color: var(--ion-color-tertiary);
+    color: var(--ion-color-tertiary-contrast);
+  }
+}

@@ -1,0 +1,67 @@
+<ion-content fullscreen>
+  <ion-fab vertical="top" horizontal="start" slot="fixed">
+    <ion-back-button defaultHref="/tabs" icon="chevron-back" color="light">
+    </ion-back-button>
+  </ion-fab>
+
+  <div class="container">
+    <ion-button
+      type="button"
+      color="secondary"
+      size="large"
+      (click)="signInWithGoogle()"
+    >
+      <ion-icon name="logo-google" size="large" slot="start"></ion-icon>
+      Sign in with Google
+    </ion-button>
+
+    <ion-button type="button" disabled color="secondary" size="large">
+      <ion-icon name="logo-facebook" size="large" slot="start"></ion-icon>
+      Sign in with Facebook
+    </ion-button>
+    <ion-button type="button" disabled color="secondary" size="large">
+      <ion-icon name="logo-apple" size="large" slot="start"></ion-icon>
+      Sign in with Apple
+    </ion-button>
+  </div>
+
+  <!-- <form (ngSubmit)="signIn()"
+        [formGroup]="credentials">
+
+
+    <br>
+
+    <div class="input-group">
+      <ion-item>
+        <ion-input type="email"
+                   placeholder="Email"
+                   formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors"
+           class="errors">
+        <span *ngIf="email.errors?.required">Email is required</span>
+        <span *ngIf="email.errors?.email">Email is invalid</span>
+      </div>
+      <ion-item>
+        <ion-input type="password"
+                   placeholder="Password"
+                   formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="(password.dirty || password.touched) && password.errors"
+           class="errors">
+        <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+      </div>
+    </div>
+
+    <ion-button type="submit"
+                expand="block"
+                [disabled]="!credentials.valid">Login</ion-button>
+    <ion-button type="button"
+                expand="block"
+                color="light"
+                fill="clear">or Sign up!
+    </ion-button>
+
+  </form> -->
+</ion-content>

@@ -1,0 +1,55 @@
+<div class="music-player" [@slideUpDown] *ngIf="showPlayer()">
+  <ion-header translucent>
+    <div class="actions">
+      <ion-segment
+        mode="ios"
+        *ngIf="soundcloudUrl && bandcampUrl"
+        [value]="selectedSource()"
+        (ionChange)="onChangePlayerSource($event)"
+      >
+        <ion-segment-button [value]="playerSource.Soundcloud">
+          <ion-icon name="logo-soundcloud"></ion-icon>
+        </ion-segment-button>
+        <ion-segment-button [value]="playerSource.Bandcamp">
+          <ion-icon src="assets/so-me-icons/bandcamp-light.svg"></ion-icon>
+        </ion-segment-button>
+      </ion-segment>
+
+      <ion-icon
+        slot="icon-only"
+        class="close-player"
+        size="large"
+        name="close-circle-outline"
+        (click)="close()"
+      >
+      </ion-icon>
+    </div>
+  </ion-header>
+
+  <div class="iframe-container">
+    <ion-spinner mode="md" color="secondary"> </ion-spinner>
+
+    @switch (selectedSource()) { @case (playerSource.Soundcloud) {
+    <iframe
+      width="100%"
+      height="120"
+      scrolling="no"
+      frameborder="no"
+      allow="autoplay"
+      seamless
+      [iframeSrc]="
+        soundcloudUrl +
+        '&color=%2328241a&auto_play=true&hide_related=true&show_comments=false&show_user=true&show_reposts=false&show_teaser=false'
+      "
+    >
+    </iframe>
+    } @case (playerSource.Bandcamp) {
+    <iframe
+      style="border: 0; width: 100%; height: 120px"
+      seamless
+      [iframeSrc]="bandcampUrl"
+    >
+    </iframe>
+    } }
+  </div>
+</div>

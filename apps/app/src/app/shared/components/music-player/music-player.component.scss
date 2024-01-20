@@ -1,0 +1,48 @@
+$music-player-height: 120px;
+$actions-height: 42px;
+
+.music-player {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: calc($music-player-height + $actions-height);
+  overflow: visible;
+
+  .actions {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    ion-segment {
+      width: unset;
+      --background: #303030;
+      border-radius: 15px 15px 0 0;
+
+      ion-segment-button {
+        --indicator-color: var(--ion-color-primary);
+        --border-radius: 15px 15px 0 0;
+      }
+    }
+
+    .close-player {
+      background-color: #303030;
+      border-radius: 15px 15px 0 0;
+      padding: 5px;
+      right: 3px;
+      bottom: $music-player-height;
+    }
+  }
+
+  .iframe-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: $music-player-height;
+    background-color: var(--ion-background-color);
+
+    iframe {
+      position: absolute;
+    }
+  }
+}

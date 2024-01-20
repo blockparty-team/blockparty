@@ -1,0 +1,126 @@
+<div class="h-full overflow-y-auto snap-mandatory snap-y">
+  <section class="h-full bg-red-400 flex flex-col snap-center">
+    <header class="bg-red-400 w-full">
+      <nav class="flex justify-center items-center">
+        <h1 class="font-logo text-4xl md:text-8xl text-yellow-500 py-7">
+          Block Party
+        </h1>
+      </nav>
+    </header>
+
+    <div
+      class="flex-grow flex-col md:flex-row flex justify-center items-center"
+    >
+      <div class="basis-1/2 flex items-center justify-center h-full p-2">
+        <h1 class="text-yellow-200 text-center text-3xl md:text-6xl">
+          We create apps for festivals covering multiple events and locations
+        </h1>
+      </div>
+      <div class="basis-1/2 flex items-center">
+        <img src="assets/pages.png" class="drop-shadow-lg p-2" />
+      </div>
+    </div>
+
+    <footer class="flex justify-center items-center">
+      <a href="#section-1">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          data-delay="2000"
+          class="w-6 h-6 animate-bounce text-yellow-200"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="m19.5 8.25-7.5 7.5-7.5-7.5"
+          />
+        </svg>
+      </a>
+    </footer>
+  </section>
+
+  <!-- FEATURES -->
+  @for (feature of features(); let idx = $index; track idx; ) {
+  <section
+    id="section-{{ idx + 1 }}"
+    [class]="'h-full flex flex-col snap-start ' + feature.backgroundColor"
+  >
+    <header class="flex items-center justify-center">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        [class]="'w-8 h-8 mr-3 md:w-12 md:h-12 ' + feature.color"
+      >
+        <path [attr.d]="feature.svgPath" />
+      </svg>
+      <h1 [class]="'font-logo py-5 text-4xl md:text-6xl ' + feature.color">
+        {{ feature.title }}
+      </h1>
+    </header>
+    <div
+      class="flex-grow flex flex-col md:flex-row justify-center items-center"
+    >
+      <div
+        class="h-2/5 md:h-full w-full md:w-1/2 flex items-center justify-center"
+      >
+        <img
+          [src]="feature.image"
+          class="drop-shadow-lg h-full object-contain p-5 md:p-10 hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+      <div
+        class="h-1/2 md:h-full w-full md:w-1/2 flex flex-col items-center md:justify-center p-10"
+      >
+        <ul [class]="'mt-10 list-disc text-lg md:text-3xl md ' + feature.color">
+          @for (bullet of feature.bullets; track $index) {
+          <li>
+            {{ bullet }}
+          </li>
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+  }
+
+  <section class="h-full bg-red-400 flex flex-col snap-center">
+    <header class="bg-red-400 w-full">
+      <nav class="flex justify-center items-center">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-8 h-8 mr-3 md:w-12 md:h-12 text-yellow-500"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
+          />
+        </svg>
+
+        <h1 class="font-logo text-4xl md:text-8xl text-yellow-500 py-7">
+          Contact
+        </h1>
+      </nav>
+    </header>
+
+    <div
+      class="flex-grow flex-col md:flex-row flex justify-center items-center"
+    >
+      <div class="flex items-center justify-center h-full p-2">
+        <button class="text-yellow-200 text-center text-3xl md:text-6xl">
+          <a href="mailto:someone@example.com">Mail</a>
+        </button>
+      </div>
+    </div>
+  </section>
+</div>

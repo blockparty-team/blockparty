@@ -1,0 +1,23 @@
+{
+  "name": "enviroments",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/enviroments/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/enviroments",
+        "main": "libs/shared/enviroments/src/index.ts",
+        "tsConfig": "libs/shared/enviroments/tsconfig.lib.json",
+        "assets": ["libs/shared/enviroments/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  },
+  "tags": []
+}
