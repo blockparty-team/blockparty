@@ -1,0 +1,40 @@
+.container {
+  .searchbar {
+    display: flex;
+    justify-content: center;
+
+    ion-searchbar {
+      max-width: 500px;
+    }
+  }
+
+  .table-container {
+    overflow-x: scroll;
+
+    table {
+      width: 100%;
+      background-color: var(--ion-background-color);
+
+      .mat-mdc-cell,
+      .mat-mdc-header-cell {
+        color: var(--ion-text-color);
+        font-family: var(--ion-font-family);
+        font-size: small;
+        border-bottom: 1px solid rgba(var(--ion-text-color-rgb), 0.2);
+      }
+
+      .mat-mdc-header-cell {
+        font-weight: bold;
+        background-color: var(--ion-background-color-shade);
+      }
+
+      .mat-mdc-row .mat-mdc-cell {
+        cursor: pointer;
+      }
+
+      .mat-mdc-row:hover .mat-mdc-cell {
+        background-color: rgba(var(--ion-color-primary-rgb), 0.14);
+      }
+    }
+  }
+}

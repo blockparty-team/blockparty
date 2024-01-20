@@ -1,0 +1,16 @@
+<app-toolbar title="Home"></app-toolbar>
+<ion-content [fullscreen]="true">
+  <ion-list>
+    @for (page of appPages(); track $index) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title> {{page.title}} </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-icon aria-hidden="true" slot="start" [name]="page.icon"></ion-icon>
+      </ion-card-content>
+    </ion-card>
+    }
+  </ion-list>
+</ion-content>

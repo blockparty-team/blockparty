@@ -1,0 +1,7 @@
+{
+  "name": "tweak",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

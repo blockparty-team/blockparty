@@ -1,1 +1,51 @@
-<app-nx-welcome></app-nx-welcome> <router-outlet></router-outlet>
+<ion-app>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-content>
+        <ion-list>
+          <ion-list-header routerLink="/home">Tweak</ion-list-header>
+          <ion-note>Edit your app data</ion-note>
+
+          @for (page of appPages(); track $index) {
+          <ion-menu-toggle auto-hide="false">
+            <ion-item
+              routerDirection="root"
+              [routerLink]="[page.url]"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <ion-icon
+                aria-hidden="true"
+                slot="start"
+                [name]="page.icon"
+              ></ion-icon>
+              <ion-label>{{ page.title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          }
+        </ion-list>
+
+        <ion-footer class="login" class="ion-no-border">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item
+              routerDirection="root"
+              routerLink="/login"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <ion-icon
+                aria-hidden="true"
+                slot="start"
+                name="log-in-outline"
+              ></ion-icon>
+              <ion-label>Login</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-footer>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
+</ion-app>
