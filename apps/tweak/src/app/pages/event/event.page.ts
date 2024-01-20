@@ -36,9 +36,9 @@ import { MapService } from '../../services/map.service';
 import {
   ListSelectionConfig,
   SelectComponent,
-} from 'src/app/shared/components/select/select.component';
-import { SupabaseService } from 'src/app/services/supabase.service';
-import { EditModalComponent } from 'src/app/shared/components/edit-modal/edit-modal.component';
+} from '@tweak/shared/components/select/select.component';
+import { SupabaseService } from '@tweak/services/supabase.service';
+import { EditModalComponent } from '@tweak/shared/components/edit-modal/edit-modal.component';
 import {
   EMPTY,
   Subject,
@@ -52,21 +52,21 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { NotificationService } from 'src/app/services/notification.service';
+import { NotificationService } from '@tweak/services/notification.service';
 import { connect } from 'ngxtension/connect';
 import {
   Tables,
   TablesInsert,
   TablesUpdate,
-} from 'src/app/interfaces/database-definitions';
+} from '@tweak/interfaces/database-definitions';
 import {
   KeyValueComponent,
   KeyValueConfig,
-} from 'src/app/shared/components/key-value/key-value.component';
+} from '@tweak/shared/components/key-value/key-value.component';
 import {
   TableComponent,
   TableConfig,
-} from 'src/app/shared/components/table/table.component';
+} from '@tweak/shared/components/table/table.component';
 import { FeatureCollection, Feature, Polygon } from 'geojson';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 

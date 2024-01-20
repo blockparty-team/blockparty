@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ToolbarComponent } from 'src/app/shared/components/toolbar/toolbar.component';
-import { SupabaseService } from 'src/app/services/supabase.service';
+import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
+import { SupabaseService } from '@tweak/services/supabase.service';
 
 @Component({
   selector: 'app-login',

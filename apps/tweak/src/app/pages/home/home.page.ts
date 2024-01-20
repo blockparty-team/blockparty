@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IonRouterLink } from '@ionic/angular/standalone';
-import { ToolbarComponent } from 'src/app/shared/components/toolbar/toolbar.component';
-import { AppPage, appPages } from 'src/app/app.component';
+import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
+import { AppPage, appPages } from '@tweak/app.component';
 
 @Component({
   selector: 'app-home',

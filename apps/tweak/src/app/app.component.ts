@@ -18,7 +18,7 @@ import {
   IonRouterLink,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { icons } from 'src/app/shared/icons';
+import { icons } from '@tweak/shared/icons';
 
 export interface AppPage {
   title: string;

@@ -26,19 +26,19 @@ import {
   IonToolbar,
   IonTitle,
 } from '@ionic/angular/standalone';
-import { ToolbarComponent } from 'src/app/shared/components/toolbar/toolbar.component';
-import { SupabaseService } from 'src/app/services/supabase.service';
+import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
+import { SupabaseService } from '@tweak/services/supabase.service';
 import { MatTableModule } from '@angular/material/table';
-import { Day, DayInsert } from 'src/app/interfaces/database-entities';
-import { EditModalComponent } from 'src/app/shared/components/edit-modal/edit-modal.component';
+import { Day, DayInsert } from '@tweak/interfaces/database-entities';
+import { EditModalComponent } from '@tweak/shared/components/edit-modal/edit-modal.component';
 import { EMPTY, Subject, catchError, startWith, tap } from 'rxjs';
 import { MatSortModule } from '@angular/material/sort';
-import { NotificationService } from 'src/app/services/notification.service';
+import { NotificationService } from '@tweak/services/notification.service';
 import {
   TableComponent,
   TableConfig,
-} from 'src/app/shared/components/table/table.component';
-import { Tables } from 'src/app/interfaces/database-definitions';
+} from '@tweak/shared/components/table/table.component';
+import { Tables } from '@tweak/interfaces/database-definitions';
 
 @Component({
   selector: 'app-day',

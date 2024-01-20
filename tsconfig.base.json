@@ -17,6 +17,7 @@
     "rootDir": ".",
     "paths": {
       "@app/*": ["apps/app/src/app/*"],
+      "@tweak/*": ["apps/tweak/src/app/*"],
       "@assets/*": ["apps/app/src/assets/*"],
       "@shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"

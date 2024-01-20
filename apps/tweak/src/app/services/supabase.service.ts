@@ -4,13 +4,13 @@ import {
   Tables,
   TablesInsert,
   TablesUpdate,
-} from 'src/app/interfaces/database-definitions';
+} from '@tweak/interfaces/database-definitions';
 import {
   Day,
   DayEvent,
   DayInsert,
   Event,
-} from 'src/app/interfaces/database-entities';
+} from '@tweak/interfaces/database-entities';
 import {
   createClient,
   Session,
