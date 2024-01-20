@@ -32,7 +32,7 @@ export class AppComponent implements OnInit {
         'Interactive zoom to different events',
         'Stage info with timetables',
         'Custom map icons',
-        'Tickets & direction links'
+        'Tickets & directions'
       ],
       backgroundColor: 'bg-army-600',
       color: 'text-white',
