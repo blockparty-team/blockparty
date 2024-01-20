@@ -16,8 +16,7 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "@app/*": ["apps/app/src/app/*"],
-      "@assets/*": ["apps/app/src/assets/*"],
+      "@distortion/*": ["apps/distortion/src/*"],
       "@shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
