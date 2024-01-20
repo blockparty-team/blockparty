@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
-import { MapService } from '@tweak/services/mapOld.service';
+import { MapService } from '@tweak/services/map.service';
 
 @Component({
   selector: 'app-stage',
@@ -23,6 +23,6 @@ export class StagePage implements AfterViewInit {
   private mapService = inject(MapService);
 
   ngAfterViewInit(): void {
-    this.mapService.initMap('stage-map');
+    // this.mapService.initMap('stage-map');
   }
 }
