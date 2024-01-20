@@ -1,20 +1,21 @@
 {
-  "extends": ["../../.eslintrc.json"],
   "ignorePatterns": ["!**/*"],
   "overrides": [
     {
       "files": ["*.ts"],
+      "parserOptions": {
+        "project": ["apps/tweak/tsconfig.*?.json"],
+        "createDefaultProgram": true
+      },
       "extends": [
-        "plugin:@nx/angular",
+        "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
-        "@angular-eslint/directive-selector": [
+        "@angular-eslint/component-class-suffix": [
           "error",
           {
-            "type": "attribute",
-            "prefix": "app",
-            "style": "camelCase"
+            "suffixes": ["Page", "Component"]
           }
         ],
         "@angular-eslint/component-selector": [
@@ -24,13 +25,22 @@
             "prefix": "app",
             "style": "kebab-case"
           }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "type": "attribute",
+            "prefix": "app",
+            "style": "camelCase"
+          }
         ]
       }
     },
     {
       "files": ["*.html"],
-      "extends": ["plugin:@nx/angular-template"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {}
     }
-  ]
+  ],
+  "extends": "../../.eslintrc.json"
 }

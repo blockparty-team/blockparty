@@ -1,0 +1,77 @@
+<app-toolbar title="Day"></app-toolbar>
+
+<ion-content [fullscreen]="true">
+  <app-table [config]="tableConfig" (selected)="onEditDay($event)"></app-table>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button (click)="onCreateDay()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<app-edit-modal [isOpen]="isModalOpen">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{isEditing() ? 'Edit day' : 'Create day'}}</ion-title>
+      @if (isEditing()) {
+      <ion-buttons slot="end">
+        <ion-button color="danger" (click)="onDeleteDay(selectedDay().id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      }
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-list>
+        <ion-item>
+          <ion-input
+            label="Name"
+            labelPlacement="floating"
+            placeholder="Enter day name"
+            formControlName="name"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Description"
+            labelPlacement="floating"
+            placeholder="Enter day description"
+            formControlName="description"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <input
+            class="date-input"
+            type="date"
+            name="date"
+            formControlName="day"
+          />
+        </ion-item>
+
+        <ion-item>
+          <ion-toggle label="Public" formControlName="public">
+            Is public?
+          </ion-toggle>
+        </ion-item>
+      </ion-list>
+    </form>
+
+    <div class="ion-text-center">
+      <ion-button
+        shape="round"
+        [fill]="form.invalid ? 'outline': 'solid'"
+        type="submit"
+        [disabled]="form.invalid"
+        (click)="onSubmit()"
+      >
+        Save
+      </ion-button>
+    </div>
+  </ion-content>
+</app-edit-modal>

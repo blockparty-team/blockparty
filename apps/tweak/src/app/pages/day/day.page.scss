@@ -1,0 +1,29 @@
+.table {
+  overflow: scroll;
+  width: 100%;
+  background-color: var(--ion-background-color);
+
+  .mat-mdc-cell,
+  .mat-mdc-header-cell {
+    color: var(--ion-text-color);
+  }
+
+  .mat-mdc-row .mat-mdc-cell {
+    cursor: pointer;
+  }
+
+  .mat-mdc-row:hover .mat-mdc-cell {
+    background-color: rgba(var(--ion-color-primary-rgb), 0.14);
+  }
+}
+
+.date-input {
+  border: none;
+  background-color: inherit;
+
+  &::-webkit-calendar-picker-indicator {
+    filter: invert(
+      1
+    ); /* Replace "invert(1)" with your desired color or style */
+  }
+}

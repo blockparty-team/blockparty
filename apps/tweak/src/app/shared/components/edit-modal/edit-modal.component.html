@@ -1,0 +1,10 @@
+<ion-modal
+  [isOpen]="isOpen()"
+  [initialBreakpoint]="initialBreakpoint"
+  [breakpoints]="breakpoints"
+  (didDismiss)="onDismiss()"
+>
+  <ng-template>
+    <ng-content></ng-content>
+  </ng-template>
+</ion-modal>

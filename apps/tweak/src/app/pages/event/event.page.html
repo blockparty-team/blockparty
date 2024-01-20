@@ -1,0 +1,122 @@
+<app-toolbar title="Event" id="header"></app-toolbar>
+
+<ion-content>
+  <div id="event-map" [hidden]="viewMode() === 'table'">
+    <ion-fab-button
+      color="secondary"
+      size="small"
+      (click)="onToggleBaselayer()"
+      style="position: absolute; z-index: 10; right: 10px; top: 10px"
+    >
+      <ion-icon name="map-sharp"></ion-icon>
+    </ion-fab-button>
+  </div>
+  <app-table
+    [config]="tableConfig"
+    (selected)="onSelectEventFromTable($event)"
+    [hidden]="viewMode() === 'map'"
+  ></app-table>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button (click)="onAddEvent()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button (click)="onSwitchView()">
+      <ion-icon
+        [name]="viewMode() === 'map' ? 'list-outline' : 'map-outline'"
+      ></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+
+<app-edit-modal
+  [isOpen]="isModalOpen"
+  [breakpoints]="[0, .7]"
+  [initialBreakpoint]=".7"
+>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>{{isEditing() ? 'Edit' : 'Create'}} event</ion-title>
+      @if(isEditing()) {
+      <ion-buttons slot="end">
+        <ion-button color="danger" (click)="onDeleteEvent(selectedEvent()?.id)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      }
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <ion-list>
+        <ion-item>
+          <ion-input
+            label="Name"
+            labelPlacement="floating"
+            placeholder="Enter event name"
+            formControlName="name"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Description"
+            labelPlacement="floating"
+            placeholder="Enter event description"
+            formControlName="description"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <app-select
+            formControlName="event_type_id"
+            [items]="items"
+            [config]="eventTypeSelecttionConfig"
+          >
+          </app-select>
+        </ion-item>
+
+        <ion-item>
+          <app-select
+            formControlName="days"
+            [items]="days"
+            [config]="daySelectionConfig"
+          >
+          </app-select>
+        </ion-item>
+
+        <ion-item>
+          <app-key-value
+            [config]="ticketKeyValueConfig"
+            formControlName="tickets"
+            buttonName="Add tickets"
+            keyPlaceholder="Ticket name"
+            valuePlaceholder="Ticket url"
+          ></app-key-value>
+        </ion-item>
+
+        <ion-item>
+          <ion-toggle label="Public" formControlName="public">
+            Is public?
+          </ion-toggle>
+        </ion-item>
+      </ion-list>
+    </form>
+
+    <div class="ion-text-center">
+      <ion-button
+        shape="round"
+        [fill]="form.invalid ? 'outline': 'solid'"
+        type="submit"
+        [disabled]="form.invalid"
+        (click)="onSubmit()"
+      >
+        Save
+      </ion-button>
+    </div>
+  </ion-content>
+</app-edit-modal>

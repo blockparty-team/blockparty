@@ -1,0 +1,77 @@
+<ion-button size="medium" color="light" shape="round" fill="outline" id="test">
+  {{ config().buttonName }}
+</ion-button>
+<div>
+  @for (chip of chips(); let i = $index; track i;) {
+  <ion-chip color="primary">
+    <ion-label>
+      {{ chip }}
+    </ion-label>
+  </ion-chip>
+  }
+</div>
+
+<ion-modal class="centered-modal" trigger="test" #modal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="end">
+          <ion-button color="primary" (click)="modal.dismiss()">
+            Done
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <form [formGroup]="keyValueForm">
+      <ion-list formArrayName="items">
+        <ion-reorder-group
+          [disabled]="false"
+          (ionItemReorder)="handleReorder($any($event))"
+        >
+          @for (item of items.controls; track idx; let idx = $index) {
+          <ion-item>
+            <ion-reorder slot="start"></ion-reorder>
+
+            <!-- <ion-label> -->
+            <div class="fields" [formGroupName]="idx">
+              <ion-input
+                type="text"
+                [formControlName]="config().property1Key"
+                [placeholder]="config().property1Label"
+                labelPlacement="stacked"
+                [label]="config().property1Label"
+              ></ion-input>
+              <ion-input
+                type="text"
+                labelPlacement="stacked"
+                [placeholder]="config().property2Label"
+                [formControlName]="config().property2Key"
+                [label]="config().property2Label"
+              ></ion-input>
+            </div>
+            <!-- </ion-label> -->
+
+            <ion-icon
+              slot="end"
+              color="danger"
+              name="trash-outline"
+              (click)="onRemoveKeyValueGroup(idx)"
+            ></ion-icon>
+          </ion-item>
+          }
+        </ion-reorder-group>
+      </ion-list>
+    </form>
+
+    <ion-footer>
+      <ion-fab-button
+        slot="start"
+        size="small"
+        (click)="onAddKeyValueGroup()"
+        color="primary"
+      >
+        <ion-icon name="add-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-footer>
+  </ng-template>
+</ion-modal>
