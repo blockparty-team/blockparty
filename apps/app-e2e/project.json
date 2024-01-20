@@ -8,14 +8,14 @@
       "executor": "@angular-devkit/build-angular:protractor",
       "options": {
         "protractorConfig": "apps/app-e2e/protractor.conf.js",
-        "devServerTarget": "app:serve"
+        "devServerTarget": "distortion:serve"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "app:serve:production"
+          "devServerTarget": "distortion:serve:production"
         },
         "ci": {
-          "devServerTarget": "app:serve:ci"
+          "devServerTarget": "distortion:serve:ci"
         }
       }
     },
@@ -24,6 +24,6 @@
       "outputs": ["{options.outputFile}"]
     }
   },
-  "implicitDependencies": ["app"],
+  "implicitDependencies": ["distortion"],
   "tags": []
 }
