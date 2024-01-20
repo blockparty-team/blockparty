@@ -1,5 +1,5 @@
 {
-  "name": "app",
+  "name": "tweak",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "generators": {
@@ -14,7 +14,7 @@
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "outputPath": "dist/apps/app",
+        "outputPath": "dist/apps/tweak",
         "index": "apps/tweak/src/index.html",
         "main": "apps/tweak/src/main.ts",
         "polyfills": "apps/tweak/src/polyfills.ts",
