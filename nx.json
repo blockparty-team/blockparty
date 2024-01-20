@@ -69,5 +69,9 @@
     "@nx/angular:component": {
       "style": "css"
     }
+  },
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
   }
 }
