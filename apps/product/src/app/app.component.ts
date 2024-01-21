@@ -1,9 +1,8 @@
-import { ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild, afterNextRender, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import AOS from 'aos';
 import { CommonModule } from '@angular/common';
-import { filter, fromEvent } from 'rxjs';
 
 type Feature = {
   title: string;
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
       bullets: [
         'Liked artists highlighted',
         'Notifications for upcoming artists',
-        'List and gantt view',
+        'Timeline and list view',
         'Tracks current time',
       ],
       backgroundColor: 'bg-primary-400',
@@ -55,7 +54,7 @@ export class AppComponent implements OnInit {
     {
       title: 'Artists',
       bullets: [
-        'Favortites',
+        'Favorites',
         'Soundclound and Bandcamp player',
         'Locate artist on map',
         'Share artist'
