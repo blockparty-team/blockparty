@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Inject, OnInit, QueryList, ViewChild, ViewChildren, afterNextRender, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import AOS from 'aos';
@@ -23,6 +23,21 @@ type Feature = {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
+  @ViewChild('wordRotation') wordRotation!: ElementRef;
+  @ViewChildren('section') sections!: QueryList<ElementRef>
+  @HostListener('window:scroll', ['$event'])
+
+  onWindowScroll(event: Event) {
+    console.log(event)
+    // Do something when the window is scrolled
+  }
+
+  currentSection: number = 0;
+
+  words = signal<string[]>([
+    'Events',
+    'Locations'
+  ])
 
   features = signal<Feature[]>([
     {
@@ -63,18 +78,6 @@ export class AppComponent implements OnInit {
       color: 'text-orange-900',
       image: 'assets/artists.png',
       svgPath: 'M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z'
-    },
-    {
-      title: 'Others',
-      bullets: [
-        'Partner branding',
-        'Push notifications',
-        'Custom pages',
-      ],
-      backgroundColor: 'bg-green-300',
-      color: 'text-army-600',
-      image: 'assets/more.png',
-      svgPath: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z'
     },
     {
       title: 'Editor',
@@ -118,13 +121,48 @@ export class AppComponent implements OnInit {
         this.copied.set(false);
       }, 2000);
     } catch (error) {
-     this.copied.set(false)
+      this.copied.set(false)
     }
 
+  }
+
+  constructor() {
+    afterNextRender(() => {
+      // console.log(this.sections.length)
+      const test = this.sections.toArray()[0].nativeElement.getBoundingClientRect();
+      // console.log(test)
 
 
+      let count = 0
+      const SWAPPER: HTMLSpanElement = this.wordRotation.nativeElement
+      const SWAP = () => {
+        SWAPPER.innerText = this.words()[(count += 1) % this.words().length]
+        // if (!document.startViewTransition) {
+        // } else {
+        //   document.startViewTransition(() => {
+        //     SWAPPER.innerText = this.words()[(count += 1) % this.words.length]
+        //   })
+        // }
+      }
+
+      setInterval(SWAP, 2000)
+
+    })
 
   }
+
+
+
+  // @HostListener('document:scroll', ['$event'])
+  // onWindowScroll(ev: Event) {
+  //   console.log(ev)
+  //   let currentSection = this.sections.toArray().findIndex(section => {
+  //     const rect = section.nativeElement.getBoundingClientRect();
+  //     return rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2;
+  //   });
+  //   this.currentSection = currentSection >= 0 ? currentSection : this.sections.length - 1;
+  //   console.log(this.currentSection)
+  // }
 
 
 }

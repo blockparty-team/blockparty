@@ -1,5 +1,5 @@
 <div class="h-full overflow-y-auto snap-mandatory snap-y scroll-smooth">
-  <section class="h-full bg-red-400 flex flex-col snap-center">
+  <section #section class="h-full bg-red-400 flex flex-col snap-center">
     <header class="bg-red-400 w-full">
       <nav class="flex justify-center items-center">
         <h1 class="font-logo text-4xl md:text-8xl text-yellow-500 py-7">
@@ -13,7 +13,9 @@
     >
       <div class="basis-1/2 flex items-center justify-center h-full p-2">
         <h1 class="text-yellow-200 text-center text-3xl md:text-6xl">
-          We create apps for festivals covering multiple events and locations
+          <span>We create apps for festivals covering multiple</span>
+          <span #wordRotation>{{ words()[0] }}</span>
+          <span></span>
         </h1>
       </div>
       <div class="basis-1/2 flex items-center">
@@ -45,6 +47,7 @@
   <!-- FEATURES -->
   @for (feature of features(); let idx = $index, odd = $odd; track idx; ) {
   <section
+    #section
     id="section-{{ idx + 1 }}"
     [class]="'h-full flex flex-col snap-start ' + feature.backgroundColor"
   >
@@ -92,7 +95,7 @@
   }
 
   <!-- Contact -->
-  <section class="h-full bg-red-400 flex flex-col snap-center">
+  <section #section class="h-full bg-red-400 flex flex-col snap-center">
     <header class="bg-red-400 w-full">
       <nav class="flex justify-center items-center">
         <h1 class="font-logo text-4xl md:text-6xl text-yellow-500 py-7">
