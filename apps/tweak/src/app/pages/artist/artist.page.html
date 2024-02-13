@@ -1,6 +1,7 @@
 <app-toolbar title="Artist"></app-toolbar>
 
 <ion-content [fullscreen]="true">
-  <lib-image-upload></lib-image-upload>
-  <lib-image-cropper></lib-image-cropper>
+  <lib-image-upload (image)="onImageEvent($event)"></lib-image-upload>
+  <lib-image-cropper [imageEvent]="imageEvent()"></lib-image-cropper>
+  <img [src]="" alt="" srcset="" />
 </ion-content>

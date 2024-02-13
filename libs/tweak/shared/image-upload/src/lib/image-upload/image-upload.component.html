@@ -1,1 +1,17 @@
-<p>image-upload works!</p>
+<div class="drag-drop">
+  <div class="drag-drop__text">
+    <ion-icon name="cloud-upload-outline"></ion-icon>
+    <p>Drop image here or</p>
+  </div>
+  <div class="file-input">
+    <ion-button fill="clear" (click)="fileInput.click()">
+      open folder
+    </ion-button>
+    <input
+      type="file"
+      #fileInput
+      (change)="onFileChanged($event)"
+      accept="image/*"
+    />
+  </div>
+</div>

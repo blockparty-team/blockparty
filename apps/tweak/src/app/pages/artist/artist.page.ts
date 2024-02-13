@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
@@ -21,4 +21,16 @@ import { ImageCropperComponent } from 'libs/tweak/shared/image-cropper';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ArtistPage { }
+export class ArtistPage {
+  public imageEvent = signal<Event | null>(null);
+
+  constructor() { }
+
+  onImageEvent(event: Event) {
+    this.imageEvent.set(event);
+  }
+
+  onImageCropped(event: Event) {
+    console.log(event);
+  }
+}
