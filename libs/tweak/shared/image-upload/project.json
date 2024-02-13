@@ -1,7 +1,7 @@
 {
-  "name": "image",
+  "name": "tweak-shared-image-upload",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/tweak/shared/image/src",
+  "sourceRoot": "libs/tweak/shared/image-upload/src",
   "prefix": "lib",
   "tags": [],
   "projectType": "library",
@@ -10,7 +10,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "libs/tweak/shared/image/jest.config.ts"
+        "jestConfig": "libs/tweak/shared/image-upload/jest.config.ts"
       }
     },
     "lint": {

@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'image',
+  displayName: 'tweak-shared-image-upload',
   preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../../../coverage/libs/tweak/shared/image',
+  coverageDirectory: '../../../../coverage/libs/tweak/shared/image-upload',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

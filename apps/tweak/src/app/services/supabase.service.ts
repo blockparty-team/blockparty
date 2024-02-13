@@ -131,6 +131,14 @@ export class SupabaseService {
     );
   }
 
+  public async updloadImage(image: Blob) {
+    const { data, error } = await this.supabase.functions.invoke('image', {
+      body: {
+        name: 'Functions'
+      },
+    })
+  }
+
   private upsert<T extends keyof Database['public']['Tables']>(
     tableName: T,
     payload: TablesInsert<T> | TablesUpdate<T>
