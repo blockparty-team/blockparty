@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
-import { ImageComponent } from 'tweak/shared/image-upload';
+import { ImageUploadComponent } from 'libs/tweak/shared/image-upload';
+import { ImageCropperComponent } from 'libs/tweak/shared/image-cropper';
 
 @Component({
   selector: 'app-artist',
@@ -15,7 +16,8 @@ import { ImageComponent } from 'tweak/shared/image-upload';
     FormsModule,
     IonContent,
     ToolbarComponent,
-    ImageComponent,
+    ImageUploadComponent,
+    ImageCropperComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

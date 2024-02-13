@@ -1,5 +1,5 @@
 {
-  "name": "tweak-shared-image-upload",
+  "name": "image-upload",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/tweak/shared/image-upload/src",
   "prefix": "lib",

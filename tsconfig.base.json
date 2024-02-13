@@ -11,23 +11,37 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2018", "es2019", "dom"],
+    "lib": [
+      "es2018",
+      "es2019",
+      "dom"
+    ],
     "skipLibCheck": true,
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "@distortion/*": ["apps/distortion/src/*"],
+      "@distortion/*": [
+        "apps/distortion/src/*"
+      ],
       "@shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
       "@shared/data-access/supabase": [
         "libs/shared/data-access/supabase/src/index.ts"
       ],
-      "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
-      "@shared/types": ["libs/shared/types/src/index.ts"],
-      "@tweak/*": ["apps/tweak/src/app/*"],
-      "image-cropper": ["libs/tweak/shared/image-cropper/src/index.ts"],
-      "tweak/shared/image-upload": [
+      "@shared/environments": [
+        "libs/shared/enviroments/src/index.ts"
+      ],
+      "@shared/types": [
+        "libs/shared/types/src/index.ts"
+      ],
+      "@tweak/*": [
+        "apps/tweak/src/app/*"
+      ],
+      "libs/tweak/shared/image-cropper": [
+        "libs/tweak/shared/image-cropper/src/index.ts"
+      ],
+      "libs/tweak/shared/image-upload": [
         "libs/tweak/shared/image-upload/src/index.ts"
       ]
     }
@@ -38,5 +52,8 @@
     "strictInputAccessModifiers": true,
     "strictTemplates": true
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
