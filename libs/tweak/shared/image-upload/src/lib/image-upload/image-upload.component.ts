@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonIcon, IonButton } from '@ionic/angular/standalone'
 
@@ -8,6 +8,7 @@ import { IonIcon, IonButton } from '@ionic/angular/standalone'
   imports: [CommonModule, IonIcon, IonButton],
   templateUrl: './image-upload.component.html',
   styleUrl: './image-upload.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ImageUploadComponent {
   @Output() imageEvent = new EventEmitter<Event>();
@@ -15,5 +16,4 @@ export class ImageUploadComponent {
   onFileChanged(event: Event) {
     this.imageEvent.emit(event);
   }
-
 }
