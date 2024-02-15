@@ -1,12 +1,211 @@
 <app-toolbar title="Artist"></app-toolbar>
 
 <ion-content [fullscreen]="true">
-  <lib-image-upload (imageEvent)="onImageEvent($event)"></lib-image-upload>
+  <app-table [config]="tableConfig" (selected)="onEdit($event)"></app-table>
 
+  <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+    <ion-fab-button (click)="onCreate()">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <app-edit-modal [isOpen]="isArtistModalOpen">
+    <div class="edit-modal-container">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title
+            >{{isEditing() ? 'Edit artist' : 'Create artist'}}</ion-title
+          >
+          @if (isEditing()) {
+          <ion-buttons slot="end">
+            <ion-button color="danger" (click)="onDelete(selectedArtist().id)">
+              <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          }
+        </ion-toolbar>
+      </ion-header>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <ion-list>
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label color="primary">Basic</ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-input
+                label="Name"
+                labelPlacement="floating"
+                placeholder="Enter artist name"
+                formControlName="name"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Description"
+                labelPlacement="floating"
+                placeholder="Enter artist description"
+                formControlName="description"
+              ></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-input
+                label="Country"
+                labelPlacement="floating"
+                placeholder="Enter artist country"
+                formControlName="country"
+              ></ion-input>
+            </ion-item>
+          </ion-item-group>
+
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label color="primary">Image</ion-label>
+            </ion-item-divider>
+
+            <ion-item lines="none">
+              <div class="image-upload-container">
+                <lib-image-upload (imageEvent)="onImageEvent($event)">
+                </lib-image-upload>
+              </div>
+            </ion-item>
+          </ion-item-group>
+
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label color="primary">Music player & links</ion-label>
+            </ion-item-divider>
+
+            <ion-item>
+              <ion-accordion-group>
+                <ion-accordion value="first">
+                  <ion-item slot="header">
+                    <ion-icon
+                      slot="start"
+                      name="musical-note-outline"
+                    ></ion-icon>
+                    <ion-label>Music player</ion-label>
+                  </ion-item>
+                  <ion-list slot="content">
+                    <ion-item>
+                      <ion-icon slot="start" name="logo-soundcloud"></ion-icon>
+                      <ion-input
+                        label="SoundCloud iframe url"
+                        labelPlacement="floating"
+                        placeholder="Enter artist SoundCloud iframe"
+                        formControlName="soundcloud_iframe"
+                      ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-icon
+                        slot="start"
+                        src="assets/some/bandcamp.svg"
+                      ></ion-icon>
+                      <ion-input
+                        label="Bandcamp iframe url"
+                        labelPlacement="floating"
+                        placeholder="Enter Bandcamp iframe url"
+                        formControlName="bandcamp_iframe"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+              </ion-accordion-group>
+            </ion-item>
+
+            <ion-item>
+              <ion-accordion-group>
+                <ion-accordion value="first">
+                  <ion-item slot="header">
+                    <ion-icon slot="start" name="open-outline"></ion-icon>
+                    <ion-label>Links</ion-label>
+                  </ion-item>
+                  <ion-list slot="content">
+                    <ion-item>
+                      <ion-icon slot="start" name="logo-instagram"></ion-icon>
+                      <ion-input
+                        label="Instagram"
+                        labelPlacement="floating"
+                        placeholder="Enter artist instagram"
+                        formControlName="instagram"
+                      ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-icon slot="start" name="logo-facebook"></ion-icon>
+                      <ion-input
+                        label="Facebook"
+                        labelPlacement="floating"
+                        placeholder="Enter artist facebook"
+                        formControlName="facebook"
+                      ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-icon
+                        slot="start"
+                        src="assets/some/spotify.svg"
+                      ></ion-icon>
+                      <ion-input
+                        label="Spotity"
+                        labelPlacement="floating"
+                        placeholder="Enter artist spotify"
+                        formControlName="spotify"
+                      ></ion-input>
+                    </ion-item>
+                    <ion-item>
+                      <ion-icon slot="start" name="logo-youtube"></ion-icon>
+                      <ion-input
+                        label="Youtube"
+                        labelPlacement="floating"
+                        placeholder="Enter artist youtube"
+                        formControlName="youtube"
+                      ></ion-input>
+                    </ion-item>
+                  </ion-list>
+                </ion-accordion>
+              </ion-accordion-group>
+            </ion-item>
+          </ion-item-group>
+
+          <ion-item-group>
+            <ion-item-divider>
+              <ion-label color="primary">Visibility</ion-label>
+            </ion-item-divider>
+            <ion-item>
+              <ion-toggle formControlName="is_visible">
+                Visible in artist view?
+              </ion-toggle>
+            </ion-item>
+
+            <ion-item>
+              <ion-toggle formControlName="public"> Published </ion-toggle>
+            </ion-item>
+          </ion-item-group>
+        </ion-list>
+      </form>
+
+      <ion-footer>
+        <ion-toolbar class="ion-text-center">
+          <ion-button
+            shape="round"
+            [fill]="form.invalid ? 'outline': 'solid'"
+            type="submit"
+            [disabled]="form.invalid"
+            (click)="onSubmit()"
+          >
+            Save
+          </ion-button>
+        </ion-toolbar>
+      </ion-footer>
+    </div>
+  </app-edit-modal>
+
+  <!-- Image crop modal -->
   <ion-modal
     #modal
-    [isOpen]="isOpen()"
-    (didDismiss)="onModalDismiss()"
+    [isOpen]="isImageCropModalOpen()"
+    (didDismiss)="onImageCropModalDismiss()"
     initialBreakpoint="1"
     [breakpoints]="[0, 1]"
   >
@@ -19,12 +218,14 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
-      <lib-image-cropper
-        [imageEvent]="imageEvent()"
-        (croppedImage)="onImageCropped($event)"
-      >
-      </lib-image-cropper>
-      <ion-content class="ion-padding"> </ion-content>
+
+      <ion-content>
+        <lib-image-cropper
+          [imageEvent]="imageEvent()"
+          (croppedImage)="onImageCropped($event)"
+        >
+        </lib-image-cropper>
+      </ion-content>
     </ng-template>
   </ion-modal>
 </ion-content>

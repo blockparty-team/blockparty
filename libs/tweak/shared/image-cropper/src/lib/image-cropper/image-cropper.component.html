@@ -1,7 +1,9 @@
 <image-cropper
+  backgroundColor="#f7f7f7"
   [imageChangedEvent]="imageEvent()"
   [maintainAspectRatio]="true"
   [aspectRatio]="4 / 3"
   format="png"
-  (imageCropped)="imageCropped($event)"
+  (imageCropped)="onImageCropped($event)"
+  (loadImageFailed)="onLoadImageFailed()"
 ></image-cropper>

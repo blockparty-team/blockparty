@@ -16,7 +16,14 @@ import {
   mapOutline,
   listOutline,
   mapSharp,
-  cloudUploadOutline
+  cloudUploadOutline,
+  openOutline,
+  logoInstagram,
+  logoFacebook,
+  logoSoundcloud,
+  logoYoutube,
+  musicalNoteOutline,
+  folderOpenOutline,
 } from 'ionicons/icons';
 
 export const icons = {
@@ -37,5 +44,12 @@ export const icons = {
   mapOutline,
   listOutline,
   mapSharp,
-  cloudUploadOutline
+  cloudUploadOutline,
+  openOutline,
+  logoInstagram,
+  logoFacebook,
+  logoSoundcloud,
+  musicalNoteOutline,
+  folderOpenOutline,
+  logoYoutube,
 };

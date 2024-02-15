@@ -10,8 +10,6 @@ import { IonModal } from '@ionic/angular/standalone';
 })
 export class EditModalComponent {
   @Input() isOpen: WritableSignal<boolean> = signal(false);
-  @Input() breakpoints = [0, 0.5, 1];
-  @Input() initialBreakpoint = 0.5;
 
   onDismiss() {
     this.isOpen.set(false);

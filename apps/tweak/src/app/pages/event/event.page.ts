@@ -29,7 +29,7 @@ import {
   IonButtons,
   IonToolbar,
   IonButton,
-  IonItem,
+  IonItem, IonFooter
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../../shared/components/toolbar/toolbar.component';
 import { MapService } from '../../services/map.service';
@@ -96,6 +96,7 @@ type State = {
   styleUrls: ['./event.page.scss'],
   standalone: true,
   imports: [
+    IonFooter,
     CommonModule,
     ReactiveFormsModule,
     TableComponent,

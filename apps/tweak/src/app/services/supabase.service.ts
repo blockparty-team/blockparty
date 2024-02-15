@@ -131,6 +131,29 @@ export class SupabaseService {
     );
   }
 
+  public fetchArtists(): Observable<Tables<'artist'>[]> {
+    return from(
+      this.supabase
+        .from('artist')
+        .select('*')
+        .order('name', { ascending: true })
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+
+        return data as Tables<'artist'>[];
+      })
+    );
+  }
+
+  upsertArtist(artist: TablesInsert<'artist'> | TablesUpdate<'artist'>): Observable<Tables<'artist'>[]> {
+    return this.upsert<'artist'>('artist', artist);
+  }
+
+  deleteArtist(id: string): Observable<void> {
+    return this.delete<'artist'>('artist', id);
+  }
+
   public async updloadImage(image: Blob) {
     const { data, error } = await this.supabase.functions.invoke('image', {
       body: {
