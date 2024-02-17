@@ -18,7 +18,7 @@
           >
           @if (isEditing()) {
           <ion-buttons slot="end">
-            <ion-button color="danger" (click)="onDelete(selectedArtist().id)">
+            <ion-button color="danger" (click)="onDelete(selectedArtistId())">
               <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
             </ion-button>
           </ion-buttons>
@@ -67,8 +67,21 @@
 
             <ion-item lines="none">
               <div class="image-upload-container">
+                @if (imageUrl()) {
+                <div class="image">
+                  <img [src]="imageUrl()" />
+                  <ion-fab-button
+                    (click)="onDeleteImage()"
+                    color="danger"
+                    size="small"
+                  >
+                    <ion-icon name="trash-outline"></ion-icon>
+                  </ion-fab-button>
+                </div>
+                } @else {
                 <lib-image-upload (imageEvent)="onImageEvent($event)">
                 </lib-image-upload>
+                }
               </div>
             </ion-item>
           </ion-item-group>

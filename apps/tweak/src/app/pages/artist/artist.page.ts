@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Signal, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonContent, IonToggle, IonButtons, IonModal, IonItem, IonToolbar, IonHeader, IonButton, IonTitle, IonList, IonIcon, IonInput, IonFab, IonFabButton, IonAccordion, IonLabel, IonAccordionGroup, IonItemGroup, IonItemDivider, IonFooter } from '@ionic/angular/standalone';
+import { IonThumbnail, IonContent, IonToggle, IonButtons, IonModal, IonItem, IonToolbar, IonHeader, IonButton, IonTitle, IonList, IonIcon, IonInput, IonFab, IonFabButton, IonAccordion, IonLabel, IonAccordionGroup, IonItemGroup, IonItemDivider, IonFooter } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
 import { EditModalComponent } from '@tweak/shared/components/edit-modal/edit-modal.component';
 import { ImageUploadComponent } from 'libs/tweak/shared/image-upload';
@@ -9,8 +9,10 @@ import { ImageCropperComponent } from 'libs/tweak/shared/image-cropper';
 import { Tables, TablesInsert } from '@shared/types';
 import { TableComponent, TableConfig } from '@tweak/shared/components/table/table.component';
 import { SupabaseService } from '@tweak/services/supabase.service';
-import { EMPTY, Subject, catchError, startWith, tap } from 'rxjs';
+import { EMPTY, Subject, catchError, of, startWith, switchMap, tap } from 'rxjs';
 import { NotificationService } from '@tweak/services/notification.service';
+import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-artist',
@@ -38,20 +40,46 @@ import { NotificationService } from '@tweak/services/notification.service';
     ImageCropperComponent,
     IonInput,
     IonToggle,
-    TableComponent
+    TableComponent,
+    IonThumbnail,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtistPage {
   private supabase = inject(SupabaseService);
   private notificationService = inject(NotificationService);
+  private sanitizer = inject(DomSanitizer);
 
-  public imageEvent = signal<Event | null>(null)
-  public isArtistModalOpen = signal<boolean>(true);
+  public imageEvent = signal<Event | null>(null);
+  public isArtistModalOpen = signal<boolean>(false);
   public isImageCropModalOpen = signal<boolean>(false);
   public isEditing = signal<boolean>(false);
-  public selectedArtist = signal<Partial<Tables<'artist'>>>({});
+  public selectedArtistId = signal<string | null>(null);
   private artists = signal<Tables<'artist'>[]>([]);
+  private croppedImage = signal<ImageCroppedEvent | null>(null);
+
+  public selectedArtist = computed<Tables<'artist'> | undefined>(() => {
+    const id = this.selectedArtistId();
+    const artists = this.artists();
+    const selected = artists.find((artist) => artist.id === id);
+
+    return selected;
+  });
+
+  public imageUrl = computed(() => {
+    const isEditing = this.isEditing();
+    const storagePath = this.selectedArtist()?.storage_path;
+    const croppedImageUrl = this.croppedImage()?.objectUrl;
+
+    if (storagePath && isEditing) {
+      const [bucket, path] = this.supabase.getBucketAndPath(storagePath);
+      return this.supabase.publicImageUrl(bucket, path);
+    } else if (croppedImageUrl) {
+      return this.sanitizer.bypassSecurityTrustUrl(croppedImageUrl as string);
+    } else {
+      return null;
+    }
+  });
 
   public tableConfig: Signal<TableConfig<Tables<'artist'>>> = computed(() => ({
     columns: [
@@ -79,6 +107,7 @@ export class ArtistPage {
     soundcloud_iframe: [''],
     bandcamp_iframe: [''],
     is_visible: [true],
+    storage_path: [''],
     public: [true],
   });
 
@@ -100,8 +129,32 @@ export class ArtistPage {
     this.isImageCropModalOpen.set(true);
   }
 
-  onImageCropped(event: Blob) {
-    console.log(event);
+  onImageCropped(image: ImageCroppedEvent) {
+    this.croppedImage.set(image);
+  }
+
+  async onDeleteImage() {
+    const confirmed = await this.notificationService.confirmAlert(
+      'Do you want to delete the image?'
+    );
+
+    if (!confirmed) return;
+
+    if (this.isEditing() && this.selectedArtist()) {
+      const artist = this.selectedArtist()!;
+      // Delete the file from storage and update the artist
+      this.supabase.deleteFile(
+        'artist',
+        artist.storage_path as string
+      ).pipe(
+        switchMap(() => this.supabase.updateArtist(artist.id, { storage_path: null })),
+        tap(() => this.updateData$.next())
+      ).subscribe();
+
+    } else {
+      this.croppedImage.set(null);
+    }
+
   }
 
   onArtistModalDismiss() {
@@ -120,8 +173,10 @@ export class ArtistPage {
 
   onEdit(artist: Tables<'artist'>) {
     this.isEditing.set(true);
-    this.selectedArtist.set(artist);
-    this.form.patchValue(artist);
+    this.selectedArtistId.set(artist.id);
+    // this.selectedArtist.set(artist);
+    this.form.patchValue(this.selectedArtist()!);
+
     this.isArtistModalOpen.set(true);
   }
 
@@ -133,7 +188,7 @@ export class ArtistPage {
     if (!confirmed) return;
 
     this.supabase
-      .deleteArtist(id!)
+      .deleteArtist(id)
       .pipe(
         tap(() => this.updateData$.next()),
         catchError((error) => {
@@ -158,14 +213,13 @@ export class ArtistPage {
         ? (this.form.value as TablesInsert<'artist'>)
         : (rest as TablesInsert<'artist'>);
 
-    this.supabase
+    if (this.croppedImage()) {
+      payload.storage_path = `artist/${payload.name.toLowerCase().replace(' ', '_')}`;
+    }
+
+    const upsertArtist$ = this.supabase
       .upsertArtist(payload)
       .pipe(
-        tap(() => {
-          this.updateData$.next()
-          this.isArtistModalOpen.set(false);
-        }
-        ),
         catchError((error) => {
           this.notificationService.showToast({
             message: `Could not create artist: ${error.message}`,
@@ -175,6 +229,26 @@ export class ArtistPage {
           return EMPTY;
         })
       )
-      .subscribe();
+
+    const uploadImage$ = this.croppedImage()
+      ? this.supabase.uploadFile('artist', payload.name.toLowerCase().replace(' ', '_'), this.croppedImage()?.blob as Blob).pipe(
+        catchError((error) => {
+          this.notificationService.showToast({
+            message: `Could not upload image: ${error.message}`,
+            color: 'danger',
+          });
+
+          return EMPTY;
+        }
+        ))
+      : of(null);
+
+    uploadImage$.pipe(
+      switchMap(() => upsertArtist$),
+      tap(() => {
+        this.updateData$.next()
+        this.isArtistModalOpen.set(false);
+      }),
+    ).subscribe();
   }
 }

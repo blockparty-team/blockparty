@@ -13,17 +13,15 @@ import { NotificationService } from '@tweak/services/notification.service'
 })
 export class ImageCropperComponent {
   public imageEvent = input<Event | null>(null);
-  @Output() croppedImage = new EventEmitter<Blob>();
+  @Output() croppedImage = new EventEmitter<ImageCroppedEvent>();
 
   private notificationService = inject(NotificationService);
 
-  onImageCropped(event: ImageCroppedEvent) {
-    if (event.blob) {
-      this.croppedImage.emit(event.blob);
-    }
+  onImageCropped(event: ImageCroppedEvent): void {
+    this.croppedImage.emit(event);
   }
 
-  onLoadImageFailed() {
+  onLoadImageFailed(): void {
     this.notificationService.showToast({
       message: 'Failed to load image',
       duration: 10000,
