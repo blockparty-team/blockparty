@@ -185,8 +185,8 @@ export class ArtistPage {
 
   onEdit(artist: Tables<'artist'>) {
     this.isEditing.set(true);
+    this.croppedImage.set(null);
     this.selectedArtistId.set(artist.id);
-    // this.selectedArtist.set(artist);
     this.form.patchValue(this.selectedArtist()!);
 
     this.isArtistModalOpen.set(true);
