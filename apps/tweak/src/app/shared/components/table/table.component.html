@@ -27,6 +27,10 @@
           @switch (column.type) { @case ('boolean') {
           <ion-checkbox [checked]="row[column.columnDef]" disabled="true">
           </ion-checkbox>
+          } @case ('image') {
+          <ion-thumbnail>
+            <ion-img [src]="row[column.columnDef]"></ion-img>
+          </ion-thumbnail>
           } @default {
           {{ row[column.columnDef] }}
           } }

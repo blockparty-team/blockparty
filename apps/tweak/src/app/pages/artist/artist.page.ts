@@ -86,10 +86,23 @@ export class ArtistPage {
       { columnDef: 'name', header: 'Name' },
       { columnDef: 'description', header: 'Description' },
       { columnDef: 'country', header: 'Country' },
+      { columnDef: 'image', header: 'Image', type: 'image' },
       { columnDef: 'is_visible', header: 'Is visible?', type: 'boolean' },
       { columnDef: 'public', header: 'Is public?', type: 'boolean' },
     ],
-    data: this.artists(),
+    data: this.artists().map(artist => {
+
+      let image;
+      if (artist.storage_path) {
+        const [bucket, path] = this.supabase.getBucketAndPath(artist.storage_path!);
+        image = this.supabase.publicImageUrl(bucket, path);
+      }
+
+      return {
+        ...artist,
+        image
+      }
+    }),
   }));
 
   private updateData$ = new Subject<void>();
@@ -107,7 +120,6 @@ export class ArtistPage {
     soundcloud_iframe: [''],
     bandcamp_iframe: [''],
     is_visible: [true],
-    storage_path: [''],
     public: [true],
   });
 
@@ -158,7 +170,7 @@ export class ArtistPage {
   }
 
   onArtistModalDismiss() {
-    this.isArtistModalOpen.set(false);
+    this.resetModalState();
   }
 
   onImageCropModalDismiss() {
@@ -187,10 +199,14 @@ export class ArtistPage {
 
     if (!confirmed) return;
 
+    // TODO: Delete related image using forkJoin
     this.supabase
       .deleteArtist(id)
       .pipe(
-        tap(() => this.updateData$.next()),
+        tap(() => {
+          this.resetModalState();
+          this.updateData$.next();
+        }),
         catchError((error) => {
           this.notificationService.showToast({
             message: `Could not delete artist: ${error.message}`,
@@ -198,11 +214,9 @@ export class ArtistPage {
           });
 
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
-    this.isArtistModalOpen.set(false);
-    this.updateData$.next();
   }
 
   async onSubmit() {
@@ -246,9 +260,15 @@ export class ArtistPage {
     uploadImage$.pipe(
       switchMap(() => upsertArtist$),
       tap(() => {
-        this.updateData$.next()
-        this.isArtistModalOpen.set(false);
+        this.resetModalState();
+        this.updateData$.next();
       }),
     ).subscribe();
+  }
+
+  private resetModalState(): void {
+    this.isArtistModalOpen.set(false);
+    this.croppedImage.set(null);
+    this.selectedArtistId.set(null);
   }
 }
