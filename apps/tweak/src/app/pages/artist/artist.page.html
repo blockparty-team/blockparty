@@ -238,6 +238,12 @@
           (croppedImage)="onImageCropped($event)"
         >
         </lib-image-cropper>
+
+        <ion-fab slot="fixed" vertical="bottom" horizontal="center">
+          <ion-fab-button (click)="onImageCropModalDismiss()">
+            <ion-icon name="checkmark-outline"></ion-icon>
+          </ion-fab-button>
+        </ion-fab>
       </ion-content>
     </ng-template>
   </ion-modal>

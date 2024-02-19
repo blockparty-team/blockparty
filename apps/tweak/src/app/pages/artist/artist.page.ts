@@ -262,6 +262,10 @@ export class ArtistPage {
       tap(() => {
         this.resetModalState();
         this.updateData$.next();
+        this.notificationService.showToast({
+          message: 'Artist saved successfully',
+          color: 'success',
+        });
       }),
     ).subscribe();
   }
