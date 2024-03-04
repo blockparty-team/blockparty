@@ -49,7 +49,7 @@
     "lottie-web": "^5.10.1",
     "maplibre-gl": "3.6.1",
     "ngx-lottie": "^10.0.0",
-    "ngxtension": "^1.10.0",
+    "ngxtension": "^2.1.0",
     "ol": "^8.2.0",
     "ol-mapbox-style": "^12.1.1",
     "onesignal-cordova-plugin": "3.3.1",
