@@ -44,8 +44,9 @@ html {
 
 .centered-modal {
   --width: 100%;
-  --max-width: 600px;
+  --max-width: 800px;
   --height: fit-content;
+  --max-height: 100dvh;
   --border-radius: 6px;
   --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
 }

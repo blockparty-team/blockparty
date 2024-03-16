@@ -4,19 +4,17 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   Signal,
   ViewChild,
   WritableSignal,
-  afterNextRender,
   computed,
   effect,
   signal,
 } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { IonSearchbar, IonCheckbox } from '@ionic/angular/standalone';
+import { IonSearchbar, IonCheckbox, IonThumbnail, IonImg } from '@ionic/angular/standalone';
 
 export type ColumnType =
   | 'text'
@@ -54,6 +52,8 @@ export interface TableConfig<T> {
     MatSortModule,
     IonSearchbar,
     IonCheckbox,
+    IonThumbnail,
+    IonImg,
   ],
 })
 export class TableComponent {

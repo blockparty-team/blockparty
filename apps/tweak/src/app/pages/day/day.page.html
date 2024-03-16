@@ -10,7 +10,7 @@
   </ion-fab>
 </ion-content>
 
-<app-edit-modal [isOpen]="isModalOpen">
+<app-edit-modal [isOpen]="isModalOpen" class="centered-modal">
   <ion-header>
     <ion-toolbar>
       <ion-title>{{isEditing() ? 'Edit day' : 'Create day'}}</ion-title>
@@ -24,45 +24,45 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <ion-list>
-        <ion-item>
-          <ion-input
-            label="Name"
-            labelPlacement="floating"
-            placeholder="Enter day name"
-            formControlName="name"
-          ></ion-input>
-        </ion-item>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <ion-list>
+      <ion-item>
+        <ion-input
+          label="Name"
+          labelPlacement="floating"
+          placeholder="Enter day name"
+          formControlName="name"
+        ></ion-input>
+      </ion-item>
 
-        <ion-item>
-          <ion-input
-            label="Description"
-            labelPlacement="floating"
-            placeholder="Enter day description"
-            formControlName="description"
-          ></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-input
+          label="Description"
+          labelPlacement="floating"
+          placeholder="Enter day description"
+          formControlName="description"
+        ></ion-input>
+      </ion-item>
 
-        <ion-item>
-          <input
-            class="date-input"
-            type="date"
-            name="date"
-            formControlName="day"
-          />
-        </ion-item>
+      <ion-item>
+        <input
+          class="date-input"
+          type="date"
+          name="date"
+          formControlName="day"
+        />
+      </ion-item>
 
-        <ion-item>
-          <ion-toggle label="Public" formControlName="public">
-            Is public?
-          </ion-toggle>
-        </ion-item>
-      </ion-list>
-    </form>
+      <ion-item>
+        <ion-toggle label="Public" formControlName="public">
+          Is public?
+        </ion-toggle>
+      </ion-item>
+    </ion-list>
+  </form>
 
-    <div class="ion-text-center">
+  <ion-footer>
+    <ion-toolbar class="ion-text-center">
       <ion-button
         shape="round"
         [fill]="form.invalid ? 'outline': 'solid'"
@@ -72,6 +72,6 @@
       >
         Save
       </ion-button>
-    </div>
-  </ion-content>
+    </ion-toolbar>
+  </ion-footer>
 </app-edit-modal>

@@ -24,7 +24,7 @@ import {
   IonButton,
   IonHeader,
   IonToolbar,
-  IonTitle,
+  IonTitle, IonFooter
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
 import { SupabaseService } from '@tweak/services/supabase.service';
@@ -47,6 +47,7 @@ import { Tables } from '@tweak/interfaces/database-definitions';
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
+    IonFooter,
     ReactiveFormsModule,
     MatTableModule,
     MatSortModule,

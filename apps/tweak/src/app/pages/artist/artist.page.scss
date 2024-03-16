@@ -1,0 +1,49 @@
+.edit-modal-container {
+  height: 95vh;
+  display: flex;
+  flex-direction: column;
+
+  form {
+    width: 100%;
+    overflow: scroll;
+    flex-grow: 1;
+
+    ion-item-group {
+      margin-top: 25px;
+    }
+
+    ion-item-divider {
+      --background: var(--ion-background-color-shade);
+    }
+
+    ion-accordion-group {
+      width: 100%;
+    }
+
+    .image-upload-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      padding-top: 15px;
+
+      .image {
+        height: 140px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        img {
+          height: 100%;
+          object-fit: cover;
+          border-radius: 5px;
+        }
+
+        ion-fab-button {
+          opacity: 0.8;
+          position: absolute;
+        }
+      }
+    }
+  }
+}

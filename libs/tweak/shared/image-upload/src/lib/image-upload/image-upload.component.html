@@ -1,0 +1,21 @@
+<div class="dropzone">
+  <div class="dropzone-text">
+    <ion-icon size="small" name="cloud-upload-outline"></ion-icon>
+    <span>Drop image here</span>
+  </div>
+
+  <span class="ion-margin"><ion-text color="medium">or</ion-text></span>
+
+  <div class="dropzone-open-folder">
+    <ion-button fill="outline" (click)="fileInput.click()">
+      <ion-icon slot="start" name="folder-open-outline"></ion-icon>
+      Open folder
+    </ion-button>
+    <input
+      type="file"
+      #fileInput
+      (change)="onFileChanged($event)"
+      accept="image/*"
+    />
+  </div>
+</div>

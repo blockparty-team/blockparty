@@ -18,6 +18,9 @@ import {
   User,
 } from '@supabase/supabase-js';
 import { Observable, from, map } from 'rxjs';
+import { environment } from '@shared/environments';
+
+export type Bucket = 'event' | 'artist' | 'icon';
 
 @Injectable({ providedIn: 'root' })
 export class SupabaseService {
@@ -29,8 +32,8 @@ export class SupabaseService {
 
   constructor() {
     this.supabase = createClient<Database>(
-      'http://localhost:54321',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+      environment.supabaseUrl,
+      environment.supabaseAnonKey
     );
   }
 
@@ -131,6 +134,83 @@ export class SupabaseService {
     );
   }
 
+  public fetchArtists(): Observable<Tables<'artist'>[]> {
+    return from(
+      this.supabase
+        .from('artist')
+        .select('*')
+        .order('name', { ascending: true })
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+
+        return data as Tables<'artist'>[];
+      })
+    );
+  }
+
+  upsertArtist(artist: TablesInsert<'artist'> | TablesUpdate<'artist'>): Observable<Tables<'artist'>[]> {
+    return this.upsert<'artist'>('artist', artist);
+  }
+
+  updateArtist(id: string, update: Partial<Tables<'artist'>>): Observable<void> {
+    return from(
+      this.supabase
+        .from('artist')
+        .update(update)
+        .eq('id', id)
+    ).pipe(
+      map(({ error }) => {
+        if (error) throw error;
+      })
+    )
+  }
+
+  deleteArtist(id: string): Observable<void> {
+    return this.delete<'artist'>('artist', id);
+  }
+
+  uploadFile(bucket: Bucket, fileName: string, image: Blob): Observable<any> {
+    return from(
+      this.supabase.storage
+        .from(bucket)
+        .upload(fileName, image, { upsert: true })
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+
+        return data;
+      })
+    );
+  }
+
+  deleteFile(bucket: Bucket, fileName: string): Observable<any> {
+    return from(
+      this.supabase.storage.from(bucket).remove([fileName])
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+
+        return data
+      })
+    );
+  }
+
+  // public async updloadImage(image: Blob) {
+  //   const { data, error } = await this.supabase.functions.invoke('image', {
+  //     body: {
+  //       name: 'Functions'
+  //     },
+  //   })
+  // }
+
+  publicImageUrl(
+    bucket: string,
+    path: string,
+  ): string {
+    return `${environment.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
+  }
+
   private upsert<T extends keyof Database['public']['Tables']>(
     tableName: T,
     payload: TablesInsert<T> | TablesUpdate<T>
@@ -169,4 +249,13 @@ export class SupabaseService {
   //       map((res: any) => res.data.geojson)
   //     );
   //   }
+
+  // UTILS
+  public getBucketAndPath(storagePath: string): [string, string] {
+
+    const [bucket, ...path] = storagePath.split('/');
+
+    return [bucket, path.join('/')];
+  };
+
 }

@@ -1,0 +1,32 @@
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 15px;
+  border: 1px dashed var(--ion-text-color);
+
+  .dropzone-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 30px;
+      margin-right: 15px;
+    }
+  }
+
+  .dropzone-open-folder {
+
+    ion-button {
+      padding: 0;
+      width: fit-content;
+    }
+
+    input[type='file'] {
+      display: none;
+    }
+  }
+}
