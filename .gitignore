@@ -84,6 +84,7 @@ CHANGELOG.md
 # Fix for issue when working on the repo in a dev container
 .pnpm-store
 .nx/cache
+.verdaccio
 
 .cargo/.package-cache
 .cargo/bin/
