@@ -7,7 +7,7 @@ export interface Day {
   date: Tables<'day'>['day'];
 }
 
-export interface Timetable {
+export interface TimetableStage {
   start_time: Tables<'timetable'>['start_time'];
   end_time: Tables<'timetable'>['end_time'];
   name: Tables<'artist'>['name'];
@@ -16,7 +16,7 @@ export interface Timetable {
 
 export interface TimetableDay {
   day: Day;
-  timetable: Timetable[];
+  timetable: TimetableStage[];
 }
 
 export interface StageGeojsonProperties {

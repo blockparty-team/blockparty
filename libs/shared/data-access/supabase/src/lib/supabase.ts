@@ -27,7 +27,7 @@ import {
   EventWithRelations,
   EventsGroupedByType,
   TransformOptions
-} from '@shared/types';
+} from '@blockparty/shared/types';
 import { environment } from '@shared/environments';
 
 @Injectable({
@@ -175,7 +175,7 @@ export class SupabaseService {
               name,
               bounds,
               event_type(
-                id, 
+                id,
                 name,
                 color
               )
