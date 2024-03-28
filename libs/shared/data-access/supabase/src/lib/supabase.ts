@@ -14,7 +14,7 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
-import { DeviceStorageService } from '@shared/data-access/device-storage';
+import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import {
   Database,
   Enums,
@@ -27,7 +27,7 @@ import {
   EventWithRelations,
   EventsGroupedByType,
   TransformOptions
-} from '@shared/types';
+} from '@blockparty/shared/types';
 import { environment } from '@shared/environments';
 
 @Injectable({
@@ -175,7 +175,7 @@ export class SupabaseService {
               name,
               bounds,
               event_type(
-                id, 
+                id,
                 name,
                 color
               )

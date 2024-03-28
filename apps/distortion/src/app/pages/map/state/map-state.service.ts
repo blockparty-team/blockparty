@@ -10,7 +10,7 @@ import {
 } from 'rxjs/operators';
 import { SupabaseService } from '@shared/data-access/supabase';
 import { FilesystemService } from '@distortion/app/services/filesystem.service';
-import { DeviceStorageService } from '@shared/data-access/device-storage';
+import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
 import { imgToBase64, imgFromUrl } from '@distortion/app/shared/functions/file-utils';
 import { MapIcon } from '@distortion/app/interfaces/database-entities';

@@ -1,1 +1,1 @@
-export { DeviceStorageService, StorageKeys } from './lib/device-storage';
+export * from './lib/device-storage';
