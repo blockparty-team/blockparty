@@ -4,7 +4,6 @@ const config: CapacitorConfig = {
   appId: 'dk.cphdistortion.app',
   appName: 'Distortion',
   webDir: '../../dist/apps/distortion',
-  bundledWebRuntime: false,
   plugins: {
     LocalNotifications: {
       smallIcon: 'ic_launcher',
