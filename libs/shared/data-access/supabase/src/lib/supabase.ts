@@ -14,7 +14,7 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
-import { DeviceStorageService } from '@shared/data-access/device-storage';
+import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import {
   Database,
   Enums,

@@ -16,11 +16,11 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "@blockparty/shared/types": ["libs/shared/types/src/index.ts"],
-      "@distortion/*": ["apps/distortion/src/*"],
-      "@shared/data-access/device-storage": [
+      "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
+      "@blockparty/shared/types": ["libs/shared/types/src/index.ts"],
+      "@distortion/*": ["apps/distortion/src/*"],
       "@shared/data-access/supabase": [
         "libs/shared/data-access/supabase/src/index.ts"
       ],
