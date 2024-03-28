@@ -14,7 +14,7 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
-import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
+// import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import {
   Database,
   Enums,
@@ -40,7 +40,7 @@ export class SupabaseService {
   session$: Observable<AuthSession | null> = this._session$.asObservable();
 
   constructor(
-    private deviceStorage: DeviceStorageService,
+    // private deviceStorage: DeviceStorageService,
     private platform: Platform
   ) {
     this.supabase = createClient<Database>(

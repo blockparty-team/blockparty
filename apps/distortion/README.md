@@ -77,4 +77,6 @@ OneSignal is for Notification
 Utility scripts has been added to `package.json` for convenience. Run with `npm run <command>`:
 
 - `update-types`: Update database definition Typescript Interface from local Supabase
-- `db-reset-local-to-prod`: Restores local DB with dump from remote supabase instance. Dependency `pg_dump`, .pgpass with local and remote DB credentials and environmental variable `SUPABASE_DB_HOST` with remote host name.
+- `db-reset-local-to-prod`: Restores local DB with dump from remote supabase instance. Dependency `pg_dump`, .pgpass with local and remote DB credentials and environmental variables: 
+  * `SUPABASE_DB_HOST` remote host name
+  * `SUPABASE_DB_USER` remote user

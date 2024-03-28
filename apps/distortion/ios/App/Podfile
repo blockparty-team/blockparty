@@ -1,4 +1,4 @@
-require_relative '../../node_modules/@capacitor/ios/scripts/pods_helpers'
+require_relative '../../../../node_modules/@capacitor/ios/scripts/pods_helpers'
 
 platform :ios, '13.0'
 use_frameworks!
@@ -9,20 +9,20 @@ use_frameworks!
 install! 'cocoapods', :disable_input_output_paths => true
 
 def capacitor_pods
-  pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
-  pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
-  pod 'CapacitorApp', :path => '../../node_modules/@capacitor/app'
-  pod 'CapacitorBrowser', :path => '../../node_modules/@capacitor/browser'
-  pod 'CapacitorClipboard', :path => '../../node_modules/@capacitor/clipboard'
-  pod 'CapacitorDevice', :path => '../../node_modules/@capacitor/device'
-  pod 'CapacitorFilesystem', :path => '../../node_modules/@capacitor/filesystem'
-  pod 'CapacitorGeolocation', :path => '../../node_modules/@capacitor/geolocation'
-  pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
-  pod 'CapacitorLocalNotifications', :path => '../../node_modules/@capacitor/local-notifications'
-  pod 'CapacitorPreferences', :path => '../../node_modules/@capacitor/preferences'
-  pod 'CapacitorShare', :path => '../../node_modules/@capacitor/share'
-  pod 'CapacitorSplashScreen', :path => '../../node_modules/@capacitor/splash-screen'
-  pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
+  pod 'Capacitor', :path => '../../../../node_modules/@capacitor/ios'
+  pod 'CapacitorCordova', :path => '../../../../node_modules/@capacitor/ios'
+  pod 'CapacitorApp', :path => '../../../../node_modules/@capacitor/app'
+  pod 'CapacitorBrowser', :path => '../../../../node_modules/@capacitor/browser'
+  pod 'CapacitorClipboard', :path => '../../../../node_modules/@capacitor/clipboard'
+  pod 'CapacitorDevice', :path => '../../../../node_modules/@capacitor/device'
+  pod 'CapacitorFilesystem', :path => '../../../../node_modules/@capacitor/filesystem'
+  pod 'CapacitorGeolocation', :path => '../../../../node_modules/@capacitor/geolocation'
+  pod 'CapacitorKeyboard', :path => '../../../../node_modules/@capacitor/keyboard'
+  pod 'CapacitorLocalNotifications', :path => '../../../../node_modules/@capacitor/local-notifications'
+  pod 'CapacitorPreferences', :path => '../../../../node_modules/@capacitor/preferences'
+  pod 'CapacitorShare', :path => '../../../../node_modules/@capacitor/share'
+  pod 'CapacitorSplashScreen', :path => '../../../../node_modules/@capacitor/splash-screen'
+  pod 'CapacitorStatusBar', :path => '../../../../node_modules/@capacitor/status-bar'
   pod 'CordovaPluginsStatic', :path => '../capacitor-cordova-ios-plugins'
 end
 
