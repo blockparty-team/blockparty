@@ -1,5 +1,5 @@
 PODS:
-  - Capacitor (5.5.1):
+  - Capacitor (5.7.4):
     - CapacitorCordova
   - CapacitorApp (5.0.7):
     - Capacitor
@@ -7,7 +7,7 @@ PODS:
     - Capacitor
   - CapacitorClipboard (5.0.7):
     - Capacitor
-  - CapacitorCordova (5.5.1)
+  - CapacitorCordova (5.7.4)
   - CapacitorDevice (5.0.7):
     - Capacitor
   - CapacitorFilesystem (5.2.1):
@@ -26,7 +26,7 @@ PODS:
     - Capacitor
   - CapacitorStatusBar (5.0.7):
     - Capacitor
-  - CordovaPluginsStatic (5.5.1):
+  - CordovaPluginsStatic (5.7.4):
     - CapacitorCordova
     - OneSignalXCFramework (= 3.12.4)
   - OneSignalXCFramework (3.12.4):
@@ -94,11 +94,11 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: 9da0a2415e3b6098511f8b5ffdb578d91ee79f8f
+  Capacitor: 4fe9adf012caceb4c71ffea2f1f4d005cdcbeea7
   CapacitorApp: 17fecd0e6cb23feafac7eb0939417389038b0979
   CapacitorBrowser: a6deae9e5bf87f62b62a753cff7992c5def9e771
   CapacitorClipboard: 45e5e25f2271f98712985d422776cdc5a779cca1
-  CapacitorCordova: e128cc7688c070ca0bfa439898a5f609da8dbcfe
+  CapacitorCordova: a6e87fccc0307dee7aec1560ec9398485f2b0ce7
   CapacitorDevice: fc91bdb484dc0e70755e9b621cd557afe642613a
   CapacitorFilesystem: 9f3e3c7fea2fff12f46dd5b07a2914f2103e4cfc
   CapacitorGeolocation: 918a292459542bcce98433f9e7c7909f8c72838a
@@ -108,7 +108,7 @@ SPEC CHECKSUMS:
   CapacitorShare: c6a1ebbf0114ff9e863b966cd6052678fa25d480
   CapacitorSplashScreen: dd3de3f3644710fa2a697cfb91ec262eece4d242
   CapacitorStatusBar: f390fbb49b82ffb754ea4b3cf71dc8b048baf3e7
-  CordovaPluginsStatic: a2402b7e8432fc23be16b4b4d8e80d929f32cb22
+  CordovaPluginsStatic: bff5b24e6316bdfd45fef24085398f9404d17579
   OneSignalXCFramework: 087934ab0d4d7445fcf1c015c7c782359e26c020
 
 PODFILE CHECKSUM: 4d9558bc1e6f53999583cc5641c90d5be998e274
