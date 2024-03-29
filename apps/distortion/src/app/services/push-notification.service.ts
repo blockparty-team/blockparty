@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Device } from '@capacitor/device';
 import { environment } from '@shared/environments';
 import OneSignal from 'onesignal-cordova-plugin';
@@ -8,21 +8,17 @@ import { OneSignal as OneSignalWeb } from 'onesignal-ngx';
   providedIn: 'root',
 })
 export class PushNotificationService {
-  constructor(private oneSignalWeb: OneSignalWeb) {}
+  private oneSignalWeb = inject(OneSignalWeb);
 
   private initOneSignalNative(externalUserId?: string): void {
-    OneSignal.setAppId(environment.oneSignalAppId);
+    OneSignal.initialize(environment.oneSignalAppId);
 
     if (externalUserId) {
-      OneSignal.setExternalUserId(externalUserId);
+      OneSignal.login(externalUserId);
     }
 
-    OneSignal.setNotificationOpenedHandler((jsonData) => {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    });
-
-    OneSignal.promptForPushNotificationsWithUserResponse((accepted) => {
-      console.log('User accepted notifications: ' + accepted);
+    OneSignal.Notifications.requestPermission(true).then((accepted: boolean) => {
+      console.log("User accepted notifications: " + accepted);
     });
   }
 

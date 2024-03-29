@@ -10,6 +10,9 @@ const config: CapacitorConfig = {
       iconColor: '#488AFF',
     },
   },
+  ios: {
+    handleApplicationNotifications: false
+  }
 };
 
 export default config;
