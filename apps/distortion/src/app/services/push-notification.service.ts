@@ -8,22 +8,14 @@ import { OneSignal as OneSignalWeb } from 'onesignal-ngx';
   providedIn: 'root',
 })
 export class PushNotificationService {
-  constructor(private oneSignalWeb: OneSignalWeb) {}
+  constructor(private oneSignalWeb: OneSignalWeb) { }
 
   private initOneSignalNative(externalUserId?: string): void {
-    OneSignal.setAppId(environment.oneSignalAppId);
+    OneSignal.initialize(environment.oneSignalAppId);
 
     if (externalUserId) {
-      OneSignal.setExternalUserId(externalUserId);
+      OneSignal.login(externalUserId);
     }
-
-    OneSignal.setNotificationOpenedHandler((jsonData) => {
-      console.log('notificationOpenedCallback: ' + JSON.stringify(jsonData));
-    });
-
-    OneSignal.promptForPushNotificationsWithUserResponse((accepted) => {
-      console.log('User accepted notifications: ' + accepted);
-    });
   }
 
   private initOneSignalWeb(): void {
