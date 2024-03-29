@@ -16,6 +16,10 @@ export class PushNotificationService {
     if (externalUserId) {
       OneSignal.login(externalUserId);
     }
+
+    OneSignal.Notifications.requestPermission(true).then((accepted: boolean) => {
+      console.log("User accepted notifications: " + accepted);
+    });
   }
 
   private initOneSignalWeb(): void {
