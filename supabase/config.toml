@@ -3,15 +3,10 @@
 project_id = "distortion"
 
 [api]
-# Port to use for the API URL.
+enabled = true
 port = 54321
-# Schemas to expose in your API. Tables, views and stored procedures in this schema will get API
-# endpoints. public and storage are always included.
-schemas = []
-# Extra schemas to add to the search_path of every request.
-extra_search_path = ["extensions"]
-# The maximum number of rows returns from a view, table, or stored procedure. Limits payload size
-# for accidental or malicious requests.
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
 max_rows = 1000
 
 [db]
@@ -21,6 +16,13 @@ port = 54322
 # server_version;` on the remote database to check.
 shadow_port = 54320
 major_version = 15
+
+[db.pooler]
+enabled = false
+port = 54329
+pool_mode = "transaction"
+default_pool_size = 15
+max_client_conn = 100
 
 [studio]
 # Port to use for Supabase Studio.
@@ -68,3 +70,4 @@ enable_confirmations = false
 # # Overrides the default auth provider URL. Used to support self-hosted gitlab, single-tenant Azure,
 # # or any other third-party OIDC providers.
 # url = ""
+
