@@ -21,6 +21,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
+import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ import { icons } from './shared/icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [IonApp, IonRouterOutlet],
+  providers: [AppUpdateService]
 })
 export class AppComponent implements OnInit {
   private zone = inject(NgZone);
@@ -38,13 +40,16 @@ export class AppComponent implements OnInit {
   private pushNotificationService = inject(PushNotificationService);
   private platform = inject(Platform);
   private notificationSchedulingService = inject(NotificationSchedulingService);
+  private appUpdateService = inject(AppUpdateService);
 
   constructor() {
     this.setupAppUrlOpenListener();
     addIcons(icons);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.appUpdateService.checkForUpdate();
+
     SplashScreen.show({
       showDuration: 2000,
       autoHide: true,

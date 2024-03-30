@@ -19,6 +19,9 @@
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
+      "@blockparty/shared/services/app-update-service": [
+        "libs/shared/services/app-update-service/src/index.ts"
+      ],
       "@blockparty/shared/types": ["libs/shared/types/src/index.ts"],
       "@distortion/*": ["apps/distortion/src/*"],
       "@shared/data-access/supabase": [
