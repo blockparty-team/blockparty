@@ -25,7 +25,6 @@ import {
   musicalNoteOutline,
   folderOpenOutline,
   checkmarkOutline,
-  shareSocialOutline,
 } from 'ionicons/icons';
 
 export const icons = {
@@ -55,5 +54,4 @@ export const icons = {
   folderOpenOutline,
   logoYoutube,
   checkmarkOutline,
-  shareSocialOutline,
 };
