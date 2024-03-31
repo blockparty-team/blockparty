@@ -8,14 +8,20 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { SupabaseService } from '@shared/data-access/supabase';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { FilesystemService } from '@distortion/app/services/filesystem.service';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
-import { imgToBase64, imgFromUrl } from '@distortion/app/shared/functions/file-utils';
+import {
+  imgToBase64,
+  imgFromUrl,
+} from '@distortion/app/shared/functions/file-utils';
 import { MapIcon } from '@distortion/app/interfaces/database-entities';
 import { MaskGeojsonProperties } from '@distortion/app/interfaces/mask-geojson-properties';
-import { MapSource, MapSourceGeojson } from '@distortion/app/interfaces/map-layer';
+import {
+  MapSource,
+  MapSourceGeojson,
+} from '@distortion/app/interfaces/map-layer';
 import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
 import {
   GeojsonProperties,

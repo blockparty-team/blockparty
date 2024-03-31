@@ -14,24 +14,19 @@ import {
 } from '@supabase/supabase-js';
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
-import { environment } from '@shared/environments';
-import { Database } from '@distortion/app/interfaces/database-definitions';
+// import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import {
-  FavoriteEntity,
-  MapIcon,
-  Profile,
-} from '@distortion/app/interfaces/database-entities';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
-import { MapSource } from '@distortion/app/interfaces/map-layer';
-import { DayEventStageTimetable } from '@distortion/app/interfaces/day-event-stage-timetable';
-import {
+  ArtistViewModel,
+  MapSource,
+  DayEventStageTimetable,
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from '@distortion/app/interfaces/entity-search-result';
-import { EventWithRelations } from '@distortion/app/interfaces/event';
-import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
-import { DeviceStorageService } from './device-storage.service';
-import { TransformOptions } from '@distortion/app/shared/models/imageSize';
+  EventWithRelations,
+  EventsGroupedByType,
+  TransformOptions,
+} from '@blockparty/shared/types';
+import { Database, Tables, Enums } from '@blockparty/distortion/data-access/supabase';
+import { environment } from '@shared/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -43,7 +38,7 @@ export class SupabaseService {
   session$: Observable<AuthSession | null> = this._session$.asObservable();
 
   constructor(
-    private deviceStorage: DeviceStorageService,
+    // private deviceStorage: DeviceStorageService,
     private platform: Platform
   ) {
     this.supabase = createClient<Database>(
@@ -116,14 +111,18 @@ export class SupabaseService {
 
   profile$(
     userId: User['id']
-  ): Observable<Pick<Profile, 'username' | 'avatar_url'>> {
+  ): Observable<Pick<Tables<'profile'>, 'username' | 'avatar_url'>> {
     return from(
       this.supabase
         .from('profile')
         .select(`username, avatar_url`)
         .eq('id', userId)
         .single()
-    ).pipe(map((res) => res.data));
+    ).pipe(
+      map(
+        (res) => res.data as Pick<Tables<'profile'>, 'username' | 'avatar_url'>
+      )
+    );
   }
 
   get artists$(): Observable<ArtistViewModel[]> {
@@ -163,7 +162,7 @@ export class SupabaseService {
           id,
           bounds
         `)
-    ).pipe(map((res) => res.data));
+    ).pipe(map((res) => res.data as any[]));
   }
 
   get days$() {
@@ -178,7 +177,7 @@ export class SupabaseService {
               name,
               bounds,
               event_type(
-                id, 
+                id,
                 name,
                 color
               )
@@ -287,7 +286,7 @@ export class SupabaseService {
   // Couldn't make supabase client upsert() work on composite primary keys hence this RPC
   upsertFavorites(
     devive_id: string,
-    entity: FavoriteEntity,
+    entity: Enums<'favorite_entity'>,
     ids: string[]
   ): Observable<any> {
     return from(
@@ -326,9 +325,9 @@ export class SupabaseService {
     return `${environment.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
   }
 
-  get mapIcons$(): Observable<MapIcon[]> {
+  get mapIcons$(): Observable<Tables<'map_icon'>[]> {
     return from(this.supabase.from('map_icon').select('*')).pipe(
-      map((res) => res.data as MapIcon[])
+      map((res) => res.data as Tables<'map_icon'>[])
     );
   }
 

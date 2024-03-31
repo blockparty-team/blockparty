@@ -23,7 +23,7 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators';
-import { SupabaseService } from '@shared/data-access/supabase';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';

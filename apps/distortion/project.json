@@ -142,6 +142,17 @@
       "options": {
         "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
       }
+    },
+    "build-sync-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "commands": [
+          "npx nx run distortion:build --configuration=production",
+          "npx cap sync"
+        ],
+        "parallel": false
+      }
     }
   }
 }

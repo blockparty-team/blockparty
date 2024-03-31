@@ -1,9 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { ArtistFavorite } from '@distortion/app/interfaces/artist';
-import { Favorite, FavoriteEntity } from '@distortion/app/interfaces/database-entities';
+import {
+  Favorite,
+  FavoriteEntity,
+} from '@distortion/app/interfaces/database-entities';
 import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
 import { DeviceService } from '@distortion/app/services/device.service';
-import { SupabaseService } from '@shared/data-access/supabase';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import {
   BehaviorSubject,
   combineLatest,
