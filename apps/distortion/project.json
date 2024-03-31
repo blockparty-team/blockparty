@@ -153,6 +153,14 @@
         ],
         "parallel": false
       }
+    },
+    "build-sync-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "commands": ["npx nx run distortion:build", "npx cap sync"],
+        "parallel": false
+      }
     }
   }
 }

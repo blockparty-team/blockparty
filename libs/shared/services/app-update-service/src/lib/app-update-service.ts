@@ -7,33 +7,20 @@ import { AlertController } from '@ionic/angular';
 export class AppUpdateService {
   private alertContoller = inject(AlertController);
 
-  public async getCurrentAppVersion() {
-    const result = await AppUpdate.getAppUpdateInfo();
-    if (Capacitor.getPlatform() === 'android') {
-      return result.currentVersionCode;
-    } else {
-      return result.currentVersionName;
-    }
-  }
-
-  public async getAvailableAppVersion() {
-    const result = await AppUpdate.getAppUpdateInfo();
-    if (Capacitor.getPlatform() === 'android') {
-      return result.availableVersionCode;
-    } else {
-      return result.availableVersionName;
-    }
-  }
-
   public async openAppStore() {
     await AppUpdate.openAppStore();
   };
 
-  public async newVersionAvailable(): Promise<boolean> {
-    const currentVersion = await this.getCurrentAppVersion();
-    const availableVersion = await this.getAvailableAppVersion();
+  private async newVersionAvailable(): Promise<boolean> {
 
-    return currentVersion !== availableVersion;
+    const platform = Capacitor.getPlatform();
+    if (platform === 'web') return false;
+
+    const result = await AppUpdate.getAppUpdateInfo();
+
+    return platform === 'android'
+      ? result.currentVersionCode !== result.availableVersionCode
+      : result.currentVersionName !== result.availableVersionName;
   }
 
   public async checkForUpdate(): Promise<void> {
