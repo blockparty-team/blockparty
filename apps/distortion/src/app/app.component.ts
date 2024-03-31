@@ -21,6 +21,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
+import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ import { icons } from './shared/icons';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [IonApp, IonRouterOutlet],
+  providers: [AppUpdateService]
 })
 export class AppComponent implements OnInit {
   private zone = inject(NgZone);
@@ -38,13 +40,14 @@ export class AppComponent implements OnInit {
   private pushNotificationService = inject(PushNotificationService);
   private platform = inject(Platform);
   private notificationSchedulingService = inject(NotificationSchedulingService);
+  private appUpdateService = inject(AppUpdateService);
 
   constructor() {
     this.setupAppUrlOpenListener();
     addIcons(icons);
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
     SplashScreen.show({
       showDuration: 2000,
       autoHide: true,
@@ -87,6 +90,8 @@ export class AppComponent implements OnInit {
         ]);
       }
     );
+
+    this.appUpdateService.checkForUpdate();
   }
 
   // Url listener extracting tokens when getting auth redirect on ios/android native
