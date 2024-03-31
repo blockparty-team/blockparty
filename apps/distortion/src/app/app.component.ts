@@ -48,8 +48,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.appUpdateService.checkForUpdate();
-
     SplashScreen.show({
       showDuration: 2000,
       autoHide: true,
@@ -92,6 +90,8 @@ export class AppComponent implements OnInit {
         ]);
       }
     );
+
+    this.appUpdateService.checkForUpdate();
   }
 
   // Url listener extracting tokens when getting auth redirect on ios/android native
