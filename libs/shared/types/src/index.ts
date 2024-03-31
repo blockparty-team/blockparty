@@ -13,4 +13,3 @@ export * from './lib/event-type';
 export * from './lib/event';
 export * from './lib/map-layer';
 export * from './lib/map-clicked-feature';
-export * from './lib/database-definitions';

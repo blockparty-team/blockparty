@@ -16,9 +16,6 @@ import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 // import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import {
-  Database,
-  Enums,
-  Tables,
   ArtistViewModel,
   MapSource,
   DayEventStageTimetable,
@@ -28,6 +25,7 @@ import {
   EventsGroupedByType,
   TransformOptions,
 } from '@blockparty/shared/types';
+import { Database, Tables, Enums } from '@blockparty/distortion/data-access/supabase';
 import { environment } from '@shared/environments';
 
 @Injectable({

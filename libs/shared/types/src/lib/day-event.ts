@@ -1,4 +1,4 @@
-import { Tables } from './database-definitions';
+import { Tables } from '@blockparty/distortion/data-access/supabase';
 
 export interface PartialEventType {
   id: Tables<'event_type'>['id'];
