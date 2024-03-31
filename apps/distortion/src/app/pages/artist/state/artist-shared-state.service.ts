@@ -8,7 +8,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { ArtistViewModel } from '@distortion/app/interfaces/artist';
-import { SupabaseService } from '@shared/data-access/supabase';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
 import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
 import { FileService } from '@distortion/app/services/file.service';

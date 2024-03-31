@@ -19,14 +19,14 @@
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
+      "@blockparty/shared/data-access/supabase-service": [
+        "libs/shared/data-access/supabase-service/src/index.ts"
+      ],
       "@blockparty/shared/services/app-update-service": [
         "libs/shared/services/app-update-service/src/index.ts"
       ],
       "@blockparty/shared/types": ["libs/shared/types/src/index.ts"],
       "@distortion/*": ["apps/distortion/src/*"],
-      "@shared/data-access/supabase": [
-        "libs/shared/data-access/supabase/src/index.ts"
-      ],
       "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
       "@tweak/*": ["apps/tweak/src/app/*"],
       "libs/tweak/shared/image-cropper": [

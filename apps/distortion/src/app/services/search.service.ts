@@ -6,7 +6,7 @@ import {
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from './geolocation.service';
-import { SupabaseService } from '@shared/data-access/supabase';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';

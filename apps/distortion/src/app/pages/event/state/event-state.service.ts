@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Event } from '@distortion/app/interfaces/database-entities';
-import { EventViewModel, EventWithRelations } from '@distortion/app/interfaces/event';
+import {
+  EventViewModel,
+  EventWithRelations,
+} from '@distortion/app/interfaces/event';
 import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
 import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
 import { FileService } from '@distortion/app/services/file.service';
-import { SupabaseService } from '@shared/data-access/supabase';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {

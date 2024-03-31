@@ -26,7 +26,7 @@ import {
   EntityFreeTextSearchResult,
   EventWithRelations,
   EventsGroupedByType,
-  TransformOptions
+  TransformOptions,
 } from '@blockparty/shared/types';
 import { environment } from '@shared/environments';
 
@@ -120,7 +120,11 @@ export class SupabaseService {
         .select(`username, avatar_url`)
         .eq('id', userId)
         .single()
-    ).pipe(map((res) => res.data as Pick<Tables<'profile'>, 'username' | 'avatar_url'>));
+    ).pipe(
+      map(
+        (res) => res.data as Pick<Tables<'profile'>, 'username' | 'avatar_url'>
+      )
+    );
   }
 
   get artists$(): Observable<ArtistViewModel[]> {
