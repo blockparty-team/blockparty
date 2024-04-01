@@ -86,13 +86,13 @@ export class StageTimetableComponent implements OnInit {
     const stage$: Observable<MapClickedFeature<StageGeojsonProperties>> =
       this.mapStateService.selectedMapFeature$.pipe(
         filter((feature) => feature.mapLayer === MapLayer.Stage),
-        map((stage) => stage as MapClickedFeature<StageGeojsonProperties>)
+        map((stage) => stage as MapClickedFeature<StageGeojsonProperties>),
       );
 
     this.stageName$ = stage$.pipe(map((stage) => stage.properties.name));
 
     this.stageDescription$ = stage$.pipe(
-      map((stage) => stage.properties.description)
+      map((stage) => stage.properties.description),
     );
 
     this.url$ = stage$.pipe(map((stage) => stage.properties.url));
@@ -104,10 +104,10 @@ export class StageTimetableComponent implements OnInit {
         stage.properties.timetables
           .map((t) => t.day)
           .sort(
-            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-          )
+            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+          ),
       ),
-      tap((days) => this._selectedDay$.next(days[0].id))
+      tap((days) => this._selectedDay$.next(days[0].id)),
     );
 
     this.timetable$ = combineLatest([stage$, this.selectedDay$]).pipe(
@@ -115,14 +115,14 @@ export class StageTimetableComponent implements OnInit {
       map(
         ([stage, day]) =>
           stage.properties.timetables.find(
-            (timetable) => timetable.day.id === day
-          ).timetable
-      )
+            (timetable) => timetable.day.id === day,
+          ).timetable,
+      ),
     );
 
     // If no timetables assigned to stage, backend returns [null] for timetables array
     this.hasTimetable$ = stage$.pipe(
-      map((stage) => stage.properties.timetables[0] !== null)
+      map((stage) => stage.properties.timetables[0] !== null),
     );
 
     this.tickets$ = stage$.pipe(map((stage) => stage.properties.tickets));
@@ -130,13 +130,13 @@ export class StageTimetableComponent implements OnInit {
     this.tags$ = stage$.pipe(map((stage) => stage.properties.tags));
 
     this.location$ = stage$.pipe(
-      map((stage) => stage.geometry.coordinates as [number, number])
+      map((stage) => stage.geometry.coordinates as [number, number]),
     );
   }
 
   onSelectDay(event: Event): void {
     this._selectedDay$.next(
-      (event as SegmentCustomEvent).detail.value.toString()
+      (event as SegmentCustomEvent).detail.value.toString(),
     );
   }
 

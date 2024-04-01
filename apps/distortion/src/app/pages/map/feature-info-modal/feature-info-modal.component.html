@@ -1,8 +1,13 @@
-<ng-container *ngIf="selectedFeature$ | async as f">
-  <app-stage-timetable
-    *ngIf="f.mapLayer === mapLayer.Stage"
-  ></app-stage-timetable>
-  <app-asset
-    *ngIf="f.mapLayer === mapLayer.Asset || f.mapLayer === mapLayer.AssetIcon"
-  ></app-asset>
-</ng-container>
+@if (selectedFeature$ | async; as selectedFeature) {
+  @switch (selectedFeature.mapLayer) {
+    @case (mapLayer.Stage) {
+      <app-stage-timetable></app-stage-timetable>
+    }
+    @case (mapLayer.Asset) {
+      <app-asset></app-asset>
+    }
+    @case (mapLayer.AssetIcon) {
+      <app-asset></app-asset>
+    }
+  }
+}

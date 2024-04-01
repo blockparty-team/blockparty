@@ -67,7 +67,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   mapLoaded$ = this.mapStateService.mapLoaded$;
   mapIdle$ = this.mapStateService.mapIdle$;
   hideHeader$ = this.mapStateService.mapInteraction$.pipe(
-    map((interaction) => !interaction)
+    map((interaction) => !interaction),
   );
 
   private abandon$ = new Subject<void>();
@@ -81,10 +81,10 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         withLatestFrom(
           this.mapStateService.dayMaskBounds$,
-          this.filterEventsStateService.eventTypes$
+          this.filterEventsStateService.eventTypes$,
         ),
         filter(
-          ([dayId, masks, eventTypes]) => !!dayId && !!masks && !!eventTypes
+          ([dayId, masks, eventTypes]) => !!dayId && !!masks && !!eventTypes,
         ),
         map(([dayId, masks, eventTypes]) => ({
           eventTypes,
@@ -94,7 +94,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           this.mapService.fitBounds(
             mask.bounds as LngLatBoundsLike,
             80,
-            [0, 30]
+            [0, 30],
           );
           this.mapService.removeFeatureHighlight(MapLayer.EventHighLight);
           this.mapService.highlightFeature(MapLayer.DayEventMask, mask.id);
@@ -109,7 +109,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         catchError((err) => {
           console.log(err);
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
 
@@ -118,11 +118,11 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         withLatestFrom(
           this.filterEventsStateService.selectedDayId$,
           this.mapStateService.dayMaskBounds$,
-          this.filterEventsStateService.events$
+          this.filterEventsStateService.events$,
         ),
         filter(
           ([eventTypeId, dayId, masks, events]) =>
-            !!eventTypeId && !!dayId && !!masks && !!events
+            !!eventTypeId && !!dayId && !!masks && !!events,
         ),
         map(([eventTypeId, dayId, masks, events]) => ({
           events,
@@ -132,7 +132,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           this.mapService.fitBounds(
             mask.bounds as LngLatBoundsLike,
             80,
-            [0, 30]
+            [0, 30],
           );
           this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
 
@@ -145,7 +145,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         catchError((err) => {
           console.log(err);
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
 
@@ -156,7 +156,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           this.mapService.fitBounds(
             event.bounds as LngLatBoundsLike,
             10,
-            [0, 30]
+            [0, 30],
           );
           this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
         }),
@@ -164,7 +164,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         catchError((err) => {
           console.log(err);
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
 
@@ -172,14 +172,14 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         switchMap((feature) => {
           if (feature.mapLayer === MapLayer.Stage) {
-            return this.openFeatureInfoModal(0.5, [0, 0.5, 0.75, 0.9]);
+            return this.openFeatureInfoModal(1, [0, 1]);
           }
 
           if (
             feature.mapLayer === MapLayer.Asset ||
             feature.mapLayer === MapLayer.AssetIcon
           ) {
-            return this.openFeatureInfoModal(0.3, [0, 0.3, 0.6]);
+            return this.openFeatureInfoModal(0.3, [0, 0.3, 1]);
           }
 
           return EMPTY;
@@ -188,7 +188,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         catchError((err) => {
           console.log(err);
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
 
@@ -197,7 +197,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       .pipe(
         filter((mapInteraction) => mapInteraction && !!this.modal),
         tap(() => this.modal.dismiss()),
-        takeUntil(this.abandon$)
+        takeUntil(this.abandon$),
       )
       .subscribe();
 
@@ -205,14 +205,15 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
     merge(
       this.tabStateService.currentTab$.pipe(
         distinctUntilChanged(),
-        filter((tab) => tab === Tab.Map)
+        filter((tab) => tab === Tab.Map),
       ),
       this.routeHistoryService.history$.pipe(
         map(
-          (history) => history.current === `/${RouteName.Tabs}/${RouteName.Map}`
+          (history) =>
+            history.current === `/${RouteName.Tabs}/${RouteName.Map}`,
         ),
-        filter((isMapRoute) => isMapRoute)
-      )
+        filter((isMapRoute) => isMapRoute),
+      ),
     )
       .pipe(
         withLatestFrom(this.mapStateService.mapLoaded$),
@@ -223,7 +224,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
             this.mapService.resize();
           }, 200);
         }),
-        takeUntil(this.abandon$)
+        takeUntil(this.abandon$),
       )
       .subscribe();
   }
@@ -240,10 +241,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
     this.abandon$.complete();
   }
 
-  openFeatureInfoModal(
-    initialBreakpoint: number = 0.4,
-    breakpoints: number[] = [0.2, 0.4, 0.7, 0.9]
-  ) {
+  openFeatureInfoModal(initialBreakpoint: number, breakpoints: number[]) {
     return from(
       this.modalCtrl.create({
         component: FeatureInfoModalComponent,
@@ -252,12 +250,13 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         backdropDismiss: false,
         showBackdrop: false,
         backdropBreakpoint: initialBreakpoint,
-      })
+        cssClass: 'feature-info-modal',
+      }),
     ).pipe(
       tap((modal) => {
         this.modal = modal;
         modal.present();
-      })
+      }),
     );
   }
 }

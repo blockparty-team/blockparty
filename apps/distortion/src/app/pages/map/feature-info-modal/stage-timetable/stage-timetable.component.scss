@@ -1,15 +1,39 @@
-ion-item {
-  animation: popIn 0.2s calc(var(--animation-order) * 70ms) both ease-in;
-}
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
-.description {
-  padding: 0 15px;
+  ion-toolbar {
+    --background: var(--ion-toolbar-background-shade);
+  }
 
-  .no-timetable {
-    text-align: center;
+  main {
+    flex-grow: 1;
+    overflow-y: auto;
 
-    .tag {
-      margin: 5px;
+    ion-item {
+      animation: popIn 0.2s calc(var(--animation-order) * 70ms) both ease-in;
+
+      .time-slot {
+        color: var(--ion-color-step-600);
+      }
+    }
+
+    .description {
+      padding: 0 15px;
+
+      .more-info {
+        position: sticky;
+        bottom: 12px;
+      }
+
+      .no-timetable {
+        text-align: center;
+
+        .tag {
+          margin: 5px;
+        }
+      }
     }
   }
 }
@@ -28,4 +52,20 @@ ion-item {
     opacity: 1;
     transform: none;
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--ion-color-primary);
+  border-radius: 5px;
 }
