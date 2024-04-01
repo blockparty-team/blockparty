@@ -49,10 +49,7 @@ h3 {
     0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12) !important;
 }
 
-// Center map attribution control
-// .maplibregl-ctrl-bottom-left {
-//   bottom: -6px;
-//   width: 100%;
-//   display: flex;
-//   justify-content: center;
-// }
+ion-modal.feature-info-modal {
+  --border-radius: 10px 10px 0 0;
+  --height: 50%;
+}
