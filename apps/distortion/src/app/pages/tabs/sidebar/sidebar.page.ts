@@ -84,11 +84,11 @@ export class SidebarPage implements OnInit {
     //   icon: 'cash-outline',
     //   routeName: RouteName.Merch
     // },
-    {
-      name: 'Transport - book a Viggo',
-      icon: 'car-outline',
-      routeName: RouteName.Transport,
-    },
+    // {
+    //   name: 'Transport',
+    //   icon: 'car-outline',
+    //   routeName: RouteName.Transport,
+    // },
     {
       name: 'Gadearmbånd - support us!',
       icon: 'thumbs-up-outline',
@@ -118,7 +118,7 @@ export class SidebarPage implements OnInit {
   ]
     .filter((navItem) =>
       !environment.featureToggle.enableLogin &&
-      navItem.routeName === RouteName.Profile
+        navItem.routeName === RouteName.Profile
         ? false
         : true
     )
