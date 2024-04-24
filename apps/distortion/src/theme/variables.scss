@@ -67,7 +67,10 @@
   --ion-color-favorite-tint: #ff8c8c;
 
   // Background
-  --ion-background-color: #332940;
+  --ion-background-color: #2D2240;
+  --ion-background-color-rgb: 68, 63, 63;
+
+  --ion-background-color: #2D2240;
   --ion-background-color-rgb: 68, 63, 63;
 
   --ion-font-family: 'Source Sans Pro', sans-serif;
@@ -94,12 +97,13 @@
   --ion-color-step-900: #ececec;
   --ion-color-step-950: #f6f5f5;
 
-  --ion-item-background: #332940;
+  --ion-item-background: #2D2240;
 
-  --ion-toolbar-background: #332940;
-  --ion-toolbar-background-shade: #282032;
+  --ion-toolbar-background: #2D2240;
+  --ion-toolbar-background-shade: #281e38;
+  --ion-toolbar-background-tint: #423853;
 
-  --ion-tab-bar-background: #332940;
+  --ion-tab-bar-background: #2D2240;
 }
 
 .ion-color-favorite {
