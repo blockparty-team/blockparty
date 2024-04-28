@@ -1,4 +1,5 @@
 .filter-events-container {
+
   // Hide scrollbar
   ion-segment {
     -ms-overflow-style: none;
@@ -13,7 +14,10 @@
     --color-checked: var(--ion-text-color);
   }
 
+
   .event-type-filter {
+    --background: var(--ion-toolbar-background-tint);
+
     ion-label {
       margin: 0;
     }
