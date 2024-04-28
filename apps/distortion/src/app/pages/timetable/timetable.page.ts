@@ -58,8 +58,8 @@ export class TimetablePage implements OnInit, OnDestroy {
     this.filterEventsStateService.days$
       .pipe(
         tap((days) => {
-          // Change day at 6am next day (for events running during nighttime)
-          const now = sub(new Date(), { hours: 6 });
+          // Change day at 7am next day (for events running during nighttime)
+          const now = sub(new Date(), { hours: 7 });
           const day = days.find((day) => isSameDay(now, new Date(day.day)));
 
           if (day) {
