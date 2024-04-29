@@ -54,8 +54,7 @@ export class TimetableGanttComponent {
   private currentTimeElement = viewChild<ElementRef>('currentTime');
 
   timetableConfig$: Observable<DayTimetableViewModel> = this.timetableStateService.dayEvents$.pipe(
-    map((day) => this.timetableGridConfig(day)),
-    shareReplay(1)
+    map((day) => this.timetableGridConfig(day))
   );
 
   private currentTimeWithinTimetable$: Observable<boolean> = this.timetableConfig$.pipe(
