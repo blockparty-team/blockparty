@@ -1,7 +1,6 @@
 <ng-container *ngIf="timetableConfig$ | async as config; else noTimetable">
   <div
     class="timetable"
-    #timetable
     [style.--template-columns]="config.gridTemplateColumns"
     [style.--template-rows]="config.gridTemplateRows"
   >
@@ -12,7 +11,7 @@
         [style.--time-label-column-start]="label.columnStart"
         [style.--time-label-column-end]="label.columnEnd"
       >
-        {{ label.label | date : 'HH:mm' }}
+        {{ label.label | date: 'HH:mm' }}
       </div>
       <div
         class="vertical-time-line"
@@ -20,6 +19,7 @@
       ></div>
 
       <div
+        #currentTime
         class="current-time"
         [style.--current-time-column-start]="currentTimeColumn$ | async"
       ></div>
@@ -48,8 +48,8 @@
                   {{ act.artist_name }}
                 </h6>
                 <p>
-                  {{ act.start_time | date : 'HH:mm' }}-{{
-                    act.end_time | date : 'HH:mm'
+                  {{ act.start_time | date: 'HH:mm' }}-{{
+                    act.end_time | date: 'HH:mm'
                   }}
                 </p>
               </div>

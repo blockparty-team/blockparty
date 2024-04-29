@@ -2,12 +2,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
-  OnInit,
-  ViewChild,
+  effect,
   inject,
+  viewChild,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { combineLatest, interval, Observable } from 'rxjs';
-import { filter, map, shareReplay, startWith, take, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, startWith } from 'rxjs/operators';
 import eachHourOfInterval from 'date-fns/eachHourOfInterval';
 import differenceInMinutes from 'date-fns/differenceInMinutes';
 import { TimetableStateService } from '../state/timetable-state.service';
@@ -44,16 +45,48 @@ import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
     IonRouterLink,
   ],
 })
-export class TimetableGanttComponent implements OnInit {
+export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);
   private favoritesService = inject(FavoritesService);
 
   routeName = RouteName;
 
-  @ViewChild('timetable') timetableElement: ElementRef;
+  private currentTimeElement = viewChild<ElementRef>('currentTime');
 
-  timetableConfig$: Observable<DayTimetableViewModel>;
-  currentTimeColumn$: Observable<number>;
+  timetableConfig$: Observable<DayTimetableViewModel> = this.timetableStateService.dayEvents$.pipe(
+    map((day) => this.timetableGridConfig(day)),
+    shareReplay(1)
+  );
+
+  private currentTimeWithinTimetable$: Observable<boolean> = this.timetableConfig$.pipe(
+    filter((config) => !!config),
+    map((config) => {
+      const now = new Date();
+      const firstActStart = config.timeLabels[0].label;
+      const lastActEnd = config.timeLabels.slice(-1)[0].label;
+
+      return now >= firstActStart && now <= lastActEnd;
+    })
+  )
+  private currentTimeWithinTimetable = toSignal(this.currentTimeWithinTimetable$);
+
+  currentTimeColumn$: Observable<number> = combineLatest([
+    interval(1000 * 60).pipe(startWith(0)),
+    this.timetableConfig$,
+    this.currentTimeWithinTimetable$,
+  ]).pipe(
+    filter(([, , withinTimetable]) => withinTimetable),
+    map(([, config, withinTimetable]) => {
+      const now = new Date();
+      const firstActStart = config.timeLabels[0].label;
+
+      if (withinTimetable) {
+        return differenceInMinutes(now, firstActStart);
+      }
+    }),
+    shareReplay(1)
+  );
+
   eventTypeColor$ = this.timetableStateService.eventTypeColor$;
 
   EVENT_ROW_GAP = 3;
@@ -61,47 +94,19 @@ export class TimetableGanttComponent implements OnInit {
   STAGE_ROW_SPAN = 1;
   COLUMN_SIZE = 3.5; // 1min = COLUMN_SIZE - Defined in CSS
 
-  ngOnInit(): void {
-    this.timetableConfig$ = this.timetableStateService.dayEvents$.pipe(
-      map((day) => this.timetableGridConfig(day)),
-      shareReplay(1)
-    );
+  constructor() {
+    effect(() => {
+      const withinTimetable = this.currentTimeWithinTimetable()
+      const currentTimeElement = this.currentTimeElement()?.nativeElement;
 
-    this.currentTimeColumn$ = combineLatest([
-      interval(1000 * 60).pipe(startWith(0)),
-      this.timetableConfig$,
-    ]).pipe(
-      filter(([, config]) => !!config),
-      map(([, config]) => {
-        const now = new Date();
-        const firstActStart = config.timeLabels[0].label;
-        const lastActEnd = config.timeLabels.slice(-1)[0].label;
-
-        if (now >= firstActStart && now <= lastActEnd) {
-          return differenceInMinutes(now, firstActStart);
-        }
-      }),
-      shareReplay(1)
-    );
-  }
-
-  ionViewDidEnter(): void {
-    // Scroll to current time
-    this.currentTimeColumn$
-      .pipe(
-        filter((currentTime) => !!currentTime),
-        take(1),
-        tap((currentTimeCol) => {
-          if (!!currentTimeCol && this.timetableElement) {
-            this.timetableElement.nativeElement.scrollTo({
-              top: 0,
-              left: currentTimeCol * this.COLUMN_SIZE - window.innerWidth / 2,
-              behavior: 'smooth',
-            });
-          }
-        })
-      )
-      .subscribe();
+      if (withinTimetable && currentTimeElement) {
+        currentTimeElement.scrollIntoView({
+          block: "center",
+          inline: "center",
+          behavior: "smooth"
+        });
+      }
+    })
   }
 
   private timeLables(firstStartTime: Date, lastEndTime: Date): TimeLabel[] {
@@ -127,11 +132,11 @@ export class TimetableGanttComponent implements OnInit {
     const timetable: TimetableViewModel[] = stage.timetable.map((timetable) => {
       const relativeStartTime =
         (new Date(timetable.start_time).getTime() - firstStartTime.getTime()) /
-          (1000 * 60) +
+        (1000 * 60) +
         offset;
       const relativeEndTime =
         (new Date(timetable.end_time).getTime() - firstStartTime.getTime()) /
-          (1000 * 60) +
+        (1000 * 60) +
         offset;
 
       return {

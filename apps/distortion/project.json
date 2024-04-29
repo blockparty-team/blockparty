@@ -161,6 +161,20 @@
         "commands": ["npx nx run distortion:build", "npx cap sync"],
         "parallel": false
       }
+    },
+    "open-xcode": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "command": "npx cap open ios"
+      }
+    },
+    "open-android-studio": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "command": "npx cap open android"
+      }
     }
   }
 }

@@ -111,7 +111,7 @@ export class TimetableListComponent {
   public routeName = RouteName;
   public viewMode = ListViewMode;
 
-  public selectedListViewMode = signal<ListViewMode>(ListViewMode.ByTime);
+  public selectedListViewMode = signal<ListViewMode>(ListViewMode.ByStage);
 
   onChangeListViewMode(event: SegmentCustomEvent): void {
     const mode = event.detail.value as ListViewMode;
