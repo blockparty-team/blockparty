@@ -183,7 +183,7 @@ export class SupabaseService {
               )
             )
           )
-      `)
+      `).order('day')
     ).pipe(map((res) => res.data));
   }
 
