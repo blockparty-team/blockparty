@@ -111,7 +111,8 @@ export class FilterEventsStateService {
     filter((events) => !!events),
     map((events) =>
       events
-        .map((event) => event.event_type)
+        .filter(event => !!event)
+        .map((event) => event?.event_type)
         .filter(
           (eventType, index, eventTypes) =>
             eventTypes.findIndex((v2) => v2.id === eventType.id) === index
@@ -129,7 +130,7 @@ export class FilterEventsStateService {
     map(([days, selectedDayId, selectedEventTypeId]) => {
       const events = days
         .find((day) => day.id === selectedDayId)
-        ?.event.filter((event) => event.event_type.id === selectedEventTypeId);
+        ?.event.filter((event) => event?.event_type?.id === selectedEventTypeId);
       // Template hides segments when events$ emits null
       return events?.length > 0 ? events : null;
     }),
@@ -145,7 +146,7 @@ export class FilterEventsStateService {
         !!eventTypes && !!selectedEventTypeId
     ),
     map(([selectedEventTypeId, eventTypes]) =>
-      eventTypes.find((eventType) => eventType.id === selectedEventTypeId)
+      eventTypes.find((eventType) => eventType?.id === selectedEventTypeId)
     ),
     filter((eventType) => !!eventType),
     shareReplay(1)
