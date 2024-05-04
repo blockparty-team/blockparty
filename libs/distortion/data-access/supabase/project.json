@@ -45,7 +45,7 @@
         "cwd": "libs/distortion/data-access/supabase",
         "commands": [
           "npx supabase db reset",
-          "npx supabase db dump --data-only | psql -h localhost -p 54322 -U postgres -d postgres"
+          "npx supabase db dump -s public --data-only | psql -h localhost -p 54322 -U postgres -d postgres"
         ],
         "parallel": false
       }
