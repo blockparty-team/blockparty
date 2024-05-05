@@ -22,6 +22,7 @@ import { RouteName } from '@distortion/app/shared/models/routeName';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
 import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
+import { AppStateService } from '@distortion/app/services/app-state.service';
 
 @Component({
   selector: 'app-root',
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit {
   private platform = inject(Platform);
   private notificationSchedulingService = inject(NotificationSchedulingService);
   private appUpdateService = inject(AppUpdateService);
+  private appStateService = inject(AppStateService);
 
   constructor() {
     this.setupAppUrlOpenListener();
@@ -73,9 +75,10 @@ export class AppComponent implements OnInit {
     });
 
     this.notificationSchedulingService.rescheduleAllArtistNotifications();
-    this.platform.resume.subscribe(() =>
-      this.notificationSchedulingService.rescheduleAllArtistNotifications()
-    );
+    this.platform.resume.subscribe(() => {
+      this.appStateService.reloadData();
+      this.notificationSchedulingService.rescheduleAllArtistNotifications();
+    });
 
     this.routeHistoryService.init();
 
