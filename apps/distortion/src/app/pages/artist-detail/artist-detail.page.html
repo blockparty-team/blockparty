@@ -33,7 +33,7 @@
         <ion-icon name="share-social-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab *ngIf="(soMeLinks$ | async).length > 0" class="so-me">
+      <ion-fab *ngIf="(soMeLinks$ | async)?.length > 0" class="so-me">
         <ion-fab-button color="secondary" size="small">
           <ion-icon name="open-outline"></ion-icon>
         </ion-fab-button>

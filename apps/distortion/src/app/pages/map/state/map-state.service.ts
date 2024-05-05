@@ -27,6 +27,7 @@ import {
   GeojsonProperties,
   MapClickedFeature,
 } from '@distortion/app/interfaces/map-clicked-feature';
+import { AppStateService } from '@distortion/app/services/app-state.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,6 +36,7 @@ export class MapStateService {
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
   private filesystemService = inject(FilesystemService);
+  private appStateService = inject(AppStateService);
 
   private _mapLoaded$ = new BehaviorSubject<boolean>(false);
   mapLoaded$: Observable<boolean> = this._mapLoaded$.asObservable();
@@ -61,25 +63,28 @@ export class MapStateService {
   removedAssetIconNames$: Observable<any> =
     this._removedAssetIconNames$.asObservable();
 
-  mapLayers$: Observable<MapSourceGeojson<GeojsonProperties>[]> = concat(
-    this.deviceStorageService
-      .get('mapLayers')
-      .pipe(filter((layers) => !!layers)),
-    forkJoin(
-      Object.values(MapSource).map((layer) =>
-        this.supabase.tableAsGeojson(layer)
+  mapLayers$: Observable<MapSourceGeojson<GeojsonProperties>[]> = this.appStateService.reloadData$.pipe(
+    switchMap(() => concat(
+      this.deviceStorageService.get('mapLayers'),
+      forkJoin(
+        Object.values(MapSource).map((layer) =>
+          this.supabase.tableAsGeojson(layer)
+        )
+      ).pipe(
+        filter((layers) => !!layers),
+        map((layers) =>
+          Object.values(MapSource).map((mapSource, i) => ({
+            mapSource,
+            geojson: layers[i],
+          }))
+        ),
+        tap((layers) => this.deviceStorageService.set('mapLayers', layers))
       )
-    ).pipe(
-      filter((layers) => !!layers),
-      map((layers) =>
-        Object.values(MapSource).map((mapSource, i) => ({
-          mapSource,
-          geojson: layers[i],
-        }))
-      ),
-      tap((layers) => this.deviceStorageService.set('mapLayers', layers))
     )
-  ).pipe(shareReplay(1));
+    ),
+    shareReplay(1)
+  )
+
 
   private mapIconsFromSupabase$: Observable<MapIconViewModel[]> =
     this.supabase.mapIcons$.pipe(
@@ -151,6 +156,7 @@ export class MapStateService {
   ).pipe(shareReplay(1));
 
   dayMaskBounds$: Observable<MaskGeojsonProperties[]> = this.mapLayers$.pipe(
+    filter(layers => !!layers),
     map((layers) =>
       layers.find((layer) => layer.mapSource === 'day_event_mask')
     ),

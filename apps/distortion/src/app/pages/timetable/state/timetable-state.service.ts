@@ -17,7 +17,7 @@ export class TimetableStateService {
   timetableWithFavorites$: Observable<DayEventStageTimetable[]> = combineLatest(
     [
       this.timetableSharedStateService.timetables$,
-      this.favoriteStateService.favorites$,
+      this.favoriteStateService.favorites$
     ]
   ).pipe(
     map(([days, favorites]) => {
