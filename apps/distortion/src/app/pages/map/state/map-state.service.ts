@@ -156,6 +156,7 @@ export class MapStateService {
   ).pipe(shareReplay(1));
 
   dayMaskBounds$: Observable<MaskGeojsonProperties[]> = this.mapLayers$.pipe(
+    filter(layers => !!layers),
     map((layers) =>
       layers.find((layer) => layer.mapSource === 'day_event_mask')
     ),
