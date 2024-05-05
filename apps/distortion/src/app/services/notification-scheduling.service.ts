@@ -2,6 +2,7 @@ import { Injectable, OnDestroy, inject, isDevMode } from '@angular/core';
 import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
 import { Observable, Subject, combineLatest, defer, from } from 'rxjs';
 import {
+  delay,
   filter,
   find,
   map,
