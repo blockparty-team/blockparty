@@ -1,41 +1,41 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, OnDestroy, inject, isDevMode } from '@angular/core';
 import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
-import { combineLatest, from } from 'rxjs';
+import { Observable, Subject, combineLatest, defer, from } from 'rxjs';
 import {
   filter,
+  find,
   map,
   mergeMap,
   skip,
   switchMap,
   take,
+  takeUntil,
   tap,
+  withLatestFrom,
 } from 'rxjs/operators';
 import { LocalNotificationsService } from './local-notifications.service';
+import { sub } from 'date-fns';
+import { enableProdMode } from '@angular/core';
+import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { TimetableSharedStateService } from '@distortion/app/pages/timetable/state/timetable-shared-state.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AppStateService } from './app-state.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class NotificationSchedulingService {
+export class NotificationSchedulingService implements OnDestroy {
   // Later this could retrieved from settings state
   private MINUTES_BEFORE = 60;
 
   private timetableSharedStateService = inject(TimetableSharedStateService);
   private favoritesStateService = inject(FavoriteStateService);
   private localNotificationService = inject(LocalNotificationsService);
-  private appStateService = inject(AppStateService);
+
+  private destroyed$: Subject<void> = new Subject<void>();
 
   constructor() {
-    this.appStateService.reloadData$.pipe(
-      tap(() => this.rescheduleAllArtistNotifications()),
-      takeUntilDestroyed()
-    ).subscribe();
-
     this.favoritesStateService.artistFavoriteChanged$
       .pipe(
-        takeUntilDestroyed(),
+        takeUntil(this.destroyed$),
         switchMap(({ artistId, isFavorite }) => {
           if (isFavorite) {
             return from(this.localNotificationService.getNextId()).pipe(
@@ -76,6 +76,11 @@ export class NotificationSchedulingService {
         })
       )
       .subscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next();
+    this.destroyed$.complete();
   }
 
   rescheduleAllArtistNotifications(): void {

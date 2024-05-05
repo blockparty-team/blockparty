@@ -74,8 +74,10 @@ export class AppComponent implements OnInit {
       }
     });
 
+    this.notificationSchedulingService.rescheduleAllArtistNotifications();
     this.platform.resume.subscribe(() => {
       this.appStateService.reloadData();
+      this.notificationSchedulingService.rescheduleAllArtistNotifications();
     });
 
     this.routeHistoryService.init();
