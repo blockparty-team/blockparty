@@ -1,7 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
   inject,
 } from '@angular/core';
 import {
@@ -32,21 +31,18 @@ import { IonContent } from '@ionic/angular/standalone';
     IonContent,
   ],
 })
-export class FeatureInfoModalComponent implements OnInit {
+export class FeatureInfoModalComponent {
   private mapStateService = inject(MapStateService);
   private mapService = inject(MapService);
 
-  selectedFeature$: Observable<MapClickedFeature<GeojsonProperties>>;
   mapLayer = MapLayer;
 
-  ngOnInit() {
-    this.selectedFeature$ = this.mapStateService.selectedMapFeature$.pipe(
-      tap((feature) =>
-        this.mapService.flyTo(
-          feature.geometry.coordinates as [number, number],
-          [0, -60]
-        )
+  selectedFeature$: Observable<MapClickedFeature<GeojsonProperties>> = this.mapStateService.selectedMapFeature$.pipe(
+    tap((feature) =>
+      this.mapService.flyTo(
+        feature.geometry.coordinates as [number, number],
+        [0, -60]
       )
-    );
-  }
+    )
+  );
 }
