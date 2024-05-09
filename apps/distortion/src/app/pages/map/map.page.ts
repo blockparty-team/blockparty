@@ -98,6 +98,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           );
           this.mapService.removeFeatureHighlight(MapLayer.EventHighLight);
           this.mapService.highlightFeature(MapLayer.DayEventMask, mask.id);
+          this.mapStateService.updateMapInteraction(true);
 
           // Default select event type if only one
           eventTypes.length === 1
@@ -135,6 +136,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
             [0, 30],
           );
           this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
+          this.mapStateService.updateMapInteraction(true);
 
           // Select event if only one
           events.length === 0
@@ -159,6 +161,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
             [0, 30],
           );
           this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
+          this.mapStateService.updateMapInteraction(true);
         }),
         takeUntil(this.abandon$),
         catchError((err) => {
