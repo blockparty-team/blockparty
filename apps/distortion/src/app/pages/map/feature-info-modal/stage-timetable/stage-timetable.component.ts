@@ -7,7 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { ModalController, SegmentCustomEvent } from '@ionic/angular/standalone';
+import { ModalController, SegmentCustomEvent, IonFooter } from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
 import { MapLayer } from '@distortion/app/interfaces/map-layer';
@@ -44,6 +44,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    IonFooter,
     NgIf,
     NgFor,
     AsyncPipe,

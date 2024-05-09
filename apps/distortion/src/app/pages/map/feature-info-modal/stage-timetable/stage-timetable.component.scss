@@ -36,6 +36,13 @@
       }
     }
   }
+
+  ion-footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    flex-direction: row-reverse;
+  }
 }
 
 .stage-description {
@@ -66,6 +73,6 @@
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: var(--ion-color-primary);
+  background: var(--ion-color-tertiary);
   border-radius: 5px;
 }
