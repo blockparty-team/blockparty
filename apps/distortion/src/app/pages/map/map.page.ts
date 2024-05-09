@@ -96,6 +96,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
             80,
             [0, 30],
           );
+          this.mapService.removeFeatureHighlight(MapLayer.StageHighlight);
+          this.mapService.removeFeatureHighlight(MapLayer.AssetHighlight);
           this.mapService.removeFeatureHighlight(MapLayer.EventHighLight);
           this.mapService.highlightFeature(MapLayer.DayEventMask, mask.id);
           this.mapStateService.updateMapInteraction(true);
@@ -135,6 +137,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
             80,
             [0, 30],
           );
+          this.mapService.removeFeatureHighlight(MapLayer.StageHighlight);
+          this.mapService.removeFeatureHighlight(MapLayer.AssetHighlight);
           this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
           this.mapStateService.updateMapInteraction(true);
 
@@ -160,6 +164,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
             10,
             [0, 30],
           );
+          this.mapService.removeFeatureHighlight(MapLayer.AssetHighlight);
+          this.mapService.removeFeatureHighlight(MapLayer.StageHighlight);
           this.mapService.highlightFeature(MapLayer.EventHighLight, event.id);
           this.mapStateService.updateMapInteraction(true);
         }),
