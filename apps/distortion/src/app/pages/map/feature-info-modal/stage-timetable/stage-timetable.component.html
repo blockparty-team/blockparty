@@ -40,6 +40,9 @@
             <ion-label (click)="onGoToArtist(act?.name)">
               {{ act?.name }}
             </ion-label>
+            @if (act.onAir) {
+              <span slot="end" class="on-air"></span>
+            }
           </ion-item>
         }
       </ion-list>

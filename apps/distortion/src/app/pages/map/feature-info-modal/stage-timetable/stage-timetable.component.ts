@@ -36,6 +36,11 @@ import {
   IonContent,
   IonList,
 } from '@ionic/angular/standalone';
+import { isSameDay, sub } from 'date-fns';
+
+interface TimetableViewModel extends Timetable {
+  onAir: boolean;
+}
 
 @Component({
   selector: 'app-stage-timetable',
@@ -74,7 +79,7 @@ export class StageTimetableComponent implements OnInit {
   stageDescription$: Observable<string>;
   tickets$: Observable<Ticket[]>;
   days$: Observable<Day[]>;
-  timetable$: Observable<Timetable[]>;
+  timetable$: Observable<TimetableViewModel[]>;
   hasTimetable$: Observable<boolean>;
   location$: Observable<[number, number]>;
   tags$: Observable<string[]>;
@@ -108,7 +113,17 @@ export class StageTimetableComponent implements OnInit {
             (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
           ),
       ),
-      tap((days) => this._selectedDay$.next(days[0].id)),
+      tap((days) => {
+        // Change day at 7am next day (for events running during nighttime)
+        const now = sub(new Date(), { hours: 7 });
+        const day = days.find((day) => isSameDay(now, new Date(day.date)));
+
+        if (day) {
+          this._selectedDay$.next(day.id);
+        } else {
+          this._selectedDay$.next(days[0].id);
+        }
+      }),
     );
 
     this.timetable$ = combineLatest([stage$, this.selectedDay$]).pipe(
@@ -119,6 +134,12 @@ export class StageTimetableComponent implements OnInit {
             (timetable) => timetable.day.id === day,
           ).timetable,
       ),
+      map((timetable) => (
+        timetable.map(slot => ({
+          ...slot,
+          onAir: new Date() > new Date(slot.start_time) && new Date() < new Date(slot.end_time),
+        }))
+      ))
     );
 
     // If no timetables assigned to stage, backend returns [null] for timetables array

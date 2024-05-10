@@ -17,6 +17,14 @@
       .time-slot {
         color: var(--ion-color-step-600);
       }
+
+      .on-air {
+        background-color: var(--ion-color-warning);
+        border-radius: 50%;
+        width: 12px;
+        height: 12px;
+        animation: pulsing 3s infinite;
+      }
     }
 
     .description {
@@ -58,6 +66,23 @@
   100% {
     opacity: 1;
     transform: none;
+  }
+}
+
+@keyframes pulsing {
+  0% {
+    transform: scale(0.5, 0.5);
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1.0;
+    transform: scale(1, 1);
+  }
+
+  100% {
+    transform: scale(0.5, 0.5);
+    opacity: 0.5;
   }
 }
 
