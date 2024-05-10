@@ -1,31 +1,5 @@
 <div class="container">
   <header>
-    <ion-toolbar mode="md">
-      <ion-title>{{ stageName$ | async }}</ion-title>
-
-      <ion-buttons slot="end">
-        @if (tickets$ | async) {
-          <ion-button id="open-tickets-modal">
-            <ion-icon slot="icon-only" name="ticket-outline"></ion-icon>
-          </ion-button>
-        }
-        @if (hasTimetable$ | async) {
-          <ion-button id="open-description-modal">
-            <ion-icon slot="icon-only" name="information-outline"></ion-icon>
-          </ion-button>
-        }
-        @if (location$ | async; as location) {
-          <ion-button
-            color="primary"
-            fill="outline"
-            (click)="onOpenGoogleMapsDirections(location)"
-          >
-            Directions
-          </ion-button>
-        }
-      </ion-buttons>
-    </ion-toolbar>
-
     @if (days$ | async; as days) {
       <ion-toolbar>
         <ion-segment
@@ -39,6 +13,12 @@
             </ion-segment-button>
           }
         </ion-segment>
+      </ion-toolbar>
+    } @else {
+      <ion-toolbar>
+        <ion-title>
+          {{ stageName$ | async }}
+        </ion-title>
       </ion-toolbar>
     }
   </header>
@@ -60,6 +40,9 @@
             <ion-label (click)="onGoToArtist(act?.name)">
               {{ act?.name }}
             </ion-label>
+            @if (act.onAir) {
+              <span slot="end" class="on-air"></span>
+            }
           </ion-item>
         }
       </ion-list>
@@ -86,20 +69,38 @@
             </ion-badge>
           </div>
         }
-        @if (url$ | async; as url) {
-          <div class="more-info ion-text-center">
-            <ion-button color="primary" (click)="onGoToUrl(url)">
-              More info
-            </ion-button>
-          </div>
-        }
       </div>
     }
   </main>
+
+  <ion-footer>
+    @if (location$ | async; as location) {
+      <ion-button fill="outline" (click)="onOpenGoogleMapsDirections(location)">
+        <ion-icon slot="start" name="compass-outline"></ion-icon>
+        Directions
+      </ion-button>
+    }
+    @if ((hasTimetable$ | async) && (stageDescription$ | async)) {
+      <ion-button id="open-description-modal" fill="outline">
+        <ion-icon name="information-outline"></ion-icon>
+      </ion-button>
+    }
+    @if (url$ | async; as url) {
+      <ion-button fill="outline" (click)="onGoToUrl(url)">
+        More info
+      </ion-button>
+    }
+    @if (tickets$ | async) {
+      <ion-button fill="outline" id="open-tickets-modal">
+        <ion-icon slot="start" name="ticket-outline"></ion-icon>
+        Tickets
+      </ion-button>
+    }
+  </ion-footer>
 </div>
 
 <!-- Modals for tickets and description -->
-@if (hasTimetable$ | async) {
+@if ((hasTimetable$ | async) && (stageDescription$ | async)) {
   <ion-modal
     trigger="open-description-modal"
     [initialBreakpoint]="0.4"

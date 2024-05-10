@@ -10,6 +10,7 @@ import {
   LngLatLike,
   Map,
   PointLike,
+  StyleImageInterface,
 } from 'maplibre-gl';
 import { Point } from 'geojson';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
@@ -120,12 +121,46 @@ export class MapService {
 
       this.map.addLayer({
         id: MapLayer.StageHighlight,
-        type: 'circle',
+        type: 'symbol',
         source: MapSource.Stage,
-        layout: {},
-        paint: {
-          'circle-color': getCssVariable('--ion-color-primary'),
-          'circle-radius': 40,
+        layout: {
+          'icon-image': 'pulsing-dot',
+          'icon-allow-overlap': true,
+          'icon-size': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            11,
+            0.01,
+            16,
+            0.2,
+            18,
+            1,
+          ]
+        },
+        filter: ['==', 'id', ''],
+      });
+
+      this.map.addLayer({
+        id: MapLayer.AssetHighlight,
+        type: 'symbol',
+        source: MapSource.Asset,
+
+        layout: {
+          'icon-image': 'pulsing-dot',
+          'icon-allow-overlap': true,
+          'icon-offset': [-4, 0],
+          'icon-size': [
+            'interpolate',
+            ['linear'],
+            ['zoom'],
+            11,
+            0.01,
+            16,
+            0.2,
+            18,
+            0.5,
+          ]
         },
         filter: ['==', 'id', ''],
       });
@@ -275,9 +310,11 @@ export class MapService {
     this.addControls();
 
     this.map.on('load', () => {
+
       this.mapStateService.updateMapLoaded(true);
 
       this.map.resize();
+      this.map.addImage('pulsing-dot', this.pulsingDot(this.map, 250), { pixelRatio: 2 });
 
       this.addAerial();
       this.addCustomBaseMap();
@@ -286,9 +323,11 @@ export class MapService {
       this.addClickBehaviourToLayer(MapLayer.Asset);
       this.addClickBehaviourToLayer(MapLayer.AssetIcon);
 
-      this.map.on('touchstart', () =>
-        this.mapStateService.updateMapInteraction(true)
-      );
+      this.map.on('touchstart', () => {
+        this.mapStateService.updateMapInteraction(true);
+        this.removeFeatureHighlight(MapLayer.StageHighlight);
+        this.removeFeatureHighlight(MapLayer.AssetHighlight);
+      });
       this.map.on('touchend', () =>
         this.mapStateService.updateMapInteraction(false)
       );
@@ -349,6 +388,17 @@ export class MapService {
             : feature.properties,
         geometry: feature.geometry as Point,
       }));
+
+      switch (features[0].mapLayer) {
+        case 'stage':
+          this.highlightFeature(MapLayer.StageHighlight, features[0].id);
+          break;
+        case 'asset_geojson-icon':
+          this.highlightFeature(MapLayer.AssetHighlight, features[0].id);
+          break;
+        default:
+          break;
+      }
 
       this.mapStateService.selectMapFeatures(features);
     });
@@ -495,4 +545,75 @@ export class MapService {
       'label_road'
     );
   }
+
+  private pulsingDot(map: Map, size: number, drawInnerCircle: boolean = false): StyleImageInterface {
+    const self = this;
+    return {
+      width: size,
+      height: size,
+      data: new Uint8Array(size * size * 4),
+
+      // get rendering context for the map canvas when layer is added to the map
+      onAdd() {
+        const canvas = document.createElement('canvas') as HTMLCanvasElement;
+        canvas.width = this.width;
+        canvas.height = this.height;
+        this.context = canvas.getContext('2d', { willReadFrequently: true });
+      },
+
+      // called once before every frame where the icon will be used
+      render() {
+        const duration = 2000;
+        const t = (performance.now() % duration) / duration;
+
+        const radius = (size / 2) * 0.3;
+        const outerRadius = (size / 2) * 0.7 * t + radius;
+        const context = this.context;
+
+        // draw outer circle
+        context.clearRect(0, 0, this.width, this.height);
+        context.beginPath();
+        context.arc(
+          this.width / 2,
+          this.height / 2,
+          outerRadius,
+          0,
+          Math.PI * 2
+        );
+        context.fillStyle = `rgba(255, 200, 200,${1 - t})`;
+        context.fill();
+
+        // draw inner circle
+        if (drawInnerCircle) {
+          context.beginPath();
+          context.arc(
+            this.width / 2,
+            this.height / 2,
+            radius,
+            0,
+            Math.PI * 2
+          );
+          context.fillStyle = 'rgba(255, 100, 100, 1)';
+          context.strokeStyle = 'white';
+          context.lineWidth = 2 + 4 * (1 - t);
+          context.fill();
+          context.stroke();
+        }
+
+        // update this image's data with data from the canvas
+        this.data = context.getImageData(
+          0,
+          0,
+          this.width,
+          this.height
+        ).data;
+
+        // continuously repaint the map, resulting in the smooth animation of the dot
+        map.triggerRepaint();
+
+        // return `true` to let the map know that the image was updated
+        return true;
+      }
+    }
+  };
 }

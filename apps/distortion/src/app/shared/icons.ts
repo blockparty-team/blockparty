@@ -29,7 +29,8 @@ import {
   thumbsUpOutline,
   ticket,
   ticketOutline,
-  shareSocialOutline
+  shareSocialOutline,
+  compassOutline,
 } from 'ionicons/icons';
 
 export const icons = {
@@ -64,4 +65,5 @@ export const icons = {
   ticket,
   ticketOutline,
   shareSocialOutline,
+  compassOutline,
 };

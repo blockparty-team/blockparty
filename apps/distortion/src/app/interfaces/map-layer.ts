@@ -16,6 +16,7 @@ export enum MapLayer {
   StageHighlight = 'stage-highlight',
   Asset = 'asset_geojson',
   AssetIcon = 'asset_geojson-icon',
+  AssetHighlight = 'asset-highlight',
 }
 
 export enum StageLayer {

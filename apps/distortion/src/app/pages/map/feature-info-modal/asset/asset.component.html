@@ -6,7 +6,11 @@
 
     <ion-buttons slot="end">
       <ng-container *ngIf="location$ | async as location">
-        <ion-button (click)="onOpenGoogleMapsDirections(location)">
+        <ion-button
+          color="primary"
+          fill="outline"
+          (click)="onOpenGoogleMapsDirections(location)"
+        >
           Directions
         </ion-button>
       </ng-container>
