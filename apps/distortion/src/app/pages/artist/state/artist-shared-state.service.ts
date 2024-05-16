@@ -46,24 +46,28 @@ export class ArtistSharedStateService {
     filter(([artists, favoriteArtistIds]) => !!artists && !!favoriteArtistIds),
     map(([artists, favoriteArtistIds]) =>
       artists.map((artist) => {
+
         const [bucket, path] = getBucketAndPath(artist.storage_path);
+        const imgUrl = bucket && path
+          ? this.supabase.publicImageUrl(bucket, path)
+          : 'assets/distortion_logo.png'
 
         const srcset =
           bucket && path
             ? this.fileService.imageSrcset(bucket, path)
             : 'assets/distortion_logo.png';
 
+        const isFavorite = favoriteArtistIds.includes(artist.id);
+
         return {
           ...artist,
-          imgUrl:
-            bucket && path
-              ? this.supabase.publicImageUrl(bucket, path)
-              : 'assets/distortion_logo.png',
+          imgUrl,
           srcset,
-          // Favorites only exists if user added artists to favorites
-          isFavorite: favoriteArtistIds.includes(artist.id),
+          isFavorite
         };
       })
-    )
+    ),
+    // Mainly to ensure shared favorites state across the app
+    shareReplay(1)
   );
 }
