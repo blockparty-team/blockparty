@@ -14,15 +14,15 @@ import { sub, add } from 'date-fns';
   providedIn: 'root',
 })
 export class LocalNotificationsService {
-  constructor() {}
+  constructor() { }
 
   public async getNextId(): Promise<number> {
     let currentId: number;
     currentId = await LocalNotifications.getPending().then((pending) => {
       return pending.notifications.length > 0
         ? Math.max(
-            ...pending.notifications.map((notification) => notification.id)
-          )
+          ...pending.notifications.map((notification) => notification.id)
+        )
         : 0;
     });
     return currentId + 1;
@@ -100,13 +100,12 @@ export class LocalNotificationsService {
     const startTime = new Date(artistAct.startTime);
     return {
       id,
-      title: `${artistAct.artistName} is playing in ${minutesBefore} minutes`,
-      body: `${artistAct.artistName} is playing at ${
-        artistAct.stageName
-      } stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString(
-        [],
-        { hour: '2-digit', minute: '2-digit' }
-      )}`,
+      title: `${artistAct.artistName} is playing soon`,
+      body: `${artistAct.artistName} is playing at ${artistAct.stageName
+        } stage (${artistAct.eventName} event) at ${startTime.toLocaleTimeString(
+          [],
+          { hour: '2-digit', minute: '2-digit' }
+        )}`,
       schedule: { at: sub(startTime, { minutes: minutesBefore }) },
       extra: { id: artistAct.artistId, artistName: artistAct.artistName },
       largeIcon: 'ic_launcher',
