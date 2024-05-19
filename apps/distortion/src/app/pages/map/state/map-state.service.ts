@@ -85,6 +85,17 @@ export class MapStateService {
     shareReplay(1)
   )
 
+  public mapTiles$ = concat(
+    this.deviceStorageService
+      .get('mapTiles')
+      .pipe(filter((mapTiles) => !!mapTiles)),
+    this.supabase.mapTiles$.pipe(
+      filter((mapTiles) => !!mapTiles),
+      tap((artists) => this.deviceStorageService.set('mapTiles', artists))
+    )
+  ).pipe(
+    shareReplay(1)
+  )
 
   private mapIconsFromSupabase$: Observable<MapIconViewModel[]> =
     this.supabase.mapIcons$.pipe(

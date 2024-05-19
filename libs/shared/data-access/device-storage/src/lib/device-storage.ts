@@ -11,7 +11,8 @@ export type StorageKeys =
   | 'events'
   | 'eventsGroupedByType'
   | 'mapLayers'
-  | 'mapIcons';
+  | 'mapIcons'
+  | 'mapTiles';
 
 @Injectable({
   providedIn: 'root',

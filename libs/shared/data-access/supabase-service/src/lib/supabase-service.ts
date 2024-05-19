@@ -298,6 +298,17 @@ export class SupabaseService {
     ).pipe(map((res) => res.data));
   }
 
+  get mapTiles$(): Observable<Tables<'map_pmtiles'>[]> {
+    return from(
+      this.supabase
+        .from('map_pmtiles')
+        .select('*')
+        .filter('public', 'eq', true)
+    ).pipe(
+      map((res) => res.data as Tables<'map_pmtiles'>[])
+    );
+  }
+
   downloadFile(bucket: string, path: string) {
     return from(this.supabase.storage.from(bucket).download(path)).pipe(
       map((res) => res.data)
