@@ -11,6 +11,7 @@ import {
   Map,
   PointLike,
   StyleImageInterface,
+  addProtocol
 } from 'maplibre-gl';
 import { Point } from 'geojson';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
@@ -22,6 +23,9 @@ import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-featur
 import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
 import { environment } from '@shared/environments';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Protocol, PMTiles } from "pmtiles";
+import { getBucketAndPath } from '../shared/functions/storage';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,8 +33,28 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 export class MapService {
   private mapStateService = inject(MapStateService);
   private geolocationService = inject(GeolocationService);
+  private supabase = inject(SupabaseService);
 
   private map: Map;
+  private pmtilesProtocol = new Protocol();
+
+  private addMapIcons$ = this.mapStateService.mapIcons$.pipe(
+    // Add images to MapLibre map object
+    tap((icons: MapIconViewModel[]) => {
+      icons
+        .filter((icon) => !!icon.image)
+        .forEach((icon) => {
+          if (this.map.hasImage(icon.name)) {
+            this.map.removeImage(icon.name);
+          }
+          this.map.addImage(icon.name, icon.image);
+        });
+    }),
+    catchError((err) => {
+      console.error(err);
+      return EMPTY;
+    })
+  );
 
   private addMapLayers$ = this.mapStateService.mapLayers$.pipe(
     tap((layers) => {
@@ -210,9 +234,9 @@ export class MapService {
             15,
             0,
             16,
-            0.5,
+            0.3,
             20,
-            1,
+            1.1
           ],
           'icon-allow-overlap': true,
         },
@@ -269,30 +293,45 @@ export class MapService {
     })
   );
 
-  private addMapIcons$ = this.mapStateService.mapIcons$.pipe(
-    // Add images to MapLibre map object
-    tap((icons: MapIconViewModel[]) => {
-      icons
-        .filter((icon) => !!icon.image)
-        .forEach((icon) => {
-          if (this.map.hasImage(icon.name)) {
-            this.map.removeImage(icon.name);
-          }
-          this.map.addImage(icon.name, icon.image);
+  private addCustomBaseMap$ = this.mapStateService.mapTiles$.pipe(
+    tap(tileLayers => {
+      tileLayers.forEach(tileLayer => {
+        const [bucket, path] = getBucketAndPath(tileLayer.storage_path);
+        const url = this.supabase.publicImageUrl(bucket, path);
+
+        const protocol = new PMTiles(`pmtiles://${url}`);
+        this.pmtilesProtocol.add(protocol);
+
+        if (!this.map.getSource(tileLayer.name)) {
+          this.map.addSource(tileLayer.name, {
+            type: 'vector',
+            url: `pmtiles://${url}`
+          });
+        }
+
+
+        (tileLayer.style as []).forEach((style: any) => {
+          if (this.map.getLayer(style.id)) return;
+
+          this.map.addLayer({
+            ...style,
+            source: tileLayer.name
+          }, MapLayer.Asset)
         });
-    }),
-    catchError((err) => {
-      console.error(err);
-      return EMPTY;
+      })
     })
-  );
+  )
 
   constructor() {
     this.mapStateService.mapLoaded$.pipe(
       filter(loaded => loaded),
       switchMap(() => concat(
         this.addMapIcons$,
-        this.addMapLayers$
+        this.addMapLayers$.pipe(
+          // This is not chained in concat, since addMapLayers$ not completing
+          // hence this switchMap is used to trigger addCustomBaseMap$ after addMapLayers$ is done
+          switchMap(() => this.addCustomBaseMap$)
+        )
       )),
       takeUntilDestroyed()
     ).subscribe();
@@ -308,6 +347,9 @@ export class MapService {
       attributionControl: false,
     });
 
+    addProtocol("pmtiles", this.pmtilesProtocol.tile);
+
+
     this.addControls();
 
     this.map.on('load', () => {
@@ -318,7 +360,9 @@ export class MapService {
       this.map.addImage('pulsing-dot', this.pulsingDot(this.map, 250), { pixelRatio: 2 });
 
       this.addAerial();
-      this.addCustomBaseMap();
+
+      // TODO: Remove this method when pmtiles basemap is tested and working
+      // this.addCustomBaseMap();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
       this.addClickBehaviourToLayer(MapLayer.Asset);
@@ -485,6 +529,7 @@ export class MapService {
     this.map.setFilter(layer, filter);
   }
 
+  // TODO: Remove this method when pmtiles basemap is tested and working
   private addCustomBaseMap(): void {
     this.map.addSource('custom-base-map', {
       type: 'raster',

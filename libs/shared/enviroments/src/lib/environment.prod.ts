@@ -13,7 +13,7 @@ export const environment: Environment = {
   mapView: {
     center: [12.57632, 55.68215],
     zoom: 11.5,
-    pitch: 0,
+    pitch: 35,
   },
   oneSignalAppId: '1c3348ed-5747-4c3d-89f1-f6ad3049c0a0',
   featureToggle: {
