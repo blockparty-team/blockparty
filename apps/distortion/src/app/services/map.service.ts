@@ -316,7 +316,7 @@ export class MapService {
           this.map.addLayer({
             ...style,
             source: tileLayer.name
-          }, MapLayer.Asset)
+          }, MapLayer.EventHighLight)
         });
       })
     })
