@@ -390,6 +390,9 @@ export class MapService {
       },
       trackUserLocation: true,
       showAccuracyCircle: false,
+      fitBoundsOptions: {
+        zoom: 18,
+      }
     });
 
     this.map.addControl(geolocateControl, 'bottom-right');
