@@ -39,7 +39,7 @@
     "@capacitor/splash-screen": "5.0.7",
     "@capacitor/status-bar": "5.0.7",
     "@capawesome/capacitor-app-update": "^5.1.0",
-    "@ionic/angular": "7.8.2",
+    "@ionic/angular": "^8.2.5",
     "@supabase/supabase-js": "2.41.1",
     "aos": "^3.0.0-beta.6",
     "date-fns": "^2.29.3",
