@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     namespace "dk.cphdistortion.app"
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "dk.cphdistortion.app"
         minSdkVersion rootProject.ext.minSdkVersion
