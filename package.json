@@ -45,7 +45,7 @@
     "date-fns": "^2.29.3",
     "geojson": "^0.5.0",
     "ionicons": "^7.2.1",
-    "maplibre-gl": "4.1.2",
+    "maplibre-gl": "4.5.0",
     "ngx-image-cropper": "^7.2.1",
     "ngxtension": "^1.10.0",
     "ol": "9.1.0",
