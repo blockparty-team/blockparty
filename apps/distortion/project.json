@@ -24,8 +24,8 @@
           "apps/distortion/src/OneSignalSDKWorker.js"
         ],
         "styles": [
-          "apps/distortion/src/theme/variables.scss",
-          "apps/distortion/src/global.scss"
+          "apps/distortion/src/global.scss",
+          "apps/distortion/src/theme/variables.scss"
         ],
         "scripts": [],
         "vendorChunk": true,
