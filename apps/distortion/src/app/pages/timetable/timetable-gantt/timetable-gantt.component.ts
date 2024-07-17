@@ -9,8 +9,7 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { combineLatest, interval, Observable } from 'rxjs';
 import { filter, map, shareReplay, startWith } from 'rxjs/operators';
-import eachHourOfInterval from 'date-fns/eachHourOfInterval';
-import differenceInMinutes from 'date-fns/differenceInMinutes';
+import { differenceInMinutes, eachHourOfInterval } from 'date-fns';
 import { TimetableStateService } from '../state/timetable-state.service';
 import {
   DayEventStageTimetable,
