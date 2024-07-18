@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, concat } from 'rxjs';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
+import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { DayEventStageTimetable } from '@distortion/app/interfaces/day-event-stage-timetable';
 import { ArtistNotification } from '@distortion/app/interfaces/favorite-notification';
 import { ArtistViewModel } from '@distortion/app/interfaces/artist';

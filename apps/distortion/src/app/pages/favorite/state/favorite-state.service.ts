@@ -4,7 +4,7 @@ import {
   Favorite,
   FavoriteEntity,
 } from '@distortion/app/interfaces/database-entities';
-import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
+import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { DeviceService } from '@distortion/app/services/device.service';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import {
@@ -76,11 +76,11 @@ export class FavoriteStateService {
       update = this._favorites$.value.map((favorite) =>
         favorite.entity === entity
           ? {
-              ...favorite,
-              ids: favorite.ids.includes(id)
-                ? favorite.ids.filter((ids) => ids !== id)
-                : [...favorite.ids, id],
-            }
+            ...favorite,
+            ids: favorite.ids.includes(id)
+              ? favorite.ids.filter((ids) => ids !== id)
+              : [...favorite.ids, id],
+          }
           : favorite
       );
     }

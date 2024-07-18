@@ -5,7 +5,7 @@ import {
   EventWithRelations,
 } from '@distortion/app/interfaces/event';
 import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
-import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
+import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@distortion/app/services/file.service';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
@@ -87,7 +87,7 @@ export class EventStateService {
     private supabase: SupabaseService,
     private deviceStorageService: DeviceStorageService,
     private fileService: FileService
-  ) {}
+  ) { }
 
   selectEventTypeId(eventTypeId: string): void {
     this._selectedEventTypeId$.next(eventTypeId);

@@ -3,7 +3,7 @@ import { Observable, BehaviorSubject, combineLatest, concat } from 'rxjs';
 import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { isSameDay, sub } from 'date-fns';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import { DeviceStorageService } from '@distortion/app/services/device-storage.service';
+import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { TimetableSharedStateService } from '@distortion/app/pages/timetable/state/timetable-shared-state.service';
 import { TabsStateService } from '@distortion/app/pages/tabs/state/tabs-state.service';
 import {
