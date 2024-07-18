@@ -22,7 +22,7 @@ import { RouteName } from '@distortion/app/shared/models/routeName';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
 import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
-import { AppStateService } from '@distortion/app/services/app-state.service';
+import { AppStateService } from '@blockparty/festival/service/app-state';
 
 @Component({
   selector: 'app-root',

@@ -27,7 +27,7 @@ import {
   GeojsonProperties,
   MapClickedFeature,
 } from '@distortion/app/interfaces/map-clicked-feature';
-import { AppStateService } from '@distortion/app/services/app-state.service';
+import { AppStateService } from '@blockparty/festival/service/app-state';
 
 @Injectable({
   providedIn: 'root',

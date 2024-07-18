@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, interval, merge, Observable, of, startWith, Subject } from "rxjs";
+import { BehaviorSubject, interval, merge, Observable, startWith } from "rxjs";
 
 @Injectable({
   providedIn: "root"
 })
 export class AppStateService {
   private _reloadData$ = new BehaviorSubject<null>(null);
-  reloadData$: Observable<number> = merge(
+  reloadData$: Observable<number | null> = merge(
     this._reloadData$.asObservable().pipe(
       startWith(null)
     ),
