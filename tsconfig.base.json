@@ -28,6 +28,9 @@
       "@blockparty/shared/data-access/supabase-service": [
         "libs/shared/data-access/supabase-service/src/index.ts"
       ],
+      "@blockparty/shared/service/device": [
+        "libs/shared/service/device/src/index.ts"
+      ],
       "@blockparty/shared/services/app-update-service": [
         "libs/shared/services/app-update-service/src/index.ts"
       ],

@@ -5,7 +5,7 @@ import {
   FavoriteEntity,
 } from '@distortion/app/interfaces/database-entities';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import { DeviceService } from '@distortion/app/services/device.service';
+import { DeviceService } from '@blockparty/shared/service/device';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import {
   BehaviorSubject,
