@@ -26,7 +26,6 @@ import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { Tab } from '@distortion/app/interfaces/tab';
-import { AnimationOptions, LottieComponent } from 'ngx-lottie';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { RouteName } from '@distortion/app/shared/models/routeName';
@@ -49,7 +48,6 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
   imports: [
     FilterEventsComponent,
     NgIf,
-    LottieComponent,
     AsyncPipe,
     IonHeader,
     IonContent,
@@ -71,10 +69,6 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   );
 
   private abandon$ = new Subject<void>();
-
-  animationOptions: AnimationOptions = {
-    path: '/assets/lottiefiles/map.json',
-  };
 
   ngOnInit(): void {
     this.filterEventsStateService.selectedDayId$

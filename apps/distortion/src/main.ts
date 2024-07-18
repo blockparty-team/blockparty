@@ -1,5 +1,4 @@
 import { enableProdMode, importProvidersFrom } from '@angular/core';
-import { LottieModule } from 'ngx-lottie';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -13,10 +12,6 @@ import { RouteReuseStrategy, provideRouter } from '@angular/router';
 import { environment } from '@shared/environments';
 import { AppComponent } from '@distortion/app/app.component';
 import { ROUTES } from '@distortion/app/routes';
-
-export function playerFactory() {
-  return import(/* webpackChunkName: 'lottie-web' */ 'lottie-web');
-}
 
 if (environment.production) {
   enableProdMode();
@@ -33,7 +28,6 @@ bootstrapApplication(AppComponent, {
       registrationStrategy: 'registerWhenStable:30000',
     }),
     provideAnimations(),
-    importProvidersFrom(LottieModule.forRoot({ player: playerFactory })),
     {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy,
