@@ -5,7 +5,7 @@ import {
 } from '@distortion/app/interfaces/entity-search-result';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
-import { GeolocationService } from './geolocation.service';
+import { GeolocationService } from '@blockparty/shared/service/geolocation';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
@@ -25,7 +25,7 @@ export class SearchService {
     private artistSateService: ArtistStateService,
     private eventStateService: EventStateService,
     private mapStateService: MapStateService
-  ) {}
+  ) { }
 
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(

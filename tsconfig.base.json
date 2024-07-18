@@ -34,6 +34,9 @@
       "@blockparty/shared/service/device": [
         "libs/shared/service/device/src/index.ts"
       ],
+      "@blockparty/shared/service/geolocation": [
+        "libs/shared/service/geolocation/src/index.ts"
+      ],
       "@blockparty/shared/services/app-update-service": [
         "libs/shared/services/app-update-service/src/index.ts"
       ],

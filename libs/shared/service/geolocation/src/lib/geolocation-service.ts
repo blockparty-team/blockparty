@@ -15,7 +15,7 @@ export class GeolocationService {
     enableHighAccuracy: true,
   };
 
-  constructor() {}
+  constructor() { }
 
   checkPermissions(): Observable<PermissionStatus> {
     return from(Geolocation.checkPermissions());
@@ -30,6 +30,6 @@ export class GeolocationService {
   }
 
   watchPosition(): any {
-    Geolocation.watchPosition(this.positionOptions, (position, err) => {});
+    Geolocation.watchPosition(this.positionOptions, (position, err) => { });
   }
 }
