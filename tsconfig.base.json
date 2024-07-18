@@ -25,6 +25,9 @@
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
+      "@blockparty/shared/data-access/filesystem": [
+        "libs/shared/data-access/filesystem/src/index.ts"
+      ],
       "@blockparty/shared/data-access/supabase-service": [
         "libs/shared/data-access/supabase-service/src/index.ts"
       ],

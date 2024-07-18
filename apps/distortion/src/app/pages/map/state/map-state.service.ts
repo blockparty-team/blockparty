@@ -9,7 +9,7 @@ import {
   tap,
 } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import { FilesystemService } from '@distortion/app/services/filesystem.service';
+import { FilesystemService } from '@blockparty/shared/data-access/filesystem';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
 import {

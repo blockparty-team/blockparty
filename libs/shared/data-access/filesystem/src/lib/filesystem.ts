@@ -26,7 +26,7 @@ export class FilesystemService {
     );
   }
 
-  public readFile(path: string): Observable<string | Blob> {
+  public readFile(path: string): Observable<string | Blob | null> {
     return from(
       Filesystem.readFile({
         directory: Directory.Cache,
