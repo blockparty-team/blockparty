@@ -6,7 +6,7 @@ export const blobToBase64 = (blob: Blob): Observable<string | ArrayBuffer> => {
   reader.readAsDataURL(blob);
 
   return fromEvent(reader, 'load').pipe(
-    map(() => reader.result),
+    map(() => reader.result as string | ArrayBuffer),
     takeUntil(fromEvent(reader, 'error')),
     takeUntil(fromEvent(reader, 'abort'))
   );
@@ -45,6 +45,10 @@ export const imgToBase64 = (img: HTMLImageElement): string => {
   const ctx = canvas.getContext('2d');
   canvas.width = img.width;
   canvas.height = img.height;
+
+  if (!ctx) {
+    throw new Error('Could not get canvas context');
+  }
 
   ctx.drawImage(img, 0, 0);
 

@@ -11,10 +11,7 @@ import {
 import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 import { FilesystemService } from '@blockparty/shared/data-access/filesystem';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import {
-  imgToBase64,
-  imgFromUrl,
-} from '@distortion/app/shared/functions/file-utils';
+import { imgToBase64, imgFromUrl } from '@blockparty/util/file';
 import {
   MapIcon,
   MapSource,
