@@ -9,7 +9,7 @@ import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-featur
 import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import { StageGeojsonProperties } from '@distortion/app/interfaces/stage-geojson-properties';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { Feature, Point } from 'geojson';
 import {

@@ -22,6 +22,9 @@
       "@blockparty/festival/service/app-state": [
         "libs/festival/service/app-state/src/index.ts"
       ],
+      "@blockparty/festival/service/map": [
+        "libs/festival/service/map/src/index.ts"
+      ],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],

@@ -8,10 +8,9 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 import { FilesystemService } from '@blockparty/shared/data-access/filesystem';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
 import {
   imgToBase64,
   imgFromUrl,
@@ -28,6 +27,7 @@ import {
   MapClickedFeature,
 } from '@distortion/app/interfaces/map-clicked-feature';
 import { AppStateService } from '@blockparty/festival/service/app-state';
+import { Tables } from 'libs/distortion/data-access/supabase/src/lib/database-definitions';
 
 @Injectable({
   providedIn: 'root',
@@ -85,7 +85,7 @@ export class MapStateService {
     shareReplay(1)
   )
 
-  public mapTiles$ = concat(
+  public mapTiles$: Observable<Tables<'map_pmtiles'>[]> = concat(
     this.deviceStorageService
       .get('mapTiles')
       .pipe(filter((mapTiles) => !!mapTiles)),

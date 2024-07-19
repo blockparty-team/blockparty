@@ -5,7 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { EventStateService } from '../event/state/event-state.service';
 import { EventViewModel } from '@distortion/app/interfaces/event';
 import { MapLayer } from '@distortion/app/interfaces/map-layer';
@@ -93,9 +93,8 @@ export class EventDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${event.name}`,
           title: 'Share',
-          text: `Check out ${event.name} event at ${
-            environment.festivalName
-          } running ${event.days.join(' and ')}`,
+          text: `Check out ${event.name} event at ${environment.festivalName
+            } running ${event.days.join(' and ')}`,
           url: `${environment.appUrl}${this.router.url}`,
         });
       }

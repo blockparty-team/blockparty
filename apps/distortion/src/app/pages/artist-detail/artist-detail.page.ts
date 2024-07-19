@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { ArtistViewModel } from '@distortion/app/interfaces/artist';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
@@ -153,11 +153,10 @@ export class ArtistDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${artist.name}`,
           title: 'Share',
-          text: `${artist.name} is playing at ${
-            environment.festivalName
-          } ${artist.timetable
-            .map((t) => t.day.name)
-            .join(' and ')} - Check it out:`,
+          text: `${artist.name} is playing at ${environment.festivalName
+            } ${artist.timetable
+              .map((t) => t.day.name)
+              .join(' and ')} - Check it out:`,
           url: `${environment.appUrl}${this.router.url}`,
         });
       }

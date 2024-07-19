@@ -3,7 +3,7 @@ import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
 import { ToggleCustomEvent } from '@ionic/angular/standalone';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import { MapStateService } from '../state/map-state.service';
 import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
@@ -50,7 +50,7 @@ export class LegendComponent implements OnInit {
   constructor(
     private mapService: MapService,
     private mapStateService: MapStateService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.iconsWithToggleState$ = combineLatest([

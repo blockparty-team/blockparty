@@ -10,9 +10,8 @@ import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
 } from '@distortion/app/interfaces/entity-search-result';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { SearchService } from '@distortion/app/services/search.service';
-import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -23,7 +22,7 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';

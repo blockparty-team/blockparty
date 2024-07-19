@@ -20,7 +20,7 @@ import {
   catchError,
 } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';

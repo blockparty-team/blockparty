@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { concat, EMPTY } from 'rxjs';
+import { concat, EMPTY, lastValueFrom } from 'rxjs';
 import { catchError, filter, first, switchMap, tap } from 'rxjs/operators';
 import { Device } from '@capacitor/device';
 import {
@@ -24,8 +24,7 @@ import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
 import { environment } from '@shared/environments';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Protocol, PMTiles } from "pmtiles";
-import { getBucketAndPath } from '../shared/functions/storage';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +34,7 @@ export class MapService {
   private geolocationService = inject(GeolocationService);
   private supabase = inject(SupabaseService);
 
-  private map: Map;
+  private map!: Map;
   private pmtilesProtocol = new Protocol();
 
   private addMapIcons$ = this.mapStateService.mapIcons$.pipe(
@@ -44,10 +43,15 @@ export class MapService {
       icons
         .filter((icon) => !!icon.image)
         .forEach((icon) => {
-          if (this.map.hasImage(icon.name)) {
-            this.map.removeImage(icon.name);
+          const name = icon.name;
+          const image = icon.image;
+
+          if (!name || !image) return;
+
+          if (this.map.hasImage(name)) {
+            this.map.removeImage(name);
           }
-          this.map.addImage(icon.name, icon.image);
+          this.map.addImage(name, image);
         });
     }),
     catchError((err) => {
@@ -296,7 +300,10 @@ export class MapService {
   private addCustomBaseMap$ = this.mapStateService.mapTiles$.pipe(
     tap(tileLayers => {
       tileLayers.forEach(tileLayer => {
+        if (tileLayer.storage_path === null) return;
         const [bucket, path] = getBucketAndPath(tileLayer.storage_path);
+
+        if (!bucket || !path) return;
         const url = this.supabase.publicImageUrl(bucket, path);
 
         const protocol = new PMTiles(`pmtiles://${url}`);
@@ -402,10 +409,10 @@ export class MapService {
       // TODO clean up mix of promise and observable
       Promise.all([
         Device.getInfo(),
-        this.geolocationService.checkPermissions().toPromise(),
+        lastValueFrom(this.geolocationService.checkPermissions()),
       ]).then(([device, permission]) => {
-        if (permission.location !== 'granted' && device.platform !== 'web') {
-          this.geolocationService.requestPermissions().toPromise();
+        if (permission!.location !== 'granted' && device.platform !== 'web') {
+          lastValueFrom(this.geolocationService.requestPermissions());
         }
       });
     });
@@ -413,10 +420,10 @@ export class MapService {
 
   private addClickBehaviourToLayer(mapLayer: MapLayer): void {
     this.map.on('click', mapLayer, (e) => {
-      if (e.features.length === 0) return;
+      if (e.features!.length === 0) return;
 
-      const features: MapClickedFeature<any>[] = e.features.map((feature) => ({
-        id: feature.properties.id,
+      const features: MapClickedFeature<any>[] = e.features!.map((feature) => ({
+        id: feature.properties['id'],
         mapLayer,
         properties:
           mapLayer === MapLayer.Stage
@@ -425,12 +432,12 @@ export class MapService {
               // MapLibre automaticly stringifies nested objects in geojson properties.
               // Since stages has timetables and tickets properties represented as objects,
               // these are parsed to get the back to original objects.
-              timetables: JSON.parse(feature.properties.timetables),
-              tickets: feature.properties.tickets
-                ? JSON.parse(feature.properties.tickets)
+              timetables: JSON.parse(feature.properties['timetables']),
+              tickets: feature.properties['tickets']
+                ? JSON.parse(feature.properties['tickets'])
                 : null,
-              tags: feature.properties.tags
-                ? JSON.parse(feature.properties.tags)
+              tags: feature.properties['tags']
+                ? JSON.parse(feature.properties['tags'])
                 : null,
             } as StageGeojsonProperties)
             : feature.properties,
@@ -596,6 +603,8 @@ export class MapService {
   }
 
   private pulsingDot(map: Map, size: number, drawInnerCircle: boolean = false): StyleImageInterface {
+    let context: CanvasRenderingContext2D;
+
     const self = this;
     return {
       width: size,
@@ -607,7 +616,7 @@ export class MapService {
         const canvas = document.createElement('canvas') as HTMLCanvasElement;
         canvas.width = this.width;
         canvas.height = this.height;
-        this.context = canvas.getContext('2d', { willReadFrequently: true });
+        context = canvas.getContext('2d', { willReadFrequently: true })!;
       },
 
       // called once before every frame where the icon will be used
@@ -617,7 +626,6 @@ export class MapService {
 
         const radius = (size / 2) * 0.3;
         const outerRadius = (size / 2) * 0.7 * t + radius;
-        const context = this.context;
 
         // draw outer circle
         context.clearRect(0, 0, this.width, this.height);

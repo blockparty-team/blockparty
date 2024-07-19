@@ -7,7 +7,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { EventViewModel } from '@distortion/app/interfaces/event';
 import { MapLayer } from '@distortion/app/interfaces/map-layer';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { EntityBadgeColor } from '../entity-badge-color';

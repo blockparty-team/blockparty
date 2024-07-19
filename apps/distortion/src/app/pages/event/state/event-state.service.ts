@@ -7,8 +7,7 @@ import {
 import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@distortion/app/services/file.service';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import { getBucketAndPath } from '@distortion/app/shared/functions/storage';
+import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {
   catchError,

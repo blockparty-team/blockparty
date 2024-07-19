@@ -11,7 +11,7 @@ import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MapStateService } from '../state/map-state.service';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapService } from '@blockparty/festival/service/map';
 import { AssetComponent } from './asset/asset.component';
 import { StageTimetableComponent } from './stage-timetable/stage-timetable.component';
 import { NgIf, AsyncPipe } from '@angular/common';
