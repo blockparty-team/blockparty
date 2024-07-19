@@ -10,9 +10,9 @@ import {
   DayEvent,
   PartialEvent,
   PartialEventType,
-} from '@distortion/app/interfaces/day-event';
-import { DayEventStageTimetable } from '@distortion/app/interfaces/day-event-stage-timetable';
-import { Tab } from '@distortion/app/interfaces/tab';
+  DayEventStageTimetable,
+  Tab,
+} from '@blockparty/festival/types';
 
 @Injectable()
 export class FilterEventsStateService {

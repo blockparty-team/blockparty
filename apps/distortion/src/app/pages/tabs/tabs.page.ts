@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Tab } from '@distortion/app/interfaces/tab';
+import { Tab } from '@blockparty/festival/types';
 import { MenuController } from '@ionic/angular/standalone';
 import { TabsStateService } from './state/tabs-state.service';
 import { RouteName } from '@distortion/app/shared/models/routeName';

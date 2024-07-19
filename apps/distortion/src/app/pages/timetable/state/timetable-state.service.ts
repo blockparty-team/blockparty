@@ -4,7 +4,7 @@ import { filter, map, shareReplay } from 'rxjs/operators';
 import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { TimetableSharedStateService } from './timetable-shared-state.service';
-import { DayEventStageTimetable } from '@distortion/app/interfaces/day-event-stage-timetable';
+import { DayEventStageTimetable } from '@blockparty/festival/types';
 
 @Injectable({
   providedIn: 'root',

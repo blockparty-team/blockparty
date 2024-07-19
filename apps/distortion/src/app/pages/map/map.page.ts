@@ -21,11 +21,10 @@ import {
 } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/service/map';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
+import { MapLayer, Tab } from '@blockparty/festival/types';
 import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
-import { Tab } from '@distortion/app/interfaces/tab';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { RouteName } from '@distortion/app/shared/models/routeName';

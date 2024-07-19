@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TicketsStateService } from './state/tickets-state.service';
 import { Browser } from '@capacitor/browser';
-import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
+import { EventsGroupedByType } from '@blockparty/festival/types';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
   IonHeader,

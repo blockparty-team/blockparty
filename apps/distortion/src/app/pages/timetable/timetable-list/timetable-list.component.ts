@@ -8,7 +8,7 @@ import { Observable, combineLatest } from 'rxjs';
 import {
   StageTimetable,
   TimetableWithStageName,
-} from '@distortion/app/interfaces/day-event-stage-timetable';
+} from '@blockparty/festival/types';
 import { TimetableStateService } from '../state/timetable-state.service';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';

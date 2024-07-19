@@ -1,4 +1,4 @@
-import { Day, Event, EventType } from './database-entities';
+import { Event, EventType } from './database-entities';
 
 export interface PartialEventType {
   id: EventType['id'];

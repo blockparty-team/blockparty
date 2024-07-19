@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
+import { MapClickedFeature, MapLayer } from '@blockparty/festival/types';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MapStateService } from '../../state/map-state.service';

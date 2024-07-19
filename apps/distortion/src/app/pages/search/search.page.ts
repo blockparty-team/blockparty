@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from '@distortion/app/interfaces/entity-search-result';
+} from '@blockparty/festival/types';
 import { MapService } from '@blockparty/festival/service/map';
 import { SearchService } from '@distortion/app/services/search.service';
 import { SegmentCustomEvent } from '@ionic/core';

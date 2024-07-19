@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { ArtistViewModel } from '@blockparty/festival/types';
 import { MapService } from '@blockparty/festival/service/map';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';

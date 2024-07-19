@@ -10,15 +10,15 @@ import { filter, map, tap } from 'rxjs/operators';
 import { ModalController, SegmentCustomEvent, IonFooter } from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import {
+  MapLayer,
   Day,
   StageGeojsonProperties,
   Timetable,
-} from '@distortion/app/interfaces/stage-geojson-properties';
-import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
+  MapClickedFeature,
+  Ticket
+} from '@blockparty/festival/types';
 import { RouteName } from '@distortion/app/shared/models/routeName';
-import { Ticket } from '@distortion/app/interfaces/event';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonHeader,
@@ -38,8 +38,9 @@ import {
 } from '@ionic/angular/standalone';
 import { isSameDay, sub } from 'date-fns';
 
-interface TimetableViewModel extends Timetable {
+interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
   onAir: boolean;
+  name: string;
 }
 
 @Component({
@@ -138,7 +139,7 @@ export class StageTimetableComponent implements OnInit {
         timetable.map(slot => ({
           ...slot,
           onAir: new Date() > new Date(slot.start_time) && new Date() < new Date(slot.end_time),
-        }))
+        })) as unknown as TimetableViewModel[]
       ))
     );
 

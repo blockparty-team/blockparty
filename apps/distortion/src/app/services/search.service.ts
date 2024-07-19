@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-} from '@distortion/app/interfaces/entity-search-result';
+  MapSource,
+  StageGeojsonProperties,
+  AssetGeojsonProperties,
+} from '@blockparty/festival/types';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from '@blockparty/shared/service/geolocation';
@@ -10,10 +13,7 @@ import { SupabaseService } from '@blockparty/shared/data-access/supabase-service
 import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
-import { MapSource } from '@distortion/app/interfaces/map-layer';
 import { Feature, Point } from 'geojson';
-import { StageGeojsonProperties } from '@distortion/app/interfaces/stage-geojson-properties';
-import { AssetGeojsonProperties } from '@distortion/app/interfaces/asset-geojson-properties';
 
 @Injectable({
   providedIn: 'root',

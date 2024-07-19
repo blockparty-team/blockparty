@@ -16,7 +16,7 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
-import { Favorite, FavoriteEntity } from '@distortion/app/interfaces/database-entities';
+import { Favorite, FavoriteEntity } from '@blockparty/festival/types';
 import { LocalNotificationsService } from './local-notifications.service';
 import { NotificationSchedulingService } from './notification-scheduling.service';
 import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
@@ -39,7 +39,7 @@ export class FavoritesService {
     //   ).subscribe();
   }
 
-  scheduleNotification(): void {}
+  scheduleNotification(): void { }
 
   removeNotification(artist_id: string): void {
     this.localNotifications
@@ -48,7 +48,7 @@ export class FavoritesService {
     this.localNotifications.getAllNotifications();
   }
 
-  createNotificationMessage(): void {}
+  createNotificationMessage(): void { }
 
   toggleFavorite(entity: FavoriteEntity, id: string) {
     this.favoriteStateService.toggleFavorite(entity, id);

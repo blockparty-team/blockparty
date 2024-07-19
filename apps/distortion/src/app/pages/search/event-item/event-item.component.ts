@@ -5,8 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { EventViewModel } from '@distortion/app/interfaces/event';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
+import { EventViewModel, MapLayer } from '@blockparty/festival/types';
 import { MapService } from '@blockparty/festival/service/map';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { LngLatBoundsLike } from 'maplibre-gl';

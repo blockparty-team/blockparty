@@ -15,19 +15,17 @@ import {
   imgToBase64,
   imgFromUrl,
 } from '@distortion/app/shared/functions/file-utils';
-import { MapIcon } from '@distortion/app/interfaces/database-entities';
-import { MaskGeojsonProperties } from '@distortion/app/interfaces/mask-geojson-properties';
 import {
+  MapIcon,
   MapSource,
   MapSourceGeojson,
-} from '@distortion/app/interfaces/map-layer';
-import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
-import {
   GeojsonProperties,
   MapClickedFeature,
-} from '@distortion/app/interfaces/map-clicked-feature';
+  MapIconViewModel,
+  MaskGeojsonProperties,
+} from '@blockparty/festival/types';
 import { AppStateService } from '@blockparty/festival/service/app-state';
-import { Tables } from 'libs/distortion/data-access/supabase/src/lib/database-definitions';
+import { Tables } from '@blockparty/distortion/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',

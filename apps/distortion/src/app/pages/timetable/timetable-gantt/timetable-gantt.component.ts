@@ -19,7 +19,7 @@ import {
   StageTimetableViewModel,
   TimetableViewModel,
   TimeLabel,
-} from '@distortion/app/interfaces/day-event-stage-timetable';
+} from '@blockparty/festival/types';
 import { FavoritesService } from '@distortion/app/services/favorites.service';
 import { RouteName } from '@distortion/app/shared/models/routeName';
 import { RouterLink } from '@angular/router';

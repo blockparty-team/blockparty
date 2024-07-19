@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
+import { EventsGroupedByType } from '@blockparty/festival/types';
 import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,5 +21,5 @@ export class TicketsStateService {
       )
     );
 
-  constructor(private eventStateService: EventStateService) {}
+  constructor(private eventStateService: EventStateService) { }
 }

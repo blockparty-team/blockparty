@@ -3,9 +3,7 @@ import { Observable, concat } from 'rxjs';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import { DayEventStageTimetable } from '@distortion/app/interfaces/day-event-stage-timetable';
-import { ArtistNotification } from '@distortion/app/interfaces/favorite-notification';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { DayEventStageTimetable, ArtistNotification, ArtistViewModel } from '@blockparty/festival/types';
 import { ArtistSharedStateService } from '@distortion/app/pages/artist/state/artist-shared-state.service';
 import { AppStateService } from '@blockparty/festival/service/app-state';
 

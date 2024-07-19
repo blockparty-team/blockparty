@@ -5,9 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
-import { StageGeojsonProperties } from '@distortion/app/interfaces/stage-geojson-properties';
+import { MapClickedFeature, MapLayer, StageGeojsonProperties } from '@blockparty/festival/types';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
 import { MapService } from '@blockparty/festival/service/map';
 import { RouteName } from '@distortion/app/shared/models/routeName';

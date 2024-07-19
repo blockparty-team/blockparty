@@ -7,7 +7,7 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { ArtistViewModel } from '@blockparty/festival/types';
 import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@distortion/app/services/file.service';

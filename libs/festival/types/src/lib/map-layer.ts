@@ -29,11 +29,6 @@ export enum AssetLayer {
   AssetIcon = 'asset-icon',
 }
 
-export enum Event {
-  Event = 'event',
-  EventHighLight = 'event-highlight',
-}
-
 export enum DayEventMask {
   DayEventMask = 'day-event-mask',
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ArtistNotification } from '@distortion/app/interfaces/favorite-notification';
+import { ArtistNotification } from '@blockparty/festival/types';
 import {
   LocalNotifications,
   LocalNotificationSchema,

@@ -6,8 +6,8 @@ import {
 import {
   GeojsonProperties,
   MapClickedFeature,
-} from '@distortion/app/interfaces/map-clicked-feature';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
+  MapLayer,
+} from '@blockparty/festival/types';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MapStateService } from '../state/map-state.service';
@@ -37,7 +37,7 @@ export class FeatureInfoModalComponent {
 
   mapLayer = MapLayer;
 
-  selectedFeature$: Observable<MapClickedFeature<GeojsonProperties>> = this.mapStateService.selectedMapFeature$.pipe(
+  selectedFeature$ = this.mapStateService.selectedMapFeature$.pipe(
     tap((feature) =>
       this.mapService.flyTo(
         feature.geometry.coordinates as [number, number],

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Tab } from '@distortion/app/interfaces/tab';
+import { Tab } from '@blockparty/festival/types';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -9,7 +9,7 @@ export class TabsStateService {
   private _currentTab$ = new BehaviorSubject<Tab>(Tab.Map);
   currentTab$: Observable<Tab> = this._currentTab$.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   updateCurrentTab(tab: Tab): void {
     this._currentTab$.next(tab);

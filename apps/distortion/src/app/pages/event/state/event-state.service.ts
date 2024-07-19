@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Event } from '@distortion/app/interfaces/database-entities';
 import {
   EventViewModel,
   EventWithRelations,
-} from '@distortion/app/interfaces/event';
-import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
+  EventsGroupedByType,
+} from '@blockparty/festival/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@distortion/app/services/file.service';
 import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
@@ -17,6 +16,7 @@ import {
   shareReplay,
   tap,
 } from 'rxjs/operators';
+import { Tables } from '@blockparty/distortion/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',
@@ -48,7 +48,7 @@ export class EventStateService {
       })
     ),
     map((events) =>
-      events.map((event: Event) => {
+      events.map((event: Tables<'event'>) => {
         const [bucket, path] = getBucketAndPath(event.storage_path);
 
         const srcset =

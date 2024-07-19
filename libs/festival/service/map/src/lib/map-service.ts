@@ -15,16 +15,25 @@ import {
 } from 'maplibre-gl';
 import { Point } from 'geojson';
 import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
-import { getCssVariable } from '@distortion/app/shared/colors';
 import { GeolocationService } from '@blockparty/shared/service/geolocation';
-import { StageGeojsonProperties } from '@distortion/app/interfaces/stage-geojson-properties';
-import { MapLayer, MapSource } from '@distortion/app/interfaces/map-layer';
-import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
-import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
+import {
+  StageGeojsonProperties,
+  MapLayer,
+  MapSource,
+  MapClickedFeature,
+  MapIconViewModel,
+} from '@blockparty/festival/types';
 import { environment } from '@shared/environments';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Protocol, PMTiles } from "pmtiles";
 import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
+
+
+function getCssVariable(cssVariable: string) {
+  return getComputedStyle(document.documentElement).getPropertyValue(
+    cssVariable
+  );
+}
 
 @Injectable({
   providedIn: 'root',

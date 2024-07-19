@@ -1,10 +1,9 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
+import { MapIconViewModel, MapLayer } from '@blockparty/festival/types';
 import { ToggleCustomEvent } from '@ionic/angular/standalone';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/service/map';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import { MapStateService } from '../state/map-state.service';
 import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';

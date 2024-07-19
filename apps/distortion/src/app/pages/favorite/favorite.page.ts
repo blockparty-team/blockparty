@@ -4,7 +4,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
+import { ArtistViewModel } from '@blockparty/festival/types';
 import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
