@@ -1,21 +1,14 @@
 import { inject, Injectable } from '@angular/core';
-import { ArtistFavorite, Favorite, FavoriteEntity } from '@blockparty/festival/types';
+import {
+  ArtistFavorite,
+  Favorite,
+  FavoriteEntity,
+} from '@blockparty/festival/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { DeviceService } from '@blockparty/shared/service/device';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import {
-  BehaviorSubject,
-  concat,
-  Observable,
-  ReplaySubject,
-} from 'rxjs';
-import {
-  filter,
-  map,
-  shareReplay,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { BehaviorSubject, concat, Observable, ReplaySubject } from 'rxjs';
+import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 
 const initialState: Pick<Favorite, 'entity' | 'ids'>[] = [
   {
@@ -39,20 +32,18 @@ export class FavoriteStateService {
   public favorites$: Observable<Favorite[]> = concat(
     this.deviceStorageService.get('favorites').pipe(
       filter((favorites) => !!favorites),
-      tap((favorites) => this._favorites$.next(favorites))
+      tap((favorites) => this._favorites$.next(favorites)),
     ),
-    this._favorites$.asObservable()
-  ).pipe(
-    shareReplay(1)
-  );
+    this._favorites$.asObservable(),
+  ).pipe(shareReplay(1));
 
   public artistIds$ = this.favorites$.pipe(
     filter((favorites) => !!favorites),
     map((favorites) =>
       favorites.some((fav) => fav.entity === 'artist')
         ? favorites.find((favorite) => favorite.entity === 'artist')!.ids
-        : []
-    )
+        : [],
+    ),
   );
 
   toggleFavorite(entity: FavoriteEntity, id: string) {
@@ -71,12 +62,12 @@ export class FavoriteStateService {
       update = this._favorites$.value.map((favorite) =>
         favorite.entity === entity
           ? {
-            ...favorite,
-            ids: favorite.ids!.includes(id)
-              ? favorite.ids!.filter((ids) => ids !== id)
-              : [...favorite.ids!, id],
-          }
-          : favorite
+              ...favorite,
+              ids: favorite.ids!.includes(id)
+                ? favorite.ids!.filter((ids) => ids !== id)
+                : [...favorite.ids!, id],
+            }
+          : favorite,
       );
     }
 
@@ -84,14 +75,18 @@ export class FavoriteStateService {
     this.deviceStorageService.set('favorites', update);
 
     const favoriteIds = update.find(
-      (favorite) => favorite.entity === entity
+      (favorite) => favorite.entity === entity,
     )!.ids;
 
     this.deviceService.deviceId
       .pipe(
         switchMap((deviceId) => {
-          return this.supabase.upsertFavorites(deviceId, 'artist', favoriteIds!);
-        })
+          return this.supabase.upsertFavorites(
+            deviceId,
+            'artist',
+            favoriteIds!,
+          );
+        }),
       )
       .subscribe();
   }

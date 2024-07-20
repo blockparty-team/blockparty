@@ -6,7 +6,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { ModalController } from '@ionic/angular/standalone';
 import { merge, from, Subject, EMPTY } from 'rxjs';
 import {
@@ -43,13 +43,7 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
     ...animations.slideUpDown,
   ],
   standalone: true,
-  imports: [
-    FilterEventsComponent,
-    NgIf,
-    AsyncPipe,
-    IonHeader,
-    IonContent,
-  ],
+  imports: [FilterEventsComponent, NgIf, AsyncPipe, IonHeader, IonContent],
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private mapService = inject(MapService);

@@ -31,7 +31,7 @@ import {
   IonText,
   IonRouterLink,
 } from '@ionic/angular/standalone';
-import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
+import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
 enum ListViewMode {
   ByTime = 'byTime',
@@ -76,13 +76,13 @@ export class TimetableListComponent {
   ]).pipe(
     filter(
       ([timetableDays, selectedDayId, eventId]) =>
-        !!timetableDays && !!selectedDayId && !!eventId
+        !!timetableDays && !!selectedDayId && !!eventId,
     ),
     map(([timetableDays, selectedDayId, eventId]) =>
       timetableDays
         .find((day) => day.id === selectedDayId)
-        ?.events.find((event) => event.event_id === eventId)
-    )
+        ?.events.find((event) => event.event_id === eventId),
+    ),
   );
 
   public timetableByTime$: Observable<TimetableWithStageName[]> =
@@ -94,18 +94,18 @@ export class TimetableListComponent {
               stage.timetable.flatMap((timetable) => ({
                 stageName: stage.stage_name,
                 ...timetable,
-              }))
+              })),
             )
             .sort(
               (a, b) =>
                 new Date(a.start_time).getTime() -
-                new Date(b.start_time).getTime()
-            ) ?? null
-      )
+                new Date(b.start_time).getTime(),
+            ) ?? null,
+      ),
     );
 
   public timetableByStage$: Observable<StageTimetable[]> = this.event$.pipe(
-    map((event) => event?.stages ?? null)
+    map((event) => event?.stages ?? null),
   );
 
   public routeName = RouteName;

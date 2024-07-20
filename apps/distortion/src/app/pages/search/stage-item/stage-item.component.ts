@@ -5,8 +5,13 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MapClickedFeature, MapLayer, StageGeojsonProperties, RouteName } from '@blockparty/festival/types';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import {
+  MapClickedFeature,
+  MapLayer,
+  StageGeojsonProperties,
+  RouteName,
+} from '@blockparty/festival/types';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { MapService } from '@blockparty/festival/service/map';
 import { Feature, Point } from 'geojson';
 import {

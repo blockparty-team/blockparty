@@ -19,14 +19,14 @@
       "@blockparty/distortion/data-access/supabase": [
         "libs/distortion/data-access/supabase/src/index.ts"
       ],
-      "@blockparty/festival/data-access/favorite-state": [
-        "libs/festival/data-access/favorite-state/src/index.ts"
-      ],
       "@blockparty/festival/data-access/file-service": [
         "libs/festival/data-access/file-service/src/index.ts"
       ],
-      "@blockparty/festival/data-access/map-state": [
-        "libs/festival/data-access/map-state/src/index.ts"
+      "@blockparty/festival/data-access/state/favorite": [
+        "libs/festival/data-access/state/favorite/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/map": [
+        "libs/festival/data-access/state/map/src/index.ts"
       ],
       "@blockparty/festival/service/app-state": [
         "libs/festival/service/app-state/src/index.ts"

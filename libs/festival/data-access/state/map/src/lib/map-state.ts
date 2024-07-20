@@ -8,7 +8,10 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
+import {
+  SupabaseService,
+  getBucketAndPath,
+} from '@blockparty/shared/data-access/supabase-service';
 import { FilesystemService } from '@blockparty/shared/data-access/filesystem';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { imgToBase64, imgFromUrl } from '@blockparty/util/file';
@@ -48,7 +51,7 @@ export class MapStateService {
     this._selectedMapFeatures$.asObservable().pipe(
       filter((features) => !!features),
       // Only provide first clicked layer
-      map((features) => features![0])
+      map((features) => features![0]),
     );
 
   private _mapInteraction$ = new BehaviorSubject<boolean>(false);
@@ -58,27 +61,29 @@ export class MapStateService {
   removedAssetIconNames$: Observable<any> =
     this._removedAssetIconNames$.asObservable();
 
-  mapLayers$: Observable<MapSourceGeojson<GeojsonProperties>[]> = this.appStateService.reloadData$.pipe(
-    switchMap(() => concat(
-      this.deviceStorageService.get('mapLayers'),
-      forkJoin(
-        Object.values(MapSource).map((layer) =>
-          this.supabase.tableAsGeojson(layer)
-        )
-      ).pipe(
-        filter((layers) => !!layers),
-        map((layers) =>
-          Object.values(MapSource).map((mapSource, i) => ({
-            mapSource,
-            geojson: layers[i],
-          }))
+  mapLayers$: Observable<MapSourceGeojson<GeojsonProperties>[]> =
+    this.appStateService.reloadData$.pipe(
+      switchMap(() =>
+        concat(
+          this.deviceStorageService.get('mapLayers'),
+          forkJoin(
+            Object.values(MapSource).map((layer) =>
+              this.supabase.tableAsGeojson(layer),
+            ),
+          ).pipe(
+            filter((layers) => !!layers),
+            map((layers) =>
+              Object.values(MapSource).map((mapSource, i) => ({
+                mapSource,
+                geojson: layers[i],
+              })),
+            ),
+            tap((layers) => this.deviceStorageService.set('mapLayers', layers)),
+          ),
         ),
-        tap((layers) => this.deviceStorageService.set('mapLayers', layers))
-      )
-    )
-    ),
-    shareReplay(1)
-  )
+      ),
+      shareReplay(1),
+    );
 
   public mapTiles$: Observable<Tables<'map_pmtiles'>[]> = concat(
     this.deviceStorageService
@@ -86,11 +91,9 @@ export class MapStateService {
       .pipe(filter((mapTiles) => !!mapTiles)),
     this.supabase.mapTiles$.pipe(
       filter((mapTiles) => !!mapTiles),
-      tap((artists) => this.deviceStorageService.set('mapTiles', artists))
-    )
-  ).pipe(
-    shareReplay(1)
-  )
+      tap((artists) => this.deviceStorageService.set('mapTiles', artists)),
+    ),
+  ).pipe(shareReplay(1));
 
   private mapIconsFromSupabase$: Observable<MapIconViewModel[]> =
     this.supabase.mapIcons$.pipe(
@@ -105,15 +108,15 @@ export class MapStateService {
             ...mapIcon,
             fileUrl: this.supabase.publicImageUrl(bucket!, path!),
           };
-        })
+        }),
       ),
       // Add HTML image element based on fileUrl
       switchMap((icons) =>
         forkJoin(icons.map((icon) => imgFromUrl(icon.fileUrl))).pipe(
           map((images) =>
-            icons.map((icon, i) => ({ ...icon, image: images[i] }))
-          )
-        )
+            icons.map((icon, i) => ({ ...icon, image: images[i] })),
+          ),
+        ),
       ),
       // Cache icons in filesystem
       tap((icons: MapIconViewModel[]) => {
@@ -123,7 +126,7 @@ export class MapStateService {
             const base64 = imgToBase64(icon.image!);
             this.filesystemService.writeFile(base64, icon.storage_path!);
           });
-      })
+      }),
     );
 
   private mapIconsFromFilesystem$: Observable<MapIconViewModel[]> =
@@ -133,45 +136,45 @@ export class MapStateService {
       switchMap((icons) =>
         forkJoin(
           icons.map((icon) =>
-            this.filesystemService.readFile(icon.storage_path!)
-          )
+            this.filesystemService.readFile(icon.storage_path!),
+          ),
         ).pipe(
           switchMap((images) =>
             // Create img element from Base64 string stored in filesystem
             forkJoin(
               images.map((base64) =>
-                imgFromUrl(`data:image/png;base64,${base64}`)
-              )
+                imgFromUrl(`data:image/png;base64,${base64}`),
+              ),
             ).pipe(
               map((images) =>
                 icons.map((icon, i) => ({
                   ...icon,
                   fileUrl: null,
                   image: images[i],
-                }))
-              )
-            )
-          )
-        )
-      )
+                })),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
 
   mapIcons$: Observable<MapIconViewModel[]> = concat(
     this.mapIconsFromFilesystem$,
-    this.mapIconsFromSupabase$
+    this.mapIconsFromSupabase$,
   ).pipe(shareReplay(1));
 
   dayMaskBounds$: Observable<MaskGeojsonProperties[]> = this.mapLayers$.pipe(
-    filter(layers => !!layers),
+    filter((layers) => !!layers),
     map((layers) =>
-      layers.find((layer) => layer.mapSource === 'day_event_mask')
+      layers.find((layer) => layer.mapSource === 'day_event_mask'),
     ),
     map(
       (layer) =>
         layer!.geojson.features.map(
-          (feature) => feature.properties
-        ) as MaskGeojsonProperties[]
-    )
+          (feature) => feature.properties,
+        ) as MaskGeojsonProperties[],
+    ),
   );
 
   selectMapFeatures(features: MapClickedFeature<GeojsonProperties>[]): void {
@@ -197,7 +200,7 @@ export class MapStateService {
       ]);
     } else {
       this._removedAssetIconNames$.next(
-        this._removedAssetIconNames$.value.filter((x) => x !== iconName)
+        this._removedAssetIconNames$.value.filter((x) => x !== iconName),
       );
     }
   }

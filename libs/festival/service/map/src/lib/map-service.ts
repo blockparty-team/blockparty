@@ -11,10 +11,10 @@ import {
   Map,
   PointLike,
   StyleImageInterface,
-  addProtocol
+  addProtocol,
 } from 'maplibre-gl';
 import { Point } from 'geojson';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { GeolocationService } from '@blockparty/shared/service/geolocation';
 import {
   StageGeojsonProperties,
@@ -25,13 +25,15 @@ import {
 } from '@blockparty/festival/types';
 import { environment } from '@shared/environments';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Protocol, PMTiles } from "pmtiles";
-import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
-
+import { Protocol, PMTiles } from 'pmtiles';
+import {
+  SupabaseService,
+  getBucketAndPath,
+} from '@blockparty/shared/data-access/supabase-service';
 
 function getCssVariable(cssVariable: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(
-    cssVariable
+    cssVariable,
   );
 }
 
@@ -66,7 +68,7 @@ export class MapService {
     catchError((err) => {
       console.error(err);
       return EMPTY;
-    })
+    }),
   );
 
   private addMapLayers$ = this.mapStateService.mapLayers$.pipe(
@@ -92,7 +94,7 @@ export class MapService {
             .getStyle()
             .layers.map((layer) => layer.id)
             .includes(layer);
-        }
+        },
       );
 
       if (layersAdded) {
@@ -173,7 +175,7 @@ export class MapService {
             0.2,
             18,
             1,
-          ]
+          ],
         },
         filter: ['==', 'id', ''],
       });
@@ -197,7 +199,7 @@ export class MapService {
             0.2,
             18,
             0.5,
-          ]
+          ],
         },
         filter: ['==', 'id', ''],
       });
@@ -249,7 +251,7 @@ export class MapService {
             16,
             0.3,
             20,
-            1.1
+            1.1,
           ],
           'icon-allow-overlap': true,
         },
@@ -302,13 +304,12 @@ export class MapService {
           ],
         },
       });
-
-    })
+    }),
   );
 
   private addCustomBaseMap$ = this.mapStateService.mapTiles$.pipe(
-    tap(tileLayers => {
-      tileLayers.forEach(tileLayer => {
+    tap((tileLayers) => {
+      tileLayers.forEach((tileLayer) => {
         if (tileLayer.storage_path === null) return;
         const [bucket, path] = getBucketAndPath(tileLayer.storage_path);
 
@@ -321,36 +322,42 @@ export class MapService {
         if (!this.map.getSource(tileLayer.name)) {
           this.map.addSource(tileLayer.name, {
             type: 'vector',
-            url: `pmtiles://${url}`
+            url: `pmtiles://${url}`,
           });
         }
-
 
         (tileLayer.style as []).forEach((style: any) => {
           if (this.map.getLayer(style.id)) return;
 
-          this.map.addLayer({
-            ...style,
-            source: tileLayer.name
-          }, MapLayer.EventHighLight)
+          this.map.addLayer(
+            {
+              ...style,
+              source: tileLayer.name,
+            },
+            MapLayer.EventHighLight,
+          );
         });
-      })
-    })
-  )
+      });
+    }),
+  );
 
   constructor() {
-    this.mapStateService.mapLoaded$.pipe(
-      filter(loaded => loaded),
-      switchMap(() => concat(
-        this.addMapIcons$,
-        this.addMapLayers$.pipe(
-          // This is not chained in concat, since addMapLayers$ not completing
-          // hence this switchMap is used to trigger addCustomBaseMap$ after addMapLayers$ is done
-          switchMap(() => this.addCustomBaseMap$)
-        )
-      )),
-      takeUntilDestroyed()
-    ).subscribe();
+    this.mapStateService.mapLoaded$
+      .pipe(
+        filter((loaded) => loaded),
+        switchMap(() =>
+          concat(
+            this.addMapIcons$,
+            this.addMapLayers$.pipe(
+              // This is not chained in concat, since addMapLayers$ not completing
+              // hence this switchMap is used to trigger addCustomBaseMap$ after addMapLayers$ is done
+              switchMap(() => this.addCustomBaseMap$),
+            ),
+          ),
+        ),
+        takeUntilDestroyed(),
+      )
+      .subscribe();
   }
 
   public initMap(): void {
@@ -363,17 +370,17 @@ export class MapService {
       attributionControl: false,
     });
 
-    addProtocol("pmtiles", this.pmtilesProtocol.tile);
-
+    addProtocol('pmtiles', this.pmtilesProtocol.tile);
 
     this.addControls();
 
     this.map.on('load', () => {
-
       this.mapStateService.updateMapLoaded(true);
 
       this.map.resize();
-      this.map.addImage('pulsing-dot', this.pulsingDot(this.map, 250), { pixelRatio: 2 });
+      this.map.addImage('pulsing-dot', this.pulsingDot(this.map, 250), {
+        pixelRatio: 2,
+      });
 
       this.addAerial();
 
@@ -390,7 +397,7 @@ export class MapService {
         this.removeFeatureHighlight(MapLayer.AssetHighlight);
       });
       this.map.on('touchend', () =>
-        this.mapStateService.updateMapInteraction(false)
+        this.mapStateService.updateMapInteraction(false),
       );
     });
 
@@ -408,7 +415,7 @@ export class MapService {
       showAccuracyCircle: false,
       fitBoundsOptions: {
         zoom: 18,
-      }
+      },
     });
 
     this.map.addControl(geolocateControl, 'bottom-right');
@@ -437,18 +444,18 @@ export class MapService {
         properties:
           mapLayer === MapLayer.Stage
             ? ({
-              ...feature.properties,
-              // MapLibre automaticly stringifies nested objects in geojson properties.
-              // Since stages has timetables and tickets properties represented as objects,
-              // these are parsed to get the back to original objects.
-              timetables: JSON.parse(feature.properties['timetables']),
-              tickets: feature.properties['tickets']
-                ? JSON.parse(feature.properties['tickets'])
-                : null,
-              tags: feature.properties['tags']
-                ? JSON.parse(feature.properties['tags'])
-                : null,
-            } as StageGeojsonProperties)
+                ...feature.properties,
+                // MapLibre automaticly stringifies nested objects in geojson properties.
+                // Since stages has timetables and tickets properties represented as objects,
+                // these are parsed to get the back to original objects.
+                timetables: JSON.parse(feature.properties['timetables']),
+                tickets: feature.properties['tickets']
+                  ? JSON.parse(feature.properties['tickets'])
+                  : null,
+                tags: feature.properties['tags']
+                  ? JSON.parse(feature.properties['tags'])
+                  : null,
+              } as StageGeojsonProperties)
             : feature.properties,
         geometry: feature.geometry as Point,
       }));
@@ -478,7 +485,7 @@ export class MapService {
   public flyTo(
     center: [number, number],
     offset: PointLike = [0, 0],
-    zoom: number = 18
+    zoom: number = 18,
   ): void {
     this.mapStateService.mapLoaded$
       .pipe(
@@ -490,7 +497,7 @@ export class MapService {
             offset,
             zoom,
           });
-        })
+        }),
       )
       .subscribe();
   }
@@ -498,7 +505,7 @@ export class MapService {
   public fitBounds(
     bounds: LngLatBoundsLike,
     padding: number = 10,
-    offset: PointLike = [0, 0]
+    offset: PointLike = [0, 0],
   ): void {
     this.mapStateService.mapLoaded$
       .pipe(
@@ -506,7 +513,7 @@ export class MapService {
         first(),
         tap(() => {
           this.map.fitBounds(bounds, { padding, offset });
-        })
+        }),
       )
       .subscribe();
   }
@@ -518,7 +525,7 @@ export class MapService {
   public highlightFeature(
     layerName: MapLayer,
     id: string,
-    autoRemove = false
+    autoRemove = false,
   ): void {
     this.mapStateService.mapIdle$
       .pipe(
@@ -532,7 +539,7 @@ export class MapService {
               this.removeFeatureHighlight(layerName);
             }, 5000);
           }
-        })
+        }),
       )
       .subscribe();
   }
@@ -581,7 +588,7 @@ export class MapService {
         },
         minzoom: 14,
       },
-      'label_road'
+      'label_road',
     );
   }
 
@@ -607,11 +614,15 @@ export class MapService {
         },
         minzoom: 14,
       },
-      'label_road'
+      'label_road',
     );
   }
 
-  private pulsingDot(map: Map, size: number, drawInnerCircle: boolean = false): StyleImageInterface {
+  private pulsingDot(
+    map: Map,
+    size: number,
+    drawInnerCircle: boolean = false,
+  ): StyleImageInterface {
     let context: CanvasRenderingContext2D;
 
     const self = this;
@@ -644,7 +655,7 @@ export class MapService {
           this.height / 2,
           outerRadius,
           0,
-          Math.PI * 2
+          Math.PI * 2,
         );
         context.fillStyle = `rgba(255, 200, 200,${1 - t})`;
         context.fill();
@@ -652,13 +663,7 @@ export class MapService {
         // draw inner circle
         if (drawInnerCircle) {
           context.beginPath();
-          context.arc(
-            this.width / 2,
-            this.height / 2,
-            radius,
-            0,
-            Math.PI * 2
-          );
+          context.arc(this.width / 2, this.height / 2, radius, 0, Math.PI * 2);
           context.fillStyle = 'rgba(255, 100, 100, 1)';
           context.strokeStyle = 'white';
           context.lineWidth = 2 + 4 * (1 - t);
@@ -667,19 +672,14 @@ export class MapService {
         }
 
         // update this image's data with data from the canvas
-        this.data = context.getImageData(
-          0,
-          0,
-          this.width,
-          this.height
-        ).data;
+        this.data = context.getImageData(0, 0, this.width, this.height).data;
 
         // continuously repaint the map, resulting in the smooth animation of the dot
         map.triggerRepaint();
 
         // return `true` to let the map know that the image was updated
         return true;
-      }
-    }
-  };
+      },
+    };
+  }
 }

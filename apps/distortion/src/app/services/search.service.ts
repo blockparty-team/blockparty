@@ -12,7 +12,7 @@ import { GeolocationService } from '@blockparty/shared/service/geolocation';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { Feature, Point } from 'geojson';
 
 @Injectable({
@@ -24,15 +24,15 @@ export class SearchService {
     private geolocationService: GeolocationService,
     private artistSateService: ArtistStateService,
     private eventStateService: EventStateService,
-    private mapStateService: MapStateService
-  ) { }
+    private mapStateService: MapStateService,
+  ) {}
 
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(
       map((position) => position.coords),
       switchMap((pos) =>
-        this.supabase.distanceTo([pos.longitude, pos.latitude], 1000000000)
-      )
+        this.supabase.distanceTo([pos.longitude, pos.latitude], 1000000000),
+      ),
     );
   }
 
@@ -41,7 +41,7 @@ export class SearchService {
       withLatestFrom(
         this.artistSateService.artists$,
         this.eventStateService.events$,
-        this.mapStateService.mapLayers$
+        this.mapStateService.mapLayers$,
       ),
       filter(([results]) => !!results),
       map(([results, artists, events, mapLayers]) =>
@@ -61,7 +61,7 @@ export class SearchService {
               const stage = mapLayers
                 .find((layer) => layer.mapSource === MapSource.Stage)
                 .geojson.features.find(
-                  (feature) => feature.properties.id === result.id
+                  (feature) => feature.properties.id === result.id,
                 ) as Feature<Point, StageGeojsonProperties>;
 
               return {
@@ -72,7 +72,7 @@ export class SearchService {
                     ...stage.properties,
                     imgUrl: this.supabase.publicImageUrl(
                       'icon',
-                      `${stage.properties.icon}.png`
+                      `${stage.properties.icon}.png`,
                     ),
                   },
                 },
@@ -81,7 +81,7 @@ export class SearchService {
               const asset = mapLayers
                 .find((layer) => layer.mapSource === MapSource.Asset)
                 .geojson.features.find(
-                  (feature) => feature.properties.id === result.id
+                  (feature) => feature.properties.id === result.id,
                 ) as Feature<Point, AssetGeojsonProperties>;
 
               return {
@@ -92,7 +92,7 @@ export class SearchService {
                     ...asset.properties,
                     imgUrl: this.supabase.publicImageUrl(
                       'icon',
-                      `${asset.properties.icon}.png`
+                      `${asset.properties.icon}.png`,
                     ),
                   },
                 },
@@ -100,8 +100,8 @@ export class SearchService {
             default:
               return result;
           }
-        })
-      )
+        }),
+      ),
     );
   }
 }

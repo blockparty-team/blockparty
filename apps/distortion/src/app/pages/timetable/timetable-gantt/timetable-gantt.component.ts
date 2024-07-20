@@ -24,7 +24,7 @@ import {
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
-import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
+import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
 @Component({
   selector: 'app-timetable-gantt',
@@ -52,21 +52,25 @@ export class TimetableGanttComponent {
 
   private currentTimeElement = viewChild<ElementRef>('currentTime');
 
-  timetableConfig$: Observable<DayTimetableViewModel> = this.timetableStateService.dayEvents$.pipe(
-    map((day) => this.timetableGridConfig(day))
+  timetableConfig$: Observable<DayTimetableViewModel> =
+    this.timetableStateService.dayEvents$.pipe(
+      map((day) => this.timetableGridConfig(day)),
+    );
+
+  private currentTimeWithinTimetable$: Observable<boolean> =
+    this.timetableConfig$.pipe(
+      filter((config) => !!config),
+      map((config) => {
+        const now = new Date();
+        const firstActStart = config.timeLabels[0].label;
+        const lastActEnd = config.timeLabels.slice(-1)[0].label;
+
+        return now >= firstActStart && now <= lastActEnd;
+      }),
+    );
+  private currentTimeWithinTimetable = toSignal(
+    this.currentTimeWithinTimetable$,
   );
-
-  private currentTimeWithinTimetable$: Observable<boolean> = this.timetableConfig$.pipe(
-    filter((config) => !!config),
-    map((config) => {
-      const now = new Date();
-      const firstActStart = config.timeLabels[0].label;
-      const lastActEnd = config.timeLabels.slice(-1)[0].label;
-
-      return now >= firstActStart && now <= lastActEnd;
-    })
-  )
-  private currentTimeWithinTimetable = toSignal(this.currentTimeWithinTimetable$);
 
   currentTimeColumn$: Observable<number> = combineLatest([
     interval(1000 * 60).pipe(startWith(0)),
@@ -82,7 +86,7 @@ export class TimetableGanttComponent {
         return differenceInMinutes(now, firstActStart);
       }
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   eventTypeColor$ = this.timetableStateService.eventTypeColor$;
@@ -94,17 +98,17 @@ export class TimetableGanttComponent {
 
   constructor() {
     effect(() => {
-      const withinTimetable = this.currentTimeWithinTimetable()
+      const withinTimetable = this.currentTimeWithinTimetable();
       const currentTimeElement = this.currentTimeElement()?.nativeElement;
 
       if (withinTimetable && currentTimeElement) {
         currentTimeElement.scrollIntoView({
-          block: "center",
-          inline: "center",
-          behavior: "smooth"
+          block: 'center',
+          inline: 'center',
+          behavior: 'smooth',
         });
       }
-    })
+    });
   }
 
   private timeLables(firstStartTime: Date, lastEndTime: Date): TimeLabel[] {
@@ -122,7 +126,7 @@ export class TimetableGanttComponent {
     stage: StageTimetable,
     firstStartTime: Date,
     rowStart: number,
-    timeLabels: TimeLabel[]
+    timeLabels: TimeLabel[],
   ): StageTimetableViewModel {
     const offset =
       (firstStartTime.getTime() - timeLabels[0].label.getTime()) / (1000 * 60);
@@ -130,11 +134,11 @@ export class TimetableGanttComponent {
     const timetable: TimetableViewModel[] = stage.timetable.map((timetable) => {
       const relativeStartTime =
         (new Date(timetable.start_time).getTime() - firstStartTime.getTime()) /
-        (1000 * 60) +
+          (1000 * 60) +
         offset;
       const relativeEndTime =
         (new Date(timetable.end_time).getTime() - firstStartTime.getTime()) /
-        (1000 * 60) +
+          (1000 * 60) +
         offset;
 
       return {
@@ -153,7 +157,7 @@ export class TimetableGanttComponent {
   }
 
   private timetableGridConfig(
-    day: DayEventStageTimetable
+    day: DayEventStageTimetable,
   ): DayTimetableViewModel {
     if (!day) return;
 
@@ -162,11 +166,11 @@ export class TimetableGanttComponent {
     const lastEndTime = new Date(day.last_end_time);
 
     const gridTemplateColumns = Math.ceil(
-      (lastEndTime.getTime() - firstStartTime.getTime()) / (1000 * 60 * 60)
+      (lastEndTime.getTime() - firstStartTime.getTime()) / (1000 * 60 * 60),
     );
     const timeLabels: TimeLabel[] = this.timeLables(
       firstStartTime,
-      lastEndTime
+      lastEndTime,
     );
     const events: EventTimetableViewModel[] = day.events.map((event) => {
       const eventConfig = {
@@ -182,7 +186,7 @@ export class TimetableGanttComponent {
             stage,
             firstStartTime,
             row,
-            timeLabels
+            timeLabels,
           );
           row += this.ACT_ROW_SPAN + this.STAGE_ROW_SPAN;
           return timetable;

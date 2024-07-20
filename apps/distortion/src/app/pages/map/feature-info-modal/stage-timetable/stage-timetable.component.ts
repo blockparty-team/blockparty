@@ -7,9 +7,13 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { ModalController, SegmentCustomEvent, IonFooter } from '@ionic/angular/standalone';
+import {
+  ModalController,
+  SegmentCustomEvent,
+  IonFooter,
+} from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import {
   MapLayer,
   Day,
@@ -17,7 +21,7 @@ import {
   Timetable,
   MapClickedFeature,
   Ticket,
-  RouteName
+  RouteName,
 } from '@blockparty/festival/types';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
@@ -135,12 +139,15 @@ export class StageTimetableComponent implements OnInit {
             (timetable) => timetable.day.id === day,
           ).timetable,
       ),
-      map((timetable) => (
-        timetable.map(slot => ({
-          ...slot,
-          onAir: new Date() > new Date(slot.start_time) && new Date() < new Date(slot.end_time),
-        })) as unknown as TimetableViewModel[]
-      ))
+      map(
+        (timetable) =>
+          timetable.map((slot) => ({
+            ...slot,
+            onAir:
+              new Date() > new Date(slot.start_time) &&
+              new Date() < new Date(slot.end_time),
+          })) as unknown as TimetableViewModel[],
+      ),
     );
 
     // If no timetables assigned to stage, backend returns [null] for timetables array

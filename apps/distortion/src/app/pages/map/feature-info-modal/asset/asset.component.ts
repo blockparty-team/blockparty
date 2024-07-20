@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MapClickedFeature, MapLayer } from '@blockparty/festival/types';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { NgIf, AsyncPipe } from '@angular/common';
 import {
   IonHeader,
@@ -38,12 +38,12 @@ export class AssetComponent {
       filter(
         (feature) =>
           feature.mapLayer === MapLayer.Asset ||
-          feature.mapLayer === MapLayer.AssetIcon
-      )
+          feature.mapLayer === MapLayer.AssetIcon,
+      ),
     );
 
   location$: Observable<[number, number]> = this.asset$.pipe(
-    map((stage) => stage.geometry.coordinates as [number, number])
+    map((stage) => stage.geometry.coordinates as [number, number]),
   );
 
   onOpenGoogleMapsDirections(coords: [number, number]): void {

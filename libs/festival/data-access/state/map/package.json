@@ -1,5 +1,5 @@
 {
-  "name": "@blockparty/festival/data-access/map-state",
+  "name": "@blockparty/festival/data-access/state/map",
   "version": "0.0.1",
   "dependencies": {
     "tslib": "^2.3.0"

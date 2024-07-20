@@ -4,7 +4,7 @@ import { ToggleCustomEvent } from '@ionic/angular/standalone';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/service/map';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
@@ -48,8 +48,8 @@ export class LegendComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
-    private mapStateService: MapStateService
-  ) { }
+    private mapStateService: MapStateService,
+  ) {}
 
   ngOnInit() {
     this.iconsWithToggleState$ = combineLatest([
@@ -63,7 +63,7 @@ export class LegendComponent implements OnInit {
           .map((asset) => ({
             ...asset,
             visible: !removed.includes(asset.name),
-          }))
+          })),
       ),
       distinctUntilChanged(),
       tap((assets) => {
@@ -73,7 +73,7 @@ export class LegendComponent implements OnInit {
 
         this.mapService.filterLayer(MapLayer.AssetIcon, 'icon', visible);
         this.mapService.filterLayer(MapLayer.Asset, 'icon', visible);
-      })
+      }),
     );
   }
 

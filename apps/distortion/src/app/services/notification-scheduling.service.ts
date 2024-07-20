@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject, isDevMode } from '@angular/core';
-import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
+import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 import { Observable, Subject, combineLatest, defer, from } from 'rxjs';
 import {
   filter,
@@ -45,35 +45,37 @@ export class NotificationSchedulingService implements OnDestroy {
                     artistNotifications.find(
                       (artist) =>
                         artist.artistId === artistId &&
-                        artist.startTime != undefined
-                    )
+                        artist.startTime != undefined,
+                    ),
                   ),
                   filter((artistNotificaton) => !!artistNotificaton),
                   map((artistNotification) => [
                     this.localNotificationService.artistNotificationPayload(
                       id,
                       artistNotification,
-                      60
+                      60,
                     ),
                   ]),
                   mergeMap((notifications) =>
-                    this.localNotificationService.schedule(notifications)
-                  )
-                )
-              )
+                    this.localNotificationService.schedule(notifications),
+                  ),
+                ),
+              ),
             );
           } else {
             return from(
               this.localNotificationService.getNotificationIdFromArtistId(
-                artistId
-              )
+                artistId,
+              ),
             ).pipe(
               switchMap((notificationId) =>
-                this.localNotificationService.cancelNotification(notificationId)
-              )
+                this.localNotificationService.cancelNotification(
+                  notificationId,
+                ),
+              ),
             );
           }
-        })
+        }),
       )
       .subscribe();
   }
@@ -87,7 +89,7 @@ export class NotificationSchedulingService implements OnDestroy {
     combineLatest([
       this.timetableSharedStateService.timetableArtistNotification$,
       this.favoritesStateService.favorites$.pipe(
-        map((favs) => favs.find((fav) => fav.entity === 'artist').ids)
+        map((favs) => favs.find((fav) => fav.entity === 'artist').ids),
       ),
     ])
       .pipe(
@@ -98,12 +100,12 @@ export class NotificationSchedulingService implements OnDestroy {
         switchMap(([artists, favoriteIds]) =>
           from(
             this.localNotificationService.cancelAllNotifications(
-              this.MINUTES_BEFORE
-            )
+              this.MINUTES_BEFORE,
+            ),
           ).pipe(
             switchMap((_) => {
               let favoriteArtists = artists.filter((artist) =>
-                favoriteIds.includes(artist.artistId)
+                favoriteIds.includes(artist.artistId),
               );
               const now = new Date();
               const notifications = favoriteArtists
@@ -111,8 +113,8 @@ export class NotificationSchedulingService implements OnDestroy {
                   this.localNotificationService.artistNotificationPayload(
                     index,
                     artist,
-                    this.MINUTES_BEFORE
-                  )
+                    this.MINUTES_BEFORE,
+                  ),
                 )
                 .filter((n) => {
                   return n.schedule.at >= now;
@@ -126,15 +128,15 @@ export class NotificationSchedulingService implements OnDestroy {
                       .then((notifications) =>
                         console.info(
                           'Rescheduled notifications:',
-                          notifications
-                        )
+                          notifications,
+                        ),
                       );
                   });
               }
               return [favoriteArtists, favoriteIds];
-            })
-          )
-        )
+            }),
+          ),
+        ),
       )
       .subscribe();
   }

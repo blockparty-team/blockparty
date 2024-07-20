@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
-import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
+import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { TimetableSharedStateService } from './timetable-shared-state.service';
 import { DayEventStageTimetable } from '@blockparty/festival/types';
@@ -17,8 +17,8 @@ export class TimetableStateService {
   timetableWithFavorites$: Observable<DayEventStageTimetable[]> = combineLatest(
     [
       this.timetableSharedStateService.timetables$,
-      this.favoriteStateService.favorites$
-    ]
+      this.favoriteStateService.favorites$,
+    ],
   ).pipe(
     map(([days, favorites]) => {
       const daysWithFavorites = days.map((day) => ({
@@ -39,7 +39,7 @@ export class TimetableStateService {
 
       return daysWithFavorites;
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   dayEvents$: Observable<DayEventStageTimetable> = combineLatest([
@@ -52,7 +52,7 @@ export class TimetableStateService {
       ([timetableDays, selectedDayId, selectedEventTypeId, selectedEventId]) =>
         !!selectedDayId &&
         !!timetableDays &&
-        (!!selectedEventTypeId || !!selectedEventId)
+        (!!selectedEventTypeId || !!selectedEventId),
     ),
     // TODO: Since UI is only showing timtable for single event there is no need to deal with days.
     map(
@@ -63,7 +63,7 @@ export class TimetableStateService {
         selectedEventId,
       ]) => {
         const timetableDay: DayEventStageTimetable = timetableDays.find(
-          (day) => day.id === selectedDayId
+          (day) => day.id === selectedDayId,
         );
         if (!timetableDay) return null;
 
@@ -98,12 +98,12 @@ export class TimetableStateService {
           first_start_time: timeSpan[0],
           last_end_time: timeSpan[1],
         };
-      }
-    )
+      },
+    ),
   );
 
   eventTypeColor$: Observable<string> =
     this.filterEventsStateService.selectedEventType$.pipe(
-      map((eventType) => eventType.color)
+      map((eventType) => eventType.color),
     );
 }
