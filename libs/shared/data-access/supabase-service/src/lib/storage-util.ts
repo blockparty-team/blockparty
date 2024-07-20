@@ -1,4 +1,4 @@
-export const getBucketAndPath = (storagePath: string) => {
+export const getBucketAndPath = (storagePath: string | null) => {
   if (!storagePath) {
     return [null, null];
   }

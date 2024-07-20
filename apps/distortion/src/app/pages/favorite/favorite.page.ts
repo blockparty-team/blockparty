@@ -5,7 +5,7 @@ import {
   signal,
 } from '@angular/core';
 import { ArtistViewModel } from '@blockparty/festival/types';
-import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
+import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';

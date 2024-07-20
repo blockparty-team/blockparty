@@ -22,6 +22,12 @@
       "@blockparty/festival/data-access/file-service": [
         "libs/festival/data-access/file-service/src/index.ts"
       ],
+      "@blockparty/festival/data-access/state/artist": [
+        "libs/festival/data-access/state/artist/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/artist-shared": [
+        "libs/festival/data-access/state/artist-shared/src/index.ts"
+      ],
       "@blockparty/festival/data-access/state/favorite": [
         "libs/festival/data-access/state/favorite/src/index.ts"
       ],

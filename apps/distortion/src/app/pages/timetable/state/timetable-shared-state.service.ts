@@ -4,7 +4,7 @@ import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { DayEventStageTimetable, ArtistNotification, ArtistViewModel } from '@blockparty/festival/types';
-import { ArtistSharedStateService } from '@distortion/app/pages/artist/state/artist-shared-state.service';
+import { ArtistSharedStateService } from '@blockparty/festival/data-access/state/artist-shared';
 import { AppStateService } from '@blockparty/festival/service/app-state';
 
 @Injectable({

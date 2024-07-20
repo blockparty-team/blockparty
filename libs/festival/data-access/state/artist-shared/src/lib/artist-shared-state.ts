@@ -45,7 +45,8 @@ export class ArtistSharedStateService {
     filter(([artists, favoriteArtistIds]) => !!artists && !!favoriteArtistIds),
     map(([artists, favoriteArtistIds]) =>
       artists.map((artist) => {
-        const [bucket, path] = getBucketAndPath(artist.storage_path);
+
+        const [bucket, path] = getBucketAndPath(artist.storage_path!);
         const imgUrl =
           bucket && path
             ? this.supabase.publicImageUrl(bucket, path)
@@ -56,7 +57,7 @@ export class ArtistSharedStateService {
             ? this.fileService.imageSrcset(bucket, path)
             : 'assets/distortion_logo.png';
 
-        const isFavorite = favoriteArtistIds.includes(artist.id);
+        const isFavorite = favoriteArtistIds.includes(artist.id!);
 
         return {
           ...artist,

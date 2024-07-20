@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from '@blockparty/shared/service/geolocation';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
+import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { Feature, Point } from 'geojson';
@@ -25,7 +25,7 @@ export class SearchService {
     private artistSateService: ArtistStateService,
     private eventStateService: EventStateService,
     private mapStateService: MapStateService,
-  ) {}
+  ) { }
 
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(

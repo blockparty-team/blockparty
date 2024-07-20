@@ -8,7 +8,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistViewModel } from '@blockparty/festival/types';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ArtistStateService } from './state/artist-state.service';
+import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { ArtistCardComponent } from './artist-card/artist-card.component';
 import {
   CdkVirtualScrollViewport,

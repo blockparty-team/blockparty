@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { ArtistSharedStateService } from './artist-shared-state.service';
+import { ArtistSharedStateService } from '@blockparty/festival/data-access/state/artist-shared';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
 @Injectable({
