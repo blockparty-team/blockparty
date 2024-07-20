@@ -28,15 +28,8 @@
     "@nx/jest:jest": {
       "cache": true,
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
+      "options": { "passWithNoTests": true },
+      "configurations": { "ci": { "ci": true, "codeCoverage": true } }
     },
     "@nx/eslint:lint": {
       "inputs": [
@@ -52,7 +45,7 @@
       "inputs": ["production", "^production"]
     }
   },
-  "nxCloudAccessToken": "YmQyMTJiMDQtYzdlYy00NTVjLWFlM2MtOTAyOGI3NDE0NWMxfHJlYWQtd3JpdGU=",
+  "nxCloudAccessToken": "NGY1NzYzOGMtOTBhOC00MzZmLWFhZjctNDgwNGNiNDg1YzQ0fHJlYWQtd3JpdGU=",
   "generators": {
     "@nx/angular:application": {
       "style": "css",
@@ -60,17 +53,9 @@
       "unitTestRunner": "jest",
       "e2eTestRunner": "none"
     },
-    "@nx/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nx/angular:component": {
-      "style": "css"
-    }
+    "@nx/angular:library": { "linter": "eslint", "unitTestRunner": "jest" },
+    "@nx/angular:component": { "style": "css" }
   },
-  "workspaceLayout": {
-    "appsDir": "apps",
-    "libsDir": "libs"
-  },
+  "workspaceLayout": { "appsDir": "apps", "libsDir": "libs" },
   "defaultBase": "main"
 }
