@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Tab } from '@blockparty/festival/types';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Tab } from '@blockparty/festival/types';
 
 @Injectable({
   providedIn: 'root',
@@ -8,8 +8,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class TabsStateService {
   private _currentTab$ = new BehaviorSubject<Tab>(Tab.Map);
   currentTab$: Observable<Tab> = this._currentTab$.asObservable();
-
-  constructor() { }
 
   updateCurrentTab(tab: Tab): void {
     this._currentTab$.next(tab);

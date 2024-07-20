@@ -5,7 +5,7 @@ import { isSameDay, sub } from 'date-fns';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { TimetableSharedStateService } from '@distortion/app/pages/timetable/state/timetable-shared-state.service';
-import { TabsStateService } from '@distortion/app/pages/tabs/state/tabs-state.service';
+import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
 import {
   DayEvent,
   PartialEvent,

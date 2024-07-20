@@ -24,7 +24,7 @@ import { MapService } from '@blockparty/festival/service/map';
 import { MapLayer, Tab, RouteName } from '@blockparty/festival/types';
 import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
-import { TabsStateService } from '../tabs/state/tabs-state.service';
+import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { NgIf, AsyncPipe } from '@angular/common';

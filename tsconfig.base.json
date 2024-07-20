@@ -34,6 +34,9 @@
       "@blockparty/festival/data-access/state/map": [
         "libs/festival/data-access/state/map/src/index.ts"
       ],
+      "@blockparty/festival/data-access/state/tabs": [
+        "libs/festival/data-access/state/tabs/src/index.ts"
+      ],
       "@blockparty/festival/service/app-state": [
         "libs/festival/service/app-state/src/index.ts"
       ],
