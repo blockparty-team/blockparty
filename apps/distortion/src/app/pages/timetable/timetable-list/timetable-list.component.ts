@@ -14,7 +14,7 @@ import { TimetableStateService } from '../state/timetable-state.service';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@distortion/app/shared/animations';
-import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
+import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {

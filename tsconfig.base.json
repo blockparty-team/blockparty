@@ -31,6 +31,9 @@
       "@blockparty/festival/data-access/state/favorite": [
         "libs/festival/data-access/state/favorite/src/index.ts"
       ],
+      "@blockparty/festival/data-access/state/filter-events": [
+        "libs/festival/data-access/state/filter-events/src/index.ts"
+      ],
       "@blockparty/festival/data-access/state/map": [
         "libs/festival/data-access/state/map/src/index.ts"
       ],

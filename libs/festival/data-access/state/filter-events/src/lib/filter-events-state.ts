@@ -59,7 +59,7 @@ export class FilterEventsStateService {
     )
   ).pipe(
     filter((days) => !!days),
-    tap((days) => {
+    tap((days: DayEvent[]) => {
       // Change day at 7am next day (for events running during nighttime)
       const now = sub(new Date(), { hours: 7 });
       const day = days.find((day) => isSameDay(now, new Date(day.day)));
@@ -87,7 +87,7 @@ export class FilterEventsStateService {
             ...day,
             event: day.event.filter((e) =>
               timetableDayEvents
-                .find((d) => d.dayId === day.id)
+                .find((d) => d.dayId === day.id)!
                 .eventIds.includes(e.id)
             ),
           }));
@@ -132,7 +132,7 @@ export class FilterEventsStateService {
         .find((day) => day.id === selectedDayId)
         ?.event.filter((event) => event?.event_type?.id === selectedEventTypeId);
       // Template hides segments when events$ emits null
-      return events?.length > 0 ? events : null;
+      return events?.length! > 0 ? events : null as any;
     }),
     shareReplay(1)
   );
