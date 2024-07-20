@@ -10,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { combineLatest, interval, Observable } from 'rxjs';
 import { filter, map, shareReplay, startWith } from 'rxjs/operators';
 import { differenceInMinutes, eachHourOfInterval } from 'date-fns';
-import { TimetableStateService } from '../state/timetable-state.service';
+import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import {
   DayEventStageTimetable,
   DayTimetableViewModel,
@@ -134,11 +134,11 @@ export class TimetableGanttComponent {
     const timetable: TimetableViewModel[] = stage.timetable.map((timetable) => {
       const relativeStartTime =
         (new Date(timetable.start_time).getTime() - firstStartTime.getTime()) /
-          (1000 * 60) +
+        (1000 * 60) +
         offset;
       const relativeEndTime =
         (new Date(timetable.end_time).getTime() - firstStartTime.getTime()) /
-          (1000 * 60) +
+        (1000 * 60) +
         offset;
 
       return {

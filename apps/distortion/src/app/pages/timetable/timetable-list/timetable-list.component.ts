@@ -10,7 +10,7 @@ import {
   TimetableWithStageName,
   RouteName,
 } from '@blockparty/festival/types';
-import { TimetableStateService } from '../state/timetable-state.service';
+import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@distortion/app/shared/animations';

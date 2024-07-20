@@ -30,7 +30,7 @@ export class TimetableStateService {
             timetable: stage.timetable.map((act) => ({
               ...act,
               isFavorite: favorites
-                .find((favorite) => favorite.entity === 'artist')
+                .find((favorite) => favorite.entity === 'artist')!
                 .ids.includes(act.artist_id),
             })),
           })),
@@ -42,7 +42,7 @@ export class TimetableStateService {
     shareReplay(1),
   );
 
-  dayEvents$: Observable<DayEventStageTimetable> = combineLatest([
+  dayEvents$: Observable<DayEventStageTimetable | null> = combineLatest([
     this.timetableWithFavorites$,
     this.filterEventsStateService.selectedDayId$,
     this.filterEventsStateService.selectedEventTypeId$,
@@ -62,7 +62,7 @@ export class TimetableStateService {
         selectedEventTypeId,
         selectedEventId,
       ]) => {
-        const timetableDay: DayEventStageTimetable = timetableDays.find(
+        const timetableDay = timetableDays.find(
           (day) => day.id === selectedDayId,
         );
         if (!timetableDay) return null;
@@ -75,17 +75,19 @@ export class TimetableStateService {
           if (selectedEventTypeId) {
             return event.event_type_id === selectedEventTypeId;
           }
+
+          return;
         });
         if (timetableEvents.length === 0) return null;
 
         // Find first and last time for events
         const timeSpan = timetableEvents.reduce((acc, val) => {
-          acc[0] =
-            acc[0] === undefined || val.first_start_time < acc[0]
+          (acc[0] as Date) =
+            acc[0] === undefined || val.first_start_time < (acc[0] as Date)
               ? val.first_start_time
               : acc[0];
-          acc[1] =
-            acc[1] === undefined || val.last_end_time > acc[1]
+          (acc[1] as Date) =
+            acc[1] === undefined || val.last_end_time > (acc[1] as Date)
               ? val.last_end_time
               : acc[1];
           return acc;
@@ -102,7 +104,7 @@ export class TimetableStateService {
     ),
   );
 
-  eventTypeColor$: Observable<string> =
+  eventTypeColor$: Observable<string | null> =
     this.filterEventsStateService.selectedEventType$.pipe(
       map((eventType) => eventType.color),
     );
