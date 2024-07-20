@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@distortion/app/services/auth.service';
+import { AuthService } from '@blockparty/festival/service/auth-service';
 import { MenuController } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';

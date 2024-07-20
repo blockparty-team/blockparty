@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@distortion/app/services/auth.service';
+import { AuthService } from '@blockparty/festival/service/auth-service';
 import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { first, switchMap } from 'rxjs/operators';
 import {

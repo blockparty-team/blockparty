@@ -1,0 +1,29 @@
+{
+  "name": "auth-service",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/festival/service/auth-service/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/festival/service/auth-service",
+        "main": "libs/festival/service/auth-service/src/index.ts",
+        "tsConfig": "libs/festival/service/auth-service/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/festival/service/auth-service/jest.config.ts"
+      }
+    }
+  }
+}

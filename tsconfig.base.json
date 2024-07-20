@@ -28,6 +28,9 @@
       "@blockparty/festival/service/app-state": [
         "libs/festival/service/app-state/src/index.ts"
       ],
+      "@blockparty/festival/service/auth-service": [
+        "libs/festival/service/auth-service/src/index.ts"
+      ],
       "@blockparty/festival/service/local-notifications-service": [
         "libs/festival/service/local-notifications-service/src/index.ts"
       ],

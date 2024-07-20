@@ -8,9 +8,9 @@ import { SupabaseService } from '@blockparty/shared/data-access/supabase-service
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private supabase: SupabaseService) {}
+  constructor(private supabase: SupabaseService) { }
 
-  get session$(): Observable<Session> {
+  get session$(): Observable<Session | null> {
     return this.supabase.session$;
   }
 
