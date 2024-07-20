@@ -5,14 +5,11 @@ import { DeviceService } from '@blockparty/shared/service/device';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import {
   BehaviorSubject,
-  combineLatest,
   concat,
   Observable,
   ReplaySubject,
-  Subject,
 } from 'rxjs';
 import {
-  distinctUntilChanged,
   filter,
   map,
   shareReplay,
@@ -45,13 +42,15 @@ export class FavoriteStateService {
       tap((favorites) => this._favorites$.next(favorites))
     ),
     this._favorites$.asObservable()
+  ).pipe(
+    shareReplay(1)
   );
 
   public artistIds$ = this.favorites$.pipe(
     filter((favorites) => !!favorites),
     map((favorites) =>
       favorites.some((fav) => fav.entity === 'artist')
-        ? favorites.find((favorite) => favorite.entity === 'artist').ids
+        ? favorites.find((favorite) => favorite.entity === 'artist')!.ids
         : []
     )
   );
@@ -61,8 +60,8 @@ export class FavoriteStateService {
     let isFavorite: boolean;
 
     isFavorite = this._favorites$.value
-      .find((favorite) => favorite.entity === entity)
-      .ids?.includes(id);
+      .find((favorite) => favorite.entity === entity)!
+      .ids?.includes(id)!;
 
     this.setArtistFavoriteStateChange(id, !isFavorite);
 
@@ -73,9 +72,9 @@ export class FavoriteStateService {
         favorite.entity === entity
           ? {
             ...favorite,
-            ids: favorite.ids.includes(id)
-              ? favorite.ids.filter((ids) => ids !== id)
-              : [...favorite.ids, id],
+            ids: favorite.ids!.includes(id)
+              ? favorite.ids!.filter((ids) => ids !== id)
+              : [...favorite.ids!, id],
           }
           : favorite
       );
@@ -86,19 +85,15 @@ export class FavoriteStateService {
 
     const favoriteIds = update.find(
       (favorite) => favorite.entity === entity
-    ).ids;
+    )!.ids;
 
     this.deviceService.deviceId
       .pipe(
         switchMap((deviceId) => {
-          return this.supabase.upsertFavorites(deviceId, 'artist', favoriteIds);
+          return this.supabase.upsertFavorites(deviceId, 'artist', favoriteIds!);
         })
       )
       .subscribe();
-  }
-
-  updateFavorites(update: Partial<Favorite[]>): void {
-    this._favorites$.next(update);
   }
 
   setArtistFavoriteStateChange(artistId: string, isFavorite: boolean): void {
@@ -106,12 +101,5 @@ export class FavoriteStateService {
       artistId: artistId,
       isFavorite: isFavorite,
     });
-    // this._artistFavoriteChanged$.subscribe(d => console.log(d));
-  }
-
-  getFavoriteState(entity: FavoriteEntity, id: string): boolean {
-    return this._favorites$.value
-      .find((favorite) => favorite.entity === entity)
-      .ids.includes(id);
   }
 }

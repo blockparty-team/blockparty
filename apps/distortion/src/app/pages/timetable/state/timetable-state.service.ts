@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
-import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
+import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { TimetableSharedStateService } from './timetable-shared-state.service';
 import { DayEventStageTimetable } from '@blockparty/festival/types';

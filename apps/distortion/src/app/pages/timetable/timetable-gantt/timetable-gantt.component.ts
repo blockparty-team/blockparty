@@ -21,10 +21,10 @@ import {
   TimeLabel,
   RouteName,
 } from '@blockparty/festival/types';
-import { FavoritesService } from '@distortion/app/services/favorites.service';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
+import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
 
 @Component({
   selector: 'app-timetable-gantt',
@@ -46,7 +46,7 @@ import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
 })
 export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);
-  private favoritesService = inject(FavoritesService);
+  private favoriteStateService = inject(FavoriteStateService);
 
   routeName = RouteName;
 
@@ -205,6 +205,6 @@ export class TimetableGanttComponent {
   }
 
   onToggleArtistFavorite(id: string): void {
-    this.favoritesService.toggleFavorite('artist', id);
+    this.favoriteStateService.toggleFavorite('artist', id);
   }
 }

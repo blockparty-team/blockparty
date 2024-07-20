@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy, inject, isDevMode } from '@angular/core';
-import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
+import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
 import { Observable, Subject, combineLatest, defer, from } from 'rxjs';
 import {
   filter,

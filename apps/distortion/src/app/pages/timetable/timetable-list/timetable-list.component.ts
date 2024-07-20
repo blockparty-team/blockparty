@@ -14,7 +14,6 @@ import { TimetableStateService } from '../state/timetable-state.service';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@distortion/app/shared/animations';
-import { FavoritesService } from '@distortion/app/services/favorites.service';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
@@ -32,6 +31,7 @@ import {
   IonText,
   IonRouterLink,
 } from '@ionic/angular/standalone';
+import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
 
 enum ListViewMode {
   ByTime = 'byTime',
@@ -67,7 +67,7 @@ enum ListViewMode {
 export class TimetableListComponent {
   private filterEventsStateService = inject(FilterEventsStateService);
   private timetableStateService = inject(TimetableStateService);
-  private favoritesSerive = inject(FavoritesService);
+  private favoriteStateService = inject(FavoriteStateService);
 
   private event$ = combineLatest([
     this.timetableStateService.timetableWithFavorites$,
@@ -119,6 +119,6 @@ export class TimetableListComponent {
   }
 
   onToggleFavorite(id: string): void {
-    this.favoritesSerive.toggleFavorite('artist', id);
+    this.favoriteStateService.toggleFavorite('artist', id);
   }
 }

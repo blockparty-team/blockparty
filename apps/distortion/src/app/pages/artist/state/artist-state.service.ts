@@ -1,17 +1,17 @@
 import { inject, Injectable } from '@angular/core';
-import { FavoritesService } from '@distortion/app/services/favorites.service';
 import { ArtistSharedStateService } from './artist-shared-state.service';
+import { FavoriteStateService } from '@blockparty/festival/data-access/favorite-state';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArtistStateService {
   private artistSharedStateService = inject(ArtistSharedStateService);
-  private favoritesService = inject(FavoritesService);
+  private favoriteStateService = inject(FavoriteStateService);
 
   public artists$ = this.artistSharedStateService.artists$;
 
   public toggleArtistFavorite(id: string): void {
-    this.favoritesService.toggleFavorite('artist', id);
+    this.favoriteStateService.toggleFavorite('artist', id);
   }
 }
