@@ -17,7 +17,7 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import { Favorite, FavoriteEntity } from '@blockparty/festival/types';
-import { LocalNotificationsService } from './local-notifications.service';
+import { LocalNotificationsService } from '@blockparty/festival/service/local-notifications-service';
 import { NotificationSchedulingService } from './notification-scheduling.service';
 import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
 

@@ -3,12 +3,10 @@ import { ArtistNotification } from '@blockparty/festival/types';
 import {
   LocalNotifications,
   LocalNotificationSchema,
-  LocalNotificationDescriptor,
   PendingResult,
   ScheduleResult,
-  ScheduleOptions,
 } from '@capacitor/local-notifications';
-import { sub, add } from 'date-fns';
+import { sub } from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -89,6 +87,8 @@ export class LocalNotificationsService {
       if (!!notification) {
         return notification.id;
       }
+
+      return null;
     });
   }
 

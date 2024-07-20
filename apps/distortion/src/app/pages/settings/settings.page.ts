@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { LocalNotificationsService } from '@distortion/app/services/local-notifications.service';
+import { LocalNotificationsService } from '@blockparty/festival/service/local-notifications-service';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { LocalNotificationSchema } from '@capacitor/local-notifications';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
@@ -44,7 +44,7 @@ export class SettingsPage implements OnInit {
   localNotifications$: Observable<LocalNotificationSchema[]> =
     this._localNotifications$.asObservable();
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   setSampleNotification(): void {
     from(
