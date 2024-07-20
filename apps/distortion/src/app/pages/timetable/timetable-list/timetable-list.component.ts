@@ -8,13 +8,13 @@ import { Observable, combineLatest } from 'rxjs';
 import {
   StageTimetable,
   TimetableWithStageName,
+  RouteName,
 } from '@blockparty/festival/types';
 import { TimetableStateService } from '../state/timetable-state.service';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@distortion/app/shared/animations';
 import { FavoritesService } from '@distortion/app/services/favorites.service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';

@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Tab } from '@blockparty/festival/types';
+import { Tab, RouteName } from '@blockparty/festival/types';
 import { MenuController } from '@ionic/angular/standalone';
 import { TabsStateService } from './state/tabs-state.service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { SidebarPage } from './sidebar/sidebar.page';

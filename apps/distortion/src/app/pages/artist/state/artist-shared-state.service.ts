@@ -10,7 +10,7 @@ import {
 import { ArtistViewModel } from '@blockparty/festival/types';
 import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import { FileService } from '@distortion/app/services/file.service';
+import { FileService } from '@blockparty/festival/data-access/file-service';
 import { FavoriteStateService } from '@distortion/app/pages/favorite/state/favorite-state.service';
 import { AppStateService } from '@blockparty/festival/service/app-state';
 

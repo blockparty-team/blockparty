@@ -21,13 +21,12 @@ import {
 } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/service/map';
-import { MapLayer, Tab } from '@blockparty/festival/types';
+import { MapLayer, Tab, RouteName } from '@blockparty/festival/types';
 import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
 import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';

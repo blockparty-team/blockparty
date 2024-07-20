@@ -5,7 +5,7 @@ import {
   EventsGroupedByType,
 } from '@blockparty/festival/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import { FileService } from '@distortion/app/services/file.service';
+import { FileService } from '@blockparty/festival/data-access/file-service';
 import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {

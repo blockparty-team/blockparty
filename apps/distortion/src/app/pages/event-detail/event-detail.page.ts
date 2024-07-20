@@ -7,9 +7,8 @@ import { Share } from '@capacitor/share';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/service/map';
 import { EventStateService } from '../event/state/event-state.service';
-import { EventViewModel, MapLayer } from '@blockparty/festival/types';
+import { EventViewModel, MapLayer, RouteName } from '@blockparty/festival/types';
 import { environment } from '@shared/environments';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {

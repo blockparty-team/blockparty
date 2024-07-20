@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
+  RouteName,
 } from '@blockparty/festival/types';
 import { MapService } from '@blockparty/festival/service/map';
 import { SearchService } from '@distortion/app/services/search.service';
@@ -23,7 +24,6 @@ import {
   switchMap,
 } from 'rxjs/operators';
 import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { AssetItemComponent } from './asset-item/asset-item.component';

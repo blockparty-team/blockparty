@@ -14,3 +14,5 @@ export * from './lib/map-layer';
 export * from './lib/mask-geojson-properties';
 export * from './lib/stage-geojson-properties';
 export * from './lib/tab';
+export * from './lib/image-size';
+export * from './lib/route-name';

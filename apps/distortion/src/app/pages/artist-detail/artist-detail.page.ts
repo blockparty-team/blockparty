@@ -8,7 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
-import { ArtistViewModel } from '@blockparty/festival/types';
+import { ArtistViewModel, RouteName } from '@blockparty/festival/types';
 import { MapService } from '@blockparty/festival/service/map';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
@@ -16,7 +16,6 @@ import { ArtistStateService } from '../artist/state/artist-state.service';
 import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
 import { environment } from '@shared/environments';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import {

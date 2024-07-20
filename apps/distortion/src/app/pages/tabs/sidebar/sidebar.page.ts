@@ -5,7 +5,7 @@ import { MenuController } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { environment } from '@shared/environments';
-import { RouteName } from '@distortion/app/shared/models/routeName';
+import { RouteName } from '@blockparty/festival/types';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import {
   IonHeader,

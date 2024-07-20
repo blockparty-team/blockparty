@@ -19,9 +19,9 @@ import {
   StageTimetableViewModel,
   TimetableViewModel,
   TimeLabel,
+  RouteName,
 } from '@blockparty/festival/types';
 import { FavoritesService } from '@distortion/app/services/favorites.service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';

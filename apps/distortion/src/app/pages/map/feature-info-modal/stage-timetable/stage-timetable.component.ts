@@ -16,9 +16,9 @@ import {
   StageGeojsonProperties,
   Timetable,
   MapClickedFeature,
-  Ticket
+  Ticket,
+  RouteName
 } from '@blockparty/festival/types';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonHeader,

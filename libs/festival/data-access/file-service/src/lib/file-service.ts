@@ -3,20 +3,14 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import { imageSize } from '@distortion/app/shared/models/imageSize';
-import { MapStateService } from '@blockparty/festival/data-access/map-state';
+import { imageSize } from '@blockparty/festival/types';
 
-interface File {
-  fileName: string;
-  url: SafeResourceUrl;
-}
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
   private sanitizer = inject(DomSanitizer);
-  private mapStateService = inject(MapStateService);
   private supabase = inject(SupabaseService);
 
   allFileUrls(bucket: string): Observable<SafeResourceUrl[]> {
@@ -24,9 +18,9 @@ export class FileService {
       map((res) => res.data),
       switchMap((files) =>
         forkJoin(
-          files.map((file) => this.supabase.downloadFile(bucket, file.name))
+          files!.map((file) => this.supabase.downloadFile(bucket, file.name))
         ).pipe(
-          map((blobs) => blobs.map((blob, i) => ({ blob: blob, ...files[i] })))
+          map((blobs) => blobs.map((blob, i) => ({ blob: blob, ...files![i] })))
         )
       ),
       map((filesWithBlobs) => {
@@ -43,9 +37,11 @@ export class FileService {
               fileUrl,
             };
           }
+
+          return null;
         });
       })
-    );
+    ) as Observable<SafeResourceUrl[]>;
   }
 
   imageSrcset(bucket: string, path: string): string {
