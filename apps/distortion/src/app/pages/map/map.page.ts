@@ -26,7 +26,7 @@ import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '../tabs/state/tabs-state.service';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
-import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
+import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';

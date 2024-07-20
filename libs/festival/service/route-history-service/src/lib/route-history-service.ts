@@ -4,7 +4,7 @@ import { Observable, concat, of } from 'rxjs';
 import { filter, map, pairwise, shareReplay } from 'rxjs/operators';
 
 interface RouteHistory {
-  previous: string;
+  previous: string | null;
   current: string;
 }
 

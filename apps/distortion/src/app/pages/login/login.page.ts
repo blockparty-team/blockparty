@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@distortion/app/services/auth.service';
-import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
+import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { first, switchMap } from 'rxjs/operators';
 import {
   IonContent,

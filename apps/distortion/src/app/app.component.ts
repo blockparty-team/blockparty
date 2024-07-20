@@ -11,7 +11,7 @@ import { SupabaseService } from '@blockparty/shared/data-access/supabase-service
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
-import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
+import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { PushNotificationService } from './services/push-notification.service';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular/standalone';

@@ -13,7 +13,7 @@ import { MapService } from '@blockparty/festival/service/map';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '../artist/state/artist-state.service';
-import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
+import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { environment } from '@shared/environments';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
