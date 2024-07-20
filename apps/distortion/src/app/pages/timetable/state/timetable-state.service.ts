@@ -3,7 +3,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
-import { TimetableSharedStateService } from './timetable-shared-state.service';
+import { TimetableSharedStateService } from '@blockparty/festival/data-access/state/timetable-shared';
 import { DayEventStageTimetable } from '@blockparty/festival/types';
 
 @Injectable({

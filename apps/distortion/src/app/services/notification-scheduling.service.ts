@@ -17,7 +17,7 @@ import { LocalNotificationsService } from '@blockparty/festival/service/local-no
 import { sub } from 'date-fns';
 import { enableProdMode } from '@angular/core';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
-import { TimetableSharedStateService } from '@distortion/app/pages/timetable/state/timetable-shared-state.service';
+import { TimetableSharedStateService } from '@blockparty/festival/data-access/state/timetable-shared';
 
 @Injectable({
   providedIn: 'root',

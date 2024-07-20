@@ -4,7 +4,7 @@ import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { isSameDay, sub } from 'date-fns';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import { TimetableSharedStateService } from '@distortion/app/pages/timetable/state/timetable-shared-state.service';
+import { TimetableSharedStateService } from '@blockparty/festival/data-access/state/timetable-shared';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
 import {
   DayEvent,
