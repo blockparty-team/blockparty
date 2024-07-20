@@ -9,7 +9,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
 import { ModalController, SegmentCustomEvent, IonFooter } from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 import {
   MapLayer,
   Day,

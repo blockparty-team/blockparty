@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MapClickedFeature, MapLayer } from '@blockparty/festival/types';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
-import { MapStateService } from '../../state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 import { NgIf, AsyncPipe } from '@angular/common';
 import {
   IonHeader,

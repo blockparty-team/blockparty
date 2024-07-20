@@ -6,7 +6,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 import { ModalController } from '@ionic/angular/standalone';
 import { merge, from, Subject, EMPTY } from 'rxjs';
 import {

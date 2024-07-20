@@ -14,7 +14,7 @@ import {
   addProtocol
 } from 'maplibre-gl';
 import { Point } from 'geojson';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 import { GeolocationService } from '@blockparty/shared/service/geolocation';
 import {
   StageGeojsonProperties,

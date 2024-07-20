@@ -12,7 +12,7 @@ import { GeolocationService } from '@blockparty/shared/service/geolocation';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { ArtistStateService } from '@distortion/app/pages/artist/state/artist-state.service';
 import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 import { Feature, Point } from 'geojson';
 
 @Injectable({

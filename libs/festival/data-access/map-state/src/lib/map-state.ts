@@ -42,13 +42,13 @@ export class MapStateService {
     .pipe(distinctUntilChanged());
 
   private _selectedMapFeatures$ = new BehaviorSubject<
-    MapClickedFeature<GeojsonProperties>[]
+    MapClickedFeature<GeojsonProperties>[] | null
   >(null);
   selectedMapFeature$: Observable<MapClickedFeature<GeojsonProperties>> =
     this._selectedMapFeatures$.asObservable().pipe(
       filter((features) => !!features),
       // Only provide first clicked layer
-      map((features) => features[0])
+      map((features) => features![0])
     );
 
   private _mapInteraction$ = new BehaviorSubject<boolean>(false);
@@ -99,11 +99,11 @@ export class MapStateService {
       // Add fileurl
       map((icons) =>
         icons.map((mapIcon) => {
-          const [bucket, path] = getBucketAndPath(mapIcon.storage_path);
+          const [bucket, path] = getBucketAndPath(mapIcon.storage_path!);
 
           return {
             ...mapIcon,
-            fileUrl: this.supabase.publicImageUrl(bucket, path),
+            fileUrl: this.supabase.publicImageUrl(bucket!, path!),
           };
         })
       ),
@@ -120,8 +120,8 @@ export class MapStateService {
         icons
           .filter((icon) => !!icon.image)
           .forEach((icon) => {
-            const base64 = imgToBase64(icon.image);
-            this.filesystemService.writeFile(base64, icon.storage_path);
+            const base64 = imgToBase64(icon.image!);
+            this.filesystemService.writeFile(base64, icon.storage_path!);
           });
       })
     );
@@ -133,7 +133,7 @@ export class MapStateService {
       switchMap((icons) =>
         forkJoin(
           icons.map((icon) =>
-            this.filesystemService.readFile(icon.storage_path)
+            this.filesystemService.readFile(icon.storage_path!)
           )
         ).pipe(
           switchMap((images) =>
@@ -168,7 +168,7 @@ export class MapStateService {
     ),
     map(
       (layer) =>
-        layer.geojson.features.map(
+        layer!.geojson.features.map(
           (feature) => feature.properties
         ) as MaskGeojsonProperties[]
     )

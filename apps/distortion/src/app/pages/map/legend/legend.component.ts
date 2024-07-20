@@ -4,7 +4,7 @@ import { ToggleCustomEvent } from '@ionic/angular/standalone';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/service/map';
-import { MapStateService } from '../state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {

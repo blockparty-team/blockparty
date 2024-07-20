@@ -4,7 +4,7 @@ import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
 import { imageSize } from '@distortion/app/shared/models/imageSize';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 
 interface File {
   fileName: string;

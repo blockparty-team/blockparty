@@ -10,7 +10,7 @@ import {
 } from '@blockparty/festival/types';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { MapStateService } from '../state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/map-state';
 import { MapService } from '@blockparty/festival/service/map';
 import { AssetComponent } from './asset/asset.component';
 import { StageTimetableComponent } from './stage-timetable/stage-timetable.component';
