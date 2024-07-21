@@ -24,8 +24,12 @@ import {
   EventWithRelations,
   EventsGroupedByType,
   TransformOptions,
-} from '@blockparty/shared/types';
-import { Database, Tables, Enums } from '@blockparty/distortion/data-access/supabase';
+} from '@blockparty/festival/types';
+import {
+  Database,
+  Tables,
+  Enums,
+} from '@blockparty/distortion/data-access/supabase';
 import { environment } from '@shared/environments';
 
 @Injectable({
@@ -39,7 +43,7 @@ export class SupabaseService {
 
   constructor(
     // private deviceStorage: DeviceStorageService,
-    private platform: Platform
+    private platform: Platform,
   ) {
     this.supabase = createClient<Database>(
       environment.supabaseUrl,
@@ -51,12 +55,12 @@ export class SupabaseService {
         //   persistSession: true,
         //   detectSessionInUrl: !this.platform.is('capacitor')
         // }
-      }
+      },
     );
   }
 
   authChanges(
-    callback: (event: AuthChangeEvent, session: Session | null) => void
+    callback: (event: AuthChangeEvent, session: Session | null) => void,
   ) {
     return this.supabase.auth.onAuthStateChange(callback);
   }
@@ -72,13 +76,13 @@ export class SupabaseService {
   signIn(email: string) {
     return from(this.supabase.auth.signInWithOtp({ email })).pipe(
       map(({ data, error }) => (error ? throwError(error) : data)),
-      catchError((err) => EMPTY)
+      catchError((err) => EMPTY),
     );
   }
 
   signInWithProvider(
     provider: Provider,
-    redirectTo: string = '/'
+    redirectTo: string = '/',
   ): Observable<OAuthResponse['data']> {
     return from(
       this.supabase.auth.signInWithOAuth({
@@ -88,7 +92,7 @@ export class SupabaseService {
             ? 'distortion://login'
             : `${window.location.origin}${redirectTo}`,
         },
-      })
+      }),
     ).pipe(map(({ data }) => data));
   }
 
@@ -110,18 +114,18 @@ export class SupabaseService {
   }
 
   profile$(
-    userId: User['id']
+    userId: User['id'],
   ): Observable<Pick<Tables<'profile'>, 'username' | 'avatar_url'>> {
     return from(
       this.supabase
         .from('profile')
         .select(`username, avatar_url`)
         .eq('id', userId)
-        .single()
+        .single(),
     ).pipe(
       map(
-        (res) => res.data as Pick<Tables<'profile'>, 'username' | 'avatar_url'>
-      )
+        (res) => res.data as Pick<Tables<'profile'>, 'username' | 'avatar_url'>,
+      ),
     );
   }
 
@@ -147,12 +151,12 @@ export class SupabaseService {
               )
             )
           )
-        `
+        `,
         )
-        .order('name')
+        .order('name'),
     ).pipe(
       // TODO: Trouble with type, hence this cast
-      map(({ data }) => data as ArtistViewModel[])
+      map(({ data }) => data as ArtistViewModel[]),
     );
   }
 
@@ -161,13 +165,16 @@ export class SupabaseService {
       this.supabase.from('day_event_mask').select(`
           id,
           bounds
-        `)
+        `),
     ).pipe(map((res) => res.data as any[]));
   }
 
   get days$() {
     return from(
-      this.supabase.from('day').select(`
+      this.supabase
+        .from('day')
+        .select(
+          `
           id,
           day,
           name,
@@ -183,7 +190,9 @@ export class SupabaseService {
               )
             )
           )
-      `).order('day')
+      `,
+        )
+        .order('day'),
     ).pipe(map((res) => res.data));
   }
 
@@ -218,12 +227,12 @@ export class SupabaseService {
               )
             )
           )
-        `
+        `,
         )
-        .order('name')
+        .order('name'),
     ).pipe(
       // TODO: Trouble with type, hence this cast
-      map(({ data }) => data as unknown as EventWithRelations[])
+      map(({ data }) => data as unknown as EventWithRelations[]),
     );
   }
 
@@ -240,15 +249,15 @@ export class SupabaseService {
             name,
             tickets
           )
-        `
+        `,
         )
-        .order('name')
+        .order('name'),
     ).pipe(map(({ data }) => data as EventsGroupedByType[]));
   }
 
   get timetables$(): Observable<DayEventStageTimetable[]> {
     return from(
-      this.supabase.from('day_event_stage_timetable').select('*')
+      this.supabase.from('day_event_stage_timetable').select('*'),
     ).pipe(map((res) => res.data as DayEventStageTimetable[]));
   }
 
@@ -257,7 +266,7 @@ export class SupabaseService {
       this.supabase.from('artist').select('*').textSearch('ts', searchTerm, {
         config: 'english',
         type: 'plain',
-      })
+      }),
     );
   }
 
@@ -276,10 +285,10 @@ export class SupabaseService {
           stage(
             name
           )
-        `
+        `,
         )
         .filter('stage_id', 'eq', stageId)
-        .order('start_time')
+        .order('start_time'),
     ).pipe(map((res) => res.data));
   }
 
@@ -287,14 +296,14 @@ export class SupabaseService {
   upsertFavorites(
     devive_id: string,
     entity: Enums<'favorite_entity'>,
-    ids: string[]
+    ids: string[],
   ): Observable<any> {
     return from(
       this.supabase.rpc('upsert_favorite', {
         _device_id: devive_id,
         _entity: entity,
         _ids: ids,
-      })
+      }),
     ).pipe(map((res) => res.data));
   }
 
@@ -303,15 +312,13 @@ export class SupabaseService {
       this.supabase
         .from('map_pmtiles')
         .select('*')
-        .filter('public', 'eq', true)
-    ).pipe(
-      map((res) => res.data as Tables<'map_pmtiles'>[])
-    );
+        .filter('public', 'eq', true),
+    ).pipe(map((res) => res.data as Tables<'map_pmtiles'>[]));
   }
 
   downloadFile(bucket: string, path: string) {
     return from(this.supabase.storage.from(bucket).download(path)).pipe(
-      map((res) => res.data)
+      map((res) => res.data),
     );
   }
 
@@ -322,7 +329,7 @@ export class SupabaseService {
   publicImageUrl(
     bucket: string,
     path: string,
-    imageSize?: TransformOptions
+    imageSize?: TransformOptions,
   ): string {
     // const { data } = this.supabase
     //   .storage
@@ -338,29 +345,29 @@ export class SupabaseService {
 
   get mapIcons$(): Observable<Tables<'map_icon'>[]> {
     return from(this.supabase.from('map_icon').select('*')).pipe(
-      map((res) => res.data as Tables<'map_icon'>[])
+      map((res) => res.data as Tables<'map_icon'>[]),
     );
   }
 
   //RPC
   tableAsGeojson(
-    table: MapSource
+    table: MapSource,
   ): Observable<FeatureCollection<Point | LineString | Polygon>> {
     return from(this.supabase.rpc('table_as_geojson', { _tbl: table })).pipe(
-      map((res: any) => res.data.geojson)
+      map((res: any) => res.data.geojson),
     );
   }
 
   distanceTo(
     coords: [number, number],
-    withinDistance: number
+    withinDistance: number,
   ): Observable<EntityDistanceSearchResult[]> {
     return from(
       this.supabase.rpc('distance_to', {
         lng: coords[0],
         lat: coords[1],
         search_radius: withinDistance,
-      })
+      }),
     ).pipe(map((res) => res.data));
   }
 
@@ -369,7 +376,7 @@ export class SupabaseService {
       this.supabase
         .rpc('text_search', { search_term: searchTerm })
         .or('rank.gt.0,similarity.gt.0.1')
-        .limit(10)
+        .limit(10),
     ).pipe(map((res) => res.data));
   }
 }
