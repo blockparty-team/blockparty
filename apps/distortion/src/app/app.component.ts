@@ -16,7 +16,7 @@ import { PushNotificationService } from '@blockparty/festival/shared/service/pus
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { NotificationSchedulingService } from './services/notification-scheduling.service';
+import { NotificationSchedulingService } from '@blockparty/festival/shared/service/notification-scheduling';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';

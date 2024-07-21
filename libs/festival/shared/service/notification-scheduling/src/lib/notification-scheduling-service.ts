@@ -1,22 +1,16 @@
-import { Injectable, OnDestroy, inject, isDevMode } from '@angular/core';
+import { Injectable, OnDestroy, inject } from '@angular/core';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
-import { Observable, Subject, combineLatest, defer, from } from 'rxjs';
+import { Subject, combineLatest, from } from 'rxjs';
 import {
   filter,
-  find,
   map,
   mergeMap,
   skip,
   switchMap,
   take,
   takeUntil,
-  tap,
-  withLatestFrom,
 } from 'rxjs/operators';
 import { LocalNotificationsService } from '@blockparty/festival/shared/service/local-notifications';
-import { sub } from 'date-fns';
-import { enableProdMode } from '@angular/core';
-import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { TimetableSharedStateService } from '@blockparty/festival/data-access/state/timetable-shared';
 
 @Injectable({
@@ -70,7 +64,7 @@ export class NotificationSchedulingService implements OnDestroy {
             ).pipe(
               switchMap((notificationId) =>
                 this.localNotificationService.cancelNotification(
-                  notificationId,
+                  notificationId!,
                 ),
               ),
             );
@@ -89,7 +83,7 @@ export class NotificationSchedulingService implements OnDestroy {
     combineLatest([
       this.timetableSharedStateService.timetableArtistNotification$,
       this.favoritesStateService.favorites$.pipe(
-        map((favs) => favs.find((fav) => fav.entity === 'artist').ids),
+        map((favs) => favs.find((fav) => fav.entity === 'artist')!.ids),
       ),
     ])
       .pipe(
@@ -117,7 +111,7 @@ export class NotificationSchedulingService implements OnDestroy {
                   ),
                 )
                 .filter((n) => {
-                  return n.schedule.at >= now;
+                  return n.schedule!.at! >= now;
                 });
               if (notifications.length > 0) {
                 this.localNotificationService

@@ -64,6 +64,9 @@
       "@blockparty/festival/shared/service/map": [
         "libs/festival/shared/service/map/src/index.ts"
       ],
+      "@blockparty/festival/shared/service/notification-scheduling": [
+        "libs/festival/shared/service/notification-scheduling/src/index.ts"
+      ],
       "@blockparty/festival/shared/service/push-notification": [
         "libs/festival/shared/service/push-notification/src/index.ts"
       ],
