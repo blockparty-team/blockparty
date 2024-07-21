@@ -52,6 +52,9 @@
       "@blockparty/festival/data-access/state/timetable-shared": [
         "libs/festival/data-access/state/timetable-shared/src/index.ts"
       ],
+      "@blockparty/festival/shared/service/app-update": [
+        "libs/festival/shared/service/app-update/src/index.ts"
+      ],
       "@blockparty/festival/shared/service/auth": [
         "libs/festival/shared/service/auth/src/index.ts"
       ],
@@ -87,9 +90,6 @@
       ],
       "@blockparty/shared/service/geolocation": [
         "libs/shared/service/geolocation/src/index.ts"
-      ],
-      "@blockparty/shared/services/app-update-service": [
-        "libs/shared/services/app-update-service/src/index.ts"
       ],
       "@blockparty/util/file": ["libs/festival/util/file/src/index.ts"],
       "@distortion/*": ["apps/distortion/src/*"],

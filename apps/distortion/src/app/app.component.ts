@@ -21,7 +21,7 @@ import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
-import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
+import { AppUpdateService } from '@blockparty/festival/shared/service/app-update';
 import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 
 @Component({

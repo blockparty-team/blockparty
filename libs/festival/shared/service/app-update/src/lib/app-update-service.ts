@@ -9,10 +9,9 @@ export class AppUpdateService {
 
   public async openAppStore() {
     await AppUpdate.openAppStore();
-  };
+  }
 
   private async newVersionAvailable(): Promise<boolean> {
-
     const platform = Capacitor.getPlatform();
     if (platform === 'web') return false;
 
@@ -30,23 +29,23 @@ export class AppUpdateService {
 
     const alert = await this.alertContoller.create({
       header: 'Update available',
-      message: 'A new version of the app is available. Would you like to update now?',
+      message:
+        'A new version of the app is available. Would you like to update now?',
       buttons: [
         {
           text: 'Cancel',
-          role: 'cancel'
+          role: 'cancel',
         },
         {
           text: 'Update',
           role: 'confirm',
           handler: () => {
             this.openAppStore();
-          }
-        }
-      ]
+          },
+        },
+      ],
     });
 
     await alert.present();
   }
-
 }
