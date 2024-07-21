@@ -13,7 +13,7 @@ import {
   tap,
   withLatestFrom,
 } from 'rxjs/operators';
-import { LocalNotificationsService } from '@blockparty/festival/service/local-notifications-service';
+import { LocalNotificationsService } from '@blockparty/festival/shared/service/local-notifications';
 import { sub } from 'date-fns';
 import { enableProdMode } from '@angular/core';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
