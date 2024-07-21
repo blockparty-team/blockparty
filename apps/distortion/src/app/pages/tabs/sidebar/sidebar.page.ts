@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '@blockparty/festival/service/auth-service';
+import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { MenuController } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
@@ -118,14 +118,14 @@ export class SidebarPage implements OnInit {
   ]
     .filter((navItem) =>
       !environment.featureToggle.enableLogin &&
-        navItem.routeName === RouteName.Profile
+      navItem.routeName === RouteName.Profile
         ? false
-        : true
+        : true,
     )
     .filter((navItem) =>
       environment.production && navItem.routeName === RouteName.Settings
         ? false
-        : true
+        : true,
     ); // Show settings menu item when not in production
 
   ngOnInit() {
@@ -151,7 +151,7 @@ export class SidebarPage implements OnInit {
           } else {
             this.router.navigate([RouteName.Login]);
           }
-        })
+        }),
       )
       .subscribe();
   }

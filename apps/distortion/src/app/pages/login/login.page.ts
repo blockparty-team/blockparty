@@ -5,7 +5,7 @@ import {
   inject,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '@blockparty/festival/service/auth-service';
+import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { first, switchMap } from 'rxjs/operators';
 import {
@@ -47,8 +47,8 @@ export class LoginPage implements OnInit {
       .pipe(
         first(),
         switchMap((history) =>
-          this.authService.signInWithGoogle(history.previous)
-        )
+          this.authService.signInWithGoogle(history.previous),
+        ),
       )
       .subscribe();
   }

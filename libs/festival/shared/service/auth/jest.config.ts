@@ -1,11 +1,12 @@
 /* eslint-disable */
 export default {
   displayName: 'auth-service',
-  preset: '../../../../jest.preset.js',
+  preset: '../../../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../../coverage/libs/festival/service/auth-service',
+  coverageDirectory:
+    '../../../../../coverage/libs/festival/shared/service/auth',
 };
