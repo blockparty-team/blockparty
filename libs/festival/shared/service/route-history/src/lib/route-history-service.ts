@@ -28,12 +28,12 @@ export class RouteHistoryService {
           previous: events[0].urlAfterRedirects,
           current: events[1].urlAfterRedirects,
         };
-      })
+      }),
     );
 
   public history$ = concat(
     this.initalHistory$,
-    this.historyAfterFirstNavigation$
+    this.historyAfterFirstNavigation$,
   ).pipe(shareReplay(1));
 
   // TODO: look at APP_INITIALIZER : https://angular.io/api/core/APP_INITIALIZER

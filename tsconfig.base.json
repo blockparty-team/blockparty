@@ -52,9 +52,6 @@
       "@blockparty/festival/data-access/state/timetable-shared": [
         "libs/festival/data-access/state/timetable-shared/src/index.ts"
       ],
-      "@blockparty/festival/service/route-history-service": [
-        "libs/festival/service/route-history-service/src/index.ts"
-      ],
       "@blockparty/festival/shared/service/auth": [
         "libs/festival/shared/service/auth/src/index.ts"
       ],
@@ -66,6 +63,9 @@
       ],
       "@blockparty/festival/shared/service/refresh": [
         "libs/festival/shared/service/refresh/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/route-history": [
+        "libs/festival/shared/service/route-history/src/index.ts"
       ],
       "@blockparty/festival/shared/service/search": [
         "libs/festival/shared/service/search/src/index.ts"

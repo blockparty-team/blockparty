@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
-import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
+import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { first, switchMap } from 'rxjs/operators';
 import {
   IonContent,

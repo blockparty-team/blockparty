@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
+import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { map } from 'rxjs';
 import { Clipboard } from '@capacitor/clipboard';
 import { Browser } from '@capacitor/browser';
@@ -40,7 +40,7 @@ export class TransportPage {
   private routeHistoryService = inject(RouteHistoryService);
 
   previousRoute$ = this.routeHistoryService.history$.pipe(
-    map((history) => (history.previous ? history.previous : '/'))
+    map((history) => (history.previous ? history.previous : '/')),
   );
 
   onCopyVoucherCode() {
