@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FilterEventsStateService } from './filter-events-state.service';
+import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
   IonHeader,

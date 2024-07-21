@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { AuthService } from '@distortion/app/services/auth.service';
+import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { UserMetadata } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
@@ -48,7 +48,7 @@ export class ProfilePage implements OnInit {
   ngOnInit() {
     this.userMetaData$ = this.authService.session$.pipe(
       filter((session) => !!session),
-      map((session) => session.user.user_metadata)
+      map((session) => session.user.user_metadata),
     );
   }
 }

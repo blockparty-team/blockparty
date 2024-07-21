@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { LocalNotificationsService } from '@distortion/app/services/local-notifications.service';
+import { LocalNotificationsService } from '@blockparty/festival/shared/service/local-notifications';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { LocalNotificationSchema } from '@capacitor/local-notifications';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
@@ -39,7 +39,7 @@ export class SettingsPage implements OnInit {
   private localNotificationsService = inject(LocalNotificationsService);
 
   private _localNotifications$ = new BehaviorSubject<LocalNotificationSchema[]>(
-    null
+    null,
   );
   localNotifications$: Observable<LocalNotificationSchema[]> =
     this._localNotifications$.asObservable();
@@ -57,14 +57,14 @@ export class SettingsPage implements OnInit {
           body: 'Just kidding!',
           schedule: { at: new Date(new Date().getTime() + 10000) },
         },
-      ] as LocalNotificationSchema[])
+      ] as LocalNotificationSchema[]),
     );
   }
 
   getNotifications(): void {
     from(this.localNotificationsService.getAllNotifications()).subscribe(
       (notifications) =>
-        this._localNotifications$.next(notifications.notifications)
+        this._localNotifications$.next(notifications.notifications),
     );
   }
 }

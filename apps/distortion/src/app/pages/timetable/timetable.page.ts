@@ -7,8 +7,8 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { isSameDay, sub } from 'date-fns';
-import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
-import { TimetableStateService } from './state/timetable-state.service';
+import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
+import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, takeUntil, tap } from 'rxjs/operators';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';

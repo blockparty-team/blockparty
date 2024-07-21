@@ -1,17 +1,13 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   GeojsonProperties,
   MapClickedFeature,
-} from '@distortion/app/interfaces/map-clicked-feature';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
+  MapLayer,
+} from '@blockparty/festival/shared/types';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { MapStateService } from '../state/map-state.service';
-import { MapService } from '@distortion/app/services/map.service';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { AssetComponent } from './asset/asset.component';
 import { StageTimetableComponent } from './stage-timetable/stage-timetable.component';
 import { NgIf, AsyncPipe } from '@angular/common';
@@ -37,12 +33,12 @@ export class FeatureInfoModalComponent {
 
   mapLayer = MapLayer;
 
-  selectedFeature$: Observable<MapClickedFeature<GeojsonProperties>> = this.mapStateService.selectedMapFeature$.pipe(
+  selectedFeature$ = this.mapStateService.selectedMapFeature$.pipe(
     tap((feature) =>
       this.mapService.flyTo(
         feature.geometry.coordinates as [number, number],
-        [0, -60]
-      )
-    )
+        [0, -60],
+      ),
+    ),
   );
 }

@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { EventViewModel } from '@distortion/app/interfaces/event';
+import {
+  EventViewModel,
+  EventsGroupedByType,
+  RouteName,
+} from '@blockparty/festival/shared/types';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
-import { EventStateService } from './state/event-state.service';
-import { EventsGroupedByType } from '@distortion/app/interfaces/event-type';
-import { RouteName } from '@distortion/app/shared/models/routeName';
+import { EventStateService } from '@blockparty/festival/data-access/state/event';
 import { EventCardComponent } from './event-card/event-card.component';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
@@ -71,7 +73,7 @@ export class EventPage implements OnInit {
 
   onEventTypeFilterChange(event: Event): void {
     this.eventStateService.selectEventTypeId(
-      (event as SegmentCustomEvent).detail.value.toString()
+      (event as SegmentCustomEvent).detail.value.toString(),
     );
   }
 

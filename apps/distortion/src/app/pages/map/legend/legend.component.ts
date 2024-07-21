@@ -1,11 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MapIconViewModel } from '@distortion/app/interfaces/map-icon';
+import { MapIconViewModel, MapLayer } from '@blockparty/festival/shared/types';
 import { ToggleCustomEvent } from '@ionic/angular/standalone';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
-import { MapService } from '@distortion/app/services/map.service';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
-import { MapStateService } from '../state/map-state.service';
+import { MapService } from '@blockparty/festival/shared/service/map';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
@@ -49,7 +48,7 @@ export class LegendComponent implements OnInit {
 
   constructor(
     private mapService: MapService,
-    private mapStateService: MapStateService
+    private mapStateService: MapStateService,
   ) {}
 
   ngOnInit() {
@@ -64,7 +63,7 @@ export class LegendComponent implements OnInit {
           .map((asset) => ({
             ...asset,
             visible: !removed.includes(asset.name),
-          }))
+          })),
       ),
       distinctUntilChanged(),
       tap((assets) => {
@@ -74,7 +73,7 @@ export class LegendComponent implements OnInit {
 
         this.mapService.filterLayer(MapLayer.AssetIcon, 'icon', visible);
         this.mapService.filterLayer(MapLayer.Asset, 'icon', visible);
-      })
+      }),
     );
   }
 

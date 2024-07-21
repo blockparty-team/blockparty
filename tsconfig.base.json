@@ -19,16 +19,88 @@
       "@blockparty/distortion/data-access/supabase": [
         "libs/distortion/data-access/supabase/src/index.ts"
       ],
+      "@blockparty/festival/data-access/file-service": [
+        "libs/festival/data-access/file-service/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/artist": [
+        "libs/festival/data-access/state/artist/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/artist-shared": [
+        "libs/festival/data-access/state/artist-shared/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/event": [
+        "libs/festival/data-access/state/event/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/favorite": [
+        "libs/festival/data-access/state/favorite/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/filter-events": [
+        "libs/festival/data-access/state/filter-events/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/map": [
+        "libs/festival/data-access/state/map/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/tabs": [
+        "libs/festival/data-access/state/tabs/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/ticket": [
+        "libs/festival/data-access/state/ticket/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/timetable": [
+        "libs/festival/data-access/state/timetable/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/state/timetable-shared": [
+        "libs/festival/data-access/state/timetable-shared/src/index.ts"
+      ],
+      "@blockparty/festival/shared/guard/can-load": [
+        "libs/festival/shared/guard/can-load/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/app-update": [
+        "libs/festival/shared/service/app-update/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/auth": [
+        "libs/festival/shared/service/auth/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/local-notifications": [
+        "libs/festival/shared/service/local-notifications/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/map": [
+        "libs/festival/shared/service/map/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/notification-scheduling": [
+        "libs/festival/shared/service/notification-scheduling/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/push-notification": [
+        "libs/festival/shared/service/push-notification/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/refresh": [
+        "libs/festival/shared/service/refresh/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/route-history": [
+        "libs/festival/shared/service/route-history/src/index.ts"
+      ],
+      "@blockparty/festival/shared/service/search": [
+        "libs/festival/shared/service/search/src/index.ts"
+      ],
+      "@blockparty/festival/shared/types": [
+        "libs/festival/shared/types/src/index.ts"
+      ],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
+      ],
+      "@blockparty/shared/data-access/filesystem": [
+        "libs/shared/data-access/filesystem/src/index.ts"
       ],
       "@blockparty/shared/data-access/supabase-service": [
         "libs/shared/data-access/supabase-service/src/index.ts"
       ],
-      "@blockparty/shared/services/app-update-service": [
-        "libs/shared/services/app-update-service/src/index.ts"
+      "@blockparty/shared/service/device": [
+        "libs/shared/service/device/src/index.ts"
       ],
-      "@blockparty/shared/types": ["libs/shared/types/src/index.ts"],
+      "@blockparty/shared/service/geolocation": [
+        "libs/shared/service/geolocation/src/index.ts"
+      ],
+      "@blockparty/util/file": ["libs/festival/util/file/src/index.ts"],
       "@distortion/*": ["apps/distortion/src/*"],
       "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
       "@tweak/*": ["apps/tweak/src/app/*"],

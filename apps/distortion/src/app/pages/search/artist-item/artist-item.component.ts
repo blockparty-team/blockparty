@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
-import { RouteName } from '@distortion/app/shared/models/routeName';
+import { ArtistViewModel, RouteName } from '@blockparty/festival/shared/types';
 import { NgFor, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {

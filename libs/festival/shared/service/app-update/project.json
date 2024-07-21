@@ -1,0 +1,29 @@
+{
+  "name": "app-update-service",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/festival/shared/service/app-update/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/festival/shared/service/app-update",
+        "main": "libs/festival/shared/service/app-update/src/index.ts",
+        "tsConfig": "libs/festival/shared/service/app-update/tsconfig.lib.json",
+        "assets": ["libs/festival/shared/service/app-update/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/festival/shared/service/app-update/jest.config.ts"
+      }
+    }
+  }
+}

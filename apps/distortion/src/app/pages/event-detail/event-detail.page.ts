@@ -5,12 +5,14 @@ import { map, switchMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { MapService } from '@distortion/app/services/map.service';
-import { EventStateService } from '../event/state/event-state.service';
-import { EventViewModel } from '@distortion/app/interfaces/event';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
+import { MapService } from '@blockparty/festival/shared/service/map';
+import { EventStateService } from '@blockparty/festival/data-access/state/event';
+import {
+  EventViewModel,
+  MapLayer,
+  RouteName,
+} from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
@@ -75,9 +77,9 @@ export class EventDetailPage implements OnInit {
       map((paramMap) => paramMap.get('id')),
       switchMap((id) =>
         this.eventStateService.events$.pipe(
-          map((events) => events.find((event) => event.id === id))
-        )
-      )
+          map((events) => events.find((event) => event.id === id)),
+        ),
+      ),
     );
   }
 

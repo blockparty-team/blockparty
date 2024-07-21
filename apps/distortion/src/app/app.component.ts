@@ -11,18 +11,18 @@ import { SupabaseService } from '@blockparty/shared/data-access/supabase-service
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
-import { RouteHistoryService as RouteHistoryService } from './services/routeHistory.service';
-import { PushNotificationService } from './services/push-notification.service';
+import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
+import { PushNotificationService } from '@blockparty/festival/shared/service/push-notification';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { NotificationSchedulingService } from './services/notification-scheduling.service';
+import { NotificationSchedulingService } from '@blockparty/festival/shared/service/notification-scheduling';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { RouteName } from '@distortion/app/shared/models/routeName';
+import { RouteName } from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
-import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
-import { AppStateService } from '@distortion/app/services/app-state.service';
+import { AppUpdateService } from '@blockparty/festival/shared/service/app-update';
+import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   private platform = inject(Platform);
   private notificationSchedulingService = inject(NotificationSchedulingService);
   private appUpdateService = inject(AppUpdateService);
-  private appStateService = inject(AppStateService);
+  private refreshService = inject(RefreshService);
 
   constructor() {
     this.setupAppUrlOpenListener();
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
 
     this.notificationSchedulingService.rescheduleAllArtistNotifications();
     this.platform.resume.subscribe(() => {
-      this.appStateService.reloadData();
+      this.refreshService.reloadData();
       this.notificationSchedulingService.rescheduleAllArtistNotifications();
     });
 
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit {
           RouteName.Artist,
           action.notification.extra.artistName,
         ]);
-      }
+      },
     );
 
     this.appUpdateService.checkForUpdate();
@@ -117,7 +117,7 @@ export class AppComponent implements OnInit {
 
         const { data, error } = await this.supabase.externalSetSession(
           access,
-          refresh
+          refresh,
         );
         this.supabase.setSession(data.session);
 

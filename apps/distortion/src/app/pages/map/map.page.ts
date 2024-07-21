@@ -6,7 +6,7 @@ import {
   OnInit,
   inject,
 } from '@angular/core';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { ModalController } from '@ionic/angular/standalone';
 import { merge, from, Subject, EMPTY } from 'rxjs';
 import {
@@ -20,15 +20,13 @@ import {
   catchError,
 } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { MapService } from '@distortion/app/services/map.service';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
+import { MapService } from '@blockparty/festival/shared/service/map';
+import { MapLayer, Tab, RouteName } from '@blockparty/festival/shared/types';
 import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
-import { TabsStateService } from '../tabs/state/tabs-state.service';
-import { Tab } from '@distortion/app/interfaces/tab';
-import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
-import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
+import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
+import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
+import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';
@@ -45,13 +43,7 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
     ...animations.slideUpDown,
   ],
   standalone: true,
-  imports: [
-    FilterEventsComponent,
-    NgIf,
-    AsyncPipe,
-    IonHeader,
-    IonContent,
-  ],
+  imports: [FilterEventsComponent, NgIf, AsyncPipe, IonHeader, IonContent],
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private mapService = inject(MapService);

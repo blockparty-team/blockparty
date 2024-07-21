@@ -8,14 +8,13 @@ import { Observable, combineLatest } from 'rxjs';
 import {
   StageTimetable,
   TimetableWithStageName,
-} from '@distortion/app/interfaces/day-event-stage-timetable';
-import { TimetableStateService } from '../state/timetable-state.service';
+  RouteName,
+} from '@blockparty/festival/shared/types';
+import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@distortion/app/shared/animations';
-import { FavoritesService } from '@distortion/app/services/favorites.service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
-import { FilterEventsStateService } from '@distortion/app/shared/components/filter-events/filter-events-state.service';
+import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
@@ -32,6 +31,7 @@ import {
   IonText,
   IonRouterLink,
 } from '@ionic/angular/standalone';
+import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
 enum ListViewMode {
   ByTime = 'byTime',
@@ -67,7 +67,7 @@ enum ListViewMode {
 export class TimetableListComponent {
   private filterEventsStateService = inject(FilterEventsStateService);
   private timetableStateService = inject(TimetableStateService);
-  private favoritesSerive = inject(FavoritesService);
+  private favoriteStateService = inject(FavoriteStateService);
 
   private event$ = combineLatest([
     this.timetableStateService.timetableWithFavorites$,
@@ -76,13 +76,13 @@ export class TimetableListComponent {
   ]).pipe(
     filter(
       ([timetableDays, selectedDayId, eventId]) =>
-        !!timetableDays && !!selectedDayId && !!eventId
+        !!timetableDays && !!selectedDayId && !!eventId,
     ),
     map(([timetableDays, selectedDayId, eventId]) =>
       timetableDays
         .find((day) => day.id === selectedDayId)
-        ?.events.find((event) => event.event_id === eventId)
-    )
+        ?.events.find((event) => event.event_id === eventId),
+    ),
   );
 
   public timetableByTime$: Observable<TimetableWithStageName[]> =
@@ -94,18 +94,18 @@ export class TimetableListComponent {
               stage.timetable.flatMap((timetable) => ({
                 stageName: stage.stage_name,
                 ...timetable,
-              }))
+              })),
             )
             .sort(
               (a, b) =>
                 new Date(a.start_time).getTime() -
-                new Date(b.start_time).getTime()
-            ) ?? null
-      )
+                new Date(b.start_time).getTime(),
+            ) ?? null,
+      ),
     );
 
   public timetableByStage$: Observable<StageTimetable[]> = this.event$.pipe(
-    map((event) => event?.stages ?? null)
+    map((event) => event?.stages ?? null),
   );
 
   public routeName = RouteName;
@@ -119,6 +119,6 @@ export class TimetableListComponent {
   }
 
   onToggleFavorite(id: string): void {
-    this.favoritesSerive.toggleFavorite('artist', id);
+    this.favoriteStateService.toggleFavorite('artist', id);
   }
 }

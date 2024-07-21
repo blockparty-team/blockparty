@@ -5,12 +5,14 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
-import { StageGeojsonProperties } from '@distortion/app/interfaces/stage-geojson-properties';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
-import { MapService } from '@distortion/app/services/map.service';
-import { RouteName } from '@distortion/app/shared/models/routeName';
+import {
+  MapClickedFeature,
+  MapLayer,
+  StageGeojsonProperties,
+  RouteName,
+} from '@blockparty/festival/shared/types';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { Feature, Point } from 'geojson';
 import {
   IonItem,

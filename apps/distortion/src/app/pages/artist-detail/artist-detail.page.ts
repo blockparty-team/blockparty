@@ -8,15 +8,14 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
-import { MapService } from '@distortion/app/services/map.service';
+import { ArtistViewModel, RouteName } from '@blockparty/festival/shared/types';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
-import { ArtistStateService } from '../artist/state/artist-state.service';
-import { RouteHistoryService } from '@distortion/app/services/routeHistory.service';
+import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
+import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { environment } from '@shared/environments';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
-import { RouteName } from '@distortion/app/shared/models/routeName';
 import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import {
@@ -85,19 +84,19 @@ export class ArtistDetailPage implements OnInit {
   showMusicPlayer = signal<boolean>(false);
   canShare$ = from(Share.canShare()).pipe(map((res) => res.value));
   previousRoute$ = this.routeHistoryService.history$.pipe(
-    map((history) => (history.previous ? history.previous : '/'))
+    map((history) => (history.previous ? history.previous : '/')),
   );
 
   private _titleScrollTop$ = new Subject<number>();
   imageScale$: Observable<string> = this._titleScrollTop$.pipe(
-    map((scrollTop) => `scale(${(100 + scrollTop / 40) / 100})`)
+    map((scrollTop) => `scale(${(100 + scrollTop / 40) / 100})`),
   );
   imageBlur$: Observable<string> = this._titleScrollTop$.pipe(
-    map((scrollTop) => `blur(${scrollTop / 100}px)`)
+    map((scrollTop) => `blur(${scrollTop / 100}px)`),
   );
   coverIosStatusBar$ = this._titleScrollTop$.pipe(
     // Image heght is defined for 250 in css
-    map((titleDistanceTop) => (titleDistanceTop < 250 ? false : true))
+    map((titleDistanceTop) => (titleDistanceTop < 250 ? false : true)),
   );
 
   ngOnInit() {
@@ -105,9 +104,9 @@ export class ArtistDetailPage implements OnInit {
       map((paramMap) => paramMap.get('name')),
       switchMap((name) =>
         this.artistStateService.artists$.pipe(
-          map((artists) => artists.find((artist) => artist.name === name))
-        )
-      )
+          map((artists) => artists.find((artist) => artist.name === name)),
+        ),
+      ),
     );
 
     this.soMeLinks$ = this.artist$.pipe(
@@ -120,7 +119,7 @@ export class ArtistDetailPage implements OnInit {
           .filter(([column, value]) => soMeColumns.includes(column) && !!value)
           .map(([column, url]) => {
             const { icon, svg } = soMeIcons.find(
-              (conf) => conf.column === column
+              (conf) => conf.column === column,
             );
 
             return {
@@ -130,7 +129,7 @@ export class ArtistDetailPage implements OnInit {
               url,
             };
           });
-      })
+      }),
     );
   }
 

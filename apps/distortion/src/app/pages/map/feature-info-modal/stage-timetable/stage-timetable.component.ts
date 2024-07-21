@@ -7,18 +7,22 @@ import {
 import { Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-import { ModalController, SegmentCustomEvent, IonFooter } from '@ionic/angular/standalone';
-import { Browser } from '@capacitor/browser';
-import { MapStateService } from '@distortion/app/pages/map/state/map-state.service';
-import { MapLayer } from '@distortion/app/interfaces/map-layer';
 import {
+  ModalController,
+  SegmentCustomEvent,
+  IonFooter,
+} from '@ionic/angular/standalone';
+import { Browser } from '@capacitor/browser';
+import { MapStateService } from '@blockparty/festival/data-access/state/map';
+import {
+  MapLayer,
   Day,
   StageGeojsonProperties,
   Timetable,
-} from '@distortion/app/interfaces/stage-geojson-properties';
-import { MapClickedFeature } from '@distortion/app/interfaces/map-clicked-feature';
-import { RouteName } from '@distortion/app/shared/models/routeName';
-import { Ticket } from '@distortion/app/interfaces/event';
+  MapClickedFeature,
+  Ticket,
+  RouteName,
+} from '@blockparty/festival/shared/types';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonHeader,
@@ -38,8 +42,9 @@ import {
 } from '@ionic/angular/standalone';
 import { isSameDay, sub } from 'date-fns';
 
-interface TimetableViewModel extends Timetable {
+interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
   onAir: boolean;
+  name: string;
 }
 
 @Component({
@@ -134,12 +139,15 @@ export class StageTimetableComponent implements OnInit {
             (timetable) => timetable.day.id === day,
           ).timetable,
       ),
-      map((timetable) => (
-        timetable.map(slot => ({
-          ...slot,
-          onAir: new Date() > new Date(slot.start_time) && new Date() < new Date(slot.end_time),
-        }))
-      ))
+      map(
+        (timetable) =>
+          timetable.map((slot) => ({
+            ...slot,
+            onAir:
+              new Date() > new Date(slot.start_time) &&
+              new Date() < new Date(slot.end_time),
+          })) as unknown as TimetableViewModel[],
+      ),
     );
 
     // If no timetables assigned to stage, backend returns [null] for timetables array

@@ -4,8 +4,8 @@ import {
   Input,
   inject,
 } from '@angular/core';
-import { ArtistViewModel } from '@distortion/app/interfaces/artist';
-import { ArtistStateService } from '../state/artist-state.service';
+import { ArtistViewModel } from '@blockparty/festival/shared/types';
+import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { NgIf, NgFor, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonCard, IonIcon, IonRouterLink } from '@ionic/angular/standalone';
