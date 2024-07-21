@@ -1,0 +1,29 @@
+{
+  "name": "refresh-service",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/festival/shared/service/refresh/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/festival/shared/service/refresh",
+        "main": "libs/festival/shared/service/refresh/src/index.ts",
+        "tsConfig": "libs/festival/shared/service/refresh/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/festival/shared/service/refresh/jest.config.ts"
+      }
+    }
+  }
+}

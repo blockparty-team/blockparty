@@ -9,7 +9,7 @@ import {
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@blockparty/festival/data-access/file-service';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
-import { AppStateService } from '@blockparty/festival/service/app-state';
+import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 
 @Injectable({
   providedIn: 'root',
@@ -19,10 +19,10 @@ export class ArtistSharedStateService {
   private supabase = inject(SupabaseService);
   private favoriteStateService = inject(FavoriteStateService);
   private fileService = inject(FileService);
-  private appStateService = inject(AppStateService);
+  private refreshService = inject(RefreshService);
 
   private _artists$: Observable<ArtistViewModel[]> =
-    this.appStateService.reloadData$.pipe(
+    this.refreshService.reloadData$.pipe(
       switchMap(() =>
         concat(
           this.deviceStorageService
@@ -45,7 +45,6 @@ export class ArtistSharedStateService {
     filter(([artists, favoriteArtistIds]) => !!artists && !!favoriteArtistIds),
     map(([artists, favoriteArtistIds]) =>
       artists.map((artist) => {
-
         const [bucket, path] = getBucketAndPath(artist.storage_path!);
         const imgUrl =
           bucket && path

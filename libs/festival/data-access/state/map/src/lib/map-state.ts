@@ -24,7 +24,7 @@ import {
   MapIconViewModel,
   MaskGeojsonProperties,
 } from '@blockparty/festival/types';
-import { AppStateService } from '@blockparty/festival/service/app-state';
+import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 import { Tables } from '@blockparty/distortion/data-access/supabase';
 
 @Injectable({
@@ -34,7 +34,7 @@ export class MapStateService {
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
   private filesystemService = inject(FilesystemService);
-  private appStateService = inject(AppStateService);
+  private refreshService = inject(RefreshService);
 
   private _mapLoaded$ = new BehaviorSubject<boolean>(false);
   mapLoaded$: Observable<boolean> = this._mapLoaded$.asObservable();
@@ -62,7 +62,7 @@ export class MapStateService {
     this._removedAssetIconNames$.asObservable();
 
   mapLayers$: Observable<MapSourceGeojson<GeojsonProperties>[]> =
-    this.appStateService.reloadData$.pipe(
+    this.refreshService.reloadData$.pipe(
       switchMap(() =>
         concat(
           this.deviceStorageService.get('mapLayers'),

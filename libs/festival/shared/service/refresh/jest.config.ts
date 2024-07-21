@@ -1,11 +1,12 @@
 /* eslint-disable */
 export default {
-  displayName: 'app-state-service',
-  preset: '../../../../jest.preset.js',
+  displayName: 'refresh-service',
+  preset: '../../../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
     '^.+\\.[tj]s$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.spec.json' }],
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../../../coverage/libs/festival/service/app-state',
+  coverageDirectory:
+    '../../../../../coverage/libs/festival/shared/service/refresh',
 };

@@ -22,7 +22,7 @@ import { RouteName } from '@blockparty/festival/types';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
 import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
-import { AppStateService } from '@blockparty/festival/service/app-state';
+import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +42,7 @@ export class AppComponent implements OnInit {
   private platform = inject(Platform);
   private notificationSchedulingService = inject(NotificationSchedulingService);
   private appUpdateService = inject(AppUpdateService);
-  private appStateService = inject(AppStateService);
+  private refreshService = inject(RefreshService);
 
   constructor() {
     this.setupAppUrlOpenListener();
@@ -76,7 +76,7 @@ export class AppComponent implements OnInit {
 
     this.notificationSchedulingService.rescheduleAllArtistNotifications();
     this.platform.resume.subscribe(() => {
-      this.appStateService.reloadData();
+      this.refreshService.reloadData();
       this.notificationSchedulingService.rescheduleAllArtistNotifications();
     });
 
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit {
           RouteName.Artist,
           action.notification.extra.artistName,
         ]);
-      }
+      },
     );
 
     this.appUpdateService.checkForUpdate();
@@ -117,7 +117,7 @@ export class AppComponent implements OnInit {
 
         const { data, error } = await this.supabase.externalSetSession(
           access,
-          refresh
+          refresh,
         );
         this.supabase.setSession(data.session);
 
