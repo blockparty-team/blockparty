@@ -6,8 +6,12 @@ import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/service/map';
-import { EventStateService } from '../event/state/event-state.service';
-import { EventViewModel, MapLayer, RouteName } from '@blockparty/festival/types';
+import { EventStateService } from '@blockparty/festival/data-access/state/event';
+import {
+  EventViewModel,
+  MapLayer,
+  RouteName,
+} from '@blockparty/festival/types';
 import { environment } from '@shared/environments';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
@@ -73,9 +77,9 @@ export class EventDetailPage implements OnInit {
       map((paramMap) => paramMap.get('id')),
       switchMap((id) =>
         this.eventStateService.events$.pipe(
-          map((events) => events.find((event) => event.id === id))
-        )
-      )
+          map((events) => events.find((event) => event.id === id)),
+        ),
+      ),
     );
   }
 
@@ -91,8 +95,9 @@ export class EventDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${event.name}`,
           title: 'Share',
-          text: `Check out ${event.name} event at ${environment.festivalName
-            } running ${event.days.join(' and ')}`,
+          text: `Check out ${event.name} event at ${
+            environment.festivalName
+          } running ${event.days.join(' and ')}`,
           url: `${environment.appUrl}${this.router.url}`,
         });
       }

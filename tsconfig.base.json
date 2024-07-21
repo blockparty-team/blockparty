@@ -28,6 +28,9 @@
       "@blockparty/festival/data-access/state/artist-shared": [
         "libs/festival/data-access/state/artist-shared/src/index.ts"
       ],
+      "@blockparty/festival/data-access/state/event": [
+        "libs/festival/data-access/state/event/src/index.ts"
+      ],
       "@blockparty/festival/data-access/state/favorite": [
         "libs/festival/data-access/state/favorite/src/index.ts"
       ],

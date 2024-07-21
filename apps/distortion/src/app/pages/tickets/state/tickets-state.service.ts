@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { EventsGroupedByType } from '@blockparty/festival/types';
-import { EventStateService } from '@distortion/app/pages/event/state/event-state.service';
+import { EventStateService } from '@blockparty/festival/data-access/state/event';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -17,9 +17,9 @@ export class TicketsStateService {
           .map((eventType) => ({
             ...eventType,
             event: eventType.event.filter((event) => !!event.tickets),
-          }))
-      )
+          })),
+      ),
     );
 
-  constructor(private eventStateService: EventStateService) { }
+  constructor(private eventStateService: EventStateService) {}
 }

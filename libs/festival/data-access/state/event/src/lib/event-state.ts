@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   EventViewModel,
   EventWithRelations,
@@ -6,7 +6,10 @@ import {
 } from '@blockparty/festival/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@blockparty/festival/data-access/file-service';
-import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
+import {
+  SupabaseService,
+  getBucketAndPath,
+} from '@blockparty/shared/data-access/supabase-service';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {
   catchError,
@@ -22,16 +25,20 @@ import { Tables } from '@blockparty/distortion/data-access/supabase';
   providedIn: 'root',
 })
 export class EventStateService {
-  private _selectedEventTypeId$ = new BehaviorSubject<string>(null);
-  selectedEventTypeId$: Observable<string> =
+  private supabase = inject(SupabaseService);
+  private deviceStorageService = inject(DeviceStorageService);
+  private fileService = inject(FileService);
+
+  private _selectedEventTypeId$ = new BehaviorSubject<string | null>(null);
+  selectedEventTypeId$: Observable<string | null> =
     this._selectedEventTypeId$.asObservable();
 
   events$: Observable<EventViewModel[]> = concat(
     this.deviceStorageService.get('events').pipe(filter((events) => !!events)),
     this.supabase.events$.pipe(
       filter((events) => !!events),
-      tap((events) => this.deviceStorageService.set('events', events))
-    )
+      tap((events) => this.deviceStorageService.set('events', events)),
+    ),
   ).pipe(
     map((events) =>
       events.map((event: EventWithRelations) => {
@@ -45,7 +52,7 @@ export class EventStateService {
             .sort((a, b) => a.name.localeCompare(b.name)),
           days: day_event.map((day) => day.day.name),
         };
-      })
+      }),
     ),
     map((events) =>
       events.map((event: Tables<'event'>) => {
@@ -60,14 +67,14 @@ export class EventStateService {
             bucket && path ? this.supabase.publicImageUrl(bucket, path) : null,
           srcset,
         };
-      })
+      }),
     ),
     distinctUntilChanged(),
     catchError((err) => {
       console.error(err);
       return EMPTY;
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   eventsGroupedByType: Observable<EventsGroupedByType[]> = concat(
@@ -77,16 +84,10 @@ export class EventStateService {
     this.supabase.eventsGroupedByTypes$.pipe(
       filter((eventTypes) => !!eventTypes),
       tap((eventTypes) =>
-        this.deviceStorageService.set('eventsGroupedByType', eventTypes)
-      )
-    )
+        this.deviceStorageService.set('eventsGroupedByType', eventTypes),
+      ),
+    ),
   );
-
-  constructor(
-    private supabase: SupabaseService,
-    private deviceStorageService: DeviceStorageService,
-    private fileService: FileService
-  ) { }
 
   selectEventTypeId(eventTypeId: string): void {
     this._selectedEventTypeId$.next(eventTypeId);
