@@ -5,8 +5,12 @@ import {
   inject,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { EventViewModel, MapLayer, RouteName } from '@blockparty/festival/types';
-import { MapService } from '@blockparty/festival/service/map';
+import {
+  EventViewModel,
+  MapLayer,
+  RouteName,
+} from '@blockparty/festival/types';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { EntityBadgeColor } from '../entity-badge-color';
 import {

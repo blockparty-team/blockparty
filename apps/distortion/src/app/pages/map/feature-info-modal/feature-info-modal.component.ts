@@ -7,7 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
-import { MapService } from '@blockparty/festival/service/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { AssetComponent } from './asset/asset.component';
 import { StageTimetableComponent } from './stage-timetable/stage-timetable.component';
 import { NgIf, AsyncPipe } from '@angular/common';

@@ -5,7 +5,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { LngLatBoundsLike } from 'maplibre-gl';
-import { MapService } from '@blockparty/festival/service/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';
 import {
   EventViewModel,

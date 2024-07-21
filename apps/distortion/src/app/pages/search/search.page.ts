@@ -11,7 +11,7 @@ import {
   EntityFreeTextSearchResult,
   RouteName,
 } from '@blockparty/festival/types';
-import { MapService } from '@blockparty/festival/service/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { SearchService } from '@blockparty/festival/shared/service/search';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';

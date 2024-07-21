@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Feature, Point, Position } from 'geojson';
-import { MapService } from '@blockparty/festival/service/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { AssetGeojsonProperties, RouteName } from '@blockparty/festival/types';
 import {
   IonItem,

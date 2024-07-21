@@ -12,7 +12,7 @@ import {
   RouteName,
 } from '@blockparty/festival/types';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
-import { MapService } from '@blockparty/festival/service/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { Feature, Point } from 'geojson';
 import {
   IonItem,

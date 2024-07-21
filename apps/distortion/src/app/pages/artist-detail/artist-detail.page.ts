@@ -9,7 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
 import { ArtistViewModel, RouteName } from '@blockparty/festival/types';
-import { MapService } from '@blockparty/festival/service/map';
+import { MapService } from '@blockparty/festival/shared/service/map';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
@@ -84,19 +84,19 @@ export class ArtistDetailPage implements OnInit {
   showMusicPlayer = signal<boolean>(false);
   canShare$ = from(Share.canShare()).pipe(map((res) => res.value));
   previousRoute$ = this.routeHistoryService.history$.pipe(
-    map((history) => (history.previous ? history.previous : '/'))
+    map((history) => (history.previous ? history.previous : '/')),
   );
 
   private _titleScrollTop$ = new Subject<number>();
   imageScale$: Observable<string> = this._titleScrollTop$.pipe(
-    map((scrollTop) => `scale(${(100 + scrollTop / 40) / 100})`)
+    map((scrollTop) => `scale(${(100 + scrollTop / 40) / 100})`),
   );
   imageBlur$: Observable<string> = this._titleScrollTop$.pipe(
-    map((scrollTop) => `blur(${scrollTop / 100}px)`)
+    map((scrollTop) => `blur(${scrollTop / 100}px)`),
   );
   coverIosStatusBar$ = this._titleScrollTop$.pipe(
     // Image heght is defined for 250 in css
-    map((titleDistanceTop) => (titleDistanceTop < 250 ? false : true))
+    map((titleDistanceTop) => (titleDistanceTop < 250 ? false : true)),
   );
 
   ngOnInit() {
@@ -104,9 +104,9 @@ export class ArtistDetailPage implements OnInit {
       map((paramMap) => paramMap.get('name')),
       switchMap((name) =>
         this.artistStateService.artists$.pipe(
-          map((artists) => artists.find((artist) => artist.name === name))
-        )
-      )
+          map((artists) => artists.find((artist) => artist.name === name)),
+        ),
+      ),
     );
 
     this.soMeLinks$ = this.artist$.pipe(
@@ -119,7 +119,7 @@ export class ArtistDetailPage implements OnInit {
           .filter(([column, value]) => soMeColumns.includes(column) && !!value)
           .map(([column, url]) => {
             const { icon, svg } = soMeIcons.find(
-              (conf) => conf.column === column
+              (conf) => conf.column === column,
             );
 
             return {
@@ -129,7 +129,7 @@ export class ArtistDetailPage implements OnInit {
               url,
             };
           });
-      })
+      }),
     );
   }
 
@@ -152,10 +152,11 @@ export class ArtistDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${artist.name}`,
           title: 'Share',
-          text: `${artist.name} is playing at ${environment.festivalName
-            } ${artist.timetable
-              .map((t) => t.day.name)
-              .join(' and ')} - Check it out:`,
+          text: `${artist.name} is playing at ${
+            environment.festivalName
+          } ${artist.timetable
+            .map((t) => t.day.name)
+            .join(' and ')} - Check it out:`,
           url: `${environment.appUrl}${this.router.url}`,
         });
       }
