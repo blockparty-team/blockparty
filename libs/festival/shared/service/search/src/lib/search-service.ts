@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
@@ -19,13 +19,11 @@ import { Feature, Point } from 'geojson';
   providedIn: 'root',
 })
 export class SearchService {
-  constructor(
-    private supabase: SupabaseService,
-    private geolocationService: GeolocationService,
-    private artistSateService: ArtistStateService,
-    private eventStateService: EventStateService,
-    private mapStateService: MapStateService,
-  ) {}
+  private supabase = inject(SupabaseService);
+  private geolocationService = inject(GeolocationService);
+  private artistSateService = inject(ArtistStateService);
+  private eventStateService = inject(EventStateService);
+  private mapStateService = inject(MapStateService);
 
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(
@@ -59,7 +57,7 @@ export class SearchService {
               };
             case 'stage':
               const stage = mapLayers
-                .find((layer) => layer.mapSource === MapSource.Stage)
+                .find((layer) => layer.mapSource === MapSource.Stage)!
                 .geojson.features.find(
                   (feature) => feature.properties.id === result.id,
                 ) as Feature<Point, StageGeojsonProperties>;
@@ -79,7 +77,7 @@ export class SearchService {
               };
             case 'asset':
               const asset = mapLayers
-                .find((layer) => layer.mapSource === MapSource.Asset)
+                .find((layer) => layer.mapSource === MapSource.Asset)!
                 .geojson.features.find(
                   (feature) => feature.properties.id === result.id,
                 ) as Feature<Point, AssetGeojsonProperties>;

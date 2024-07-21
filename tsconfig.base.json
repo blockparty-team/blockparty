@@ -67,6 +67,9 @@
       "@blockparty/festival/service/route-history-service": [
         "libs/festival/service/route-history-service/src/index.ts"
       ],
+      "@blockparty/festival/shared/service/search": [
+        "libs/festival/shared/service/search/src/index.ts"
+      ],
       "@blockparty/festival/types": ["libs/festival/types/src/index.ts"],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"

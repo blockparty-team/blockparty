@@ -12,7 +12,7 @@ import {
   RouteName,
 } from '@blockparty/festival/types';
 import { MapService } from '@blockparty/festival/service/map';
-import { SearchService } from '@distortion/app/services/search.service';
+import { SearchService } from '@blockparty/festival/shared/service/search';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
@@ -23,7 +23,10 @@ import {
   map,
   switchMap,
 } from 'rxjs/operators';
-import { SupabaseService, getBucketAndPath } from '@blockparty/shared/data-access/supabase-service';
+import {
+  SupabaseService,
+  getBucketAndPath,
+} from '@blockparty/shared/data-access/supabase-service';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@blockparty/festival/service/route-history-service';
 import { AssetItemComponent } from './asset-item/asset-item.component';
@@ -114,20 +117,20 @@ export class SearchPage {
   @ViewChild(IonSearchbar) searchElement: IonSearchbar;
 
   private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(
-    SearchMode.FreeText
+    SearchMode.FreeText,
   );
   selectedSearchMode$: Observable<SearchMode> =
     this._selectedSearchMode$.asObservable();
 
   previousRoute$ = this.routeHistoryService.history$.pipe(
-    map((history) => (history.previous ? history.previous : '/'))
+    map((history) => (history.previous ? history.previous : '/')),
   );
 
   searchResults$: Observable<EntityFreeTextSearchResult[]> =
     this.searchTerm.valueChanges.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap((term) => this.searchService.textSearch(term))
+      switchMap((term) => this.searchService.textSearch(term)),
     );
 
   nearBy$: Observable<EntityDistanceSearchResult[]> = combineLatest([
@@ -135,7 +138,7 @@ export class SearchPage {
     this._selectedSearchMode$,
   ]).pipe(
     filter(([, mode]) => mode === SearchMode.NearBy),
-    map(([nearBy]) => nearBy)
+    map(([nearBy]) => nearBy),
   );
 
   ionViewDidEnter(): void {
@@ -155,7 +158,7 @@ export class SearchPage {
 
   onSearchModeChange(ev: Event): void {
     this._selectedSearchMode$.next(
-      (ev as SegmentCustomEvent).detail.value as SearchMode
+      (ev as SegmentCustomEvent).detail.value as SearchMode,
     );
   }
 
