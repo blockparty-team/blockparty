@@ -1,5 +1,5 @@
 import { Route } from '@angular/router';
-import { RouteName } from '@blockparty/festival/types';
+import { RouteName } from '@blockparty/festival/shared/types';
 import { CanLoadLoginGuard } from '@distortion/app/guards/can-load.guard';
 
 export const ROUTES: Route[] = [

@@ -20,7 +20,7 @@ import {
   TimetableViewModel,
   TimeLabel,
   RouteName,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
@@ -134,11 +134,11 @@ export class TimetableGanttComponent {
     const timetable: TimetableViewModel[] = stage.timetable.map((timetable) => {
       const relativeStartTime =
         (new Date(timetable.start_time).getTime() - firstStartTime.getTime()) /
-        (1000 * 60) +
+          (1000 * 60) +
         offset;
       const relativeEndTime =
         (new Date(timetable.end_time).getTime() - firstStartTime.getTime()) /
-        (1000 * 60) +
+          (1000 * 60) +
         offset;
 
       return {

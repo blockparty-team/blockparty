@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ArtistNotification } from '@blockparty/festival/types';
+import { ArtistNotification } from '@blockparty/festival/shared/types';
 import {
   LocalNotifications,
   LocalNotificationSchema,

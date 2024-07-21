@@ -10,7 +10,7 @@ import {
   MapLayer,
   StageGeojsonProperties,
   RouteName,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { Feature, Point } from 'geojson';

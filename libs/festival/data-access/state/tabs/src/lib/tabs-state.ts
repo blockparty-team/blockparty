@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Tab } from '@blockparty/festival/types';
+import { Tab } from '@blockparty/festival/shared/types';
 
 @Injectable({
   providedIn: 'root',

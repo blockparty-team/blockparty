@@ -3,7 +3,7 @@ import {
   ArtistFavorite,
   Favorite,
   FavoriteEntity,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { DeviceService } from '@blockparty/shared/service/device';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';

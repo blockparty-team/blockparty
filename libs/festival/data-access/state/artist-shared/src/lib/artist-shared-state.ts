@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { combineLatest, concat, Observable } from 'rxjs';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { ArtistViewModel } from '@blockparty/festival/types';
+import { ArtistViewModel } from '@blockparty/festival/shared/types';
 import {
   SupabaseService,
   getBucketAndPath,

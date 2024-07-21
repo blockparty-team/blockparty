@@ -10,7 +10,7 @@ import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
   RouteName,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { SearchService } from '@blockparty/festival/shared/service/search';
 import { SegmentCustomEvent } from '@ionic/core';

@@ -4,7 +4,7 @@ import {
   EventViewModel,
   EventsGroupedByType,
   RouteName,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';

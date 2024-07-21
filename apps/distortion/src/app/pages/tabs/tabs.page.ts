@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { Tab, RouteName } from '@blockparty/festival/types';
+import { Tab, RouteName } from '@blockparty/festival/shared/types';
 import { MenuController } from '@ionic/angular/standalone';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
 import { Observable } from 'rxjs';

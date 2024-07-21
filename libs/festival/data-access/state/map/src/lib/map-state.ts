@@ -23,7 +23,7 @@ import {
   MapClickedFeature,
   MapIconViewModel,
   MaskGeojsonProperties,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 import { Tables } from '@blockparty/distortion/data-access/supabase';
 

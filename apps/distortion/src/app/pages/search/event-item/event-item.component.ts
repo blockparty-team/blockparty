@@ -9,7 +9,7 @@ import {
   EventViewModel,
   MapLayer,
   RouteName,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { EntityBadgeColor } from '../entity-badge-color';

@@ -21,7 +21,7 @@ import {
 } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/shared/service/map';
-import { MapLayer, Tab, RouteName } from '@blockparty/festival/types';
+import { MapLayer, Tab, RouteName } from '@blockparty/festival/shared/types';
 import { animations } from '@distortion/app/shared/animations';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';

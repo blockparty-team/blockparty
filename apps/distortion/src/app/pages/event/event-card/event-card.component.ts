@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { EventViewModel } from '@blockparty/festival/types';
+import { EventViewModel } from '@blockparty/festival/shared/types';
 import { NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { IonCard, IonBadge, IonRouterLink } from '@ionic/angular/standalone';

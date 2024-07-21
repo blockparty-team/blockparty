@@ -1,6 +1,5 @@
 import { Tables } from '@blockparty/distortion/data-access/supabase';
 
-
 interface Timetable {
   day: {
     name: Tables<'day'>['name'];

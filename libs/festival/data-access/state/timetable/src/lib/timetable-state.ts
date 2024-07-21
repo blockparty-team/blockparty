@@ -4,7 +4,7 @@ import { filter, map, shareReplay } from 'rxjs/operators';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
 import { TimetableSharedStateService } from '@blockparty/festival/data-access/state/timetable-shared';
-import { DayEventStageTimetable } from '@blockparty/festival/types';
+import { DayEventStageTimetable } from '@blockparty/festival/shared/types';
 
 @Injectable({
   providedIn: 'root',

@@ -24,7 +24,7 @@ import {
   EventWithRelations,
   EventsGroupedByType,
   TransformOptions,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import {
   Database,
   Tables,

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MapClickedFeature, MapLayer } from '@blockparty/festival/types';
+import { MapClickedFeature, MapLayer } from '@blockparty/festival/shared/types';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';

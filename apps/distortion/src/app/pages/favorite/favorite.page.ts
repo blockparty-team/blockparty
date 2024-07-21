@@ -4,7 +4,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ArtistViewModel } from '@blockparty/festival/types';
+import { ArtistViewModel } from '@blockparty/festival/shared/types';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -66,7 +66,7 @@ export class FavoritePage {
 
   favoriteArtists$: Observable<ArtistViewModel[]> =
     this.artistStateService.artists$.pipe(
-      map((artists) => artists.filter((artist) => artist.isFavorite))
+      map((artists) => artists.filter((artist) => artist.isFavorite)),
     );
 
   dayGroupedFavorites$: Observable<DayGroupedFavorites[]> =
@@ -94,7 +94,7 @@ export class FavoritePage {
               group.artists.sort(
                 (a, b) =>
                   new Date(a.timetable[0]?.start_time).getTime() -
-                  new Date(b.timetable[0]?.start_time).getTime()
+                  new Date(b.timetable[0]?.start_time).getTime(),
               );
             });
 
@@ -102,9 +102,9 @@ export class FavoritePage {
           }, [])
           .sort(
             (a, b) =>
-              new Date(a.day.day).getTime() - new Date(b.day.day).getTime()
+              new Date(a.day.day).getTime() - new Date(b.day.day).getTime(),
           );
-      })
+      }),
     );
 
   toggleFavorite(id: string): void {

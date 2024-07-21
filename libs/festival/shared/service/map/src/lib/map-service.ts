@@ -22,7 +22,7 @@ import {
   MapSource,
   MapClickedFeature,
   MapIconViewModel,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Protocol, PMTiles } from 'pmtiles';

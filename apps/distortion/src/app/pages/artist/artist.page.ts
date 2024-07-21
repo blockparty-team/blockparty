@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
-import { ArtistViewModel } from '@blockparty/festival/types';
+import { ArtistViewModel } from '@blockparty/festival/shared/types';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { ArtistCardComponent } from './artist-card/artist-card.component';
@@ -74,9 +74,9 @@ export class ArtistPage {
         // Only show visible artist but include all on search
         .filter((artist) => (!!term ? true : artist.is_visible))
         .filter((artist) =>
-          artist.name.toLowerCase().includes(term.toLowerCase())
-        )
-    )
+          artist.name.toLowerCase().includes(term.toLowerCase()),
+        ),
+    ),
   );
 
   toggleSearch(): void {

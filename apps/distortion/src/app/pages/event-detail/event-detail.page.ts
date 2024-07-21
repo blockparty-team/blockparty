@@ -11,7 +11,7 @@ import {
   EventViewModel,
   MapLayer,
   RouteName,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';

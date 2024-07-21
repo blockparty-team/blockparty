@@ -3,7 +3,7 @@ import {
   EventViewModel,
   EventWithRelations,
   EventsGroupedByType,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@blockparty/festival/data-access/file-service';
 import {

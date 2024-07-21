@@ -22,7 +22,7 @@ import {
   MapClickedFeature,
   Ticket,
   RouteName,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonHeader,

@@ -3,8 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
-import { imageSize } from '@blockparty/festival/types';
-
+import { imageSize } from '@blockparty/festival/shared/types';
 
 @Injectable({
   providedIn: 'root',
@@ -18,10 +17,12 @@ export class FileService {
       map((res) => res.data),
       switchMap((files) =>
         forkJoin(
-          files!.map((file) => this.supabase.downloadFile(bucket, file.name))
+          files!.map((file) => this.supabase.downloadFile(bucket, file.name)),
         ).pipe(
-          map((blobs) => blobs.map((blob, i) => ({ blob: blob, ...files![i] })))
-        )
+          map((blobs) =>
+            blobs.map((blob, i) => ({ blob: blob, ...files![i] })),
+          ),
+        ),
       ),
       map((filesWithBlobs) => {
         return filesWithBlobs.map((fileWithBlob) => {
@@ -29,7 +30,7 @@ export class FileService {
             const { blob, ...file } = fileWithBlob;
 
             const fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
-              URL.createObjectURL(blob)
+              URL.createObjectURL(blob),
             );
 
             return {
@@ -40,7 +41,7 @@ export class FileService {
 
           return null;
         });
-      })
+      }),
     ) as Observable<SafeResourceUrl[]>;
   }
 

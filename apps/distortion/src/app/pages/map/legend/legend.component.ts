@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { MapIconViewModel, MapLayer } from '@blockparty/festival/types';
+import { MapIconViewModel, MapLayer } from '@blockparty/festival/shared/types';
 import { ToggleCustomEvent } from '@ionic/angular/standalone';
 import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';

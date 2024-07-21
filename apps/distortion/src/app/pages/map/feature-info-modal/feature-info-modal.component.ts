@@ -3,7 +3,7 @@ import {
   GeojsonProperties,
   MapClickedFeature,
   MapLayer,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';

@@ -12,7 +12,7 @@ import {
   PartialEventType,
   DayEventStageTimetable,
   Tab,
-} from '@blockparty/festival/types';
+} from '@blockparty/festival/shared/types';
 
 @Injectable()
 export class FilterEventsStateService {
@@ -39,7 +39,7 @@ export class FilterEventsStateService {
           eventIds: day.events.map((event) => event.event_id),
         }));
       }),
-      shareReplay(1)
+      shareReplay(1),
     );
 
   private _days$: Observable<DayEvent[]> = concat(
@@ -55,8 +55,8 @@ export class FilterEventsStateService {
           };
         }) as DayEvent[];
       }),
-      tap((days) => this.deviceStorageService.set('days', days))
-    )
+      tap((days) => this.deviceStorageService.set('days', days)),
+    ),
   ).pipe(
     filter((days) => !!days),
     tap((days: DayEvent[]) => {
@@ -66,7 +66,7 @@ export class FilterEventsStateService {
 
       if (day) this.selectDay(day.id);
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   // Combine current tab and timetables
@@ -81,21 +81,21 @@ export class FilterEventsStateService {
       if (tab === Tab.Timetable) {
         return days
           .filter((day) =>
-            timetableDayEvents.map((day) => day.dayId).includes(day.id)
+            timetableDayEvents.map((day) => day.dayId).includes(day.id),
           )
           .map((day) => ({
             ...day,
             event: day.event.filter((e) =>
               timetableDayEvents
                 .find((d) => d.dayId === day.id)!
-                .eventIds.includes(e.id)
+                .eventIds.includes(e.id),
             ),
           }));
       }
 
       return days;
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   eventTypes$: Observable<PartialEventType[]> = combineLatest([
@@ -104,21 +104,21 @@ export class FilterEventsStateService {
   ]).pipe(
     filter(([days, selectedDayId]) => !!days && !!selectedDayId),
     map(([days, selectedDayId]) =>
-      days.find((day) => day.id === selectedDayId)
+      days.find((day) => day.id === selectedDayId),
     ),
     filter((day) => !!day),
     map((day) => day.event),
     filter((events) => !!events),
     map((events) =>
       events
-        .filter(event => !!event)
+        .filter((event) => !!event)
         .map((event) => event?.event_type)
         .filter(
           (eventType, index, eventTypes) =>
-            eventTypes.findIndex((v2) => v2.id === eventType.id) === index
-        )
+            eventTypes.findIndex((v2) => v2.id === eventType.id) === index,
+        ),
     ),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   events$: Observable<PartialEvent[]> = combineLatest([
@@ -130,11 +130,13 @@ export class FilterEventsStateService {
     map(([days, selectedDayId, selectedEventTypeId]) => {
       const events = days
         .find((day) => day.id === selectedDayId)
-        ?.event.filter((event) => event?.event_type?.id === selectedEventTypeId);
+        ?.event.filter(
+          (event) => event?.event_type?.id === selectedEventTypeId,
+        );
       // Template hides segments when events$ emits null
-      return events?.length! > 0 ? events : null as any;
+      return events?.length! > 0 ? events : (null as any);
     }),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   selectedEventType$: Observable<PartialEventType> = combineLatest([
@@ -143,13 +145,13 @@ export class FilterEventsStateService {
   ]).pipe(
     filter(
       ([selectedEventTypeId, eventTypes]) =>
-        !!eventTypes && !!selectedEventTypeId
+        !!eventTypes && !!selectedEventTypeId,
     ),
     map(([selectedEventTypeId, eventTypes]) =>
-      eventTypes.find((eventType) => eventType?.id === selectedEventTypeId)
+      eventTypes.find((eventType) => eventType?.id === selectedEventTypeId),
     ),
     filter((eventType) => !!eventType),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   selectedEvent$: Observable<PartialEvent> = combineLatest([
@@ -158,10 +160,10 @@ export class FilterEventsStateService {
   ]).pipe(
     filter(([selectedEventId, events]) => !!events && !!selectedEventId),
     map(([selectedEventId, events]) =>
-      events.find((event) => event.id === selectedEventId)
+      events.find((event) => event.id === selectedEventId),
     ),
     filter((event) => !!event),
-    shareReplay(1)
+    shareReplay(1),
   );
 
   selectDay(dayId: string): void {

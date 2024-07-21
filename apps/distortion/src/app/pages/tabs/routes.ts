@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 import { TabsPage } from './tabs.page';
-import { RouteName } from '@blockparty/festival/types';
+import { RouteName } from '@blockparty/festival/shared/types';
 
 export const routes: Route[] = [
   {

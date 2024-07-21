@@ -18,7 +18,7 @@ import { Platform } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { NotificationSchedulingService } from './services/notification-scheduling.service';
 import { LocalNotifications } from '@capacitor/local-notifications';
-import { RouteName } from '@blockparty/festival/types';
+import { RouteName } from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';
 import { icons } from './shared/icons';
 import { AppUpdateService } from '@blockparty/shared/services/app-update-service';
