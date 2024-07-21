@@ -12,7 +12,7 @@ import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
-import { PushNotificationService } from './services/push-notification.service';
+import { PushNotificationService } from '@blockparty/festival/shared/service/push-notification';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { Platform } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
