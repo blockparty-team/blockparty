@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TicketsStateService } from './state/tickets-state.service';
+import { TicketStateService } from '@blockparty/festival/data-access/state/ticket';
 import { Browser } from '@capacitor/browser';
 import { EventsGroupedByType } from '@blockparty/festival/types';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
@@ -43,7 +43,7 @@ import {
   ],
 })
 export class TicketsPage implements OnInit {
-  private ticketStateService = inject(TicketsStateService);
+  private ticketStateService = inject(TicketStateService);
 
   eventsGroupedByType$: Observable<EventsGroupedByType[]>;
 

@@ -43,6 +43,9 @@
       "@blockparty/festival/data-access/state/tabs": [
         "libs/festival/data-access/state/tabs/src/index.ts"
       ],
+      "@blockparty/festival/data-access/state/ticket": [
+        "libs/festival/data-access/state/ticket/src/index.ts"
+      ],
       "@blockparty/festival/data-access/state/timetable": [
         "libs/festival/data-access/state/timetable/src/index.ts"
       ],
