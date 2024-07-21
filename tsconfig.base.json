@@ -52,6 +52,9 @@
       "@blockparty/festival/data-access/state/timetable-shared": [
         "libs/festival/data-access/state/timetable-shared/src/index.ts"
       ],
+      "@blockparty/festival/shared/guard/can-load": [
+        "libs/festival/shared/guard/can-load/src/index.ts"
+      ],
       "@blockparty/festival/shared/service/app-update": [
         "libs/festival/shared/service/app-update/src/index.ts"
       ],
