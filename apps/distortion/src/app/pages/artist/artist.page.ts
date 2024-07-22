@@ -9,7 +9,7 @@ import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistViewModel } from '@blockparty/festival/shared/types';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
-import { ArtistCardComponent } from './artist-card/artist-card.component';
+import { ArtistCardComponent } from '@blockparty/festival/ui/artist-card';
 import {
   CdkVirtualScrollViewport,
   CdkFixedSizeVirtualScroll,

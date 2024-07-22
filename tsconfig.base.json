@@ -85,6 +85,9 @@
       "@blockparty/festival/shared/types": [
         "libs/festival/shared/types/src/index.ts"
       ],
+      "@blockparty/festival/ui/artist-card": [
+        "libs/festival/ui/artist-card/src/index.ts"
+      ],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],

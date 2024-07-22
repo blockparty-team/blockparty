@@ -21,7 +21,7 @@ import { IonCard, IonIcon, IonRouterLink } from '@ionic/angular/standalone';
 export class ArtistCardComponent {
   private artistStateService = inject(ArtistStateService);
 
-  @Input() artist: ArtistViewModel;
+  @Input() artist!: ArtistViewModel;
 
   toggleFavorite(id: string): void {
     this.artistStateService.toggleArtistFavorite(id);

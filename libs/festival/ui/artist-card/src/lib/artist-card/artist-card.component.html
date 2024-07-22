@@ -19,7 +19,7 @@
         {{ act.stage.event.name }} |
         {{ act.day.name }}
         <ng-container *ngIf="act.start_time">
-          | {{ act.start_time | date : 'HH:mm' }}
+          | {{ act.start_time | date: 'HH:mm' }}
         </ng-container>
       </p>
     </div>
@@ -29,7 +29,7 @@
         slot="icon-only"
         [color]="artist.isFavorite ? 'favorite' : ''"
         [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
-        (click)="toggleFavorite(artist.id)"
+        (click)="toggleFavorite(artist.id!)"
       >
       </ion-icon>
     </div>
