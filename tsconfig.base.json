@@ -73,6 +73,9 @@
       "@blockparty/festival/feature/page/search": [
         "libs/festival/feature/page/search/src/index.ts"
       ],
+      "@blockparty/festival/feature/page/settings": [
+        "libs/festival/feature/page/settings/src/index.ts"
+      ],
       "@blockparty/festival/feature/page/ticket": [
         "libs/festival/feature/page/ticket/src/index.ts"
       ],

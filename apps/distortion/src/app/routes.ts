@@ -52,7 +52,10 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.Settings,
     title: 'Settings',
-    loadChildren: () => import('./pages/settings/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/settings').then(
+        (m) => m.routes,
+      ),
   },
   {
     path: RouteName.Tickets,
