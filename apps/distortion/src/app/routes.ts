@@ -43,7 +43,9 @@ export const ROUTES: Route[] = [
       {
         path: ':id',
         loadChildren: () =>
-          import('./pages/event-detail/routes').then((m) => m.routes),
+          import('@blockparty/festival/feature/page/event-detail').then(
+            (m) => m.routes,
+          ),
       },
     ],
   },

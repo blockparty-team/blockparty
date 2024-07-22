@@ -69,7 +69,7 @@ export class EventDetailPage implements OnInit {
 
   routeName = RouteName;
 
-  event$: Observable<EventViewModel>;
+  event$!: Observable<EventViewModel | undefined>;
   canShare$ = from(Share.canShare()).pipe(map((res) => res.value));
 
   ngOnInit() {
