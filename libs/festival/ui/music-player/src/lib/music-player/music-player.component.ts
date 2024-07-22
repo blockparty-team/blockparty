@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { animations } from '@blockparty/util/animation';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
-import { IframeSrcDirective } from '../../directives/iframe-src.directive';
+import { IframeSrcDirective } from '@blockparty/festival/shared/directives';
 import { NgIf, AsyncPipe } from '@angular/common';
 import {
   IonHeader,
@@ -43,9 +43,9 @@ enum PlayerSource {
   ],
 })
 export class MusicPlayerComponent implements OnInit {
-  @Input() soundcloudUrl: string;
-  @Input() bandcampUrl: string;
-  @Input() showPlayer: WritableSignal<boolean>;
+  @Input() soundcloudUrl!: string;
+  @Input() bandcampUrl!: string;
+  @Input() showPlayer!: WritableSignal<boolean>;
 
   public selectedSource = signal<PlayerSource>(PlayerSource.Soundcloud);
   public playerSource = PlayerSource;

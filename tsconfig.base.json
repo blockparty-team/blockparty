@@ -64,11 +64,17 @@
       "@blockparty/festival/featurecomponent/event-filter": [
         "libs/festival/feature/component/event-filter/src/index.ts"
       ],
+      "@blockparty/festival/shared/directives": [
+        "libs/festival/shared/directives/src/index.ts"
+      ],
       "@blockparty/festival/shared/guard/can-load": [
         "libs/festival/shared/guard/can-load/src/index.ts"
       ],
       "@blockparty/festival/shared/icons": [
         "libs/festival/shared/icons/src/index.ts"
+      ],
+      "@blockparty/festival/shared/pipes": [
+        "libs/festival/shared/pipes/src/index.ts"
       ],
       "@blockparty/festival/shared/service/app-update": [
         "libs/festival/shared/service/app-update/src/index.ts"
@@ -102,6 +108,9 @@
       ],
       "@blockparty/festival/ui/artist-card": [
         "libs/festival/ui/artist-card/src/index.ts"
+      ],
+      "@blockparty/festival/ui/music-player": [
+        "libs/festival/ui/music-player/src/index.ts"
       ],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"

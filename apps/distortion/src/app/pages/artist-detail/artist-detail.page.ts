@@ -16,7 +16,7 @@ import { ArtistStateService } from '@blockparty/festival/data-access/state/artis
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { environment } from '@shared/environments';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
-import { MusicPlayerComponent } from '../../shared/components/music-player/music-player.component';
+import { MusicPlayerComponent } from '@blockparty/festival/ui/music-player';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonContent,

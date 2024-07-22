@@ -1,0 +1,36 @@
+{
+  "name": "music-player",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/festival/ui/music-player/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/festival/ui/music-player/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/festival/ui/music-player/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/festival/ui/music-player/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/festival/ui/music-player/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
