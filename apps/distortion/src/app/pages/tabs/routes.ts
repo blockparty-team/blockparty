@@ -43,7 +43,10 @@ export const routes: Route[] = [
       },
       {
         path: RouteName.Favorite,
-        loadChildren: () => import('../favorite/routes').then((m) => m.routes),
+        loadChildren: () =>
+          import('@blockparty/festival/feature/page/favorite').then(
+            (m) => m.routes,
+          ),
       },
       {
         path: '',

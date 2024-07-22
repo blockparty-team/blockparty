@@ -28,7 +28,7 @@ import {
 } from '@ionic/angular/standalone';
 
 interface DayGroupedFavorites {
-  day: { name: string; day: string };
+  day: { name: string | null; day: string };
   artists: ArtistViewModel[];
 }
 
@@ -87,14 +87,14 @@ export class FavoritePage {
             }
 
             acc
-              .find((group) => group.day.name == day.name)
+              .find((group) => group.day.name == day.name)!
               .artists.push(artist);
 
             acc.forEach((group) => {
               group.artists.sort(
                 (a, b) =>
-                  new Date(a.timetable[0]?.start_time).getTime() -
-                  new Date(b.timetable[0]?.start_time).getTime(),
+                  new Date(a.timetable[0]?.start_time!).getTime() -
+                  new Date(b.timetable[0]?.start_time!).getTime(),
               );
             });
 
