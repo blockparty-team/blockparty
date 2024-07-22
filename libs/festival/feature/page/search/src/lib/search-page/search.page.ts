@@ -111,10 +111,10 @@ export class SearchPage {
   routeName = RouteName;
   entity = Entity;
   searchMode = SearchMode;
-  badgeColor = EntityBadgeColor;
+  // badgeColor = EntityBadgeColor;
 
   searchTerm = new FormControl('');
-  @ViewChild(IonSearchbar) searchElement: IonSearchbar;
+  @ViewChild(IonSearchbar) searchElement!: IonSearchbar;
 
   private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(
     SearchMode.FreeText,
@@ -130,7 +130,7 @@ export class SearchPage {
     this.searchTerm.valueChanges.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap((term) => this.searchService.textSearch(term)),
+      switchMap((term) => this.searchService.textSearch(term!)),
     );
 
   nearBy$: Observable<EntityDistanceSearchResult[]> = combineLatest([
@@ -147,6 +147,12 @@ export class SearchPage {
         this.searchElement.setFocus();
       }, 150);
     }
+  }
+
+  entityBadgeColor(entity: string | null): string {
+    if (!entity) return '';
+
+    return EntityBadgeColor[entity as Entity];
   }
 
   imgUrl(storagePath: string): string {

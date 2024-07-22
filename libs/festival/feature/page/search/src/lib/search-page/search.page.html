@@ -44,7 +44,7 @@
           (click)="onShowOnMap(result.geom)"
         >
           <span slot="start">{{result.distance}} m</span>
-          <ion-badge slot="end" [color]="badgeColor[result.entity]"
+          <ion-badge slot="end" [color]="entityBadgeColor(result.entity)"
             >{{result.entity}}</ion-badge
           >
           <ion-label>
@@ -67,22 +67,22 @@
       <ion-list>
         <ng-container
           *ngFor="let result of results"
-          [ngSwitch]="entity[result.entity]"
+          [ngSwitch]="entity[result!.entity!]"
         >
           <ng-container *ngSwitchCase="entity.artist">
-            <app-artist-item [artist]="result.artist"></app-artist-item>
+            <app-artist-item [artist]="result.artist!"></app-artist-item>
           </ng-container>
 
           <ng-container *ngSwitchCase="entity.event">
-            <app-event-item [event]="result.event"></app-event-item>
+            <app-event-item [event]="result.event!"></app-event-item>
           </ng-container>
 
           <ng-container *ngSwitchCase="entity.stage">
-            <app-stage-item [stage]="result.stage"></app-stage-item>
+            <app-stage-item [stage]="result.stage!"></app-stage-item>
           </ng-container>
 
           <ng-container *ngSwitchCase="entity.asset">
-            <app-asset-item [asset]="result.asset"></app-asset-item>
+            <app-asset-item [asset]="result.asset!"></app-asset-item>
           </ng-container>
         </ng-container>
       </ion-list>

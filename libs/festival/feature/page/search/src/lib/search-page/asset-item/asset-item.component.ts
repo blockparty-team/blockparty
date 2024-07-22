@@ -30,7 +30,7 @@ export class AssetItemComponent {
   private router = inject(Router);
   private mapService = inject(MapService);
 
-  @Input() asset: Feature<Point, AssetGeojsonProperties>;
+  @Input() asset!: Feature<Point, AssetGeojsonProperties>;
 
   onShowOnMap(coords: Position) {
     this.router.navigate(['/tabs', RouteName.Map]);

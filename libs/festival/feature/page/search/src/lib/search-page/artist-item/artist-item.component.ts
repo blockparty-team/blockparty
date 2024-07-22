@@ -26,7 +26,7 @@ import {
   ],
 })
 export class ArtistItemComponent {
-  @Input() artist: ArtistViewModel;
+  @Input() artist!: ArtistViewModel;
 
   routeName = RouteName;
 }

@@ -34,7 +34,7 @@ export class StageItemComponent {
   private mapService = inject(MapService);
   private mapStateService = inject(MapStateService);
 
-  @Input() stage: Feature<Point, StageGeojsonProperties>;
+  @Input() stage!: Feature<Point, StageGeojsonProperties>;
 
   onShowOnMap() {
     this.router.navigate(['/tabs', RouteName.Map]);

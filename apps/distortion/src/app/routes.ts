@@ -67,7 +67,8 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.Search,
     title: 'Search',
-    loadChildren: () => import('./pages/search/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/search').then((m) => m.routes),
   },
   {
     path: RouteName.Transport,

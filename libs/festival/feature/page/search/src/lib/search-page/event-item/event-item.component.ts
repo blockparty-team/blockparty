@@ -33,7 +33,7 @@ export class EventItemComponent {
   private router = inject(Router);
   private mapService = inject(MapService);
 
-  @Input() event: EventViewModel;
+  @Input() event!: EventViewModel;
 
   routeName = RouteName;
   badgeColor = EntityBadgeColor;

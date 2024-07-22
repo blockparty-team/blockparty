@@ -6,7 +6,7 @@
   <ion-label>
     <h2>{{ artist.name }}</h2>
     <p *ngFor="let act of artist.timetable">
-      {{ act?.day.name }} | {{ act?.start_time | date : 'HH:mm' }}
+      {{ (act?.day)!.name }} | {{ act?.start_time | date: 'HH:mm' }}
     </p>
   </ion-label>
 </ion-item>

@@ -70,6 +70,9 @@
       "@blockparty/festival/feature/page/map": [
         "libs/festival/feature/page/map/src/index.ts"
       ],
+      "@blockparty/festival/feature/page/search": [
+        "libs/festival/feature/page/search/src/index.ts"
+      ],
       "@blockparty/festival/feature/page/timetable": [
         "libs/festival/feature/page/timetable/src/index.ts"
       ],
