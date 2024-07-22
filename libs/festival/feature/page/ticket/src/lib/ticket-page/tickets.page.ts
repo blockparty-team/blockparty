@@ -45,7 +45,7 @@ import {
 export class TicketsPage implements OnInit {
   private ticketStateService = inject(TicketStateService);
 
-  eventsGroupedByType$: Observable<EventsGroupedByType[]>;
+  eventsGroupedByType$!: Observable<EventsGroupedByType[]>;
 
   ngOnInit() {
     this.eventsGroupedByType$ = this.ticketStateService.eventsGroupedByType$;
