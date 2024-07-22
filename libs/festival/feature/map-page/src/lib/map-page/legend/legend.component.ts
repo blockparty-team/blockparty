@@ -5,7 +5,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
-import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
+// import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
   IonHeader,
@@ -32,7 +32,7 @@ interface IconsViewModel extends MapIconViewModel {
     NgIf,
     NgFor,
     AsyncPipe,
-    SafePipe,
+    // SafePipe,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -44,7 +44,7 @@ interface IconsViewModel extends MapIconViewModel {
   ],
 })
 export class LegendComponent implements OnInit {
-  iconsWithToggleState$: Observable<IconsViewModel[]>;
+  iconsWithToggleState$!: Observable<IconsViewModel[]>;
 
   constructor(
     private mapService: MapService,
@@ -71,8 +71,8 @@ export class LegendComponent implements OnInit {
           .filter((asset) => asset.visible)
           .map((asset) => asset.name);
 
-        this.mapService.filterLayer(MapLayer.AssetIcon, 'icon', visible);
-        this.mapService.filterLayer(MapLayer.Asset, 'icon', visible);
+        this.mapService.filterLayer(MapLayer.AssetIcon, 'icon', visible as any);
+        this.mapService.filterLayer(MapLayer.Asset, 'icon', visible as any);
       }),
     );
   }
@@ -80,10 +80,10 @@ export class LegendComponent implements OnInit {
   onToggleChange(event: Event) {
     const name = (event as ToggleCustomEvent).target.value;
     const visible = (event as ToggleCustomEvent).detail.checked;
-    this.mapStateService.updateRemovedAssetIconNames(name, visible);
+    this.mapStateService.updateRemovedAssetIconNames(name!, visible);
   }
 
-  public trackBy(index, asset: MapIconViewModel) {
+  public trackBy(_index, asset: MapIconViewModel) {
     return asset.name;
   }
 }

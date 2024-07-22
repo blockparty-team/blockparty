@@ -7,7 +7,7 @@ import {
   WritableSignal,
   signal,
 } from '@angular/core';
-import { animations } from '@distortion/app/shared/animations';
+import { animations } from '@blockparty/util/animation';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { IframeSrcDirective } from '../../directives/iframe-src.directive';
 import { NgIf, AsyncPipe } from '@angular/common';

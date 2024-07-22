@@ -37,7 +37,7 @@
               <span slot="start" class="time-slot">N/A</span>
             }
 
-            <ion-label (click)="onGoToArtist(act?.name)">
+            <ion-label (click)="onGoToArtist(act?.name!)">
               {{ act?.name }}
             </ion-label>
             @if (act.onAir) {

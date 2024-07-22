@@ -13,7 +13,7 @@ import {
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
-import { animations } from '@distortion/app/shared/animations';
+import { animations } from '@blockparty/util/animation';
 import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';

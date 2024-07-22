@@ -80,18 +80,18 @@ export class StageTimetableComponent implements OnInit {
   private modalCtrl = inject(ModalController);
   private router = inject(Router);
 
-  stageName$: Observable<string>;
-  stageDescription$: Observable<string>;
-  tickets$: Observable<Ticket[]>;
-  days$: Observable<Day[]>;
-  timetable$: Observable<TimetableViewModel[]>;
-  hasTimetable$: Observable<boolean>;
-  location$: Observable<[number, number]>;
-  tags$: Observable<string[]>;
-  url$: Observable<string>;
+  stageName$!: Observable<string>;
+  stageDescription$!: Observable<string | null>;
+  tickets$!: Observable<Ticket[]>;
+  days$!: Observable<Day[]>;
+  timetable$!: Observable<TimetableViewModel[]>;
+  hasTimetable$!: Observable<boolean>;
+  location$!: Observable<[number, number]>;
+  tags$!: Observable<string[] | null | undefined>;
+  url$!: Observable<string | undefined | null>;
 
-  private _selectedDay$ = new BehaviorSubject<string>(null);
-  selectedDay$: Observable<string> = this._selectedDay$.asObservable();
+  private _selectedDay$ = new BehaviorSubject<string | null>(null);
+  selectedDay$: Observable<string | null> = this._selectedDay$.asObservable();
 
   ngOnInit() {
     const stage$: Observable<MapClickedFeature<StageGeojsonProperties>> =
@@ -137,15 +137,15 @@ export class StageTimetableComponent implements OnInit {
         ([stage, day]) =>
           stage.properties.timetables.find(
             (timetable) => timetable.day.id === day,
-          ).timetable,
+          )!.timetable,
       ),
       map(
         (timetable) =>
           timetable.map((slot) => ({
             ...slot,
             onAir:
-              new Date() > new Date(slot.start_time) &&
-              new Date() < new Date(slot.end_time),
+              new Date() > new Date(slot.start_time!) &&
+              new Date() < new Date(slot.end_time!),
           })) as unknown as TimetableViewModel[],
       ),
     );
@@ -166,7 +166,7 @@ export class StageTimetableComponent implements OnInit {
 
   onSelectDay(event: Event): void {
     this._selectedDay$.next(
-      (event as SegmentCustomEvent).detail.value.toString(),
+      (event as SegmentCustomEvent).detail.value!.toString(),
     );
   }
 

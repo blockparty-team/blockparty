@@ -22,13 +22,13 @@ import {
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { MapLayer, Tab, RouteName } from '@blockparty/festival/shared/types';
-import { animations } from '@distortion/app/shared/animations';
+import { animations } from '@blockparty/util/animation';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
 import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
+import { EventFilterComponent } from '@blockparty/festival/feature/event-filter';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';
 
 @Component({
@@ -43,7 +43,7 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
     ...animations.slideUpDown,
   ],
   standalone: true,
-  imports: [FilterEventsComponent, NgIf, AsyncPipe, IonHeader, IonContent],
+  imports: [EventFilterComponent, NgIf, AsyncPipe, IonHeader, IonContent],
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private mapService = inject(MapService);
@@ -53,7 +53,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private modalCtrl = inject(ModalController);
   private routeHistoryService = inject(RouteHistoryService);
 
-  private modal: HTMLIonModalElement;
+  private modal!: HTMLIonModalElement;
   mapLoaded$ = this.mapStateService.mapLoaded$;
   mapIdle$ = this.mapStateService.mapIdle$;
   hideHeader$ = this.mapStateService.mapInteraction$.pipe(
@@ -78,14 +78,14 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         })),
         tap(({ eventTypes, mask }) => {
           this.mapService.fitBounds(
-            mask.bounds as LngLatBoundsLike,
+            mask!.bounds as LngLatBoundsLike,
             80,
             [0, 30],
           );
           this.mapService.removeFeatureHighlight(MapLayer.StageHighlight);
           this.mapService.removeFeatureHighlight(MapLayer.AssetHighlight);
           this.mapService.removeFeatureHighlight(MapLayer.EventHighLight);
-          this.mapService.highlightFeature(MapLayer.DayEventMask, mask.id);
+          this.mapService.highlightFeature(MapLayer.DayEventMask, mask!.id!);
           this.mapStateService.updateMapInteraction(true);
 
           // Default select event type if only one
@@ -119,13 +119,13 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
         })),
         tap(({ mask, events }) => {
           this.mapService.fitBounds(
-            mask.bounds as LngLatBoundsLike,
+            mask!.bounds as LngLatBoundsLike,
             80,
             [0, 30],
           );
           this.mapService.removeFeatureHighlight(MapLayer.StageHighlight);
           this.mapService.removeFeatureHighlight(MapLayer.AssetHighlight);
-          this.mapService.highlightFeature(MapLayer.EventHighLight, mask.id);
+          this.mapService.highlightFeature(MapLayer.EventHighLight, mask!.id!);
           this.mapStateService.updateMapInteraction(true);
 
           // Select event if only one

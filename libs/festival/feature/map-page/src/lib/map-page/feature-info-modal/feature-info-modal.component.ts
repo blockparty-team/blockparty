@@ -1,10 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import {
-  GeojsonProperties,
-  MapClickedFeature,
-  MapLayer,
-} from '@blockparty/festival/shared/types';
-import { Observable } from 'rxjs';
+import { MapLayer } from '@blockparty/festival/shared/types';
 import { tap } from 'rxjs/operators';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { MapService } from '@blockparty/festival/shared/service/map';

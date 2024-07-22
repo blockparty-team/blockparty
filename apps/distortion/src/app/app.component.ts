@@ -20,7 +20,7 @@ import { NotificationSchedulingService } from '@blockparty/festival/shared/servi
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@blockparty/festival/shared/types';
 import { environment } from '@shared/environments';
-import { icons } from './shared/icons';
+import { icons } from '@blockparty/festival/shared/icons';
 import { AppUpdateService } from '@blockparty/festival/shared/service/app-update';
 import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 

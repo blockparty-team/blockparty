@@ -10,7 +10,8 @@ export const routes: Route[] = [
       {
         path: RouteName.Map,
         title: 'Map',
-        loadChildren: () => import('../map/routes').then((m) => m.routes),
+        loadChildren: () =>
+          import('@blockparty/festival/feature/map-page').then((m) => m.routes),
       },
       {
         path: RouteName.Artist,
