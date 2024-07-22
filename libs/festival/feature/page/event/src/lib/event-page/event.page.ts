@@ -55,11 +55,11 @@ export class EventPage implements OnInit {
   private eventStateService = inject(EventStateService);
   private router = inject(Router);
 
-  @ViewChild(IonModal) modal: IonModal;
+  @ViewChild(IonModal) modal!: IonModal;
 
-  events$: Observable<EventViewModel[]>;
-  eventTypes$: Observable<EventsGroupedByType[]>;
-  selectedEventTypeId$: Observable<string>;
+  events$!: Observable<EventViewModel[]>;
+  eventTypes$!: Observable<EventsGroupedByType[]>;
+  selectedEventTypeId$!: Observable<string | null>;
 
   ngOnInit() {
     this.events$ = this.eventStateService.events$;
@@ -73,7 +73,7 @@ export class EventPage implements OnInit {
 
   onEventTypeFilterChange(event: Event): void {
     this.eventStateService.selectEventTypeId(
-      (event as SegmentCustomEvent).detail.value.toString(),
+      (event as SegmentCustomEvent).detail.value!.toString(),
     );
   }
 

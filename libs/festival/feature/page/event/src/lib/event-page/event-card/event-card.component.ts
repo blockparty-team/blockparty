@@ -13,5 +13,5 @@ import { IonCard, IonBadge, IonRouterLink } from '@ionic/angular/standalone';
   imports: [RouterLink, NgIf, IonCard, IonBadge, IonRouterLink],
 })
 export class EventCardComponent {
-  @Input() event: EventViewModel;
+  @Input() event!: EventViewModel;
 }
