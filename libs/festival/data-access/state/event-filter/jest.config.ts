@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'filter-events-state',
+  displayName: 'event-filter-state',
   preset: '../../../../../jest.preset.js',
   testEnvironment: 'node',
   transform: {
@@ -8,5 +8,5 @@ export default {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory:
-    '../../../../../coverage/libs/festival/data-access/state/filter-events',
+    '../../../../../coverage/libs/festival/data-access/state/event-filter',
 };

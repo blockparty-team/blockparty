@@ -25,7 +25,7 @@ import { MapLayer, Tab, RouteName } from '@blockparty/festival/shared/types';
 import { animations } from '@blockparty/util/animation';
 import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-modal.component';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
-import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
+import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { NgIf, AsyncPipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/feature/event-filter';
@@ -35,7 +35,7 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
   selector: 'app-map',
   templateUrl: 'map.page.html',
   styleUrls: ['map.page.scss'],
-  providers: [FilterEventsStateService],
+  providers: [EventFilterStateService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     ...animations.slideInOut,
@@ -48,7 +48,7 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private mapService = inject(MapService);
   private mapStateService = inject(MapStateService);
-  private filterEventsStateService = inject(FilterEventsStateService);
+  private eventFilterStateService = inject(EventFilterStateService);
   private tabStateService = inject(TabsStateService);
   private modalCtrl = inject(ModalController);
   private routeHistoryService = inject(RouteHistoryService);
@@ -63,11 +63,11 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private abandon$ = new Subject<void>();
 
   ngOnInit(): void {
-    this.filterEventsStateService.selectedDayId$
+    this.eventFilterStateService.selectedDayId$
       .pipe(
         withLatestFrom(
           this.mapStateService.dayMaskBounds$,
-          this.filterEventsStateService.eventTypes$,
+          this.eventFilterStateService.eventTypes$,
         ),
         filter(
           ([dayId, masks, eventTypes]) => !!dayId && !!masks && !!eventTypes,
@@ -90,9 +90,9 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 
           // Default select event type if only one
           eventTypes.length === 1
-            ? this.filterEventsStateService.selectEventType(eventTypes[0].id)
-            : this.filterEventsStateService.selectEventType('');
-          this.filterEventsStateService.selectEvent('');
+            ? this.eventFilterStateService.selectEventType(eventTypes[0].id)
+            : this.eventFilterStateService.selectEventType('');
+          this.eventFilterStateService.selectEvent('');
         }),
         takeUntil(this.abandon$),
         catchError((err) => {
@@ -102,12 +102,12 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe();
 
-    this.filterEventsStateService.selectedEventTypeId$
+    this.eventFilterStateService.selectedEventTypeId$
       .pipe(
         withLatestFrom(
-          this.filterEventsStateService.selectedDayId$,
+          this.eventFilterStateService.selectedDayId$,
           this.mapStateService.dayMaskBounds$,
-          this.filterEventsStateService.events$,
+          this.eventFilterStateService.events$,
         ),
         filter(
           ([eventTypeId, dayId, masks, events]) =>
@@ -130,8 +130,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 
           // Select event if only one
           events.length === 0
-            ? this.filterEventsStateService.selectEvent(events[0].id)
-            : this.filterEventsStateService.selectEvent('');
+            ? this.eventFilterStateService.selectEvent(events[0].id)
+            : this.eventFilterStateService.selectEvent('');
         }),
         takeUntil(this.abandon$),
         catchError((err) => {
@@ -141,7 +141,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe();
 
-    this.filterEventsStateService.selectedEvent$
+    this.eventFilterStateService.selectedEvent$
       .pipe(
         filter((event) => !!event),
         tap((event) => {

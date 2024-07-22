@@ -7,13 +7,13 @@ import {
 } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { isSameDay, sub } from 'date-fns';
-import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
+import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, takeUntil, tap } from 'rxjs/operators';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { FilterEventsComponent } from '../../shared/components/filter-events/filter-events.component';
+import { EventFilterComponent } from '@blockparty/festival/feature/event-filter';
 import {
   IonHeader,
   IonContent,
@@ -28,11 +28,11 @@ type TimeTableViewMode = 'gantt' | 'list';
   selector: 'app-timetable',
   templateUrl: 'timetable.page.html',
   styleUrls: ['timetable.page.scss'],
-  providers: [TimetableStateService, FilterEventsStateService],
+  providers: [TimetableStateService, EventFilterStateService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    FilterEventsComponent,
+    EventFilterComponent,
     NgIf,
     TimetableGanttComponent,
     TimetableListComponent,
@@ -45,7 +45,7 @@ type TimeTableViewMode = 'gantt' | 'list';
   ],
 })
 export class TimetablePage implements OnInit, OnDestroy {
-  private filterEventsStateService = inject(FilterEventsStateService);
+  private eventFilterStateService = inject(EventFilterStateService);
 
   private _timetableViewMode$ = new BehaviorSubject<TimeTableViewMode>('gantt');
   timetableViewMode$: Observable<TimeTableViewMode> =
@@ -55,7 +55,7 @@ export class TimetablePage implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // Default select first day, event type and event
-    this.filterEventsStateService.days$
+    this.eventFilterStateService.days$
       .pipe(
         tap((days) => {
           // Change day at 7am next day (for events running during nighttime)
@@ -63,31 +63,29 @@ export class TimetablePage implements OnInit, OnDestroy {
           const day = days.find((day) => isSameDay(now, new Date(day.day)));
 
           if (day) {
-            this.filterEventsStateService.selectDay(day.id);
+            this.eventFilterStateService.selectDay(day.id);
           } else {
-            this.filterEventsStateService.selectDay(days[0].id);
+            this.eventFilterStateService.selectDay(days[0].id);
           }
         }),
-        takeUntil(this.abandon$)
+        takeUntil(this.abandon$),
       )
       .subscribe();
 
-    this.filterEventsStateService.eventTypes$
+    this.eventFilterStateService.eventTypes$
       .pipe(
         tap((eventTypes) =>
-          this.filterEventsStateService.selectEventType(eventTypes[0].id)
+          this.eventFilterStateService.selectEventType(eventTypes[0].id),
         ),
-        takeUntil(this.abandon$)
+        takeUntil(this.abandon$),
       )
       .subscribe();
 
-    this.filterEventsStateService.events$
+    this.eventFilterStateService.events$
       .pipe(
         filter((events) => !!events),
-        tap((events) =>
-          this.filterEventsStateService.selectEvent(events[0].id)
-        ),
-        takeUntil(this.abandon$)
+        tap((events) => this.eventFilterStateService.selectEvent(events[0].id)),
+        takeUntil(this.abandon$),
       )
       .subscribe();
   }

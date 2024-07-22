@@ -14,7 +14,7 @@ import { TimetableStateService } from '@blockparty/festival/data-access/state/ti
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@blockparty/util/animation';
-import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
+import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { RouterLink } from '@angular/router';
 import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
@@ -65,14 +65,14 @@ enum ListViewMode {
   ],
 })
 export class TimetableListComponent {
-  private filterEventsStateService = inject(FilterEventsStateService);
+  private eventFilterStateService = inject(EventFilterStateService);
   private timetableStateService = inject(TimetableStateService);
   private favoriteStateService = inject(FavoriteStateService);
 
   private event$ = combineLatest([
     this.timetableStateService.timetableWithFavorites$,
-    this.filterEventsStateService.selectedDayId$,
-    this.filterEventsStateService.selectedEventId$,
+    this.eventFilterStateService.selectedDayId$,
+    this.eventFilterStateService.selectedEventId$,
   ]).pipe(
     filter(
       ([timetableDays, selectedDayId, eventId]) =>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
+import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
   IonHeader,
@@ -27,25 +27,25 @@ import {
   ],
 })
 export class EventFilterComponent {
-  private filterEventsStateService = inject(FilterEventsStateService);
+  private eventFilterStateService = inject(EventFilterStateService);
 
-  days$ = this.filterEventsStateService.days$;
-  eventTypes$ = this.filterEventsStateService.eventTypes$;
-  events$ = this.filterEventsStateService.events$;
+  days$ = this.eventFilterStateService.days$;
+  eventTypes$ = this.eventFilterStateService.eventTypes$;
+  events$ = this.eventFilterStateService.events$;
 
-  selectedDayId$ = this.filterEventsStateService.selectedDayId$;
-  selectedEventTypeId$ = this.filterEventsStateService.selectedEventTypeId$;
-  selectedEventId$ = this.filterEventsStateService.selectedEventId$;
+  selectedDayId$ = this.eventFilterStateService.selectedDayId$;
+  selectedEventTypeId$ = this.eventFilterStateService.selectedEventTypeId$;
+  selectedEventId$ = this.eventFilterStateService.selectedEventId$;
 
   onDaySelect(id: string): void {
-    this.filterEventsStateService.selectDay(id);
+    this.eventFilterStateService.selectDay(id);
   }
 
   onEventTypeSelect(id: string): void {
-    this.filterEventsStateService.selectEventType(id);
+    this.eventFilterStateService.selectEventType(id);
   }
 
   onEventSelect(id: string): void {
-    this.filterEventsStateService.selectEvent(id);
+    this.eventFilterStateService.selectEvent(id);
   }
 }

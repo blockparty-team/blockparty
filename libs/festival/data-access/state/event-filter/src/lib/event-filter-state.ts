@@ -15,7 +15,7 @@ import {
 } from '@blockparty/festival/shared/types';
 
 @Injectable()
-export class FilterEventsStateService {
+export class EventFilterStateService {
   private supabase = inject(SupabaseService);
   private deviceStorageService = inject(DeviceStorageService);
   private tabsStateService = inject(TabsStateService);

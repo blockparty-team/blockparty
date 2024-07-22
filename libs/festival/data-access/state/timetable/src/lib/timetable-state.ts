@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { filter, map, shareReplay } from 'rxjs/operators';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
-import { FilterEventsStateService } from '@blockparty/festival/data-access/state/filter-events';
+import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableSharedStateService } from '@blockparty/festival/data-access/state/timetable-shared';
 import { DayEventStageTimetable } from '@blockparty/festival/shared/types';
 
@@ -12,7 +12,7 @@ import { DayEventStageTimetable } from '@blockparty/festival/shared/types';
 export class TimetableStateService {
   private favoriteStateService = inject(FavoriteStateService);
   private timetableSharedStateService = inject(TimetableSharedStateService);
-  private filterEventsStateService = inject(FilterEventsStateService);
+  private eventFilterStateService = inject(EventFilterStateService);
 
   timetableWithFavorites$: Observable<DayEventStageTimetable[]> = combineLatest(
     [
@@ -44,9 +44,9 @@ export class TimetableStateService {
 
   dayEvents$: Observable<DayEventStageTimetable | null> = combineLatest([
     this.timetableWithFavorites$,
-    this.filterEventsStateService.selectedDayId$,
-    this.filterEventsStateService.selectedEventTypeId$,
-    this.filterEventsStateService.selectedEventId$,
+    this.eventFilterStateService.selectedDayId$,
+    this.eventFilterStateService.selectedEventTypeId$,
+    this.eventFilterStateService.selectedEventId$,
   ]).pipe(
     filter(
       ([timetableDays, selectedDayId, selectedEventTypeId, selectedEventId]) =>
@@ -105,7 +105,7 @@ export class TimetableStateService {
   );
 
   eventTypeColor$: Observable<string | null> =
-    this.filterEventsStateService.selectedEventType$.pipe(
+    this.eventFilterStateService.selectedEventType$.pipe(
       map((eventType) => eventType.color),
     );
 }
