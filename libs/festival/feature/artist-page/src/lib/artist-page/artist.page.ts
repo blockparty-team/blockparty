@@ -57,7 +57,7 @@ import {
 export class ArtistPage {
   private artistStateService = inject(ArtistStateService);
 
-  @ViewChild(IonSearchbar) searchElement: IonSearchbar;
+  @ViewChild(IonSearchbar) searchElement!: IonSearchbar;
 
   showSearch$ = new BehaviorSubject(false);
 
@@ -74,7 +74,7 @@ export class ArtistPage {
         // Only show visible artist but include all on search
         .filter((artist) => (!!term ? true : artist.is_visible))
         .filter((artist) =>
-          artist.name.toLowerCase().includes(term.toLowerCase()),
+          artist.name!.toLowerCase().includes(term!.toLowerCase()),
         ),
     ),
   );

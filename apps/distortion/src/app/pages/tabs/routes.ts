@@ -19,7 +19,9 @@ export const routes: Route[] = [
           {
             path: '',
             loadChildren: () =>
-              import('../artist/routes').then((m) => m.routes),
+              import('@blockparty/festival/feature/artist-page').then(
+                (m) => m.routes,
+              ),
           },
           {
             path: ':name',
