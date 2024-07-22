@@ -52,17 +52,17 @@
       "@blockparty/festival/data-access/state/timetable-shared": [
         "libs/festival/data-access/state/timetable-shared/src/index.ts"
       ],
-      "@blockparty/festival/feature/artist-page": [
-        "libs/festival/feature/artist-page/src/index.ts"
+      "@blockparty/festival/feature/page/artist": [
+        "libs/festival/feature/page/artist/src/index.ts"
       ],
-      "@blockparty/festival/feature/event-filter": [
-        "libs/festival/feature/event-filter/src/index.ts"
-      ],
-      "@blockparty/festival/feature/map-page": [
-        "libs/festival/feature/map-page/src/index.ts"
+      "@blockparty/festival/feature/page/map": [
+        "libs/festival/feature/page/map/src/index.ts"
       ],
       "@blockparty/festival/feature/page/timetable": [
         "libs/festival/feature/page/timetable/src/index.ts"
+      ],
+      "@blockparty/festival/featurecomponent/event-filter": [
+        "libs/festival/feature/component/event-filter/src/index.ts"
       ],
       "@blockparty/festival/shared/guard/can-load": [
         "libs/festival/shared/guard/can-load/src/index.ts"

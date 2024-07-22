@@ -13,7 +13,7 @@ import { filter, takeUntil, tap } from 'rxjs/operators';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
 import { NgIf, AsyncPipe } from '@angular/common';
-import { EventFilterComponent } from '@blockparty/festival/feature/event-filter';
+import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import {
   IonHeader,
   IonContent,
