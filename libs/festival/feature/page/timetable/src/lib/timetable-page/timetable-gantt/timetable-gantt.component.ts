@@ -52,9 +52,9 @@ export class TimetableGanttComponent {
 
   private currentTimeElement = viewChild<ElementRef>('currentTime');
 
-  timetableConfig$: Observable<DayTimetableViewModel> =
+  timetableConfig$: Observable<DayTimetableViewModel | null> =
     this.timetableStateService.dayEvents$.pipe(
-      map((day) => this.timetableGridConfig(day)),
+      map((day) => this.timetableGridConfig(day!)),
     );
 
   private currentTimeWithinTimetable$: Observable<boolean> =
@@ -72,19 +72,21 @@ export class TimetableGanttComponent {
     this.currentTimeWithinTimetable$,
   );
 
-  currentTimeColumn$: Observable<number> = combineLatest([
+  currentTimeColumn$: Observable<number | null> = combineLatest([
     interval(1000 * 60).pipe(startWith(0)),
     this.timetableConfig$,
     this.currentTimeWithinTimetable$,
   ]).pipe(
-    filter(([, , withinTimetable]) => withinTimetable),
+    filter(([, config, withinTimetable]) => withinTimetable),
     map(([, config, withinTimetable]) => {
       const now = new Date();
-      const firstActStart = config.timeLabels[0].label;
+      const firstActStart = config?.timeLabels[0].label;
 
       if (withinTimetable) {
-        return differenceInMinutes(now, firstActStart);
+        return differenceInMinutes(now, firstActStart!);
       }
+
+      return null;
     }),
     shareReplay(1),
   );
@@ -158,8 +160,8 @@ export class TimetableGanttComponent {
 
   private timetableGridConfig(
     day: DayEventStageTimetable,
-  ): DayTimetableViewModel {
-    if (!day) return;
+  ): DayTimetableViewModel | null {
+    if (!day) return null;
 
     let row = 0; // First row is time labels
     const firstStartTime = new Date(day.first_start_time);

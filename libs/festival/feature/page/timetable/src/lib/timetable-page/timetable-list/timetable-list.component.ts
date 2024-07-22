@@ -85,7 +85,7 @@ export class TimetableListComponent {
     ),
   );
 
-  public timetableByTime$: Observable<TimetableWithStageName[]> =
+  public timetableByTime$: Observable<TimetableWithStageName[] | null> =
     this.event$.pipe(
       map(
         (event) =>
@@ -104,9 +104,8 @@ export class TimetableListComponent {
       ),
     );
 
-  public timetableByStage$: Observable<StageTimetable[]> = this.event$.pipe(
-    map((event) => event?.stages ?? null),
-  );
+  public timetableByStage$: Observable<StageTimetable[] | null> =
+    this.event$.pipe(map((event) => event?.stages ?? null));
 
   public routeName = RouteName;
   public viewMode = ListViewMode;

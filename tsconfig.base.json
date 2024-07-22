@@ -61,6 +61,9 @@
       "@blockparty/festival/feature/map-page": [
         "libs/festival/feature/map-page/src/index.ts"
       ],
+      "@blockparty/festival/feature/page/timetable": [
+        "libs/festival/feature/page/timetable/src/index.ts"
+      ],
       "@blockparty/festival/shared/guard/can-load": [
         "libs/festival/shared/guard/can-load/src/index.ts"
       ],
