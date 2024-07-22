@@ -46,11 +46,6 @@ export const ROUTES: Route[] = [
     ],
   },
   {
-    path: RouteName.Playlists,
-    title: 'Playlists',
-    loadChildren: () => import('./pages/playlist/routes').then((m) => m.routes),
-  },
-  {
     path: RouteName.Settings,
     title: 'Settings',
     loadChildren: () => import('./pages/settings/routes').then((m) => m.routes),
