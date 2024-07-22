@@ -55,11 +55,6 @@ export const ROUTES: Route[] = [
     loadChildren: () => import('./pages/settings/routes').then((m) => m.routes),
   },
   {
-    path: RouteName.Merch,
-    title: 'Merch',
-    loadChildren: () => import('./pages/merch/routes').then((m) => m.routes),
-  },
-  {
     path: RouteName.Tickets,
     title: 'Tickets',
     loadChildren: () =>
