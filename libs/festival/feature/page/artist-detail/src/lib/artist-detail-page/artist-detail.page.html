@@ -33,7 +33,7 @@
         <ion-icon name="share-social-outline"></ion-icon>
       </ion-fab-button>
 
-      <ion-fab *ngIf="(soMeLinks$ | async)?.length > 0" class="so-me">
+      <ion-fab *ngIf="(soMeLinks$ | async)?.length! > 0" class="so-me">
         <ion-fab-button color="secondary" size="small">
           <ion-icon name="open-outline"></ion-icon>
         </ion-fab-button>
@@ -42,7 +42,7 @@
           <ion-fab-button
             *ngFor="let soMe of soMeLinks$ | async"
             color="secondary"
-            (click)="openUrl(soMe.url)"
+            (click)="openUrl(soMe.url!)"
           >
             <ion-icon *ngIf="soMe.icon" size="large" [name]="soMe.icon">
             </ion-icon>
@@ -77,7 +77,7 @@
           class="favorite-icon"
           [color]="artist.isFavorite ? 'favorite' : ''"
           [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
-          (click)="toggleFavorite(artist.id)"
+          (click)="toggleFavorite(artist.id!)"
         >
         </ion-icon>
       </h1>
@@ -105,8 +105,8 @@
 
     <app-music-player
       [showPlayer]="showMusicPlayer"
-      [soundcloudUrl]="artist.soundcloud_iframe"
-      [bandcampUrl]="artist.bandcamp_iframe"
+      [soundcloudUrl]="artist.soundcloud_iframe!"
+      [bandcampUrl]="artist.bandcamp_iframe!"
     >
     </app-music-player>
   </ion-content>

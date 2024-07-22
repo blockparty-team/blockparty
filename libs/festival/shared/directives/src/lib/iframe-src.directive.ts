@@ -1,10 +1,13 @@
-import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, inject, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: 'iframe',
   standalone: true,
 })
 export class IframeSrcDirective {
+  private elRef = inject(ElementRef);
+  private renderer = inject(Renderer2);
+
   @Input()
   public get iframeSrc(): string {
     return this.elRef.nativeElement.src;
@@ -14,6 +17,4 @@ export class IframeSrcDirective {
       this.renderer.setAttribute(this.elRef.nativeElement, 'src', src);
     }
   }
-
-  constructor(private elRef: ElementRef, private renderer: Renderer2) {}
 }

@@ -79,8 +79,8 @@ export class ArtistDetailPage implements OnInit {
   mapService = inject(MapService);
   routeHistoryService = inject(RouteHistoryService);
 
-  artist$: Observable<ArtistViewModel>;
-  soMeLinks$: Observable<SoMeIcon[]>;
+  artist$!: Observable<ArtistViewModel>;
+  soMeLinks$!: Observable<SoMeIcon[]>;
   showMusicPlayer = signal<boolean>(false);
   canShare$ = from(Share.canShare()).pipe(map((res) => res.value));
   previousRoute$ = this.routeHistoryService.history$.pipe(
@@ -104,7 +104,7 @@ export class ArtistDetailPage implements OnInit {
       map((paramMap) => paramMap.get('name')),
       switchMap((name) =>
         this.artistStateService.artists$.pipe(
-          map((artists) => artists.find((artist) => artist.name === name)),
+          map((artists) => artists.find((artist) => artist.name === name)!),
         ),
       ),
     );
@@ -120,7 +120,7 @@ export class ArtistDetailPage implements OnInit {
           .map(([column, url]) => {
             const { icon, svg } = soMeIcons.find(
               (conf) => conf.column === column,
-            );
+            )!;
 
             return {
               column,

@@ -3,13 +3,13 @@ import {
   Component,
   Input,
   OnInit,
-  Signal,
   WritableSignal,
+  inject,
+  input,
   signal,
 } from '@angular/core';
 import { animations } from '@blockparty/util/animation';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
-import { IframeSrcDirective } from '@blockparty/festival/shared/directives';
 import { NgIf, AsyncPipe } from '@angular/common';
 import {
   IonHeader,
@@ -18,6 +18,8 @@ import {
   IonIcon,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { SafePipe } from '@blockparty/festival/shared/pipes';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 enum PlayerSource {
   Soundcloud = 'soundcloud',
@@ -33,7 +35,6 @@ enum PlayerSource {
   standalone: true,
   imports: [
     NgIf,
-    IframeSrcDirective,
     AsyncPipe,
     IonHeader,
     IonSegment,
@@ -43,17 +44,20 @@ enum PlayerSource {
   ],
 })
 export class MusicPlayerComponent implements OnInit {
-  @Input() soundcloudUrl!: string;
-  @Input() bandcampUrl!: string;
+  private sanitizer = inject(DomSanitizer);
+
+  soundcloudUrl = input<string>();
+  bandcampUrl = input<string>();
+
   @Input() showPlayer!: WritableSignal<boolean>;
 
   public selectedSource = signal<PlayerSource>(PlayerSource.Soundcloud);
   public playerSource = PlayerSource;
 
   ngOnInit(): void {
-    if (this.soundcloudUrl && this.bandcampUrl) {
+    if (this.soundcloudUrl() && this.bandcampUrl()) {
       this.selectedSource.set(PlayerSource.Soundcloud);
-    } else if (this.soundcloudUrl) {
+    } else if (this.soundcloudUrl()) {
       this.selectedSource.set(PlayerSource.Soundcloud);
     } else {
       this.selectedSource.set(PlayerSource.Bandcamp);
@@ -67,5 +71,9 @@ export class MusicPlayerComponent implements OnInit {
 
   close(): void {
     this.showPlayer.set(false);
+  }
+
+  sanitizeUrl(url: string): SafeResourceUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

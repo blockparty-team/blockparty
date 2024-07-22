@@ -55,6 +55,9 @@
       "@blockparty/festival/feature/page/artist": [
         "libs/festival/feature/page/artist/src/index.ts"
       ],
+      "@blockparty/festival/feature/page/artist-detail": [
+        "libs/festival/feature/page/artist-detail/src/index.ts"
+      ],
       "@blockparty/festival/feature/page/map": [
         "libs/festival/feature/page/map/src/index.ts"
       ],
