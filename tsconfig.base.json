@@ -67,8 +67,14 @@
       "@blockparty/festival/feature/page/favorite": [
         "libs/festival/feature/page/favorite/src/index.ts"
       ],
+      "@blockparty/festival/feature/page/login": [
+        "libs/festival/feature/page/login/src/index.ts"
+      ],
       "@blockparty/festival/feature/page/map": [
         "libs/festival/feature/page/map/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/profile": [
+        "libs/festival/feature/page/profile/src/index.ts"
       ],
       "@blockparty/festival/feature/page/search": [
         "libs/festival/feature/page/search/src/index.ts"

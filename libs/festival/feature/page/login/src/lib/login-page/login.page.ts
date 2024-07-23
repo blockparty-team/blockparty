@@ -29,7 +29,7 @@ export class LoginPage implements OnInit {
   private authService = inject(AuthService);
   private routeHistoryService = inject(RouteHistoryService);
 
-  credentials: FormGroup;
+  credentials!: FormGroup;
 
   ngOnInit() {
     this.credentials = this.fb.group({
@@ -39,7 +39,7 @@ export class LoginPage implements OnInit {
   }
 
   signIn(): void {
-    this.authService.signInWithMail(this.email.value).subscribe();
+    this.authService.signInWithMail(this.email!.value).subscribe();
   }
 
   signInWithGoogle() {
@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
       .pipe(
         first(),
         switchMap((history) =>
-          this.authService.signInWithGoogle(history.previous),
+          this.authService.signInWithGoogle(history.previous as string),
         ),
       )
       .subscribe();

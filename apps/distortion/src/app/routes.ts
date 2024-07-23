@@ -15,13 +15,15 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.Login,
     title: 'Login',
-    loadChildren: () => import('./pages/login/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/login').then((m) => m.routes),
     canLoad: [CanLoadLoginGuard],
   },
   {
     path: RouteName.Profile,
     title: 'Profile',
-    loadChildren: () => import('./pages/profile/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/profile').then((m) => m.routes),
     canLoad: [CanLoadLoginGuard],
   },
   {

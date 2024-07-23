@@ -12,9 +12,9 @@
   <div class="container">
     <ng-container *ngIf="userMetaData$ | async as userMeta; else login">
       <ion-avatar class="ion-margin">
-        <img [src]="userMeta.avatar_url" />
+        <img [src]="userMeta['avatar_url']" />
       </ion-avatar>
-      <h1 class="ion-text-center">{{userMeta.name}}</h1>
+      <h1 class="ion-text-center">{{userMeta['name']}}</h1>
     </ng-container>
 
     <ng-template #login>

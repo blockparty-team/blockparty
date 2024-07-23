@@ -39,9 +39,9 @@ import {
   ],
 })
 export class ProfilePage implements OnInit {
-  userMetaData$: Observable<UserMetadata>;
-  name$: Observable<string>;
-  avatarUrl$: Observable<string>;
+  userMetaData$!: Observable<UserMetadata>;
+  name$!: Observable<string>;
+  avatarUrl$!: Observable<string>;
 
   constructor(private authService: AuthService) {}
 
