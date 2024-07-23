@@ -31,11 +31,11 @@
       "@blockparty/festival/data-access/state/event": [
         "libs/festival/data-access/state/event/src/index.ts"
       ],
+      "@blockparty/festival/data-access/state/event-filter": [
+        "libs/festival/data-access/state/event-filter/src/index.ts"
+      ],
       "@blockparty/festival/data-access/state/favorite": [
         "libs/festival/data-access/state/favorite/src/index.ts"
-      ],
-      "@blockparty/festival/data-access/state/filter-events": [
-        "libs/festival/data-access/state/filter-events/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/map": [
         "libs/festival/data-access/state/map/src/index.ts"
@@ -52,8 +52,56 @@
       "@blockparty/festival/data-access/state/timetable-shared": [
         "libs/festival/data-access/state/timetable-shared/src/index.ts"
       ],
+      "@blockparty/festival/feature/page/artist": [
+        "libs/festival/feature/page/artist/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/artist-detail": [
+        "libs/festival/feature/page/artist-detail/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/event": [
+        "libs/festival/feature/page/event/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/event-detail": [
+        "libs/festival/feature/page/event-detail/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/favorite": [
+        "libs/festival/feature/page/favorite/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/login": [
+        "libs/festival/feature/page/login/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/map": [
+        "libs/festival/feature/page/map/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/profile": [
+        "libs/festival/feature/page/profile/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/search": [
+        "libs/festival/feature/page/search/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/settings": [
+        "libs/festival/feature/page/settings/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/ticket": [
+        "libs/festival/feature/page/ticket/src/index.ts"
+      ],
+      "@blockparty/festival/feature/page/timetable": [
+        "libs/festival/feature/page/timetable/src/index.ts"
+      ],
+      "@blockparty/festival/featurecomponent/event-filter": [
+        "libs/festival/feature/component/event-filter/src/index.ts"
+      ],
+      "@blockparty/festival/shared/directives": [
+        "libs/festival/shared/directives/src/index.ts"
+      ],
       "@blockparty/festival/shared/guard/can-load": [
         "libs/festival/shared/guard/can-load/src/index.ts"
+      ],
+      "@blockparty/festival/shared/icons": [
+        "libs/festival/shared/icons/src/index.ts"
+      ],
+      "@blockparty/festival/shared/pipes": [
+        "libs/festival/shared/pipes/src/index.ts"
       ],
       "@blockparty/festival/shared/service/app-update": [
         "libs/festival/shared/service/app-update/src/index.ts"
@@ -85,6 +133,12 @@
       "@blockparty/festival/shared/types": [
         "libs/festival/shared/types/src/index.ts"
       ],
+      "@blockparty/festival/ui/artist-card": [
+        "libs/festival/ui/artist-card/src/index.ts"
+      ],
+      "@blockparty/festival/ui/music-player": [
+        "libs/festival/ui/music-player/src/index.ts"
+      ],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
@@ -99,6 +153,9 @@
       ],
       "@blockparty/shared/service/geolocation": [
         "libs/shared/service/geolocation/src/index.ts"
+      ],
+      "@blockparty/util/animation": [
+        "libs/festival/util/animation/src/index.ts"
       ],
       "@blockparty/util/file": ["libs/festival/util/file/src/index.ts"],
       "@distortion/*": ["apps/distortion/src/*"],

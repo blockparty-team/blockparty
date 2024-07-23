@@ -1,0 +1,36 @@
+{
+  "name": "timetable-page",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/festival/feature/page/timetable/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/festival/feature/page/timetable/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/festival/feature/page/timetable/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/festival/feature/page/timetable/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/festival/feature/page/timetable/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

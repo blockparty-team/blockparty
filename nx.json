@@ -50,6 +50,11 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     }
   },
   "nxCloudAccessToken": "NGY1NzYzOGMtOTBhOC00MzZmLWFhZjctNDgwNGNiNDg1YzQ0fHJlYWQtd3JpdGU=",

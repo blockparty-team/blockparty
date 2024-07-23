@@ -15,13 +15,15 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.Login,
     title: 'Login',
-    loadChildren: () => import('./pages/login/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/login').then((m) => m.routes),
     canLoad: [CanLoadLoginGuard],
   },
   {
     path: RouteName.Profile,
     title: 'Profile',
-    loadChildren: () => import('./pages/profile/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/profile').then((m) => m.routes),
     canLoad: [CanLoadLoginGuard],
   },
   {
@@ -36,39 +38,38 @@ export const ROUTES: Route[] = [
       {
         path: '',
         loadChildren: () =>
-          import('./pages/event/routes').then((m) => m.routes),
+          import('@blockparty/festival/feature/page/event').then(
+            (m) => m.routes,
+          ),
       },
       {
         path: ':id',
         loadChildren: () =>
-          import('./pages/event-detail/routes').then((m) => m.routes),
+          import('@blockparty/festival/feature/page/event-detail').then(
+            (m) => m.routes,
+          ),
       },
     ],
   },
   {
-    path: RouteName.Playlists,
-    title: 'Playlists',
-    loadChildren: () => import('./pages/playlist/routes').then((m) => m.routes),
-  },
-  {
     path: RouteName.Settings,
     title: 'Settings',
-    loadChildren: () => import('./pages/settings/routes').then((m) => m.routes),
-  },
-  {
-    path: RouteName.Merch,
-    title: 'Merch',
-    loadChildren: () => import('./pages/merch/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/settings').then(
+        (m) => m.routes,
+      ),
   },
   {
     path: RouteName.Tickets,
     title: 'Tickets',
-    loadChildren: () => import('./pages/tickets/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/ticket').then((m) => m.routes),
   },
   {
     path: RouteName.Search,
     title: 'Search',
-    loadChildren: () => import('./pages/search/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('@blockparty/festival/feature/page/search').then((m) => m.routes),
   },
   {
     path: RouteName.Transport,

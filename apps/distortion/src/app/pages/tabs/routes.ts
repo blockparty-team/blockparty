@@ -10,7 +10,8 @@ export const routes: Route[] = [
       {
         path: RouteName.Map,
         title: 'Map',
-        loadChildren: () => import('../map/routes').then((m) => m.routes),
+        loadChildren: () =>
+          import('@blockparty/festival/feature/page/map').then((m) => m.routes),
       },
       {
         path: RouteName.Artist,
@@ -19,23 +20,33 @@ export const routes: Route[] = [
           {
             path: '',
             loadChildren: () =>
-              import('../artist/routes').then((m) => m.routes),
+              import('@blockparty/festival/feature/page/artist').then(
+                (m) => m.routes,
+              ),
           },
           {
             path: ':name',
             loadChildren: () =>
-              import('../artist-detail/routes').then((m) => m.routes),
+              import('@blockparty/festival/feature/page/artist-detail').then(
+                (m) => m.routes,
+              ),
           },
         ],
       },
       {
         path: RouteName.Timetable,
         title: 'Timetable',
-        loadChildren: () => import('../timetable/routes').then((m) => m.routes),
+        loadChildren: () =>
+          import('@blockparty/festival/feature/page/timetable').then(
+            (m) => m.routes,
+          ),
       },
       {
         path: RouteName.Favorite,
-        loadChildren: () => import('../favorite/routes').then((m) => m.routes),
+        loadChildren: () =>
+          import('@blockparty/festival/feature/page/favorite').then(
+            (m) => m.routes,
+          ),
       },
       {
         path: '',

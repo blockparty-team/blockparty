@@ -1,0 +1,15 @@
+<ion-item>
+  <ion-badge slot="start" [color]="badgeColor.event">Event </ion-badge>
+
+  <ion-label [routerLink]="['/', routeName.Event, event.id]">
+    <h2>{{ event.name }}</h2>
+    <p>{{ event.description }}</p>
+  </ion-label>
+
+  <ion-icon
+    slot="end"
+    name="map"
+    (click)="onZoomToEventOnMap(event.id, event.bounds!)"
+  >
+  </ion-icon>
+</ion-item>
