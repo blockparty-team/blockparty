@@ -1,16 +1,19 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 import { RouteName } from '@blockparty/festival/shared/types';
-import { environment } from '@shared/environments';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CanLoadLoginGuard {
-  constructor(private router: Router) {}
+  private router = inject(Router);
+  private enableLogin =
+    inject(AppConfigService).appConfig.featureToggle.enableLogin;
 
   canLoad(route: Route) {
-    if (environment.featureToggle.enableLogin === false) {
+    console.log('CanLoadLoginGuard.canLoad', this.enableLogin());
+    if (this.enableLogin() === false) {
       switch (route.path) {
         case RouteName.Login:
           this.router.navigate(['tabs', RouteName.Map]);

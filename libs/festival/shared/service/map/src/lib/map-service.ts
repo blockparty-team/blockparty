@@ -7,7 +7,6 @@ import {
   FilterSpecification,
   GeolocateControl,
   LngLatBoundsLike,
-  LngLatLike,
   Map,
   PointLike,
   StyleImageInterface,
@@ -23,13 +22,13 @@ import {
   MapClickedFeature,
   MapIconViewModel,
 } from '@blockparty/festival/shared/types';
-import { environment } from '@shared/environments';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Protocol, PMTiles } from 'pmtiles';
 import {
   SupabaseService,
   getBucketAndPath,
 } from '@blockparty/shared/data-access/supabase-service';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 function getCssVariable(cssVariable: string) {
   return getComputedStyle(document.documentElement).getPropertyValue(
@@ -44,6 +43,7 @@ export class MapService {
   private mapStateService = inject(MapStateService);
   private geolocationService = inject(GeolocationService);
   private supabase = inject(SupabaseService);
+  private config = inject(AppConfigService).appConfig.map;
 
   private map!: Map;
   private pmtilesProtocol = new Protocol();
@@ -363,10 +363,10 @@ export class MapService {
   public initMap(): void {
     this.map = new Map({
       container: 'map-container',
-      style: environment.maptilerStyleJson,
-      center: environment.mapView.center as LngLatLike,
-      zoom: environment.mapView.zoom,
-      pitch: environment.mapView.pitch,
+      style: this.config.styleUrl(),
+      center: this.config.view.center(),
+      zoom: this.config.view.zoom(),
+      pitch: this.config.view.pitch(),
       attributionControl: false,
     });
 
@@ -383,9 +383,6 @@ export class MapService {
       });
 
       this.addAerial();
-
-      // TODO: Remove this method when pmtiles basemap is tested and working
-      // this.addCustomBaseMap();
 
       this.addClickBehaviourToLayer(MapLayer.Stage);
       this.addClickBehaviourToLayer(MapLayer.Asset);
@@ -553,43 +550,6 @@ export class MapService {
   public filterLayer(layer: MapLayer, property: string, values: string[]) {
     const filter: FilterSpecification = ['in', property, ...values];
     this.map.setFilter(layer, filter);
-  }
-
-  // TODO: Remove this method when pmtiles basemap is tested and working
-  private addCustomBaseMap(): void {
-    this.map.addSource('custom-base-map', {
-      type: 'raster',
-      tiles: [
-        `https://api.maptiler.com/tiles/32951a70-ebdd-4640-a35b-b070263ab0ca/{z}/{x}/{y}.png?key=${environment.maptilerApiKey}`,
-      ],
-      tileSize: 256,
-      minzoom: 14,
-      bounds: [12.61504, 55.689367, 12.620842, 55.691206],
-    });
-
-    this.map.addLayer(
-      {
-        id: 'custom-base-map',
-        type: 'raster',
-        source: 'custom-base-map',
-        paint: {
-          'raster-opacity': [
-            'interpolate',
-            ['linear'],
-            ['zoom'],
-            14,
-            0,
-            15,
-            0.9,
-          ],
-        },
-        layout: {
-          visibility: 'visible',
-        },
-        minzoom: 14,
-      },
-      'label_road',
-    );
   }
 
   private addAerial(): void {

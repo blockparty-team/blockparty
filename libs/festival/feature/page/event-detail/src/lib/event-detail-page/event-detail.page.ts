@@ -12,7 +12,6 @@ import {
   MapLayer,
   RouteName,
 } from '@blockparty/festival/shared/types';
-import { environment } from '@shared/environments';
 import { ModalController } from '@ionic/angular/standalone';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
@@ -32,6 +31,7 @@ import {
   IonItem,
   IonRouterLink,
 } from '@ionic/angular/standalone';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 @Component({
   selector: 'app-event-detail',
@@ -66,6 +66,7 @@ export class EventDetailPage implements OnInit {
   private eventStateService = inject(EventStateService);
   private mapService = inject(MapService);
   private router = inject(Router);
+  private appConfig = inject(AppConfigService).appConfig.app;
 
   routeName = RouteName;
 
@@ -95,10 +96,8 @@ export class EventDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${event.name}`,
           title: 'Share',
-          text: `Check out ${event.name} event at ${
-            environment.festivalName
-          } running ${event.days.join(' and ')}`,
-          url: `${environment.appUrl}${this.router.url}`,
+          text: `Check out ${event.name} event at ${this.appConfig.name()} running ${event.days.join(' and ')}`,
+          url: `${this.appConfig.url()}${this.router.url}`,
         });
       }
     });

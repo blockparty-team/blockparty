@@ -24,13 +24,14 @@ import {
   EventWithRelations,
   EventsGroupedByType,
   TransformOptions,
+  AppConfig,
 } from '@blockparty/festival/shared/types';
 import {
   Database,
   Tables,
   Enums,
 } from '@blockparty/distortion/data-access/supabase';
-import { environment } from '@shared/environments';
+import { distortionEnv } from '@shared/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -46,8 +47,8 @@ export class SupabaseService {
     private platform: Platform,
   ) {
     this.supabase = createClient<Database>(
-      environment.supabaseUrl,
-      environment.supabaseAnonKey,
+      distortionEnv.supabaseUrl,
+      distortionEnv.supabaseAnonKey,
       {
         // auth: {
         //   storage: this.deviceStorage,
@@ -126,6 +127,18 @@ export class SupabaseService {
       map(
         (res) => res.data as Pick<Tables<'profile'>, 'username' | 'avatar_url'>,
       ),
+    );
+  }
+
+  get appConfig$(): Observable<AppConfig> {
+    return from(
+      this.supabase.from('app_config').select('config').limit(1).single(),
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+
+        return data.config;
+      }),
     );
   }
 
@@ -340,7 +353,7 @@ export class SupabaseService {
 
     // return data.publicUrl;
 
-    return `${environment.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
+    return `${distortionEnv.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
   }
 
   get mapIcons$(): Observable<Tables<'map_icon'>[]> {

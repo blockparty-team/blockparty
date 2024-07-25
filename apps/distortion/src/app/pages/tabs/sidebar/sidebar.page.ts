@@ -1,10 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, computed, inject, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { MenuController } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
-import { environment } from '@shared/environments';
 import { RouteName } from '@blockparty/festival/shared/types';
 import { NgFor, NgIf, AsyncPipe } from '@angular/common';
 import {
@@ -20,6 +19,7 @@ import {
   IonLabel,
   IonFooter,
 } from '@ionic/angular/standalone';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 interface NavigationItem {
   name: string;
@@ -53,8 +53,8 @@ export class SidebarPage implements OnInit {
   private authService = inject(AuthService);
   private router = inject(Router);
   private menu = inject(MenuController);
-
-  showLogin: boolean = environment.featureToggle.enableLogin;
+  public enableLogin =
+    inject(AppConfigService).appConfig.featureToggle.enableLogin;
 
   authenticated$: Observable<boolean>;
 
@@ -117,15 +117,12 @@ export class SidebarPage implements OnInit {
     // Hide profile menu item when login is disabled
   ]
     .filter((navItem) =>
-      !environment.featureToggle.enableLogin &&
-      navItem.routeName === RouteName.Profile
+      !this.enableLogin() && navItem.routeName === RouteName.Profile
         ? false
         : true,
     )
     .filter((navItem) =>
-      environment.production && navItem.routeName === RouteName.Settings
-        ? false
-        : true,
+      !isDevMode() && navItem.routeName === RouteName.Settings ? false : true,
     ); // Show settings menu item when not in production
 
   ngOnInit() {

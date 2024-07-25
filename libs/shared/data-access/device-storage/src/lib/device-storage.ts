@@ -12,7 +12,8 @@ export type StorageKeys =
   | 'eventsGroupedByType'
   | 'mapLayers'
   | 'mapIcons'
-  | 'mapTiles';
+  | 'mapTiles'
+  | 'appConfig';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +28,7 @@ export class DeviceStorageService {
 
   get(key: StorageKeys): Observable<any> {
     return from(Preferences.get({ key })).pipe(
-      map((prop) => prop.value ? JSON.parse(prop.value) : null)
+      map((prop) => (prop.value ? JSON.parse(prop.value) : null)),
     );
   }
 
