@@ -78,7 +78,7 @@
     "@nx/js": "19.5.1",
     "@nx/workspace": "19.5.1",
     "@schematics/angular": "18.1.1",
-    "@swc-node/register": "1.9.2",
+    "@swc-node/register": "1.10.9",
     "@swc/core": "1.5.7",
     "@swc/helpers": "0.5.12",
     "@types/aos": "^3.0.7",
