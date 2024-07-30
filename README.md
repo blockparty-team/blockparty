@@ -20,3 +20,28 @@ Supabase client id and key is loaded through the @blockparty/shared/environment 
 
 ### App config table (from Supabase)
 App config such as map, OneSignal, feature toggles and others are loaded from supabase the `app_config` table when app in initializing.
+
+
+```json
+{
+  "map": {
+    "view": {
+      "zoom": 11.5,
+      "pitch": 35,
+      "center": [
+        12.57632,
+        55.68215
+      ]
+    },
+    "styleUrl": "https://api.maptiler.com/maps/<MAPID>/style.json?key=<YOUR_KEY>"
+  },
+  "festival": {
+    "url": "http://localhost:8100",
+    "name": "Blockparty Festival"
+  },
+  "featureToggle": {
+    "enableLogin": false
+  },
+  "oneSignalAppId": "<ONE_SIGNAL_ID>"
+}
+```
