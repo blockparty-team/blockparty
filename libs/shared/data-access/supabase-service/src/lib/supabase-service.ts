@@ -31,7 +31,7 @@ import {
   Tables,
   Enums,
 } from '@blockparty/distortion/data-access/supabase';
-import { distortionEnv } from '@shared/environments';
+import { environment } from '@shared/environments';
 
 @Injectable({
   providedIn: 'root',
@@ -47,8 +47,8 @@ export class SupabaseService {
     private platform: Platform,
   ) {
     this.supabase = createClient<Database>(
-      distortionEnv.supabaseUrl,
-      distortionEnv.supabaseAnonKey,
+      environment.supabaseUrl,
+      environment.supabaseAnonKey,
       {
         // auth: {
         //   storage: this.deviceStorage,
@@ -353,7 +353,7 @@ export class SupabaseService {
 
     // return data.publicUrl;
 
-    return `${distortionEnv.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
+    return `${environment.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
   }
 
   get mapIcons$(): Observable<Tables<'map_icon'>[]> {

@@ -57,10 +57,9 @@
       "inputs": ["production", "^production"]
     }
   },
-  "nxCloudAccessToken": "NGY1NzYzOGMtOTBhOC00MzZmLWFhZjctNDgwNGNiNDg1YzQ0fHJlYWQtd3JpdGU=",
   "generators": {
     "@nx/angular:application": {
-      "style": "css",
+      "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "none"
@@ -70,7 +69,7 @@
       "unitTestRunner": "jest"
     },
     "@nx/angular:component": {
-      "style": "css"
+      "style": "scss"
     }
   },
   "workspaceLayout": {

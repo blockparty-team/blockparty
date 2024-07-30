@@ -41,7 +41,7 @@
         "production": {
           "fileReplacements": [
             {
-              "replace": "libs/shared/enviroments/src/lib/distortion.dev.ts",
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
               "with": "libs/shared/enviroments/src/lib/distortion.prod.ts"
             }
           ],
@@ -62,6 +62,12 @@
           ]
         },
         "development": {
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/distortion.dev.ts"
+            }
+          ],
           "optimization": false,
           "outputHashing": "all",
           "sourceMap": false,
