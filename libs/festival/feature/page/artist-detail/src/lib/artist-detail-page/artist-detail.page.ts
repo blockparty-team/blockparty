@@ -14,7 +14,6 @@ import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
-import { environment } from '@shared/environments';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { MusicPlayerComponent } from '@blockparty/festival/ui/music-player';
 import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
@@ -27,6 +26,7 @@ import {
   IonFabList,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 interface SoMeIcon {
   column: string;
@@ -78,6 +78,7 @@ export class ArtistDetailPage implements OnInit {
   artistStateService = inject(ArtistStateService);
   mapService = inject(MapService);
   routeHistoryService = inject(RouteHistoryService);
+  private appConfig = inject(AppConfigService).appConfig.app;
 
   artist$!: Observable<ArtistViewModel>;
   soMeLinks$!: Observable<SoMeIcon[]>;
@@ -152,12 +153,10 @@ export class ArtistDetailPage implements OnInit {
         Share.share({
           dialogTitle: `${artist.name}`,
           title: 'Share',
-          text: `${artist.name} is playing at ${
-            environment.festivalName
-          } ${artist.timetable
+          text: `${artist.name} is playing at ${this.appConfig.name()} ${artist.timetable
             .map((t) => t.day.name)
             .join(' and ')} - Check it out:`,
-          url: `${environment.appUrl}${this.router.url}`,
+          url: `${this.appConfig.url()}${this.router.url}`,
         });
       }
     });

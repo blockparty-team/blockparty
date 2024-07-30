@@ -25,7 +25,7 @@
     </ion-list>
   </ion-content>
 
-  <ion-footer class="login" *ngIf="showLogin">
+  <ion-footer class="login" *ngIf="enableLogin()">
     <ion-item (click)="signInOrOut()" button lines="none">
       <ion-icon
         [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"

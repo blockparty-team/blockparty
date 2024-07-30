@@ -19,10 +19,10 @@ import { addIcons } from 'ionicons';
 import { NotificationSchedulingService } from '@blockparty/festival/shared/service/notification-scheduling';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { RouteName } from '@blockparty/festival/shared/types';
-import { environment } from '@shared/environments';
 import { icons } from '@blockparty/festival/shared/icons';
 import { AppUpdateService } from '@blockparty/festival/shared/service/app-update';
 import { RefreshService } from '@blockparty/festival/shared/service/refresh';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 @Component({
   selector: 'app-root',
@@ -43,6 +43,7 @@ export class AppComponent implements OnInit {
   private notificationSchedulingService = inject(NotificationSchedulingService);
   private appUpdateService = inject(AppUpdateService);
   private refreshService = inject(RefreshService);
+  private featureToggle = inject(AppConfigService).appConfig.featureToggle;
 
   constructor() {
     this.setupAppUrlOpenListener();
@@ -109,7 +110,7 @@ export class AppComponent implements OnInit {
         this.router.navigateByUrl(`/${slug}`, { replaceUrl: true });
       });
 
-      if (environment.featureToggle.enableLogin) {
+      if (this.featureToggle.enableLogin()) {
         const access = openUrl.split('#access_token=').pop().split('&')[0];
         const refresh = openUrl.split('&refresh_token=').pop().split('&')[0];
 

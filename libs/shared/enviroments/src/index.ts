@@ -1,2 +1,1 @@
-export { environment } from './lib/environment';
-
+export * from './lib/environment';

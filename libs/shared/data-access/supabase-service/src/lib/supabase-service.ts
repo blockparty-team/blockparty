@@ -24,6 +24,7 @@ import {
   EventWithRelations,
   EventsGroupedByType,
   TransformOptions,
+  AppConfig,
 } from '@blockparty/festival/shared/types';
 import {
   Database,
@@ -126,6 +127,18 @@ export class SupabaseService {
       map(
         (res) => res.data as Pick<Tables<'profile'>, 'username' | 'avatar_url'>,
       ),
+    );
+  }
+
+  get appConfig$(): Observable<AppConfig> {
+    return from(
+      this.supabase.from('app_config').select('config').limit(1).single(),
+    ).pipe(
+      map(({ data, error }) => {
+        if (error) throw error;
+
+        return data.config;
+      }),
     );
   }
 

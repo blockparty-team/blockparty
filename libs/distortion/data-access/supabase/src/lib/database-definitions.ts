@@ -34,6 +34,24 @@ export type Database = {
   }
   public: {
     Tables: {
+      app_config: {
+        Row: {
+          config: Json | null
+          id: string
+          inserted_at: string
+        }
+        Insert: {
+          config?: Json | null
+          id?: string
+          inserted_at?: string
+        }
+        Update: {
+          config?: Json | null
+          id?: string
+          inserted_at?: string
+        }
+        Relationships: []
+      }
       artist: {
         Row: {
           apple_music: string | null
@@ -403,24 +421,24 @@ export type Database = {
           inserted_at: string
           name: string
           public: boolean | null
-          storage_path: string | null
-          style: Json | null
+          storage_path: string
+          style: Json
         }
         Insert: {
           id?: string
           inserted_at?: string
           name: string
           public?: boolean | null
-          storage_path?: string | null
-          style?: Json | null
+          storage_path: string
+          style: Json
         }
         Update: {
           id?: string
           inserted_at?: string
           name?: string
           public?: boolean | null
-          storage_path?: string | null
-          style?: Json | null
+          storage_path?: string
+          style?: Json
         }
         Relationships: []
       }
