@@ -12,7 +12,6 @@ export class CanLoadLoginGuard {
     inject(AppConfigService).appConfig.featureToggle.enableLogin;
 
   canLoad(route: Route) {
-    console.log('CanLoadLoginGuard.canLoad', this.enableLogin());
     if (this.enableLogin() === false) {
       switch (route.path) {
         case RouteName.Login:
