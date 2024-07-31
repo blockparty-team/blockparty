@@ -23,7 +23,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>distortion</string>
+				<string>studieby</string>
 			</array>
 		</dict>
 	</array>
