@@ -1,0 +1,186 @@
+{
+  "name": "studieby",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/studieby/src",
+  "projectType": "application",
+  "prefix": "app",
+  "generators": {},
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "options": {
+        "outputPath": "dist/apps/studieby",
+        "index": "apps/studieby/src/index.html",
+        "main": "apps/studieby/src/main.ts",
+        "polyfills": "apps/studieby/src/polyfills.ts",
+        "tsConfig": "apps/studieby/tsconfig.app.json",
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "apps/studieby/src/assets",
+            "output": "assets"
+          },
+          "apps/studieby/src/manifest.webmanifest",
+          "apps/studieby/src/OneSignalSDKWorker.js"
+        ],
+        "styles": [
+          "apps/studieby/src/global.scss",
+          "apps/studieby/src/theme/variables.scss"
+        ],
+        "scripts": [],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true,
+        "serviceWorker": false,
+        "ngswConfigPath": "ngsw-config.json"
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/studieby.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "10mb",
+              "maximumError": "15mb"
+            }
+          ]
+        },
+        "development": {
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/studieby.dev.ts"
+            }
+          ],
+          "optimization": false,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "10mb",
+              "maximumError": "15mb"
+            }
+          ]
+        },
+        "ci": {
+          "progress": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "studieby:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "studieby:build:production"
+        },
+        "development": {
+          "buildTarget": "studieby:build:development"
+        },
+        "ci": {
+          "progress": false
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "studieby:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "apps/studieby/src/test.ts",
+        "polyfills": "apps/studieby/src/polyfills.ts",
+        "tsConfig": "apps/studieby/tsconfig.spec.json",
+        "karmaConfig": "apps/studieby/karma.conf.js",
+        "styles": [],
+        "scripts": [],
+        "assets": [
+          {
+            "glob": "favicon.ico",
+            "input": "apps/studieby/src/",
+            "output": "/"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/studieby/src/assets",
+            "output": "/assets"
+          },
+          "apps/studieby/src/manifest.webmanifest",
+          "apps/studieby/src/OneSignalSDKWorker.js"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "progress": false,
+          "watch": false
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
+    },
+    "build-sync-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/studieby/",
+        "commands": [
+          "npx nx run studieby:build --configuration=production",
+          "npx cap sync"
+        ],
+        "parallel": false
+      }
+    },
+    "build-sync-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/studieby/",
+        "commands": ["npx nx run studieby:build", "npx cap sync"],
+        "parallel": false
+      }
+    },
+    "open-xcode": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/studieby/",
+        "command": "npx cap open ios"
+      }
+    },
+    "open-android-studio": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/studieby/",
+        "command": "npx cap open android"
+      }
+    }
+  }
+}
