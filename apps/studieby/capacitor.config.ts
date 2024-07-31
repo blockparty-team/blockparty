@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'dev.blockparty.studieby',
-  appName: 'Tour de Chanmbre',
+  appName: 'Tour de Chambre',
   webDir: '../../dist/apps/studieby',
   plugins: {
     LocalNotifications: {
