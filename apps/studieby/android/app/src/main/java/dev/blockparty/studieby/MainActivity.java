@@ -1,4 +1,4 @@
-package dk.cphdistortion.app;
+package dev.blockparty.studieby;
 
 import com.getcapacitor.BridgeActivity;
 
