@@ -1,80 +1,185 @@
 {
-  "name": "Studieby",
+  "name": "distortion",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/distortion/src",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/studieby/src",
-  "tags": [],
+  "generators": {},
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@angular-devkit/build-angular:browser",
       "options": {
-        "outputPath": "dist/apps/studieby",
-        "index": "apps/studieby/src/index.html",
-        "browser": "apps/studieby/src/main.ts",
-        "polyfills": ["zone.js"],
-        "tsConfig": "apps/studieby/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
+        "outputPath": "dist/apps/distortion",
+        "index": "apps/distortion/src/index.html",
+        "main": "apps/distortion/src/main.ts",
+        "polyfills": "apps/distortion/src/polyfills.ts",
+        "tsConfig": "apps/distortion/tsconfig.app.json",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/studieby/public"
-          }
+            "input": "apps/distortion/src/assets",
+            "output": "assets"
+          },
+          "apps/distortion/src/manifest.webmanifest",
+          "apps/distortion/src/OneSignalSDKWorker.js"
         ],
-        "styles": ["apps/studieby/src/styles.scss"],
-        "scripts": []
+        "styles": [
+          "apps/distortion/src/global.scss",
+          "apps/distortion/src/theme/variables.scss"
+        ],
+        "scripts": [],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true,
+        "serviceWorker": false,
+        "ngswConfigPath": "ngsw-config.json"
       },
       "configurations": {
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/distortion.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
-            {
-              "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "maximumWarning": "10mb",
+              "maximumError": "15mb"
             }
-          ],
-          "outputHashing": "all"
+          ]
         },
         "development": {
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/distortion.dev.ts"
+            }
+          ],
           "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "10mb",
+              "maximumError": "15mb"
+            }
+          ]
+        },
+        "ci": {
+          "progress": false
         }
-      },
-      "defaultConfiguration": "production"
+      }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "buildTarget": "distortion:build"
+      },
       "configurations": {
         "production": {
-          "buildTarget": "Studieby:build:production"
+          "buildTarget": "distortion:build:production"
         },
         "development": {
-          "buildTarget": "Studieby:build:development"
+          "buildTarget": "distortion:build:development"
+        },
+        "ci": {
+          "progress": false
         }
-      },
-      "defaultConfiguration": "development"
+      }
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "Studieby:build"
+        "buildTarget": "distortion:build"
+      }
+    },
+    "test": {
+      "executor": "@angular-devkit/build-angular:karma",
+      "options": {
+        "main": "apps/distortion/src/test.ts",
+        "polyfills": "apps/distortion/src/polyfills.ts",
+        "tsConfig": "apps/distortion/tsconfig.spec.json",
+        "karmaConfig": "apps/distortion/karma.conf.js",
+        "styles": [],
+        "scripts": [],
+        "assets": [
+          {
+            "glob": "favicon.ico",
+            "input": "apps/distortion/src/",
+            "output": "/"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/distortion/src/assets",
+            "output": "/assets"
+          },
+          "apps/distortion/src/manifest.webmanifest",
+          "apps/distortion/src/OneSignalSDKWorker.js"
+        ]
+      },
+      "configurations": {
+        "ci": {
+          "progress": false,
+          "watch": false
+        }
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
-    },
-    "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/eslint:lint",
       "options": {
-        "jestConfig": "apps/studieby/jest.config.ts"
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
+    },
+    "build-sync-prod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "commands": [
+          "npx nx run distortion:build --configuration=production",
+          "npx cap sync"
+        ],
+        "parallel": false
+      }
+    },
+    "build-sync-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "commands": ["npx nx run distortion:build", "npx cap sync"],
+        "parallel": false
+      }
+    },
+    "open-xcode": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "command": "npx cap open ios"
+      }
+    },
+    "open-android-studio": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "command": "npx cap open android"
       }
     }
   }
