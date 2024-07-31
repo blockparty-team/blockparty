@@ -1,9 +1,9 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'dk.cphdistortion.app',
-  appName: 'Distortion',
-  webDir: '../../dist/apps/distortion',
+  appId: 'dev.blockparty.studieby',
+  appName: 'Tour de Chanmbre',
+  webDir: '../../dist/apps/studieby',
   plugins: {
     LocalNotifications: {
       smallIcon: 'ic_launcher',
@@ -11,8 +11,8 @@ const config: CapacitorConfig = {
     },
   },
   ios: {
-    handleApplicationNotifications: false
-  }
+    handleApplicationNotifications: false,
+  },
 };
 
 export default config;
