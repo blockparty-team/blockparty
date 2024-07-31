@@ -1,0 +1,29 @@
+{
+  "name": "supabase-studieby",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/studieby/data-access/supabase/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/studieby/data-access/supabase",
+        "main": "libs/studieby/data-access/supabase/src/index.ts",
+        "tsConfig": "libs/studieby/data-access/supabase/tsconfig.lib.json",
+        "assets": []
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/studieby/data-access/supabase/jest.config.ts"
+      }
+    }
+  }
+}

@@ -163,6 +163,9 @@
       "@blockparty/util/file": ["libs/festival/util/file/src/index.ts"],
       "@distortion/*": ["apps/distortion/src/*"],
       "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
+      "@studieby/data-access/supabase": [
+        "libs/studieby/data-access/supabase/src/index.ts"
+      ],
       "@tweak/*": ["apps/tweak/src/app/*"],
       "libs/tweak/shared/image-cropper": [
         "libs/tweak/shared/image-cropper/src/index.ts"
