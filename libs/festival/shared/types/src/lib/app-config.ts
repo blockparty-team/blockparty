@@ -1,3 +1,6 @@
+export type TimetableMode = 'gantt' | 'list';
+export type ListMode = 'byStage' | 'byTime';
+
 export type AppConfig = {
   app: {
     name: string;
@@ -11,6 +14,11 @@ export type AppConfig = {
     };
     styleUrl: string;
   };
+  timetable: {
+    mode: TimetableMode;
+    listMode: ListMode;
+  };
+  dayChangeDelay: number;
   supabase: {
     url: string;
     anonKey: string;
@@ -18,5 +26,10 @@ export type AppConfig = {
   oneSignalAppId: string;
   featureToggle: {
     enableLogin: boolean;
+  };
+  eventFilter: {
+    showDays: boolean;
+    showEventTypes: boolean;
+    showEvents: boolean;
   };
 };

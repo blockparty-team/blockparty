@@ -60,11 +60,15 @@ export class EventFilterStateService {
   ).pipe(
     filter((days) => !!days),
     tap((days: DayEvent[]) => {
-      // Change day at 7am next day (for events running during nighttime)
-      const now = sub(new Date(), { hours: 7 });
-      const day = days.find((day) => isSameDay(now, new Date(day.day)));
+      if (days.length === 1) {
+        this.selectDay(days[0].id);
+      } else {
+        // Change day at 7am next day (for events running during nighttime)
+        const now = sub(new Date(), { hours: 7 });
+        const day = days.find((day) => isSameDay(now, new Date(day.day)));
 
-      if (day) this.selectDay(day.id);
+        if (day) this.selectDay(day.id);
+      }
     }),
     shareReplay(1),
   );

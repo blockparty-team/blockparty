@@ -1,5 +1,5 @@
 @switch (selectedListViewMode()) {
-  @case (viewMode.ByStage) {
+  @case ('byStage') {
     @if (timetableByStage$ | async; as timetableByStage) {
       <ion-list>
         <ion-item-group *ngFor="let stage of timetableByStage">
@@ -37,7 +37,7 @@
       </ion-list>
     }
   }
-  @case (viewMode.ByTime) {
+  @case ('byTime') {
     @if (timetableByTime$ | async; as timetableByTime) {
       <ion-list>
         <ion-item *ngFor="let artist of timetableByTime">
@@ -85,10 +85,10 @@
     [value]="selectedListViewMode()"
     [@slideLeft]
   >
-    <ion-segment-button [value]="viewMode.ByStage">
+    <ion-segment-button [value]="'byStage'">
       <ion-label>By stage</ion-label>
     </ion-segment-button>
-    <ion-segment-button [value]="viewMode.ByTime">
+    <ion-segment-button [value]="'byTime'">
       <ion-label>By time</ion-label>
     </ion-segment-button>
   </ion-segment>

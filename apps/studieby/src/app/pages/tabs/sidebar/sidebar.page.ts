@@ -60,59 +60,19 @@ export class SidebarPage implements OnInit {
 
   navigationItems: NavigationItem[] = [
     {
-      name: 'Tickets',
-      icon: 'ticket-outline',
-      routeName: RouteName.Tickets,
-    },
-    {
-      name: 'Events',
-      icon: 'musical-notes-outline',
-      routeName: RouteName.Event,
-    },
-    // {
-    //   name: 'Playlists',
-    //   icon: 'play-outline',
-    //   routeName: RouteName.Playlists
-    // },
-    // {
-    //   name: 'Sponsors & Partners',
-    //   icon: 'rocket-outline',
-    //   routeName: RouteName.Partners
-    // },
-    // {
-    //   name: 'Merch',
-    //   icon: 'cash-outline',
-    //   routeName: RouteName.Merch
-    // },
-    // {
-    //   name: 'Transport',
-    //   icon: 'car-outline',
-    //   routeName: RouteName.Transport,
-    // },
-    {
-      name: 'Gadearmbånd - support us!',
-      icon: 'thumbs-up-outline',
-      routeName: RouteName.Gadearmbaand,
-    },
-    {
       name: 'About',
       icon: 'information-circle-outline',
       routeName: RouteName.About,
     },
     {
-      name: 'Settings',
-      icon: 'settings-outline',
-      routeName: RouteName.Settings,
+      name: 'Accessibility',
+      icon: 'accessibility-outline',
+      routeName: RouteName.Accessibility,
     },
     {
       name: 'Search',
       icon: 'search',
       routeName: RouteName.Search,
-    },
-    {
-      name: 'Profile',
-      icon: 'person-circle-outline',
-      routeName: RouteName.Profile,
     },
     // Hide profile menu item when login is disabled
   ]

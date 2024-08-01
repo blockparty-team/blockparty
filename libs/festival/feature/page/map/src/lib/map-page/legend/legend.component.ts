@@ -5,7 +5,6 @@ import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
-// import { SafePipe } from '@distortion/app/shared/pipes/safe.pipe';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
   IonHeader,

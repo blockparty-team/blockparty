@@ -9,8 +9,8 @@ import {
 
 import { RouteReuseStrategy, provideRouter } from '@angular/router';
 
-import { AppComponent } from '@distortion/app/app.component';
-import { ROUTES } from '@distortion/app/routes';
+import { AppComponent } from './app/app.component';
+import { ROUTES } from './app/routes';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 function configFactory(configService: AppConfigService): () => void {
