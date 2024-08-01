@@ -18,6 +18,10 @@ const initialAppConfig: AppConfig = {
     },
     styleUrl: '',
   },
+  timetable: {
+    mode: 'gantt',
+    listMode: 'byStage',
+  },
   supabase: {
     url: '',
     anonKey: '',

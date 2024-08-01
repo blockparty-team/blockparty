@@ -1,15 +1,16 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnDestroy,
+  DestroyRef,
   OnInit,
   inject,
+  signal,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { isSameDay, sub } from 'date-fns';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
 import { NgIf, AsyncPipe } from '@angular/common';
@@ -21,8 +22,8 @@ import {
   IonFabButton,
   IonIcon,
 } from '@ionic/angular/standalone';
-
-type TimeTableViewMode = 'gantt' | 'list';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-timetable',
@@ -44,14 +45,13 @@ type TimeTableViewMode = 'gantt' | 'list';
     IonIcon,
   ],
 })
-export class TimetablePage implements OnInit, OnDestroy {
+export class TimetablePage implements OnInit {
   private eventFilterStateService = inject(EventFilterStateService);
+  private timetableConfig = inject(AppConfigService).appConfig.timetable;
+  private destroyRef = inject(DestroyRef);
 
-  private _timetableViewMode$ = new BehaviorSubject<TimeTableViewMode>('gantt');
-  timetableViewMode$: Observable<TimeTableViewMode> =
-    this._timetableViewMode$.asObservable();
-
-  private abandon$ = new Subject<void>();
+  private _timetableMode = signal(this.timetableConfig.mode());
+  timetableMode = this._timetableMode.asReadonly();
 
   ngOnInit(): void {
     // Default select first day, event type and event
@@ -68,7 +68,7 @@ export class TimetablePage implements OnInit, OnDestroy {
             this.eventFilterStateService.selectDay(days[0].id);
           }
         }),
-        takeUntil(this.abandon$),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
 
@@ -77,7 +77,7 @@ export class TimetablePage implements OnInit, OnDestroy {
         tap((eventTypes) =>
           this.eventFilterStateService.selectEventType(eventTypes[0].id),
         ),
-        takeUntil(this.abandon$),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
 
@@ -85,19 +85,14 @@ export class TimetablePage implements OnInit, OnDestroy {
       .pipe(
         filter((events) => !!events),
         tap((events) => this.eventFilterStateService.selectEvent(events[0].id)),
-        takeUntil(this.abandon$),
+        takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }
 
-  ngOnDestroy(): void {
-    this.abandon$.next();
-    this.abandon$.complete();
-  }
-
   onToggleTimetableView(): void {
-    this._timetableViewMode$.value === 'gantt'
-      ? this._timetableViewMode$.next('list')
-      : this._timetableViewMode$.next('gantt');
+    this.timetableMode() === 'gantt'
+      ? this._timetableMode.set('list')
+      : this._timetableMode.set('gantt');
   }
 }

@@ -32,6 +32,7 @@ import {
   IonRouterLink,
 } from '@ionic/angular/standalone';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 enum ListViewMode {
   ByTime = 'byTime',
@@ -68,6 +69,7 @@ export class TimetableListComponent {
   private eventFilterStateService = inject(EventFilterStateService);
   private timetableStateService = inject(TimetableStateService);
   private favoriteStateService = inject(FavoriteStateService);
+  private timetableConfig = inject(AppConfigService).appConfig.timetable;
 
   private event$ = combineLatest([
     this.timetableStateService.timetableWithFavorites$,
@@ -108,9 +110,8 @@ export class TimetableListComponent {
     this.event$.pipe(map((event) => event?.stages ?? null));
 
   public routeName = RouteName;
-  public viewMode = ListViewMode;
 
-  public selectedListViewMode = signal<ListViewMode>(ListViewMode.ByStage);
+  public selectedListViewMode = signal(this.timetableConfig.listMode());
 
   onChangeListViewMode(event: SegmentCustomEvent): void {
     const mode = event.detail.value as ListViewMode;

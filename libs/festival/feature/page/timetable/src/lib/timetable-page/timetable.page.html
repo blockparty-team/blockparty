@@ -3,17 +3,16 @@
 </ion-header>
 
 <ion-content #content>
-  <ng-container *ngIf="(timetableViewMode$ | async) === 'gantt'">
-    <app-timetable-gantt></app-timetable-gantt>
-  </ng-container>
-  <ng-container *ngIf="(timetableViewMode$ | async) === 'list'">
-    <app-timetable-list></app-timetable-list>
-  </ng-container>
+  @if (timetableMode() === 'gantt') {
+  <app-timetable-gantt></app-timetable-gantt>
+  } @else {
+  <app-timetable-list></app-timetable-list>
+  }
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button (click)="onToggleTimetableView()" color="secondary">
       <ion-icon
-        [name]="(timetableViewMode$ | async) === 'list' ? 'calendar-outline' : 'list'"
+        [name]="timetableMode() === 'list' ? 'calendar-outline' : 'list'"
       ></ion-icon>
       <!-- <ion-icon src="assets/ui-icons/gantt.svg"></ion-icon> -->
     </ion-fab-button>

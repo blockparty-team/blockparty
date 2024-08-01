@@ -1,3 +1,6 @@
+export type TimetableMode = 'gantt' | 'list';
+export type ListMode = 'byStage' | 'byTime';
+
 export type AppConfig = {
   app: {
     name: string;
@@ -10,6 +13,10 @@ export type AppConfig = {
       pitch: number;
     };
     styleUrl: string;
+  };
+  timetable: {
+    mode: TimetableMode;
+    listMode: ListMode;
   };
   supabase: {
     url: string;
