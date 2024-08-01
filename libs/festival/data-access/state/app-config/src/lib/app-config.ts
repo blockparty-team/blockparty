@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AppConfig } from '@blockparty/festival/shared/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
@@ -29,6 +29,12 @@ const initialAppConfig: AppConfig = {
   oneSignalAppId: '',
   featureToggle: {
     enableLogin: false,
+  },
+  dayChangeDelay: 0,
+  eventFilter: {
+    showDays: true,
+    showEventTypes: true,
+    showEvents: true,
   },
 };
 

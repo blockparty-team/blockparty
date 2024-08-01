@@ -18,6 +18,7 @@ export type AppConfig = {
     mode: TimetableMode;
     listMode: ListMode;
   };
+  dayChangeDelay: number;
   supabase: {
     url: string;
     anonKey: string;
@@ -25,5 +26,10 @@ export type AppConfig = {
   oneSignalAppId: string;
   featureToggle: {
     enableLogin: boolean;
+  };
+  eventFilter: {
+    showDays: boolean;
+    showEventTypes: boolean;
+    showEvents: boolean;
   };
 };

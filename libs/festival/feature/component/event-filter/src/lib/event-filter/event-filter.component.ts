@@ -8,6 +8,7 @@ import {
   IonSegmentButton,
   IonLabel,
 } from '@ionic/angular/standalone';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 @Component({
   selector: 'app-event-filter',
@@ -28,6 +29,7 @@ import {
 })
 export class EventFilterComponent {
   private eventFilterStateService = inject(EventFilterStateService);
+  public filterConfig = inject(AppConfigService).appConfig.eventFilter;
 
   days$ = this.eventFilterStateService.days$;
   eventTypes$ = this.eventFilterStateService.eventTypes$;
