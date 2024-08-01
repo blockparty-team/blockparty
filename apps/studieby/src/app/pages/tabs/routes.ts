@@ -15,7 +15,7 @@ export const routes: Route[] = [
       },
       {
         path: RouteName.Artist,
-        title: 'Artist',
+        title: 'Venue',
         children: [
           {
             path: '',

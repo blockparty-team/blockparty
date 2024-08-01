@@ -14,4 +14,5 @@ export enum RouteName {
   Favorite = 'favorite',
   Transport = 'transport',
   Gadearmbaand = 'gadearmbaand',
+  Accessibility = 'accessibility',
 }

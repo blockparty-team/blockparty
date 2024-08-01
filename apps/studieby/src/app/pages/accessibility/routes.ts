@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import { GadearmbaandPage } from './gadearmbaand.page';
+import { AccessibilityPage } from './accessibility.page';
 
 export const routes: Route[] = [
   {
     path: '',
-    component: GadearmbaandPage,
+    component: AccessibilityPage,
   },
 ];
