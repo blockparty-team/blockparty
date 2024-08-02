@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
 
     Device.getInfo().then((info) => {
       if (info.platform !== 'web') {
-        StatusBar.setBackgroundColor({ color: '#0013C7' });
+        StatusBar.setBackgroundColor({ color: '#2d2439' });
       }
     });
 
