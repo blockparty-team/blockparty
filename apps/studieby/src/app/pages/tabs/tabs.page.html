@@ -2,35 +2,35 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button [tab]="routeName.Map">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Map ? 'location' : 'location-outline'"
+        [src]="(currentTab$ | async) === tabName.Map ? 'assets/ui-icons/map-fill.svg' : 'assets/ui-icons/map-outline.svg'"
       ></ion-icon>
       <ion-label>Map</ion-label>
     </ion-tab-button>
 
     <ion-tab-button [tab]="routeName.Artist">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Artist ? 'musical-notes' : 'musical-notes-outline'"
+        [src]="(currentTab$ | async) === tabName.Artist ? 'assets/ui-icons/venues-fill.svg' : 'assets/ui-icons/venues-outline.svg'"
       ></ion-icon>
       <ion-label>Venues</ion-label>
     </ion-tab-button>
 
     <ion-tab-button [tab]="routeName.Timetable">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Timetable ? 'calendar' : 'calendar-outline'"
+        [src]="(currentTab$ | async) === tabName.Timetable ? 'assets/ui-icons/programme-fill.svg' : 'assets/ui-icons/programme-outline.svg'"
       ></ion-icon>
       <ion-label>Programme</ion-label>
     </ion-tab-button>
 
     <ion-tab-button [tab]="routeName.Favorite">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Favorite ? 'heart' : 'heart-outline'"
+        [src]="(currentTab$ | async) === tabName.Favorite ? 'assets/ui-icons/favorite-fill.svg' : 'assets/ui-icons/favorite-outline.svg'"
       ></ion-icon>
       <ion-label>Favorites</ion-label>
     </ion-tab-button>
 
     <ion-tab-button (click)="openSidebar()">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Favorite ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'"
+        [src]="(currentTab$ | async) === tabName.More ? 'assets/ui-icons/more-fill.svg' : 'assets/ui-icons/more-outline.svg'"
       ></ion-icon>
       <ion-label>More</ion-label>
     </ion-tab-button>
