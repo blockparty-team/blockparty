@@ -91,12 +91,12 @@
             </ng-container>
             {{act.stage.name}}
           </span>
-          <ion-fab-button size="small" color="secondary">
-            <ion-icon
-              name="map-outline"
-              (click)="goToStageOnMap(act.stage.geom)"
-            >
-            </ion-icon>
+          <ion-fab-button
+            size="small"
+            color="secondary"
+            (click)="goToStageOnMap(act.stage.geom)"
+          >
+            <ion-icon name="map-outline"> </ion-icon>
           </ion-fab-button>
         </div>
       </div>

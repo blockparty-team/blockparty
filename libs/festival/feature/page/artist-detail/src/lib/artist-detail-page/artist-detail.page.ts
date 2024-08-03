@@ -140,7 +140,7 @@ export class ArtistDetailPage implements OnInit {
 
   goToStageOnMap(geom: any): void {
     this.router.navigate(['tabs', RouteName.Map]);
-    this.mapService.flyTo(geom.coordinates);
+    setTimeout(() => this.mapService.flyTo(geom.coordinates), 50);
   }
 
   openUrl(url: string): void {
