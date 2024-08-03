@@ -29,12 +29,12 @@
 @import 'maplibre-gl/dist/maplibre-gl.css';
 
 // Font
-@import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,400;0,700;1,400;1,700&display=swap');
 
 h1,
 h2,
 h3 {
-  font-family: 'Anuphan', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .maplibregl-ctrl-group button {
