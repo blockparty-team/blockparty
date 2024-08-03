@@ -261,7 +261,6 @@ export class MapService {
         id: MapLayer.Stage,
         type: 'symbol',
         source: MapSource.Stage,
-        minzoom: 11,
         layout: {
           'text-field': ['get', 'name'],
           'text-offset': [0, 0.5],
@@ -274,8 +273,8 @@ export class MapService {
             'interpolate',
             ['linear'],
             ['zoom'],
-            11,
-            0.01,
+            10,
+            0.03,
             15,
             0.2,
             17,
@@ -292,7 +291,6 @@ export class MapService {
           'text-halo-color': getCssVariable('--ion-background-color'),
           'text-halo-width': 3,
           'icon-halo-blur': 10,
-          'icon-opacity': ['interpolate', ['linear'], ['zoom'], 11, 0, 12, 1],
           'text-opacity': [
             'interpolate',
             ['linear'],
