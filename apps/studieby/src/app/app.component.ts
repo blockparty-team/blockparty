@@ -104,7 +104,7 @@ export class AppComponent implements OnInit {
       const openUrl = urlData.url;
 
       // url scheme "distortion://" is used for native app.
-      const slug = openUrl.split('distortion://').pop();
+      const slug = openUrl.split('studieby://').pop();
 
       this.zone.run(() => {
         this.router.navigateByUrl(`/${slug}`, { replaceUrl: true });
