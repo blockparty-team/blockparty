@@ -103,7 +103,6 @@ export class AppComponent implements OnInit {
     App.addListener('appUrlOpen', async (urlData: URLOpenListenerEvent) => {
       const openUrl = urlData.url;
 
-      // url scheme "distortion://" is used for native app.
       const slug = openUrl.split('studieby://').pop();
 
       this.zone.run(() => {
