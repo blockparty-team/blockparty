@@ -153,10 +153,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/studieby/",
-        "commands": [
-          "npx nx run studieby:build --configuration=production",
-          "npx cap sync"
-        ],
+        "commands": ["nx run studieby:build:production", "npx cap sync"],
         "parallel": false
       }
     },
