@@ -41,7 +41,7 @@ export class MapService {
 
       this.map.resize();
 
-      this.addAerial();
+      // this.addAerial();
       this.addCustomBaseMap();
       this.addMapData();
 
@@ -98,7 +98,7 @@ export class MapService {
           {
             ...feature.properties,
             // MapLibre automaticly stringifies nested objects in geojson properties.
-            // Since stages has timetables and tickets properties represented as objects, 
+            // Since stages has timetables and tickets properties represented as objects,
             // these are parsed to get the back to original objects.
             timetables: JSON.parse(feature.properties.timetables),
             tickets: feature.properties.tickets ? JSON.parse(feature.properties.tickets) : null,
@@ -185,7 +185,7 @@ export class MapService {
     this.map.addSource('custom-base-map', {
       "type": "raster",
       "tiles": [
-        `https://api.maptiler.com/tiles/0e73b874-eea7-4d49-afb7-6291e7744f2a/{z}/{x}/{y}.png?key=${environment.maptilerApiKey}`
+        `https://api.maptiler.com/tiles/32951a70-ebdd-4640-a35b-b070263ab0ca/{z}/{x}/{y}.png?key=${environment.maptilerApiKey}`
       ],
       tileSize: 256,
       minzoom: 14,
@@ -366,6 +366,24 @@ export class MapService {
         });
 
         this.map.addLayer({
+          id: MapLayer.AssetIcon,
+          type: 'symbol',
+          source: MapSource.Asset,
+          minzoom: 15,
+          layout: {
+            'icon-anchor': 'bottom',
+            'icon-image': ['get', 'icon'],
+            'icon-size': [
+              'interpolate', ['linear'], ['zoom'],
+              15, 0,
+              16, 0.5,
+              20, 1
+            ],
+            'icon-allow-overlap': true
+          }
+        });
+
+        this.map.addLayer({
           id: MapLayer.Stage,
           type: 'symbol',
           source: MapSource.Stage,
@@ -406,25 +424,6 @@ export class MapService {
             ]
           }
         });
-
-        this.map.addLayer({
-          id: MapLayer.AssetIcon,
-          type: 'symbol',
-          source: MapSource.Asset,
-          minzoom: 15,
-          layout: {
-            'icon-anchor': 'bottom',
-            'icon-image': ['get', 'icon'],
-            'icon-size': [
-              'interpolate', ['linear'], ['zoom'],
-              15, 0,
-              16, 0.5,
-              20, 1
-            ],
-            'icon-allow-overlap': true
-          }
-        });
-
       })
     );
   }

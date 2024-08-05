@@ -11,7 +11,7 @@ export const environment: Environment = {
   mapView: {
     center: [12.618371, 55.690323],
     zoom: 15.5,
-    pitch: 0
+    pitch: 35
   },
   oneSignalAppId: '663546ff-5912-40a5-885b-e77fdeb9dc82',
   featureToggle: {
