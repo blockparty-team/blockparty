@@ -41,7 +41,7 @@
     "@capawesome/capacitor-app-update": "6.0.0",
     "@ionic/angular": "^8.2.5",
     "@ngrx/signals": "^18.0.0-rc.3",
-    "@supabase/supabase-js": "2.44.4",
+    "@supabase/supabase-js": "2.45.0",
     "aos": "^3.0.0-beta.6",
     "date-fns": "3.6.0",
     "geojson": "^0.5.0",
