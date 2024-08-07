@@ -65,11 +65,6 @@ export class SidebarPage implements OnInit {
       routeName: RouteName.About,
     },
     {
-      name: 'Accessibility',
-      icon: 'accessibility-outline',
-      routeName: RouteName.Accessibility,
-    },
-    {
       name: 'Search',
       icon: 'search',
       routeName: RouteName.Search,
