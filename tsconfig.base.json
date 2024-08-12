@@ -157,6 +157,9 @@
       "@blockparty/shared/service/geolocation": [
         "libs/shared/service/geolocation/src/index.ts"
       ],
+      "@blockparty/studieby/feature/page/timetable": [
+        "libs/studieby/feature/page/timetable/src/index.ts"
+      ],
       "@blockparty/util/animation": [
         "libs/festival/util/animation/src/index.ts"
       ],

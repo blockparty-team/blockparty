@@ -37,7 +37,7 @@ export const routes: Route[] = [
         path: RouteName.Timetable,
         title: 'Timetable',
         loadChildren: () =>
-          import('@blockparty/festival/feature/page/timetable').then(
+          import('@blockparty/studieby/feature/page/timetable').then(
             (m) => m.routes,
           ),
       },

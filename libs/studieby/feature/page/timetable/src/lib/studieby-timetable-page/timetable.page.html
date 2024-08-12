@@ -1,0 +1,20 @@
+<ion-header>
+  <app-event-filter></app-event-filter>
+</ion-header>
+
+<ion-content #content>
+  @if (timetableMode() === 'gantt') {
+  <app-timetable-gantt></app-timetable-gantt>
+  } @else {
+  <app-timetable-list></app-timetable-list>
+  }
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="onToggleTimetableView()" color="secondary">
+      <ion-icon
+        [name]="timetableMode() === 'list' ? 'calendar-outline' : 'list'"
+      ></ion-icon>
+      <!-- <ion-icon src="assets/ui-icons/gantt.svg"></ion-icon> -->
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
