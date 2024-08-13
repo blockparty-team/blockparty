@@ -4,7 +4,7 @@ import {
   ViewChild,
   inject,
 } from '@angular/core';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistViewModel } from '@blockparty/festival/shared/types';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -59,8 +59,6 @@ export class ArtistPage {
 
   @ViewChild(IonSearchbar) searchElement!: IonSearchbar;
 
-  showSearch$ = new BehaviorSubject(false);
-
   searchTerm = new FormControl('');
 
   filteredArtists$: Observable<ArtistViewModel[]> = combineLatest([
@@ -71,26 +69,12 @@ export class ArtistPage {
     filter(([artists, ,]) => !!artists),
     map(([artists, term]) =>
       artists
-        // Only show visible artist but include all on search
-        .filter((artist) => (!!term ? true : artist.is_visible))
+        .filter((artist) => artist.is_visible)
         .filter((artist) =>
           artist.name!.toLowerCase().includes(term!.toLowerCase()),
         ),
     ),
   );
-
-  toggleSearch(): void {
-    this.showSearch$.next(!this.showSearch$.value);
-
-    // reset filter when search is removed and focus if shown
-    if (!this.showSearch$.value) {
-      this.searchTerm.setValue('');
-    } else {
-      setTimeout(() => {
-        this.searchElement.setFocus();
-      }, 150);
-    }
-  }
 
   toggleFavorite(id: string): void {
     this.artistStateService.toggleArtistFavorite(id);
