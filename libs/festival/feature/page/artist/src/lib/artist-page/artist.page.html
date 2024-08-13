@@ -1,21 +1,11 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="end">
-      <ion-button (click)="toggleSearch()">
-        <ion-icon slot="icon-only" name="search"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title class="ion-text-center">Artists</ion-title>
-  </ion-toolbar>
-  <ion-toolbar *ngIf="showSearch$ | async">
-    <ion-searchbar
-      mode="ios"
-      debounce="0"
-      [formControl]="searchTerm"
-      animated="true"
-    >
-    </ion-searchbar>
-  </ion-toolbar>
+  <ion-searchbar
+    mode="ios"
+    debounce="0"
+    [formControl]="searchTerm"
+    animated="true"
+  >
+  </ion-searchbar>
 </ion-header>
 
 <ion-content id="main" class="artist-list">
