@@ -99,7 +99,6 @@ export class TimetablePage implements OnInit {
       });
     }),
     shareReplay(1),
-    tap(console.log),
   );
 
   ngOnInit(): void {

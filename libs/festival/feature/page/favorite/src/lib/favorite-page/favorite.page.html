@@ -60,9 +60,10 @@
                 {{artist.timetable[0]?.end_time | date:'HH:mm'}}
               </span>
             </h3>
-            <p *ngIf="artist.timetable[0] as timetable">
-              {{timetable.stage.event.name}} | {{timetable.stage.name}}
-            </p>
+            @if (artist.timetable[0]; as timetable) { @if
+            (!appConfig().simpleLabel) {
+            <p>{{timetable.stage.event.name}} | {{timetable.stage.name}}</p>
+            } }
           </ion-label>
 
           <div slot="end" (click)="toggleFavorite(artist.id!)">

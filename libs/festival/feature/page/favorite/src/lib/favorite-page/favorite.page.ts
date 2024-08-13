@@ -26,6 +26,7 @@ import {
   IonItem,
   IonRouterLink,
 } from '@ionic/angular/standalone';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 interface DayGroupedFavorites {
   day: { name: string | null; day: string };
@@ -61,6 +62,7 @@ interface DayGroupedFavorites {
 })
 export class FavoritePage {
   private artistStateService = inject(ArtistStateService);
+  public appConfig = inject(AppConfigService).appConfig.favorites;
 
   public showDayGroupedFavorites = signal<boolean>(true);
 

@@ -1,5 +1,5 @@
 export type TimetableMode = 'gantt' | 'list';
-export type ListMode = 'byStage' | 'byTime';
+export type TimetableListMode = 'byStage' | 'byTime';
 
 export type AppConfig = {
   app: {
@@ -16,7 +16,10 @@ export type AppConfig = {
   };
   timetable: {
     mode: TimetableMode;
-    listMode: ListMode;
+    listMode: TimetableListMode;
+  };
+  favorites: {
+    simpleLabel: boolean;
   };
   dayChangeDelay: number;
   supabase: {
