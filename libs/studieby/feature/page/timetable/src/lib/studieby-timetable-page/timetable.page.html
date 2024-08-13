@@ -1,0 +1,36 @@
+<ion-header>
+  <app-event-filter [inputConfig]="{showEvents: false}"></app-event-filter>
+</ion-header>
+
+<ion-content>
+  @if (eventTimetables$ | async; as eventTimetables) {
+  <ion-list>
+    @for (event of eventTimetables; track $index) {
+    <ion-item-group>
+      <ion-item-divider sticky="true" color="primary">
+        <ion-label>{{ event.event_name }}</ion-label>
+      </ion-item-divider>
+      @for (timetable of event.timetable; track $index) {
+      <ion-item [routerLink]="['/tabs', 'artist', event.event_name]">
+        <ion-label>
+          <div class="timeslot">
+            <span class="start-time"
+              >{{ timetable.start_time | date: 'HH:mm' }}</span
+            >
+            <span class="end-time"
+              >{{ timetable.end_time| date: 'HH:mm' }}</span
+            >
+          </div>
+
+          <div class="artist-stage">
+            <span class="artist-name"> {{ timetable.artist_name }} </span>
+            <!-- <span class="stage-name"> {{ timetable.artist_name }} </span> -->
+          </div>
+        </ion-label>
+      </ion-item>
+      }
+    </ion-item-group>
+    }
+  </ion-list>
+  }
+</ion-content>
