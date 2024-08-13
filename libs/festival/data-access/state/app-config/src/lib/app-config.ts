@@ -22,6 +22,9 @@ const initialAppConfig: AppConfig = {
     mode: 'gantt',
     listMode: 'byStage',
   },
+  favorites: {
+    simpleLabel: false,
+  },
   supabase: {
     url: '',
     anonKey: '',
