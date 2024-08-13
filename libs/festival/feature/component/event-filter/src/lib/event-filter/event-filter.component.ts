@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+} from '@angular/core';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { NgIf, NgFor, AsyncPipe } from '@angular/common';
 import {
@@ -9,6 +14,7 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { AppConfig } from '@blockparty/festival/shared/types';
 
 @Component({
   selector: 'app-event-filter',
@@ -30,6 +36,8 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
 export class EventFilterComponent {
   private eventFilterStateService = inject(EventFilterStateService);
   public filterConfig = inject(AppConfigService).appConfig.eventFilter;
+
+  inputConfig = input<Partial<AppConfig['eventFilter']>>();
 
   days$ = this.eventFilterStateService.days$;
   eventTypes$ = this.eventFilterStateService.eventTypes$;

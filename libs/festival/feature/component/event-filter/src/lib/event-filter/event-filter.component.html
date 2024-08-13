@@ -1,5 +1,5 @@
 <div class="event-filter-container">
-  @if (filterConfig().showDays) {
+  @if (inputConfig()?.showDays ?? filterConfig().showDays) {
     @if (days$ | async; as days) {
       <ion-toolbar>
         <ion-segment scrollable [value]="selectedDayId$ | async">
@@ -12,7 +12,7 @@
       </ion-toolbar>
     }
   }
-  @if (filterConfig().showEventTypes) {
+  @if (inputConfig()?.showEventTypes ?? filterConfig().showEventTypes) {
     @if (eventTypes$ | async; as eventTypes) {
       <ion-toolbar class="event-type-filter">
         <ion-segment scrollable [value]="selectedEventTypeId$ | async">
@@ -33,7 +33,7 @@
       </ion-toolbar>
     }
   }
-  @if (filterConfig().showEvents) {
+  @if (inputConfig()?.showEvents ?? filterConfig().showEvents) {
     @if (events$ | async; as events) {
       @if (events.length > 1) {
         <ion-toolbar

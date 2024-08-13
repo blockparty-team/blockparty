@@ -4,16 +4,13 @@ import {
   DestroyRef,
   OnInit,
   inject,
-  signal,
 } from '@angular/core';
-import { Subject } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { isSameDay, sub } from 'date-fns';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
-import { filter, tap } from 'rxjs/operators';
-import { TimetableListComponent } from './timetable-list/timetable-list.component';
-import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { filter, map, share, shareReplay, tap } from 'rxjs/operators';
+import { NgIf, AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import {
   IonHeader,
@@ -21,9 +18,16 @@ import {
   IonFab,
   IonFabButton,
   IonIcon,
+  IonList,
+  IonLabel,
+  IonItem,
+  IonItemGroup,
+  IonItemDivider,
 } from '@ionic/angular/standalone';
-import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { EventTimetable } from '@blockparty/festival/shared/types';
+import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-timetable',
@@ -33,11 +37,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
+    IonItemDivider,
+    IonItemGroup,
+    IonItem,
+    IonLabel,
+    IonList,
     EventFilterComponent,
     NgIf,
-    TimetableGanttComponent,
-    TimetableListComponent,
     AsyncPipe,
+    DatePipe,
+    JsonPipe,
+    RouterLink,
     IonHeader,
     IonContent,
     IonFab,
@@ -47,11 +57,50 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class TimetablePage implements OnInit {
   private eventFilterStateService = inject(EventFilterStateService);
-  private timetableConfig = inject(AppConfigService).appConfig.timetable;
+  private timetableStateService = inject(TimetableStateService);
+  private favoriteStateService = inject(FavoriteStateService);
   private destroyRef = inject(DestroyRef);
 
-  private _timetableMode = signal(this.timetableConfig.mode());
-  timetableMode = this._timetableMode.asReadonly();
+  private selectedEventTypeId$ =
+    this.eventFilterStateService.selectedEventTypeId$;
+
+  private timetableGroupedByEventType$ =
+    this.timetableStateService.timetableWithFavorites$.pipe(
+      map((days) => days.map((day) => day.events)),
+      map((events) => this.groupByEventType(events.flat())),
+      shareReplay(1),
+    );
+
+  eventTimetables$ = combineLatest([
+    this.timetableGroupedByEventType$,
+    this.selectedEventTypeId$,
+  ]).pipe(
+    map(([timetable, selectedEventTypeId]) => timetable[selectedEventTypeId]),
+    map((events) => {
+      return events?.map(({ stages, ...rest }) => {
+        const timetable = stages
+          ?.flatMap((stage) =>
+            stage.timetable?.map((timetable) => ({
+              ...timetable,
+              stage_name: stage.stage_name,
+              last_end_time: stage.last_end_time,
+              first_start_time: stage.first_start_time,
+            })),
+          )
+          .sort(
+            (a, b) =>
+              new Date(a.start_time).getTime() -
+              new Date(b.start_time).getTime(),
+          );
+        return {
+          timetable,
+          ...rest,
+        };
+      });
+    }),
+    shareReplay(1),
+    tap(console.log),
+  );
 
   ngOnInit(): void {
     // Default select first day, event type and event
@@ -90,9 +139,19 @@ export class TimetablePage implements OnInit {
       .subscribe();
   }
 
-  onToggleTimetableView(): void {
-    this.timetableMode() === 'gantt'
-      ? this._timetableMode.set('list')
-      : this._timetableMode.set('gantt');
+  private groupByEventType(events: EventTimetable[]): {
+    [key: string]: EventTimetable[];
+  } {
+    return events.reduce((acc: { [key: string]: EventTimetable[] }, event) => {
+      if (!acc[event.event_type_id]) {
+        acc[event.event_type_id] = [];
+      }
+      acc[event.event_type_id].push(event);
+      return acc;
+    }, {});
+  }
+
+  onToggleFavorite(id: string): void {
+    this.favoriteStateService.toggleFavorite('artist', id);
   }
 }
