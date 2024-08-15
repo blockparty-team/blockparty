@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { map } from 'rxjs';
-import { Clipboard } from '@capacitor/clipboard';
 import { Browser } from '@capacitor/browser';
 import { AsyncPipe } from '@angular/common';
 import {
@@ -11,8 +10,6 @@ import {
   IonTitle,
   IonContent,
   IonText,
-  IonButton,
-  IonIcon,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -28,8 +25,6 @@ import {
     IonTitle,
     IonContent,
     IonText,
-    IonButton,
-    IonIcon,
   ],
 })
 export class TransportPage {
