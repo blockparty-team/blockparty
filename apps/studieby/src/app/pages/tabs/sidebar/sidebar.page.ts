@@ -69,6 +69,11 @@ export class SidebarPage implements OnInit {
       icon: 'search',
       routeName: RouteName.Search,
     },
+    {
+      name: 'Transport',
+      icon: 'car-outline',
+      routeName: RouteName.Transport,
+    },
     // Hide profile menu item when login is disabled
   ]
     .filter((navItem) =>
