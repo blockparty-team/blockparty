@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button
+      [defaultHref]="previousRoute$ | async"
+      icon="chevron-back"
+      slot="start"
+    >
+    </ion-back-button>
+    <ion-title>Transport</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <p>
+    Specially designed in collaboration with DOT for Tour de Chambre’s
+    participants, the 24-Hours Travel Pass will be accessible at a discounted
+    rate (DKK 36) and gives access to bus, train and metro. The participants can
+    buy the pass when available on
+    <ion-text
+      color="primary"
+      (click)="onGoToUrl('https://studieby.kk.dk/tour-de-chambre')"
+      >studieby.kk.dk/tour-de-chambre</ion-text
+    >, to then get the ticket sent to them via email.
+  </p>
+</ion-content>

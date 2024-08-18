@@ -12,6 +12,12 @@ export const ROUTES: Route[] = [
     loadChildren: () => import('./pages/about/routes').then((m) => m.routes),
   },
   {
+    path: RouteName.Transport,
+    title: 'Transport',
+    loadChildren: () =>
+      import('./pages/transport/routes').then((m) => m.routes),
+  },
+  {
     path: RouteName.Search,
     title: 'Search',
     loadChildren: () =>
