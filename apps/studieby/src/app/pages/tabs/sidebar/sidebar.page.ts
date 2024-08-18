@@ -65,14 +65,14 @@ export class SidebarPage implements OnInit {
       routeName: RouteName.About,
     },
     {
-      name: 'Search',
-      icon: 'search',
-      routeName: RouteName.Search,
-    },
-    {
       name: 'Transport',
       icon: 'car-outline',
       routeName: RouteName.Transport,
+    },
+    {
+      name: 'Search',
+      icon: 'search',
+      routeName: RouteName.Search,
     },
     // Hide profile menu item when login is disabled
   ]
