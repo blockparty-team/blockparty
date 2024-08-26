@@ -92,7 +92,7 @@ export class EventFilterStateService {
             event: day.event.filter((e) =>
               timetableDayEvents
                 .find((d) => d.dayId === day.id)!
-                .eventIds.includes(e.id),
+                .eventIds.includes(e?.id),
             ),
           }));
       }
