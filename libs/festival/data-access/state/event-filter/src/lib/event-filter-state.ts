@@ -120,7 +120,9 @@ export class EventFilterStateService {
         .filter(
           (eventType, index, eventTypes) =>
             eventTypes.findIndex((v2) => v2.id === eventType.id) === index,
-        ),
+        )
+        // TODO: create rank column for ordering event types by priority
+        .sort((a, b) => a.name.localeCompare(b.name)),
     ),
     shareReplay(1),
   );
