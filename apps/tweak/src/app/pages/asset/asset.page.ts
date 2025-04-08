@@ -11,13 +11,12 @@ import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.compo
 import { MapService } from '@tweak/services/map.service';
 
 @Component({
-  selector: 'app-asset',
-  templateUrl: './asset.page.html',
-  styleUrls: ['./asset.page.scss'],
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule, FormsModule, IonContent, ToolbarComponent],
-  providers: [MapService],
+    selector: 'app-asset',
+    templateUrl: './asset.page.html',
+    styleUrls: ['./asset.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [CommonModule, FormsModule, IonContent, ToolbarComponent],
+    providers: [MapService]
 })
 export class AssetPage implements AfterViewInit {
   private mapService = inject(MapService);

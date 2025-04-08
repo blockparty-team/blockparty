@@ -9,18 +9,17 @@ import { NgIf, AsyncPipe } from '@angular/common';
 import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-feature-info-modal',
-  templateUrl: './feature-info-modal.component.html',
-  styleUrls: ['./feature-info-modal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    StageTimetableComponent,
-    AssetComponent,
-    AsyncPipe,
-    IonContent,
-  ],
+    selector: 'app-feature-info-modal',
+    templateUrl: './feature-info-modal.component.html',
+    styleUrls: ['./feature-info-modal.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgIf,
+        StageTimetableComponent,
+        AssetComponent,
+        AsyncPipe,
+        IonContent,
+    ]
 })
 export class FeatureInfoModalComponent {
   private mapStateService = inject(MapStateService);

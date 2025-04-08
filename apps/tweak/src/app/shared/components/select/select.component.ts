@@ -49,36 +49,35 @@ const defaultCongig: ListSelectionConfig = {
 };
 
 @Component({
-  selector: 'app-select',
-  templateUrl: './select.component.html',
-  styleUrls: ['./select.component.scss'],
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => SelectComponent),
-      multi: true,
-    },
-  ],
-  imports: [
-    IonContent,
-    IonToolbar,
-    IonRadioGroup,
-    IonRadio,
-    IonHeader,
-    IonSearchbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonCheckbox,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonModal,
-    IonChip,
-  ],
+    selector: 'app-select',
+    templateUrl: './select.component.html',
+    styleUrls: ['./select.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => SelectComponent),
+            multi: true,
+        },
+    ],
+    imports: [
+        IonContent,
+        IonToolbar,
+        IonRadioGroup,
+        IonRadio,
+        IonHeader,
+        IonSearchbar,
+        IonTitle,
+        IonButtons,
+        IonButton,
+        IonCheckbox,
+        IonList,
+        IonItem,
+        IonLabel,
+        IonModal,
+        IonChip,
+    ]
 })
 export class SelectComponent implements ControlValueAccessor {
   @Input() public items: WritableSignal<any[]> = signal([]);

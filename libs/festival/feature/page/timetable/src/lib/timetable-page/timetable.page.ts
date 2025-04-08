@@ -26,24 +26,23 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-timetable',
-  templateUrl: 'timetable.page.html',
-  styleUrls: ['timetable.page.scss'],
-  providers: [TimetableStateService, EventFilterStateService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    EventFilterComponent,
-    NgIf,
-    TimetableGanttComponent,
-    TimetableListComponent,
-    AsyncPipe,
-    IonHeader,
-    IonContent,
-    IonFab,
-    IonFabButton,
-    IonIcon,
-  ],
+    selector: 'app-timetable',
+    templateUrl: 'timetable.page.html',
+    styleUrls: ['timetable.page.scss'],
+    providers: [TimetableStateService, EventFilterStateService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        EventFilterComponent,
+        NgIf,
+        TimetableGanttComponent,
+        TimetableListComponent,
+        AsyncPipe,
+        IonHeader,
+        IonContent,
+        IonFab,
+        IonFabButton,
+        IonIcon,
+    ]
 })
 export class TimetablePage implements OnInit {
   private eventFilterStateService = inject(EventFilterStateService);

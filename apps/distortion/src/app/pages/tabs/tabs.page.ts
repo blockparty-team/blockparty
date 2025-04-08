@@ -19,21 +19,20 @@ interface TabsChanged {
 }
 
 @Component({
-  selector: 'app-tabs',
-  templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    SidebarPage,
-    AsyncPipe,
-    IonTabs,
-    IonTabBar,
-    IonTabButton,
-    IonIcon,
-    IonLabel,
-    IonMenu,
-  ],
+    selector: 'app-tabs',
+    templateUrl: 'tabs.page.html',
+    styleUrls: ['tabs.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        SidebarPage,
+        AsyncPipe,
+        IonTabs,
+        IonTabBar,
+        IonTabButton,
+        IonIcon,
+        IonLabel,
+        IonMenu,
+    ]
 })
 export class TabsPage {
   private tabStateService = inject(TabsStateService);

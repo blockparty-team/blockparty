@@ -4,12 +4,11 @@ import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
 import { NotificationService } from '@tweak/services/notification.service'
 
 @Component({
-  selector: 'lib-image-cropper',
-  standalone: true,
-  imports: [CommonModule, ImageCropperModule],
-  templateUrl: './image-cropper.component.html',
-  styleUrl: './image-cropper.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'lib-image-cropper',
+    imports: [CommonModule, ImageCropperModule],
+    templateUrl: './image-cropper.component.html',
+    styleUrl: './image-cropper.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageCropperComponent {
   public imageEvent = input<Event | null>(null);

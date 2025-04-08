@@ -27,21 +27,20 @@ enum PlayerSource {
 }
 
 @Component({
-  selector: 'app-music-player',
-  templateUrl: './music-player.component.html',
-  styleUrls: ['./music-player.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: animations.slideUpDown,
-  standalone: true,
-  imports: [
-    NgIf,
-    AsyncPipe,
-    IonHeader,
-    IonSegment,
-    IonSegmentButton,
-    IonIcon,
-    IonSpinner,
-  ],
+    selector: 'app-music-player',
+    templateUrl: './music-player.component.html',
+    styleUrls: ['./music-player.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: animations.slideUpDown,
+    imports: [
+        NgIf,
+        AsyncPipe,
+        IonHeader,
+        IonSegment,
+        IonSegmentButton,
+        IonIcon,
+        IonSpinner,
+    ]
 })
 export class MusicPlayerComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);

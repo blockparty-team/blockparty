@@ -27,29 +27,28 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-event',
-  templateUrl: './event.page.html',
-  styleUrls: ['./event.page.scss'],
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    EventCardComponent,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonBackButton,
-    IonButton,
-    IonTitle,
-    IonContent,
-    IonModal,
-    IonIcon,
-    IonAccordionGroup,
-    IonAccordion,
-    IonItem,
-    IonLabel,
-  ],
+    selector: 'app-event',
+    templateUrl: './event.page.html',
+    styleUrls: ['./event.page.scss'],
+    imports: [
+        NgIf,
+        NgFor,
+        EventCardComponent,
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonButtons,
+        IonBackButton,
+        IonButton,
+        IonTitle,
+        IonContent,
+        IonModal,
+        IonIcon,
+        IonAccordionGroup,
+        IonAccordion,
+        IonItem,
+        IonLabel,
+    ]
 })
 export class EventPage implements OnInit {
   private eventStateService = inject(EventStateService);

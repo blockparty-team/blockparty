@@ -15,12 +15,11 @@ type Feature = {
 
 
 @Component({
-  standalone: true,
-  imports: [NxWelcomeComponent, CommonModule, RouterModule],
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+    imports: [NxWelcomeComponent, CommonModule, RouterModule],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrl: './app.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent implements OnInit {
 

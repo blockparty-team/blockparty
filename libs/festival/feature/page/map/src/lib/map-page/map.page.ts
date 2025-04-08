@@ -32,18 +32,17 @@ import { EventFilterComponent } from '@blockparty/festival/featurecomponent/even
 import { IonHeader, IonContent } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-map',
-  templateUrl: 'map.page.html',
-  styleUrls: ['map.page.scss'],
-  providers: [EventFilterStateService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    ...animations.slideInOut,
-    ...animations.fadeInOut,
-    ...animations.slideUpDown,
-  ],
-  standalone: true,
-  imports: [EventFilterComponent, NgIf, AsyncPipe, IonHeader, IonContent],
+    selector: 'app-map',
+    templateUrl: 'map.page.html',
+    styleUrls: ['map.page.scss'],
+    providers: [EventFilterStateService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    animations: [
+        ...animations.slideInOut,
+        ...animations.fadeInOut,
+        ...animations.slideUpDown,
+    ],
+    imports: [EventFilterComponent, NgIf, AsyncPipe, IonHeader, IonContent]
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private mapService = inject(MapService);

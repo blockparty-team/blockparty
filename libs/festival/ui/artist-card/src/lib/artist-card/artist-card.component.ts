@@ -11,12 +11,11 @@ import { RouterLink } from '@angular/router';
 import { IonCard, IonIcon, IonRouterLink } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-artist-card',
-  templateUrl: './artist-card.component.html',
-  styleUrls: ['./artist-card.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [RouterLink, NgIf, NgFor, DatePipe, IonCard, IonIcon, IonRouterLink],
+    selector: 'app-artist-card',
+    templateUrl: './artist-card.component.html',
+    styleUrls: ['./artist-card.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterLink, NgIf, NgFor, DatePipe, IonCard, IonIcon, IonRouterLink]
 })
 export class ArtistCardComponent {
   private artistStateService = inject(ArtistStateService);

@@ -30,30 +30,29 @@ import { FavoriteStateService } from '@blockparty/festival/data-access/state/fav
 import { RouterLink } from '@angular/router';
 
 @Component({
-  selector: 'app-timetable',
-  templateUrl: 'timetable.page.html',
-  styleUrls: ['timetable.page.scss'],
-  providers: [TimetableStateService, EventFilterStateService],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    IonItemDivider,
-    IonItemGroup,
-    IonItem,
-    IonLabel,
-    IonList,
-    EventFilterComponent,
-    NgIf,
-    AsyncPipe,
-    DatePipe,
-    JsonPipe,
-    RouterLink,
-    IonHeader,
-    IonContent,
-    IonFab,
-    IonFabButton,
-    IonIcon,
-  ],
+    selector: 'app-timetable',
+    templateUrl: 'timetable.page.html',
+    styleUrls: ['timetable.page.scss'],
+    providers: [TimetableStateService, EventFilterStateService],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        IonItemDivider,
+        IonItemGroup,
+        IonItem,
+        IonLabel,
+        IonList,
+        EventFilterComponent,
+        NgIf,
+        AsyncPipe,
+        DatePipe,
+        JsonPipe,
+        RouterLink,
+        IonHeader,
+        IonContent,
+        IonFab,
+        IonFabButton,
+        IonIcon,
+    ]
 })
 export class TimetablePage implements OnInit {
   private eventFilterStateService = inject(EventFilterStateService);

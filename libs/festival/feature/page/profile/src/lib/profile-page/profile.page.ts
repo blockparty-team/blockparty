@@ -18,25 +18,24 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    RouterLink,
-    AsyncPipe,
-    IonRouterLink,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonBackButton,
-    IonTitle,
-    IonContent,
-    IonAvatar,
-    IonButton,
-  ],
+    selector: 'app-profile',
+    templateUrl: './profile.page.html',
+    styleUrls: ['./profile.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgIf,
+        RouterLink,
+        AsyncPipe,
+        IonRouterLink,
+        IonHeader,
+        IonToolbar,
+        IonButtons,
+        IonBackButton,
+        IonTitle,
+        IonContent,
+        IonAvatar,
+        IonButton,
+    ]
 })
 export class ProfilePage implements OnInit {
   userMetaData$!: Observable<UserMetadata>;

@@ -10,20 +10,19 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-artist-item',
-  templateUrl: './artist-item.component.html',
-  styleUrls: ['./artist-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    RouterLink,
-    NgFor,
-    DatePipe,
-    IonItem,
-    IonAvatar,
-    IonLabel,
-    IonRouterLink,
-  ],
+    selector: 'app-artist-item',
+    templateUrl: './artist-item.component.html',
+    styleUrls: ['./artist-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        RouterLink,
+        NgFor,
+        DatePipe,
+        IonItem,
+        IonAvatar,
+        IonLabel,
+        IonRouterLink,
+    ]
 })
 export class ArtistItemComponent {
   @Input() artist!: ArtistViewModel;

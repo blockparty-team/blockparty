@@ -13,19 +13,18 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-transport',
-  templateUrl: './transport.page.html',
-  styleUrls: ['./transport.page.scss'],
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonBackButton,
-    IonTitle,
-    IonContent,
-    IonText,
-  ],
+    selector: 'app-transport',
+    templateUrl: './transport.page.html',
+    styleUrls: ['./transport.page.scss'],
+    imports: [
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonBackButton,
+        IonTitle,
+        IonContent,
+        IonText,
+    ]
 })
 export class TransportPage {
   private routeHistoryService = inject(RouteHistoryService);

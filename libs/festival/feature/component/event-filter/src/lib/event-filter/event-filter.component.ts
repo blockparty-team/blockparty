@@ -17,21 +17,20 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
 import { AppConfig } from '@blockparty/festival/shared/types';
 
 @Component({
-  selector: 'app-event-filter',
-  templateUrl: './event-filter.component.html',
-  styleUrls: ['./event-filter.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonSegment,
-    IonSegmentButton,
-    IonLabel,
-  ],
+    selector: 'app-event-filter',
+    templateUrl: './event-filter.component.html',
+    styleUrls: ['./event-filter.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonSegment,
+        IonSegmentButton,
+        IonLabel,
+    ]
 })
 export class EventFilterComponent {
   private eventFilterStateService = inject(EventFilterStateService);

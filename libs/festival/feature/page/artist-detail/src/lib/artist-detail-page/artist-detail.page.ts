@@ -52,25 +52,24 @@ const soMeIcons: SoMeIcon[] = [
 ];
 
 @Component({
-  templateUrl: './artist-detail.page.html',
-  styleUrls: ['./artist-detail.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    NgClass,
-    MusicPlayerComponent,
-    AsyncPipe,
-    DatePipe,
-    IonContent,
-    IonBackButton,
-    IonFabButton,
-    IonIcon,
-    IonFab,
-    IonFabList,
-    IonSpinner,
-  ],
+    templateUrl: './artist-detail.page.html',
+    styleUrls: ['./artist-detail.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgIf,
+        NgFor,
+        NgClass,
+        MusicPlayerComponent,
+        AsyncPipe,
+        DatePipe,
+        IonContent,
+        IonBackButton,
+        IonFabButton,
+        IonIcon,
+        IonFab,
+        IonFabList,
+        IonSpinner,
+    ]
 })
 export class ArtistDetailPage implements OnInit {
   router = inject(Router);

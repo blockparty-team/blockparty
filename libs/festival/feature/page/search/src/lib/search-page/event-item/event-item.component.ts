@@ -22,12 +22,11 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-event-item',
-  templateUrl: './event-item.component.html',
-  styleUrls: ['./event-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [RouterLink, IonItem, IonBadge, IonLabel, IonIcon, IonRouterLink],
+    selector: 'app-event-item',
+    templateUrl: './event-item.component.html',
+    styleUrls: ['./event-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [RouterLink, IonItem, IonBadge, IonLabel, IonIcon, IonRouterLink]
 })
 export class EventItemComponent {
   private router = inject(Router);

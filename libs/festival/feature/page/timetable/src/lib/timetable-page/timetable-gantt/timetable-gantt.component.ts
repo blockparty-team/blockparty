@@ -27,22 +27,21 @@ import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
 @Component({
-  selector: 'app-timetable-gantt',
-  templateUrl: './timetable-gantt.component.html',
-  styleUrls: ['./timetable-gantt.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    NgClass,
-    RouterLink,
-    AsyncPipe,
-    DatePipe,
-    IonIcon,
-    IonText,
-    IonRouterLink,
-  ],
+    selector: 'app-timetable-gantt',
+    templateUrl: './timetable-gantt.component.html',
+    styleUrls: ['./timetable-gantt.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgIf,
+        NgFor,
+        NgClass,
+        RouterLink,
+        AsyncPipe,
+        DatePipe,
+        IonIcon,
+        IonText,
+        IonRouterLink,
+    ]
 })
 export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);

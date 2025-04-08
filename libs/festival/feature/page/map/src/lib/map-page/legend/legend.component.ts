@@ -22,25 +22,24 @@ interface IconsViewModel extends MapIconViewModel {
 }
 
 @Component({
-  selector: 'app-legend',
-  templateUrl: './legend.component.html',
-  styleUrls: ['./legend.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    // SafePipe,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonList,
-    IonItem,
-    IonThumbnail,
-    IonLabel,
-    IonToggle,
-  ],
+    selector: 'app-legend',
+    templateUrl: './legend.component.html',
+    styleUrls: ['./legend.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        // SafePipe,
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonList,
+        IonItem,
+        IonThumbnail,
+        IonLabel,
+        IonToggle,
+    ]
 })
 export class LegendComponent implements OnInit {
   iconsWithToggleState$!: Observable<IconsViewModel[]>;

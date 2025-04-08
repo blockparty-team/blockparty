@@ -40,21 +40,20 @@ export interface TableConfig<T> {
  * @title Data table
  */
 @Component({
-  selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgFor,
-    JsonPipe,
-    MatTableModule,
-    MatSortModule,
-    IonSearchbar,
-    IonCheckbox,
-    IonThumbnail,
-    IonImg,
-  ],
+    selector: 'app-table',
+    templateUrl: './table.component.html',
+    styleUrls: ['./table.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgFor,
+        JsonPipe,
+        MatTableModule,
+        MatSortModule,
+        IonSearchbar,
+        IonCheckbox,
+        IonThumbnail,
+        IonImg,
+    ]
 })
 export class TableComponent {
   @Input({ required: true }) config!: Signal<TableConfig<any>>;

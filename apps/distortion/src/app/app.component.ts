@@ -25,13 +25,12 @@ import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [IonApp, IonRouterOutlet],
-  providers: [AppUpdateService],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonApp, IonRouterOutlet],
+    providers: [AppUpdateService]
 })
 export class AppComponent implements OnInit {
   private zone = inject(NgZone);

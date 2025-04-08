@@ -1,4 +1,4 @@
-import { APP_INITIALIZER, isDevMode } from '@angular/core';
+import { isDevMode, inject, provideAppInitializer } from '@angular/core';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -32,11 +32,9 @@ bootstrapApplication(AppComponent, {
       provide: RouteReuseStrategy,
       useClass: IonicRouteStrategy,
     },
-    {
-      provide: APP_INITIALIZER,
-      useFactory: configFactory,
-      multi: true,
-      deps: [AppConfigService],
-    },
+    provideAppInitializer(() => {
+        const initializerFn = (configFactory)(inject(AppConfigService));
+        return initializerFn();
+      }),
   ],
 }).catch((err) => console.log(err));

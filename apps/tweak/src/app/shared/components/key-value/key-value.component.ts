@@ -49,40 +49,39 @@ export type KeyValueConfig = {
 };
 
 @Component({
-  selector: 'app-key-value',
-  templateUrl: './key-value.component.html',
-  styleUrls: ['./key-value.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => KeyValueComponent),
-      multi: true,
-    },
-  ],
-  imports: [
-    NgFor,
-    ReactiveFormsModule,
-    IonInput,
-    IonButton,
-    IonIcon,
-    IonFabButton,
-    IonModal,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonContent,
-    IonLabel,
-    IonFooter,
-    IonList,
-    IonItem,
-    IonChip,
-    IonReorderGroup,
-    IonReorder,
-    JsonPipe,
-    AsyncPipe,
-  ],
+    selector: 'app-key-value',
+    templateUrl: './key-value.component.html',
+    styleUrls: ['./key-value.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [
+        {
+            provide: NG_VALUE_ACCESSOR,
+            useExisting: forwardRef(() => KeyValueComponent),
+            multi: true,
+        },
+    ],
+    imports: [
+        NgFor,
+        ReactiveFormsModule,
+        IonInput,
+        IonButton,
+        IonIcon,
+        IonFabButton,
+        IonModal,
+        IonHeader,
+        IonToolbar,
+        IonButtons,
+        IonContent,
+        IonLabel,
+        IonFooter,
+        IonList,
+        IonItem,
+        IonChip,
+        IonReorderGroup,
+        IonReorder,
+        JsonPipe,
+        AsyncPipe,
+    ]
 })
 export class KeyValueComponent implements ControlValueAccessor {
   @Input() public config!: WritableSignal<KeyValueConfig>;

@@ -22,12 +22,11 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-stage-item',
-  templateUrl: './stage-item.component.html',
-  styleUrls: ['./stage-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [IonItem, IonThumbnail, IonLabel, IonIcon],
+    selector: 'app-stage-item',
+    templateUrl: './stage-item.component.html',
+    styleUrls: ['./stage-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonItem, IonThumbnail, IonLabel, IonIcon]
 })
 export class StageItemComponent {
   private router = inject(Router);

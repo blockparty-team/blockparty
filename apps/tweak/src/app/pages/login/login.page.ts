@@ -6,12 +6,11 @@ import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.compo
 import { SupabaseService } from '@tweak/services/supabase.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule, ToolbarComponent],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
+    imports: [IonicModule, CommonModule, ReactiveFormsModule, ToolbarComponent],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginPage {
   private fb = inject(FormBuilder);

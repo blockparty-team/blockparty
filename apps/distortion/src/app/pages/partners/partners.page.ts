@@ -10,18 +10,17 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-partners',
-  templateUrl: './partners.page.html',
-  styleUrls: ['./partners.page.scss'],
-  standalone: true,
-  imports: [
-    RouterLink,
-    IonContent,
-    IonGrid,
-    IonRow,
-    IonCol,
-    IonButton,
-    IonRouterLink,
-  ],
+    selector: 'app-partners',
+    templateUrl: './partners.page.html',
+    styleUrls: ['./partners.page.scss'],
+    imports: [
+        RouterLink,
+        IonContent,
+        IonGrid,
+        IonRow,
+        IonCol,
+        IonButton,
+        IonRouterLink,
+    ]
 })
 export class PartnersPage {}

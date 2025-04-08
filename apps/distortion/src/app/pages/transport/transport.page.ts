@@ -17,22 +17,21 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-transport',
-  templateUrl: './transport.page.html',
-  styleUrls: ['./transport.page.scss'],
-  standalone: true,
-  imports: [
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonBackButton,
-    IonTitle,
-    IonContent,
-    IonText,
-    IonButton,
-    IonIcon,
-    IonToast,
-  ],
+    selector: 'app-transport',
+    templateUrl: './transport.page.html',
+    styleUrls: ['./transport.page.scss'],
+    imports: [
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonBackButton,
+        IonTitle,
+        IonContent,
+        IonText,
+        IonButton,
+        IonIcon,
+        IonToast,
+    ]
 })
 export class TransportPage {
   viggoVoucherCode = 'DISTORTION23';
