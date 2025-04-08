@@ -19,39 +19,31 @@ import { NgIf, AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonTitle,
   IonSearchbar,
   IonContent,
   IonSpinner,
 } from '@ionic/angular/standalone';
 
 @Component({
-    selector: 'app-artist',
-    styleUrls: ['./artist.page.scss'],
-    templateUrl: './artist.page.html',
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [
-        NgIf,
-        FormsModule,
-        ReactiveFormsModule,
-        CdkVirtualScrollViewport,
-        CdkFixedSizeVirtualScroll,
-        CdkVirtualForOf,
-        ArtistCardComponent,
-        AsyncPipe,
-        IonHeader,
-        IonToolbar,
-        IonButtons,
-        IonButton,
-        IonIcon,
-        IonTitle,
-        IonSearchbar,
-        IonContent,
-        IonSpinner,
-    ]
+  selector: 'app-artist',
+  styleUrls: ['./artist.page.scss'],
+  templateUrl: './artist.page.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    NgIf,
+    FormsModule,
+    ReactiveFormsModule,
+    CdkVirtualScrollViewport,
+    CdkFixedSizeVirtualScroll,
+    CdkVirtualForOf,
+    ArtistCardComponent,
+    AsyncPipe,
+    IonHeader,
+    IonToolbar,
+    IonSearchbar,
+    IonContent,
+    IonSpinner,
+  ],
 })
 export class ArtistPage {
   private artistStateService = inject(ArtistStateService);

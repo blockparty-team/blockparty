@@ -1,3 +1,7 @@
+ion-searchbar {
+  margin-top: 10px;
+}
+
 .artist-list {
   cdk-virtual-scroll-viewport {
     height: 100%;
@@ -10,39 +14,5 @@
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-}
-
-.favorites-menu {
-  ion-header {
-    ion-fab-button {
-      --box-shadow: none;
-    }
-  }
-
-  ion-item {
-    animation: popIn 0.2s calc(var(--animation-order) * 70ms) both ease-in;
-
-    ion-label {
-      outline: none;
-
-      .time {
-        margin-left: 10px;
-        opacity: 0.7;
-        font-size: small;
-      }
-    }
-  }
-}
-
-@keyframes popIn {
-  0% {
-    opacity: 0;
-    transform: scale(0.6) translateY(-8px);
-  }
-
-  100% {
-    opacity: 1;
-    transform: none;
   }
 }
