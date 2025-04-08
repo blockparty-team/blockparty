@@ -81,6 +81,5 @@
     "appsDir": "apps",
     "libsDir": "libs"
   },
-  "defaultBase": "main",
-  "useLegacyCache": true
+  "defaultBase": "main"
 }
