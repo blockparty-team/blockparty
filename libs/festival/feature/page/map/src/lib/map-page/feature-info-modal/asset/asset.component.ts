@@ -14,21 +14,20 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-asset',
-  templateUrl: './asset.component.html',
-  styleUrls: ['./asset.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonContent,
-  ],
+    selector: 'app-asset',
+    templateUrl: './asset.component.html',
+    styleUrls: ['./asset.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        NgIf,
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonButtons,
+        IonButton,
+        IonContent,
+    ]
 })
 export class AssetComponent {
   private mapStateService = inject(MapStateService);

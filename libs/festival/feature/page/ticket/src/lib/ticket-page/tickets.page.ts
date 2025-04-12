@@ -20,27 +20,26 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-tickets',
-  templateUrl: './tickets.page.html',
-  styleUrls: ['./tickets.page.scss'],
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonBackButton,
-    IonTitle,
-    IonContent,
-    IonAccordionGroup,
-    IonAccordion,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonIcon,
-  ],
+    selector: 'app-tickets',
+    templateUrl: './tickets.page.html',
+    styleUrls: ['./tickets.page.scss'],
+    imports: [
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonButtons,
+        IonBackButton,
+        IonTitle,
+        IonContent,
+        IonAccordionGroup,
+        IonAccordion,
+        IonItem,
+        IonLabel,
+        IonList,
+        IonIcon,
+    ]
 })
 export class TicketsPage implements OnInit {
   private ticketStateService = inject(TicketStateService);

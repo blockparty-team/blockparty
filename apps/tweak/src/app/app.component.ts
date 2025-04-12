@@ -37,29 +37,28 @@ export const appPages: AppPage[] = [
 ];
 
 @Component({
-  selector: 'app-root',
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.scss'],
-  standalone: true,
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-    CommonModule,
-    IonApp,
-    IonFooter,
-    IonSplitPane,
-    IonMenu,
-    IonContent,
-    IonList,
-    IonListHeader,
-    IonNote,
-    IonMenuToggle,
-    IonRouterLink,
-    IonItem,
-    IonIcon,
-    IonLabel,
-    IonRouterOutlet,
-  ],
+    selector: 'app-root',
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.scss'],
+    imports: [
+        RouterLink,
+        RouterLinkActive,
+        CommonModule,
+        IonApp,
+        IonFooter,
+        IonSplitPane,
+        IonMenu,
+        IonContent,
+        IonList,
+        IonListHeader,
+        IonNote,
+        IonMenuToggle,
+        IonRouterLink,
+        IonItem,
+        IonIcon,
+        IonLabel,
+        IonRouterOutlet,
+    ]
 })
 export class AppComponent {
   public appPages = signal<AppPage[]>(appPages);

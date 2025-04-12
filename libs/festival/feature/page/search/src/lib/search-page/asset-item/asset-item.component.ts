@@ -19,12 +19,11 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-asset-item',
-  templateUrl: './asset-item.component.html',
-  styleUrls: ['./asset-item.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [IonItem, IonThumbnail, IonLabel, IonIcon],
+    selector: 'app-asset-item',
+    templateUrl: './asset-item.component.html',
+    styleUrls: ['./asset-item.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonItem, IonThumbnail, IonLabel, IonIcon]
 })
 export class AssetItemComponent {
   private router = inject(Router);

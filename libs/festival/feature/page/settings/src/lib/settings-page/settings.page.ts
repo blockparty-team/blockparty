@@ -16,24 +16,23 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-settings',
-  templateUrl: './settings.page.html',
-  styleUrls: ['./settings.page.scss'],
-  standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonButtons,
-    IonBackButton,
-    IonTitle,
-    IonContent,
-    IonButton,
-    IonItem,
-    IonLabel,
-  ],
+    selector: 'app-settings',
+    templateUrl: './settings.page.html',
+    styleUrls: ['./settings.page.scss'],
+    imports: [
+        NgIf,
+        NgFor,
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonButtons,
+        IonBackButton,
+        IonTitle,
+        IonContent,
+        IonButton,
+        IonItem,
+        IonLabel,
+    ]
 })
 export class SettingsPage implements OnInit {
   private localNotificationsService = inject(LocalNotificationsService);

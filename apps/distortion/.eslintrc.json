@@ -37,7 +37,8 @@
           }
         ],
         "@typescript-eslint/member-ordering": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "@angular-eslint/prefer-standalone": "off"
       }
     },
     {

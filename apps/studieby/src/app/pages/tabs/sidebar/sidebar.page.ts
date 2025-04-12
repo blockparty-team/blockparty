@@ -28,26 +28,25 @@ interface NavigationItem {
 }
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.page.html',
-  styleUrls: ['./sidebar.page.scss'],
-  standalone: true,
-  imports: [
-    NgFor,
-    NgIf,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonIcon,
-    IonContent,
-    IonList,
-    IonItem,
-    IonLabel,
-    IonFooter,
-  ],
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.page.html',
+    styleUrls: ['./sidebar.page.scss'],
+    imports: [
+        NgFor,
+        NgIf,
+        AsyncPipe,
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonButtons,
+        IonButton,
+        IonIcon,
+        IonContent,
+        IonList,
+        IonItem,
+        IonLabel,
+        IonFooter,
+    ]
 })
 export class SidebarPage implements OnInit {
   private authService = inject(AuthService);

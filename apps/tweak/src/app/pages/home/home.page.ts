@@ -12,18 +12,17 @@ import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.compo
 import { AppPage, appPages } from '@tweak/app.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.page.html',
-  styleUrls: ['./home.page.scss'],
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ToolbarComponent,
-    IonRouterLink,
-  ],
+    selector: 'app-home',
+    templateUrl: './home.page.html',
+    styleUrls: ['./home.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        IonicModule,
+        CommonModule,
+        FormsModule,
+        ToolbarComponent,
+        IonRouterLink,
+    ]
 })
 export class HomePage {
   appPages = signal<AppPage[]>(appPages);

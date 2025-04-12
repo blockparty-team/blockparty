@@ -17,12 +17,11 @@ import {
 } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [IonContent, IonFab, IonBackButton, IonButton, IonIcon],
+    selector: 'app-login',
+    templateUrl: './login.page.html',
+    styleUrls: ['./login.page.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [IonContent, IonFab, IonBackButton, IonButton, IonIcon]
 })
 export class LoginPage implements OnInit {
   private fb = inject(FormBuilder);
