@@ -168,6 +168,14 @@
         "parallel": false
       }
     },
+    "capacitor-sync": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "commands": ["npx cap sync"],
+        "parallel": false
+      }
+    },
     "open-xcode": {
       "executor": "nx:run-commands",
       "options": {
