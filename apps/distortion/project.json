@@ -153,10 +153,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/distortion/",
-        "commands": [
-          "npx nx run distortion:build --configuration=production",
-          "npx cap sync"
-        ],
+        "commands": ["npx nx run distortion:build:production", "npx cap sync"],
         "parallel": false
       }
     },
@@ -164,7 +161,15 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/distortion/",
-        "commands": ["npx nx run distortion:build", "npx cap sync"],
+        "commands": ["npx nx run distortion:build:development", "npx cap sync"],
+        "parallel": false
+      }
+    },
+    "capacitor-sync": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/distortion/",
+        "commands": ["npx cap sync"],
         "parallel": false
       }
     },
