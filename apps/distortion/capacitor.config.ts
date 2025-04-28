@@ -11,8 +11,11 @@ const config: CapacitorConfig = {
     },
   },
   ios: {
-    handleApplicationNotifications: false
-  }
+    handleApplicationNotifications: false,
+  },
+  android: {
+    adjustMarginsForEdgeToEdge: 'force',
+  },
 };
 
 export default config;

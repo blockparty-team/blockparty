@@ -10,5 +10,8 @@
 	},
 	"ios": {
 		"handleApplicationNotifications": false
+	},
+	"android": {
+		"adjustMarginsForEdgeToEdge": "force"
 	}
 }
