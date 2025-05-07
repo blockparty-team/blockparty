@@ -5,12 +5,10 @@ import { filter, map } from 'rxjs/operators';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { NgIf, AsyncPipe } from '@angular/common';
 import {
-  IonHeader,
   IonToolbar,
   IonTitle,
   IonButtons,
   IonButton,
-  IonContent,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -19,16 +17,7 @@ import {
   styleUrls: ['./asset.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    NgIf,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonButtons,
-    IonButton,
-    IonContent,
-  ],
+  imports: [NgIf, AsyncPipe, IonToolbar, IonTitle, IonButtons, IonButton],
 })
 export class AssetComponent {
   private mapStateService = inject(MapStateService);
