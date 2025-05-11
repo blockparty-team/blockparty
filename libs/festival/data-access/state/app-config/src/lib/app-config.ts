@@ -39,6 +39,7 @@ const initialAppConfig: AppConfig = {
     showEventTypes: true,
     showEvents: true,
   },
+  iosAppId: '',
 };
 
 @Injectable({

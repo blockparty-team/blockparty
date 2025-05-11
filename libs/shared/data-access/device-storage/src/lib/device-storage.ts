@@ -13,7 +13,8 @@ export type StorageKeys =
   | 'mapLayers'
   | 'mapIcons'
   | 'mapTiles'
-  | 'appConfig';
+  | 'appConfig'
+  | 'skipAppUpdateVersion';
 
 @Injectable({
   providedIn: 'root',
@@ -30,6 +31,11 @@ export class DeviceStorageService {
     return from(Preferences.get({ key })).pipe(
       map((prop) => (prop.value ? JSON.parse(prop.value) : null)),
     );
+  }
+
+  async getAsync(key: StorageKeys): Promise<any> {
+    const pref = await Preferences.get({ key });
+    return pref.value ? JSON.parse(pref.value) : null;
   }
 
   // Methods below is used by supabase client to persist login in IOS/Android app
