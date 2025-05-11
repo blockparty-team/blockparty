@@ -35,4 +35,5 @@ export type AppConfig = {
     showEventTypes: boolean;
     showEvents: boolean;
   };
+  iosAppId: string;
 };
