@@ -121,8 +121,7 @@ export class EventFilterStateService {
           (eventType, index, eventTypes) =>
             eventTypes.findIndex((v2) => v2.id === eventType.id) === index,
         )
-        // TODO: create rank column for ordering event types by priority
-        .sort((a, b) => a.name.localeCompare(b.name)),
+        .sort((a, b) => a.rank! - b.rank!),
     ),
     shareReplay(1),
   );
@@ -136,9 +135,8 @@ export class EventFilterStateService {
     map(([days, selectedDayId, selectedEventTypeId]) => {
       const events = days
         .find((day) => day.id === selectedDayId)
-        ?.event.filter(
-          (event) => event?.event_type?.id === selectedEventTypeId,
-        );
+        ?.event.filter((event) => event?.event_type?.id === selectedEventTypeId)
+        .sort((a, b) => a.rank! - b.rank!);
       // Template hides segments when events$ emits null
       return events?.length! > 0 ? events : (null as any);
     }),

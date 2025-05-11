@@ -196,10 +196,12 @@ export class SupabaseService {
               id,
               name,
               bounds,
+              rank,
               event_type(
                 id,
                 name,
-                color
+                color,
+                rank
               )
             )
           )
