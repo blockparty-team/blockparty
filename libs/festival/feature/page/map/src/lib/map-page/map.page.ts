@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { ModalController } from '@ionic/angular/standalone';
-import { merge, from, Subject, EMPTY } from 'rxjs';
+import { merge, from, Subject, EMPTY, combineLatest } from 'rxjs';
 import {
   filter,
   map,
@@ -18,6 +18,7 @@ import {
   distinctUntilChanged,
   takeUntil,
   catchError,
+  debounceTime,
 } from 'rxjs/operators';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/shared/service/map';
@@ -102,17 +103,18 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
       )
       .subscribe();
 
-    this.eventFilterStateService.selectedEventTypeId$
+    combineLatest([
+      this.eventFilterStateService.selectedEventTypeId$,
+      this.eventFilterStateService.selectedDayId$,
+      this.mapStateService.dayMaskBounds$,
+      this.eventFilterStateService.events$,
+    ])
       .pipe(
-        withLatestFrom(
-          this.eventFilterStateService.selectedDayId$,
-          this.mapStateService.dayMaskBounds$,
-          this.eventFilterStateService.events$,
-        ),
         filter(
           ([eventTypeId, dayId, masks, events]) =>
             !!eventTypeId && !!dayId && !!masks && !!events,
         ),
+        debounceTime(50),
         map(([eventTypeId, dayId, masks, events]) => ({
           events,
           mask: masks.find((mask) => mask.id === `${dayId}_${eventTypeId}`),
