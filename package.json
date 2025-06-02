@@ -40,7 +40,7 @@
     "@capacitor/status-bar": "7.0.1",
     "@capawesome/capacitor-app-update": "7.0.1",
     "@ionic/angular": "^8.2.5",
-    "@ngrx/signals": "^18.0.0-rc.3",
+    "@ngrx/signals": "^19.2.1",
     "@supabase/supabase-js": "2.49.4",
     "aos": "^3.0.0-beta.6",
     "date-fns": "4.1.0",
