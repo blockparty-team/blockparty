@@ -1,9 +1,7 @@
 {
   "deno.enable": true,
   "deno.unstable": true,
-  "deno.enablePaths": [
-    "/supabase/functions"
-  ],
+  "deno.enablePaths": ["/supabase/functions"],
   "typescript.preferences.autoImportFileExcludePatterns": [
     "@ionic/angular/common",
     "@ionic/angular"
@@ -13,5 +11,6 @@
   "editor.formatOnSave": true,
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "nxConsole.generateAiAgentRules": true
 }
