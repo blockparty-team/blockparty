@@ -2,14 +2,14 @@
   "name": "tweak",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
+  "sourceRoot": "apps/tweak/src",
+  "prefix": "app",
   "generators": {
     "@ionic/angular-toolkit:page": {
       "styleext": "scss",
       "standalone": true
     }
   },
-  "sourceRoot": "apps/tweak/src",
-  "prefix": "app",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -86,7 +86,8 @@
           "progress": false
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
