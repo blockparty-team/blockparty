@@ -5,9 +5,8 @@ import {
   input,
 } from '@angular/core';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
-  IonHeader,
   IonToolbar,
   IonSegment,
   IonSegmentButton,
@@ -22,16 +21,7 @@ import { AppConfig } from '@blockparty/festival/shared/types';
   styleUrls: ['./event-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
-  imports: [
-    NgIf,
-    NgFor,
-    AsyncPipe,
-    IonHeader,
-    IonToolbar,
-    IonSegment,
-    IonSegmentButton,
-    IonLabel,
-  ],
+  imports: [AsyncPipe, IonToolbar, IonSegment, IonSegmentButton, IonLabel],
 })
 export class EventFilterComponent {
   private eventFilterStateService = inject(EventFilterStateService);

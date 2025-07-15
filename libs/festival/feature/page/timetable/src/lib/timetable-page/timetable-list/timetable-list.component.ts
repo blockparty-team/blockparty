@@ -16,10 +16,9 @@ import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@blockparty/util/animation';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonFooter,
-  IonContent,
   IonList,
   IonItemGroup,
   IonItemDivider,
@@ -28,7 +27,6 @@ import {
   IonIcon,
   IonSegment,
   IonSegmentButton,
-  IonText,
   IonRouterLink,
 } from '@ionic/angular/standalone';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
@@ -46,13 +44,11 @@ enum ListViewMode {
   animations: animations.slideLeft,
   standalone: true,
   imports: [
-    NgIf,
     NgFor,
     RouterLink,
     AsyncPipe,
     DatePipe,
     IonFooter,
-    IonContent,
     IonList,
     IonItemGroup,
     IonItemDivider,
@@ -61,7 +57,6 @@ enum ListViewMode {
     IonIcon,
     IonSegment,
     IonSegmentButton,
-    IonText,
     IonRouterLink,
   ],
 })

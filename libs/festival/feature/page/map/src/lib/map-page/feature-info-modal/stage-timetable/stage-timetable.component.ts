@@ -23,9 +23,8 @@ import {
   Ticket,
   RouteName,
 } from '@blockparty/festival/shared/types';
-import { NgIf, NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { NgFor, AsyncPipe, DatePipe } from '@angular/common';
 import {
-  IonHeader,
   IonToolbar,
   IonTitle,
   IonButtons,
@@ -55,11 +54,9 @@ interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
   standalone: true,
   imports: [
     IonFooter,
-    NgIf,
     NgFor,
     AsyncPipe,
     DatePipe,
-    IonHeader,
     IonToolbar,
     IonTitle,
     IonButtons,

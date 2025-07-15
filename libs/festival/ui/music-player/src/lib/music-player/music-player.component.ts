@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { animations } from '@blockparty/util/animation';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { NgIf } from '@angular/common';
 import {
   IonHeader,
   IonSegment,
@@ -18,7 +18,6 @@ import {
   IonIcon,
   IonSpinner,
 } from '@ionic/angular/standalone';
-import { SafePipe } from '@blockparty/festival/shared/pipes';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 enum PlayerSource {
@@ -33,15 +32,7 @@ enum PlayerSource {
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animations.slideUpDown,
   standalone: true,
-  imports: [
-    NgIf,
-    AsyncPipe,
-    IonHeader,
-    IonSegment,
-    IonSegmentButton,
-    IonIcon,
-    IonSpinner,
-  ],
+  imports: [NgIf, IonHeader, IonSegment, IonSegmentButton, IonIcon, IonSpinner],
 })
 export class MusicPlayerComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);

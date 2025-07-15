@@ -6,14 +6,12 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { Subject } from 'rxjs';
 import { isSameDay, sub } from 'date-fns';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, tap } from 'rxjs/operators';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
-import { NgIf, AsyncPipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import {
   IonHeader,
@@ -34,10 +32,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   standalone: true,
   imports: [
     EventFilterComponent,
-    NgIf,
     TimetableGanttComponent,
     TimetableListComponent,
-    AsyncPipe,
     IonHeader,
     IonContent,
     IonFab,
