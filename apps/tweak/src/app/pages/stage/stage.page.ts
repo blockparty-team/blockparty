@@ -14,7 +14,6 @@ import { MapService } from '@tweak/services/map.service';
   selector: 'app-stage',
   templateUrl: './stage.page.html',
   styleUrls: ['./stage.page.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule, IonContent, ToolbarComponent],
   providers: [MapService],

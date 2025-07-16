@@ -16,7 +16,6 @@ import {
   templateUrl: './asset.component.html',
   styleUrls: ['./asset.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [AsyncPipe, IonToolbar, IonTitle, IonButtons, IonButton],
 })
 export class AssetComponent {

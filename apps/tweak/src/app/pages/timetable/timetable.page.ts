@@ -8,7 +8,6 @@ import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.compo
   selector: 'app-timetable',
   templateUrl: './timetable.page.html',
   styleUrls: ['./timetable.page.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule, IonContent, ToolbarComponent],
 })

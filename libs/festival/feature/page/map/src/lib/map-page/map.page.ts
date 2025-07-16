@@ -43,7 +43,6 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
     ...animations.fadeInOut,
     ...animations.slideUpDown,
   ],
-  standalone: true,
   imports: [EventFilterComponent, AsyncPipe, IonHeader, IonContent],
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {

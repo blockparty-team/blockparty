@@ -14,15 +14,7 @@ import {
   templateUrl: './artist-item.component.html',
   styleUrls: ['./artist-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    RouterLink,
-    DatePipe,
-    IonItem,
-    IonAvatar,
-    IonLabel,
-    IonRouterLink
-],
+  imports: [RouterLink, DatePipe, IonItem, IonAvatar, IonLabel, IonRouterLink],
 })
 export class ArtistItemComponent {
   @Input() artist!: ArtistViewModel;

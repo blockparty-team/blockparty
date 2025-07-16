@@ -67,7 +67,6 @@ enum SearchMode {
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -88,8 +87,8 @@ enum SearchMode {
     IonItem,
     IonBadge,
     IonIcon,
-    IonSpinner
-],
+    IonSpinner,
+  ],
 })
 export class SearchPage {
   private router = inject(Router);

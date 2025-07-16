@@ -1,15 +1,57 @@
-import { ChangeDetectionStrategy, Component, Signal, inject, signal, computed } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  Signal,
+  inject,
+  signal,
+  computed,
+} from '@angular/core';
 
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { IonThumbnail, IonContent, IonToggle, IonButtons, IonModal, IonItem, IonToolbar, IonHeader, IonButton, IonTitle, IonList, IonIcon, IonInput, IonFab, IonFabButton, IonAccordion, IonLabel, IonAccordionGroup, IonItemGroup, IonItemDivider, IonFooter } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonToggle,
+  IonButtons,
+  IonModal,
+  IonItem,
+  IonToolbar,
+  IonHeader,
+  IonButton,
+  IonTitle,
+  IonList,
+  IonIcon,
+  IonInput,
+  IonFab,
+  IonFabButton,
+  IonAccordion,
+  IonLabel,
+  IonAccordionGroup,
+  IonItemGroup,
+  IonItemDivider,
+  IonFooter,
+} from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
 import { EditModalComponent } from '@tweak/shared/components/edit-modal/edit-modal.component';
 import { ImageUploadComponent } from 'libs/tweak/shared/image-upload';
 import { ImageCropperComponent } from 'libs/tweak/shared/image-cropper';
-import { Tables, TablesInsert } from '@blockparty/distortion/data-access/supabase';
-import { TableComponent, TableConfig } from '@tweak/shared/components/table/table.component';
+import {
+  Tables,
+  TablesInsert,
+} from '@blockparty/distortion/data-access/supabase';
+import {
+  TableComponent,
+  TableConfig,
+} from '@tweak/shared/components/table/table.component';
 import { SupabaseService } from '@tweak/services/supabase.service';
-import { EMPTY, Subject, catchError, of, startWith, switchMap, tap } from 'rxjs';
+import {
+  EMPTY,
+  Subject,
+  catchError,
+  of,
+  startWith,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { NotificationService } from '@tweak/services/notification.service';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -18,8 +60,34 @@ import { DomSanitizer } from '@angular/platform-browser';
   selector: 'app-artist',
   templateUrl: './artist.page.html',
   styleUrls: ['./artist.page.scss'],
-  standalone: true,
-  imports: [IonFooter, IonItemDivider, IonItemGroup, IonAccordionGroup, IonLabel, IonAccordion, IonFabButton, IonFab, IonIcon, IonList, IonTitle, IonButton, IonHeader, IonToolbar, IonItem, IonModal, IonButtons, ReactiveFormsModule, IonContent, ToolbarComponent, EditModalComponent, ImageUploadComponent, ImageCropperComponent, IonInput, IonToggle, TableComponent, IonThumbnail],
+  imports: [
+    IonFooter,
+    IonItemDivider,
+    IonItemGroup,
+    IonAccordionGroup,
+    IonLabel,
+    IonAccordion,
+    IonFabButton,
+    IonFab,
+    IonIcon,
+    IonList,
+    IonTitle,
+    IonButton,
+    IonHeader,
+    IonToolbar,
+    IonItem,
+    IonModal,
+    IonButtons,
+    ReactiveFormsModule,
+    IonContent,
+    ToolbarComponent,
+    EditModalComponent,
+    ImageUploadComponent,
+    ImageCropperComponent,
+    IonInput,
+    IonToggle,
+    TableComponent,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtistPage {
@@ -67,18 +135,19 @@ export class ArtistPage {
       { columnDef: 'is_visible', header: 'Is visible?', type: 'boolean' },
       { columnDef: 'public', header: 'Is public?', type: 'boolean' },
     ],
-    data: this.artists().map(artist => {
-
+    data: this.artists().map((artist) => {
       let image;
       if (artist.storage_path) {
-        const [bucket, path] = this.supabase.getBucketAndPath(artist.storage_path!);
+        const [bucket, path] = this.supabase.getBucketAndPath(
+          artist.storage_path!,
+        );
         image = this.supabase.publicImageUrl(bucket, path);
       }
 
       return {
         ...artist,
-        image
-      }
+        image,
+      };
     }),
   }));
 
@@ -103,7 +172,7 @@ export class ArtistPage {
   constructor() {
     this.updateData$
       .pipe(
-        startWith(null) // Initial data fetch
+        startWith(null), // Initial data fetch
       )
       .subscribe(() => {
         this.supabase.fetchArtists().subscribe((artists) => {
@@ -111,7 +180,6 @@ export class ArtistPage {
         });
       });
   }
-
 
   onImageEvent(event: Event) {
     this.imageEvent.set(event);
@@ -124,7 +192,7 @@ export class ArtistPage {
 
   async onDeleteImage() {
     const confirmed = await this.notificationService.confirmAlert(
-      'Do you want to delete the image?'
+      'Do you want to delete the image?',
     );
 
     if (!confirmed) return;
@@ -132,18 +200,18 @@ export class ArtistPage {
     if (this.isEditing() && this.selectedArtist()) {
       const artist = this.selectedArtist()!;
       // Delete the file from storage and update the artist
-      this.supabase.deleteFile(
-        'artist',
-        artist.storage_path as string
-      ).pipe(
-        switchMap(() => this.supabase.updateArtist(artist.id, { storage_path: null })),
-        tap(() => this.updateData$.next())
-      ).subscribe();
-
+      this.supabase
+        .deleteFile('artist', artist.storage_path as string)
+        .pipe(
+          switchMap(() =>
+            this.supabase.updateArtist(artist.id, { storage_path: null }),
+          ),
+          tap(() => this.updateData$.next()),
+        )
+        .subscribe();
     } else {
       this.croppedImage.set(null);
     }
-
   }
 
   onArtistModalDismiss() {
@@ -171,7 +239,7 @@ export class ArtistPage {
 
   async onDelete(id: string) {
     const confirmed = await this.notificationService.confirmAlert(
-      'Are you sure you want to delete this artist?'
+      'Are you sure you want to delete this artist?',
     );
 
     if (!confirmed) return;
@@ -208,43 +276,49 @@ export class ArtistPage {
       payload.storage_path = `artist/${payload.name.toLowerCase().replace(' ', '_')}`;
     }
 
-    const upsertArtist$ = this.supabase
-      .upsertArtist(payload)
-      .pipe(
-        catchError((error) => {
-          this.notificationService.showToast({
-            message: `Could not create artist: ${error.message}`,
-            color: 'danger',
-          });
+    const upsertArtist$ = this.supabase.upsertArtist(payload).pipe(
+      catchError((error) => {
+        this.notificationService.showToast({
+          message: `Could not create artist: ${error.message}`,
+          color: 'danger',
+        });
 
-          return EMPTY;
-        })
-      )
+        return EMPTY;
+      }),
+    );
 
     const uploadImage$ = this.croppedImage()
-      ? this.supabase.uploadFile('artist', payload.name.toLowerCase().replace(' ', '_'), this.croppedImage()?.blob as Blob).pipe(
-        catchError((error) => {
-          this.notificationService.showToast({
-            message: `Could not upload image: ${error.message}`,
-            color: 'danger',
-          });
+      ? this.supabase
+          .uploadFile(
+            'artist',
+            payload.name.toLowerCase().replace(' ', '_'),
+            this.croppedImage()?.blob as Blob,
+          )
+          .pipe(
+            catchError((error) => {
+              this.notificationService.showToast({
+                message: `Could not upload image: ${error.message}`,
+                color: 'danger',
+              });
 
-          return EMPTY;
-        }
-        ))
+              return EMPTY;
+            }),
+          )
       : of(null);
 
-    uploadImage$.pipe(
-      switchMap(() => upsertArtist$),
-      tap(() => {
-        this.resetModalState();
-        this.updateData$.next();
-        this.notificationService.showToast({
-          message: 'Artist saved successfully',
-          color: 'success',
-        });
-      }),
-    ).subscribe();
+    uploadImage$
+      .pipe(
+        switchMap(() => upsertArtist$),
+        tap(() => {
+          this.resetModalState();
+          this.updateData$.next();
+          this.notificationService.showToast({
+            message: 'Artist saved successfully',
+            color: 'success',
+          });
+        }),
+      )
+      .subscribe();
   }
 
   private resetModalState(): void {

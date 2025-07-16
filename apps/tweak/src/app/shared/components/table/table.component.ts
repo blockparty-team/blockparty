@@ -1,4 +1,3 @@
-import { JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,7 +13,12 @@ import {
 } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { IonSearchbar, IonCheckbox, IonThumbnail, IonImg } from '@ionic/angular/standalone';
+import {
+  IonSearchbar,
+  IonCheckbox,
+  IonThumbnail,
+  IonImg,
+} from '@ionic/angular/standalone';
 
 export type ColumnType =
   | 'text'
@@ -44,16 +48,14 @@ export interface TableConfig<T> {
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    JsonPipe,
     MatTableModule,
     MatSortModule,
     IonSearchbar,
     IonCheckbox,
     IonThumbnail,
-    IonImg
-],
+    IonImg,
+  ],
 })
 export class TableComponent {
   @Input({ required: true }) config!: Signal<TableConfig<any>>;

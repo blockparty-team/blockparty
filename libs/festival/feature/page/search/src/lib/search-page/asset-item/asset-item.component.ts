@@ -23,7 +23,6 @@ import {
   templateUrl: './asset-item.component.html',
   styleUrls: ['./asset-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [IonItem, IonThumbnail, IonLabel, IonIcon],
 })
 export class AssetItemComponent {

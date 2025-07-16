@@ -2,7 +2,6 @@ import { Directive, ElementRef, inject, Input, Renderer2 } from '@angular/core';
 
 @Directive({
   selector: 'iframe',
-  standalone: true,
 })
 export class IframeSrcDirective {
   private elRef = inject(ElementRef);

@@ -31,7 +31,6 @@ interface NavigationItem {
   selector: 'app-sidebar',
   templateUrl: './sidebar.page.html',
   styleUrls: ['./sidebar.page.scss'],
-  standalone: true,
   imports: [
     AsyncPipe,
     IonHeader,
@@ -44,8 +43,8 @@ interface NavigationItem {
     IonList,
     IonItem,
     IonLabel,
-    IonFooter
-],
+    IonFooter,
+  ],
 })
 export class SidebarPage implements OnInit {
   private authService = inject(AuthService);

@@ -1,10 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
-import { IonIcon, IonButton, IonText } from '@ionic/angular/standalone'
+import { IonIcon, IonButton, IonText } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'lib-image-upload',
-  standalone: true,
   imports: [IonText, IonIcon, IonButton],
   templateUrl: './image-upload.component.html',
   styleUrl: './image-upload.component.scss',

@@ -26,7 +26,6 @@ interface IconsViewModel extends MapIconViewModel {
   templateUrl: './legend.component.html',
   styleUrls: ['./legend.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     AsyncPipe,
     IonHeader,
@@ -36,8 +35,8 @@ interface IconsViewModel extends MapIconViewModel {
     IonItem,
     IonThumbnail,
     IonLabel,
-    IonToggle
-],
+    IonToggle,
+  ],
 })
 export class LegendComponent implements OnInit {
   iconsWithToggleState$!: Observable<IconsViewModel[]>;
@@ -79,7 +78,7 @@ export class LegendComponent implements OnInit {
     this.mapStateService.updateRemovedAssetIconNames(name!, visible);
   }
 
-  public trackBy(_index, asset: MapIconViewModel) {
+  public trackBy(_index: number, asset: MapIconViewModel) {
     return asset.name;
   }
 }

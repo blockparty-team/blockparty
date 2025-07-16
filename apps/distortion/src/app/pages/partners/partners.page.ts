@@ -13,7 +13,6 @@ import {
   selector: 'app-partners',
   templateUrl: './partners.page.html',
   styleUrls: ['./partners.page.scss'],
-  standalone: true,
   imports: [
     RouterLink,
     IonContent,

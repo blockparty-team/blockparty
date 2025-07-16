@@ -51,7 +51,6 @@ interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
   templateUrl: './stage-timetable.component.html',
   styleUrls: ['./stage-timetable.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     IonFooter,
     AsyncPipe,
@@ -68,8 +67,8 @@ interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
     IonBadge,
     IonModal,
     IonContent,
-    IonList
-],
+    IonList,
+  ],
 })
 export class StageTimetableComponent implements OnInit {
   private mapStateService = inject(MapStateService);

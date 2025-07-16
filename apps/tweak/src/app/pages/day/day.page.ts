@@ -12,19 +12,16 @@ import {
   IonFabButton,
   IonButtons,
   IonIcon,
-  IonCheckbox,
   IonToggle,
   IonContent,
   IonList,
   IonItem,
   IonInput,
-  IonDatetimeButton,
-  IonDatetime,
-  IonModal,
   IonButton,
   IonHeader,
   IonToolbar,
-  IonTitle, IonFooter
+  IonTitle,
+  IonFooter,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
 import { SupabaseService } from '@tweak/services/supabase.service';
@@ -44,7 +41,6 @@ import { Tables } from '@tweak/interfaces/database-definitions';
   selector: 'app-day',
   templateUrl: './day.page.html',
   styleUrls: ['./day.page.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonFooter,
@@ -56,15 +52,11 @@ import { Tables } from '@tweak/interfaces/database-definitions';
     IonFab,
     IonFabButton,
     IonIcon,
-    IonCheckbox,
     IonContent,
     IonToggle,
     IonList,
     IonItem,
     IonInput,
-    IonDatetimeButton,
-    IonDatetime,
-    IonModal,
     IonButton,
     ToolbarComponent,
     IonHeader,
@@ -115,7 +107,7 @@ export class DayPage {
   constructor() {
     this.updateData$
       .pipe(
-        startWith(null) // Initial data fetch
+        startWith(null), // Initial data fetch
       )
       .subscribe(() => {
         this.supabase.fetchDays().subscribe((days) => {
@@ -140,7 +132,7 @@ export class DayPage {
 
   async onDeleteDay(id: string | undefined) {
     const confirmed = await this.notificationService.confirmAlert(
-      'Are you sure you want to delete this day?'
+      'Are you sure you want to delete this day?',
     );
 
     if (!confirmed) return;
@@ -156,7 +148,7 @@ export class DayPage {
           });
 
           return EMPTY;
-        })
+        }),
       )
       .subscribe();
     this.isModalOpen.set(false);

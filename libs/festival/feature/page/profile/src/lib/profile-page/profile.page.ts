@@ -22,7 +22,6 @@ import {
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     AsyncPipe,
@@ -34,8 +33,8 @@ import {
     IonTitle,
     IonContent,
     IonAvatar,
-    IonButton
-],
+    IonButton,
+  ],
 })
 export class ProfilePage implements OnInit {
   userMetaData$!: Observable<UserMetadata>;

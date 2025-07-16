@@ -9,7 +9,6 @@ import { SupabaseService } from '@tweak/services/supabase.service';
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
-  standalone: true,
   imports: [IonicModule, ReactiveFormsModule, ToolbarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

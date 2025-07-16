@@ -19,7 +19,6 @@ import {
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
-  standalone: true,
   imports: [
     AsyncPipe,
     IonHeader,
@@ -30,8 +29,8 @@ import {
     IonContent,
     IonButton,
     IonItem,
-    IonLabel
-],
+    IonLabel,
+  ],
 })
 export class SettingsPage implements OnInit {
   private localNotificationsService = inject(LocalNotificationsService);

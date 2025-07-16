@@ -20,7 +20,6 @@ import {
   selector: 'app-transport',
   templateUrl: './transport.page.html',
   styleUrls: ['./transport.page.scss'],
-  standalone: true,
   imports: [
     AsyncPipe,
     IonHeader,

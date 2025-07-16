@@ -30,7 +30,6 @@ import {
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
-  standalone: true,
   imports: [
     EventCardComponent,
     AsyncPipe,
@@ -46,8 +45,8 @@ import {
     IonAccordionGroup,
     IonAccordion,
     IonItem,
-    IonLabel
-],
+    IonLabel,
+  ],
 })
 export class EventPage implements OnInit {
   private eventStateService = inject(EventStateService);

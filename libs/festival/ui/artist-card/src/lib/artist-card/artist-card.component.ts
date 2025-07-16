@@ -15,7 +15,6 @@ import { IonCard, IonIcon, IonRouterLink } from '@ionic/angular/standalone';
   templateUrl: './artist-card.component.html',
   styleUrls: ['./artist-card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, DatePipe, IonCard, IonIcon, IonRouterLink],
 })
 export class ArtistCardComponent {

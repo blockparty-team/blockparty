@@ -37,7 +37,6 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
   selector: 'app-event-detail',
   templateUrl: './event-detail.page.html',
   styleUrls: ['./event-detail.page.scss'],
-  standalone: true,
   imports: [
     RouterLink,
     AsyncPipe,
@@ -55,8 +54,8 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
     IonButton,
     IonList,
     IonItem,
-    IonRouterLink
-],
+    IonRouterLink,
+  ],
 })
 export class EventDetailPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);

@@ -26,7 +26,6 @@ import {
   templateUrl: './event-item.component.html',
   styleUrls: ['./event-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [RouterLink, IonItem, IonBadge, IonLabel, IonIcon, IonRouterLink],
 })
 export class EventItemComponent {

@@ -31,7 +31,6 @@ import { FavoriteStateService } from '@blockparty/festival/data-access/state/fav
   templateUrl: './timetable-gantt.component.html',
   styleUrls: ['./timetable-gantt.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgClass,
     RouterLink,
@@ -39,8 +38,8 @@ import { FavoriteStateService } from '@blockparty/festival/data-access/state/fav
     DatePipe,
     IonIcon,
     IonText,
-    IonRouterLink
-],
+    IonRouterLink,
+  ],
 })
 export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);

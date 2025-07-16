@@ -55,7 +55,6 @@ const soMeIcons: SoMeIcon[] = [
   templateUrl: './artist-detail.page.html',
   styleUrls: ['./artist-detail.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     NgClass,
     MusicPlayerComponent,
@@ -67,8 +66,8 @@ const soMeIcons: SoMeIcon[] = [
     IonIcon,
     IonFab,
     IonFabList,
-    IonSpinner
-],
+    IonSpinner,
+  ],
 })
 export class ArtistDetailPage implements OnInit {
   router = inject(Router);

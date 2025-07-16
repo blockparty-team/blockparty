@@ -1,4 +1,3 @@
-
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
@@ -40,7 +39,6 @@ export const appPages: AppPage[] = [
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  standalone: true,
   imports: [
     RouterLink,
     RouterLinkActive,
@@ -57,8 +55,8 @@ export const appPages: AppPage[] = [
     IonItem,
     IonIcon,
     IonLabel,
-    IonRouterOutlet
-],
+    IonRouterOutlet,
+  ],
 })
 export class AppComponent {
   public appPages = signal<AppPage[]>(appPages);

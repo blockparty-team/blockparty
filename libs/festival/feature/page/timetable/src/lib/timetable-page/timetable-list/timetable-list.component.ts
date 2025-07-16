@@ -42,7 +42,6 @@ enum ListViewMode {
   styleUrls: ['./timetable-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animations.slideLeft,
-  standalone: true,
   imports: [
     RouterLink,
     AsyncPipe,
@@ -56,8 +55,8 @@ enum ListViewMode {
     IonIcon,
     IonSegment,
     IonSegmentButton,
-    IonRouterLink
-],
+    IonRouterLink,
+  ],
 })
 export class TimetableListComponent {
   private eventFilterStateService = inject(EventFilterStateService);

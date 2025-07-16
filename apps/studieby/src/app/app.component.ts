@@ -29,7 +29,6 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [IonApp, IonRouterOutlet],
   providers: [AppUpdateService],
 })

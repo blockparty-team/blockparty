@@ -38,7 +38,6 @@ interface DayGroupedFavorites {
   templateUrl: './favorite.page.html',
   styleUrls: ['./favorite.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     RouterLink,
     AsyncPipe,
@@ -56,8 +55,8 @@ interface DayGroupedFavorites {
     IonItemDivider,
     IonLabel,
     IonItem,
-    IonRouterLink
-],
+    IonRouterLink,
+  ],
 })
 export class FavoritePage {
   private artistStateService = inject(ArtistStateService);

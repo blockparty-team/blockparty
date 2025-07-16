@@ -31,7 +31,6 @@ enum PlayerSource {
   styleUrls: ['./music-player.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animations.slideUpDown,
-  standalone: true,
   imports: [IonHeader, IonSegment, IonSegmentButton, IonIcon, IonSpinner],
 })
 export class MusicPlayerComponent implements OnInit {

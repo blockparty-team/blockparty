@@ -8,7 +8,6 @@ import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.compo
   selector: 'app-icon',
   templateUrl: './icon.page.html',
   styleUrls: ['./icon.page.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule, IonContent, ToolbarComponent],
 })

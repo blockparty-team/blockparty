@@ -29,7 +29,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrls: ['timetable.page.scss'],
   providers: [TimetableStateService, EventFilterStateService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     EventFilterComponent,
     TimetableGanttComponent,

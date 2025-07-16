@@ -14,7 +14,6 @@ import { MapService } from '@tweak/services/map.service';
   selector: 'app-asset',
   templateUrl: './asset.page.html',
   styleUrls: ['./asset.page.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule, IonContent, ToolbarComponent],
   providers: [MapService],

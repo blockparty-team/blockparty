@@ -12,7 +12,6 @@ import { AsyncPipe } from '@angular/common';
   templateUrl: './feature-info-modal.component.html',
   styleUrls: ['./feature-info-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [StageTimetableComponent, AssetComponent, AsyncPipe],
 })
 export class FeatureInfoModalComponent {

@@ -20,7 +20,6 @@ import { AppConfig } from '@blockparty/festival/shared/types';
   templateUrl: './event-filter.component.html',
   styleUrls: ['./event-filter.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [AsyncPipe, IonToolbar, IonSegment, IonSegmentButton, IonLabel],
 })
 export class EventFilterComponent {

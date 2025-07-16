@@ -29,7 +29,6 @@ import {
   styleUrls: ['./artist.page.scss'],
   templateUrl: './artist.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     FormsModule,
     ReactiveFormsModule,
@@ -42,8 +41,8 @@ import {
     IonToolbar,
     IonSearchbar,
     IonContent,
-    IonSpinner
-],
+    IonSpinner,
+  ],
 })
 export class ArtistPage {
   private artistStateService = inject(ArtistStateService);

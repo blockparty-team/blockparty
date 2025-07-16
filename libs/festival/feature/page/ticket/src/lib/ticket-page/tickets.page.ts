@@ -23,7 +23,6 @@ import {
   selector: 'app-tickets',
   templateUrl: './tickets.page.html',
   styleUrls: ['./tickets.page.scss'],
-  standalone: true,
   imports: [
     AsyncPipe,
     IonHeader,
@@ -37,8 +36,8 @@ import {
     IonItem,
     IonLabel,
     IonList,
-    IonIcon
-],
+    IonIcon,
+  ],
 })
 export class TicketsPage implements OnInit {
   private ticketStateService = inject(TicketStateService);
