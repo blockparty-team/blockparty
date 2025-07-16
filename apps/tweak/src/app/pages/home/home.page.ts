@@ -4,7 +4,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { IonRouterLink } from '@ionic/angular/standalone';
@@ -19,11 +19,10 @@ import { AppPage, appPages } from '@tweak/app.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonicModule,
-    CommonModule,
     FormsModule,
     ToolbarComponent,
-    IonRouterLink,
-  ],
+    IonRouterLink
+],
 })
 export class HomePage {
   appPages = signal<AppPage[]>(appPages);

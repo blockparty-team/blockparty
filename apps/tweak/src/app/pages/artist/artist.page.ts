@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Signal, inject, signal, computed } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonThumbnail, IonContent, IonToggle, IonButtons, IonModal, IonItem, IonToolbar, IonHeader, IonButton, IonTitle, IonList, IonIcon, IonInput, IonFab, IonFabButton, IonAccordion, IonLabel, IonAccordionGroup, IonItemGroup, IonItemDivider, IonFooter } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
@@ -19,30 +19,7 @@ import { DomSanitizer } from '@angular/platform-browser';
   templateUrl: './artist.page.html',
   styleUrls: ['./artist.page.scss'],
   standalone: true,
-  imports: [IonFooter, IonItemDivider, IonItemGroup, IonAccordionGroup, IonLabel, IonAccordion,
-    IonFabButton,
-    IonFab,
-    IonIcon,
-    IonList,
-    IonTitle,
-    IonButton,
-    IonHeader,
-    IonToolbar,
-    IonItem,
-    IonModal,
-    IonButtons,
-    CommonModule,
-    ReactiveFormsModule,
-    IonContent,
-    ToolbarComponent,
-    EditModalComponent,
-    ImageUploadComponent,
-    ImageCropperComponent,
-    IonInput,
-    IonToggle,
-    TableComponent,
-    IonThumbnail,
-  ],
+  imports: [IonFooter, IonItemDivider, IonItemGroup, IonAccordionGroup, IonLabel, IonAccordion, IonFabButton, IonFab, IonIcon, IonList, IonTitle, IonButton, IonHeader, IonToolbar, IonItem, IonModal, IonButtons, ReactiveFormsModule, IonContent, ToolbarComponent, EditModalComponent, ImageUploadComponent, ImageCropperComponent, IonInput, IonToggle, TableComponent, IonThumbnail],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ArtistPage {

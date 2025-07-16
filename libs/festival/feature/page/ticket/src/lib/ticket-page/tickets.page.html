@@ -13,7 +13,7 @@
     <p>Select event types below to buy tickets</p>
   </section>
 
-  <ng-container *ngIf="eventsGroupedByType$ | async as eventTypes">
+  @if (eventsGroupedByType$ | async; as eventTypes) {
     <ion-accordion-group>
       <!-- Custom Accordion with full festival pass -->
       <ion-accordion>
@@ -26,49 +26,51 @@
           class="ion-padding"
           slot="content"
           [style.background-color]="'var(--ion-color-light)'"
-        >
+          >
           <ion-list lines="none">
             <ion-item
               (click)="onGoToTicket('https://www.ticketmaster.dk/event/distortion-2025-festival-pass-tickets/550887')"
               button="true"
               color="light"
-            >
+              >
               <ion-icon name="ticket" slot="start"></ion-icon>
               Full Festival Pass
             </ion-item>
           </ion-list>
         </div>
       </ion-accordion>
-
       <!-- Generated accordions from event/types -->
-      <ion-accordion *ngFor="let eventType of eventTypes">
-        <ion-item
-          slot="header"
-          [style.--background]="eventType.color ? eventType.color : 'gray'"
-        >
-          <ion-label color="dark">
-            <h2>{{eventType.name}}</h2>
-          </ion-label>
-        </ion-item>
-        <div
-          class="ion-padding"
-          slot="content"
-          [style.background-color]="eventType.color"
-        >
-          <ion-list lines="none">
-            <ng-container *ngFor="let event of eventType.event">
-              <ion-item
-                *ngFor="let ticket of event.tickets"
-                (click)="onGoToTicket(ticket.url)"
-                button="true"
-              >
-                <ion-icon name="ticket" color="light" slot="start"> </ion-icon>
-                {{ticket.name}}
-              </ion-item>
-            </ng-container>
-          </ion-list>
-        </div>
-      </ion-accordion>
+      @for (eventType of eventTypes; track eventType) {
+        <ion-accordion>
+          <ion-item
+            slot="header"
+            [style.--background]="eventType.color ? eventType.color : 'gray'"
+            >
+            <ion-label color="dark">
+              <h2>{{eventType.name}}</h2>
+            </ion-label>
+          </ion-item>
+          <div
+            class="ion-padding"
+            slot="content"
+            [style.background-color]="eventType.color"
+            >
+            <ion-list lines="none">
+              @for (event of eventType.event; track event) {
+                @for (ticket of event.tickets; track ticket) {
+                  <ion-item
+                    (click)="onGoToTicket(ticket.url)"
+                    button="true"
+                    >
+                    <ion-icon name="ticket" color="light" slot="start"> </ion-icon>
+                    {{ticket.name}}
+                  </ion-item>
+                }
+              }
+            </ion-list>
+          </div>
+        </ion-accordion>
+      }
     </ion-accordion-group>
-  </ng-container>
+  }
 </ion-content>

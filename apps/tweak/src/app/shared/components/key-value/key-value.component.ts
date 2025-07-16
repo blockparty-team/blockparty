@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, NgFor } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -62,7 +62,6 @@ export type KeyValueConfig = {
     },
   ],
   imports: [
-    NgFor,
     ReactiveFormsModule,
     IonInput,
     IonButton,
@@ -81,8 +80,8 @@ export type KeyValueConfig = {
     IonReorderGroup,
     IonReorder,
     JsonPipe,
-    AsyncPipe,
-  ],
+    AsyncPipe
+],
 })
 export class KeyValueComponent implements ControlValueAccessor {
   @Input() public config!: WritableSignal<KeyValueConfig>;

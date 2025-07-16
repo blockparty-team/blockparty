@@ -9,90 +9,88 @@
 </ion-header>
 
 <ion-content>
-  <ng-container *ngIf="event$ | async as event">
+  @if (event$ | async; as event) {
     <ion-fab slot="fixed" vertical="top" horizontal="end">
       <ion-fab-button
         color="secondary"
         (click)="onZoomToEventOnMap(event.id, event.bounds!)"
-      >
+        >
         <ion-icon name="map-outline"></ion-icon>
       </ion-fab-button>
-
-      <ion-fab-button
-        color="secondary"
-        id="event-detail-open-tickets-modal"
-        *ngIf="event.tickets"
-        class="margin-top"
-      >
-        <ion-icon name="ticket-outline"></ion-icon>
-      </ion-fab-button>
-
-      <ion-fab-button
-        color="secondary"
-        *ngIf="canShare$ | async"
-        class="margin-top"
-        (click)="share(event)"
-      >
-        <ion-icon name="share-social-outline"></ion-icon>
-      </ion-fab-button>
+      @if (event.tickets) {
+        <ion-fab-button
+          color="secondary"
+          id="event-detail-open-tickets-modal"
+          class="margin-top"
+          >
+          <ion-icon name="ticket-outline"></ion-icon>
+        </ion-fab-button>
+      }
+      @if (canShare$ | async) {
+        <ion-fab-button
+          color="secondary"
+          class="margin-top"
+          (click)="share(event)"
+          >
+          <ion-icon name="share-social-outline"></ion-icon>
+        </ion-fab-button>
+      }
     </ion-fab>
-
-    <ng-container *ngIf="event.imgUrl">
+    @if (event.imgUrl) {
       <img
         [src]="event.imgUrl"
         alt="Image of {{event.name}}"
         [srcset]="event.srcset"
-      />
-    </ng-container>
-
+        />
+    }
     <div class="ion-padding">
       <header class="ion-text-center">
         <h1>{{event.name}}</h1>
         <p class="days">{{ event.days.join(' | ')}}</p>
         <ion-badge [style.--background]="event.event_type.color"
           >{{event.event_type.name}}</ion-badge
+          >
+        </header>
+        <section class="description">
+          <p>{{ event.description }}</p>
+        </section>
+        <section class="artists">
+          @for (artist of event.artists; track artist) {
+            <div
+              class="artist-badge"
+              [routerLink]="['/tabs', routeName.Artist, artist.name]"
+              >
+              {{ artist.name }}
+            </div>
+          }
+        </section>
+      </div>
+      <ion-modal
+        trigger="event-detail-open-tickets-modal"
+        [initialBreakpoint]="0.4"
+        [breakpoints]="[0.4, 0.75]"
         >
-      </header>
-
-      <section class="description">
-        <p>{{ event.description }}</p>
-      </section>
-
-      <section class="artists">
-        <div
-          class="artist-badge"
-          *ngFor="let artist of event.artists"
-          [routerLink]="['/tabs', routeName.Artist, artist.name]"
-        >
-          {{ artist.name }}
-        </div>
-      </section>
-    </div>
-
-    <ion-modal
-      trigger="event-detail-open-tickets-modal"
-      [initialBreakpoint]="0.4"
-      [breakpoints]="[0.4, 0.75]"
-    >
-      <ng-template>
-        <ion-header>
-          <ion-toolbar>
-            <ion-buttons slot="end">
-              <ion-button (click)="onCloseModal()">
-                <ion-icon slot="icon-only" name="close"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-            <ion-title>Tickets</ion-title>
-          </ion-toolbar>
-        </ion-header>
-        <ion-content class="ion-padding">
-          <ion-list>
-            <ion-item *ngFor="let ticket of event.tickets" [href]="ticket.url">
-              {{ticket.name}}
-            </ion-item>
-          </ion-list>
-        </ion-content>
-      </ng-template>
-    </ion-modal>
-  </ng-container>
-</ion-content>
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-buttons slot="end">
+                <ion-button (click)="onCloseModal()">
+                  <ion-icon slot="icon-only" name="close"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+              <ion-title>Tickets</ion-title>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <ion-list>
+              @for (ticket of event.tickets; track ticket) {
+                <ion-item [href]="ticket.url">
+                  {{ticket.name}}
+                </ion-item>
+              }
+            </ion-list>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    }
+  </ion-content>

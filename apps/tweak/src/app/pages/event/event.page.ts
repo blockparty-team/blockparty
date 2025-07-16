@@ -8,7 +8,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   FormBuilder,
   FormsModule,
@@ -97,7 +97,6 @@ type State = {
   standalone: true,
   imports: [
     IonFooter,
-    CommonModule,
     ReactiveFormsModule,
     TableComponent,
     SelectComponent,
@@ -117,10 +116,9 @@ type State = {
     IonFab,
     IonFabButton,
     IonIcon,
-    CommonModule,
     FormsModule,
-    ToolbarComponent,
-  ],
+    ToolbarComponent
+],
   providers: [MapService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

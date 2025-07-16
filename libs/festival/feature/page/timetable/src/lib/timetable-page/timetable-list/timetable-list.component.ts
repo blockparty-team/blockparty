@@ -16,7 +16,7 @@ import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@blockparty/util/animation';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { RouterLink } from '@angular/router';
-import { NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonFooter,
   IonList,
@@ -44,7 +44,6 @@ enum ListViewMode {
   animations: animations.slideLeft,
   standalone: true,
   imports: [
-    NgFor,
     RouterLink,
     AsyncPipe,
     DatePipe,
@@ -57,8 +56,8 @@ enum ListViewMode {
     IonIcon,
     IonSegment,
     IonSegmentButton,
-    IonRouterLink,
-  ],
+    IonRouterLink
+],
 })
 export class TimetableListComponent {
   private eventFilterStateService = inject(EventFilterStateService);

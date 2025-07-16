@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
@@ -44,7 +44,6 @@ export const appPages: AppPage[] = [
   imports: [
     RouterLink,
     RouterLinkActive,
-    CommonModule,
     IonApp,
     IonFooter,
     IonSplitPane,
@@ -58,8 +57,8 @@ export const appPages: AppPage[] = [
     IonItem,
     IonIcon,
     IonLabel,
-    IonRouterOutlet,
-  ],
+    IonRouterOutlet
+],
 })
 export class AppComponent {
   public appPages = signal<AppPage[]>(appPages);

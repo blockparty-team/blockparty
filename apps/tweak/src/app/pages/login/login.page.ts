@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
@@ -10,7 +10,7 @@ import { SupabaseService } from '@tweak/services/supabase.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, ReactiveFormsModule, ToolbarComponent],
+  imports: [IonicModule, ReactiveFormsModule, ToolbarComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPage {

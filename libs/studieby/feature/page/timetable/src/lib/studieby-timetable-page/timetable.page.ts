@@ -10,7 +10,7 @@ import { isSameDay, sub } from 'date-fns';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, map, share, shareReplay, tap } from 'rxjs/operators';
-import { NgIf, AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import {
   IonHeader,
@@ -43,7 +43,6 @@ import { RouterLink } from '@angular/router';
     IonLabel,
     IonList,
     EventFilterComponent,
-    NgIf,
     AsyncPipe,
     DatePipe,
     JsonPipe,
@@ -52,8 +51,8 @@ import { RouterLink } from '@angular/router';
     IonContent,
     IonFab,
     IonFabButton,
-    IonIcon,
-  ],
+    IonIcon
+],
 })
 export class TimetablePage implements OnInit {
   private eventFilterStateService = inject(EventFilterStateService);

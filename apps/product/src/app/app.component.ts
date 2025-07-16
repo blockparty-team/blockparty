@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/cor
 import { RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
 import AOS from 'aos';
-import { CommonModule } from '@angular/common';
+
 
 type Feature = {
   title: string;
@@ -16,7 +16,7 @@ type Feature = {
 
 @Component({
   standalone: true,
-  imports: [NxWelcomeComponent, CommonModule, RouterModule],
+  imports: [NxWelcomeComponent, RouterModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

@@ -12,29 +12,32 @@
 
   <ion-content class="navigation">
     <ion-list>
-      <ion-item
-        *ngFor="let item of navigationItems"
-        lines="none"
-        (click)="onGoTo(item.routeName)"
-      >
-        <ion-icon [name]="item.icon" slot="start"></ion-icon>
-        <ion-label>
-          <h2>{{item.name}}</h2>
-        </ion-label>
-      </ion-item>
+      @for (item of navigationItems; track item) {
+        <ion-item
+          lines="none"
+          (click)="onGoTo(item.routeName)"
+          >
+          <ion-icon [name]="item.icon" slot="start"></ion-icon>
+          <ion-label>
+            <h2>{{item.name}}</h2>
+          </ion-label>
+        </ion-item>
+      }
     </ion-list>
   </ion-content>
 
-  <ion-footer class="login" *ngIf="enableLogin()">
-    <ion-item (click)="signInOrOut()" button lines="none">
-      <ion-icon
-        [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"
-        slot="start"
-        size="large"
-      ></ion-icon>
-      <ion-label>
-        <h2>{{ (authenticated$ | async) ? 'Logout' : 'Login'}}</h2>
-      </ion-label>
-    </ion-item>
-  </ion-footer>
+  @if (enableLogin()) {
+    <ion-footer class="login">
+      <ion-item (click)="signInOrOut()" button lines="none">
+        <ion-icon
+          [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"
+          slot="start"
+          size="large"
+        ></ion-icon>
+        <ion-label>
+          <h2>{{ (authenticated$ | async) ? 'Logout' : 'Login'}}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-footer>
+  }
 </div>

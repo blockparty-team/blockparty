@@ -4,7 +4,7 @@ import { UserMetadata } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonRouterLink,
   IonHeader,
@@ -24,7 +24,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
     RouterLink,
     AsyncPipe,
     IonRouterLink,
@@ -35,8 +34,8 @@ import {
     IonTitle,
     IonContent,
     IonAvatar,
-    IonButton,
-  ],
+    IonButton
+],
 })
 export class ProfilePage implements OnInit {
   userMetaData$!: Observable<UserMetadata>;

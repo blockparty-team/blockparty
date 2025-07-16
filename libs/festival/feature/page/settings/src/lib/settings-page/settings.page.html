@@ -12,15 +12,19 @@
   <h1 class="ion-text-center">Coming...</h1>
   <ion-button (click)="setSampleNotification()"
     >Sample notification (in 10 seconds)...</ion-button
-  >
+    >
 
-  <ion-button (click)="getNotifications()">Show notifications</ion-button>
-  <ion-content *ngIf="localNotifications$ | async as notifications">
-    <ion-item *ngFor="let notification of notifications">
-      <ion-label
-        >{{ notification.title }} <br />
-        {{ notification.schedule!.at }}</ion-label
-      >
-    </ion-item>
-  </ion-content>
-</ion-content>
+    <ion-button (click)="getNotifications()">Show notifications</ion-button>
+    @if (localNotifications$ | async; as notifications) {
+      <ion-content>
+        @for (notification of notifications; track notification) {
+          <ion-item>
+            <ion-label
+              >{{ notification.title }} <br />
+              {{ notification.schedule!.at }}</ion-label
+              >
+            </ion-item>
+          }
+        </ion-content>
+      }
+    </ion-content>

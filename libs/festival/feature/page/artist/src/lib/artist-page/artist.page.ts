@@ -15,7 +15,7 @@ import {
   CdkFixedSizeVirtualScroll,
   CdkVirtualForOf,
 } from '@angular/cdk/scrolling';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -31,7 +31,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
     FormsModule,
     ReactiveFormsModule,
     CdkVirtualScrollViewport,
@@ -43,8 +42,8 @@ import {
     IonToolbar,
     IonSearchbar,
     IonContent,
-    IonSpinner,
-  ],
+    IonSpinner
+],
 })
 export class ArtistPage {
   private artistStateService = inject(ArtistStateService);

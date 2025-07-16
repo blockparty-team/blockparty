@@ -5,8 +5,10 @@
 
   <ion-label>
     <h2>{{ artist.name }}</h2>
-    <p *ngFor="let act of artist.timetable">
-      {{ (act?.day)!.name }} | {{ act?.start_time | date: 'HH:mm' }}
-    </p>
+    @for (act of artist.timetable; track act) {
+      <p>
+        {{ (act?.day)!.name }} | {{ act?.start_time | date: 'HH:mm' }}
+      </p>
+    }
   </ion-label>
 </ion-item>

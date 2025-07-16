@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { animations } from '@blockparty/util/animation';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
-import { NgIf } from '@angular/common';
+
 import {
   IonHeader,
   IonSegment,
@@ -32,7 +32,7 @@ enum PlayerSource {
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: animations.slideUpDown,
   standalone: true,
-  imports: [NgIf, IonHeader, IonSegment, IonSegmentButton, IonIcon, IonSpinner],
+  imports: [IonHeader, IonSegment, IonSegmentButton, IonIcon, IonSpinner],
 })
 export class MusicPlayerComponent implements OnInit {
   private sanitizer = inject(DomSanitizer);

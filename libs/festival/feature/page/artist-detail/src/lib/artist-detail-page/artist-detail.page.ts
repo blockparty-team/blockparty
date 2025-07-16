@@ -16,7 +16,7 @@ import { ArtistStateService } from '@blockparty/festival/data-access/state/artis
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { ScrollCustomEvent } from '@ionic/angular/standalone';
 import { MusicPlayerComponent } from '@blockparty/festival/ui/music-player';
-import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
+import { NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonContent,
   IonBackButton,
@@ -57,8 +57,6 @@ const soMeIcons: SoMeIcon[] = [
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     MusicPlayerComponent,
     AsyncPipe,
@@ -69,8 +67,8 @@ const soMeIcons: SoMeIcon[] = [
     IonIcon,
     IonFab,
     IonFabList,
-    IonSpinner,
-  ],
+    IonSpinner
+],
 })
 export class ArtistDetailPage implements OnInit {
   router = inject(Router);

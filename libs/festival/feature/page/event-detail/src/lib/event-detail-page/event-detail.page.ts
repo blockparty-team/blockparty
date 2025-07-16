@@ -13,7 +13,7 @@ import {
   RouteName,
 } from '@blockparty/festival/shared/types';
 import { ModalController } from '@ionic/angular/standalone';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -39,8 +39,6 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
   styleUrls: ['./event-detail.page.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     RouterLink,
     AsyncPipe,
     IonHeader,
@@ -57,8 +55,8 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
     IonButton,
     IonList,
     IonItem,
-    IonRouterLink,
-  ],
+    IonRouterLink
+],
 })
 export class EventDetailPage implements OnInit {
   private activatedRoute = inject(ActivatedRoute);

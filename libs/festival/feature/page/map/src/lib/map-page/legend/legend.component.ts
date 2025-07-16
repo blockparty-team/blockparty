@@ -5,7 +5,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -28,10 +28,7 @@ interface IconsViewModel extends MapIconViewModel {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
-    // SafePipe,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -39,8 +36,8 @@ interface IconsViewModel extends MapIconViewModel {
     IonItem,
     IonThumbnail,
     IonLabel,
-    IonToggle,
-  ],
+    IonToggle
+],
 })
 export class LegendComponent implements OnInit {
   iconsWithToggleState$!: Observable<IconsViewModel[]>;

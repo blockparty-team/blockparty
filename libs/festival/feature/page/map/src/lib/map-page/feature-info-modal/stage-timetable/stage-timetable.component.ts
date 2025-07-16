@@ -23,7 +23,7 @@ import {
   Ticket,
   RouteName,
 } from '@blockparty/festival/shared/types';
-import { NgFor, AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonToolbar,
   IonTitle,
@@ -54,7 +54,6 @@ interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
   standalone: true,
   imports: [
     IonFooter,
-    NgFor,
     AsyncPipe,
     DatePipe,
     IonToolbar,
@@ -69,8 +68,8 @@ interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
     IonBadge,
     IonModal,
     IonContent,
-    IonList,
-  ],
+    IonList
+],
 })
 export class StageTimetableComponent implements OnInit {
   private mapStateService = inject(MapStateService);

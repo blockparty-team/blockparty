@@ -1,4 +1,4 @@
-import { JsonPipe, NgFor } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -46,15 +46,14 @@ export interface TableConfig<T> {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgFor,
     JsonPipe,
     MatTableModule,
     MatSortModule,
     IonSearchbar,
     IonCheckbox,
     IonThumbnail,
-    IonImg,
-  ],
+    IonImg
+],
 })
 export class TableComponent {
   @Input({ required: true }) config!: Signal<TableConfig<any>>;

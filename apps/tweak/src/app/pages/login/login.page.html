@@ -11,13 +11,18 @@
             formControlName="email"
           ></ion-input>
         </ion-item>
-        <div
-          *ngIf="(email?.dirty || email?.touched) && email?.errors"
-          class="errors"
-        >
-          <span *ngIf="email?.errors?.['required']">Email is required</span>
-          <span *ngIf="email?.errors?.['email']">Email is invalid</span>
-        </div>
+        @if ((email?.dirty || email?.touched) && email?.errors) {
+          <div
+            class="errors"
+            >
+            @if (email?.errors?.['required']) {
+              <span>Email is required</span>
+            }
+            @if (email?.errors?.['email']) {
+              <span>Email is invalid</span>
+            }
+          </div>
+        }
         <ion-item>
           <ion-input
             type="password"
@@ -25,22 +30,27 @@
             formControlName="password"
           ></ion-input>
         </ion-item>
-        <div
-          *ngIf="(password?.dirty || password?.touched) && password?.errors"
-          class="errors"
-        >
-          <span *ngIf="password?.errors?.['required']"
-            >Password is required</span
-          >
-          <span *ngIf="password?.errors?.['minlength']"
-            >Password needs to be 6 characters</span
-          >
-        </div>
-      </div>
+        @if ((password?.dirty || password?.touched) && password?.errors) {
+          <div
+            class="errors"
+            >
+            @if (password?.errors?.['required']) {
+              <span
+                >Password is required</span
+                >
+              }
+              @if (password?.errors?.['minlength']) {
+                <span
+                  >Password needs to be 6 characters</span
+                  >
+                }
+              </div>
+            }
+          </div>
 
-      <ion-button type="submit" expand="block" [disabled]="!credentials.valid"
-        >Login</ion-button
-      >
-    </form>
-  </div>
-</ion-content>
+          <ion-button type="submit" expand="block" [disabled]="!credentials.valid"
+            >Login</ion-button
+            >
+          </form>
+        </div>
+      </ion-content>

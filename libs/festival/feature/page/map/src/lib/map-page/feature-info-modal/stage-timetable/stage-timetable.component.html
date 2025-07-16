@@ -6,7 +6,7 @@
           scrollable
           (ionChange)="onSelectDay($event)"
           [value]="selectedDay$ | async"
-        >
+          >
           @for (day of days; track day.id) {
             <ion-segment-button [value]="day.id">
               <ion-label>{{ day.name }}</ion-label>
@@ -105,7 +105,7 @@
     trigger="open-description-modal"
     [initialBreakpoint]="0.4"
     [breakpoints]="[0.4, 0.75, 1]"
-  >
+    >
     <ng-template>
       <ion-toolbar>
         <ion-buttons slot="end">
@@ -128,7 +128,7 @@
     trigger="open-tickets-modal"
     [initialBreakpoint]="0.4"
     [breakpoints]="[0.4, 0.75]"
-  >
+    >
     <ng-template>
       <ion-toolbar>
         <ion-buttons slot="end">
@@ -140,9 +140,11 @@
       </ion-toolbar>
       <ion-content class="ion-padding">
         <ion-list>
-          <ion-item *ngFor="let ticket of tickets$ | async" [href]="ticket.url">
-            {{ ticket.name }}
-          </ion-item>
+          @for (ticket of tickets$ | async; track ticket) {
+            <ion-item [href]="ticket.url">
+              {{ ticket.name }}
+            </ion-item>
+          }
         </ion-list>
       </ion-content>
     </ng-template>

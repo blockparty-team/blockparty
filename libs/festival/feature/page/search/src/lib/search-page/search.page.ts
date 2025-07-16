@@ -33,13 +33,7 @@ import { AssetItemComponent } from './asset-item/asset-item.component';
 import { StageItemComponent } from './stage-item/stage-item.component';
 import { EventItemComponent } from './event-item/event-item.component';
 import { ArtistItemComponent } from './artist-item/artist-item.component';
-import {
-  NgIf,
-  NgFor,
-  NgSwitch,
-  NgSwitchCase,
-  AsyncPipe,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -75,12 +69,8 @@ enum SearchMode {
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
   imports: [
-    NgIf,
     FormsModule,
     ReactiveFormsModule,
-    NgFor,
-    NgSwitch,
-    NgSwitchCase,
     ArtistItemComponent,
     EventItemComponent,
     StageItemComponent,
@@ -98,8 +88,8 @@ enum SearchMode {
     IonItem,
     IonBadge,
     IonIcon,
-    IonSpinner,
-  ],
+    IonSpinner
+],
 })
 export class SearchPage {
   private router = inject(Router);

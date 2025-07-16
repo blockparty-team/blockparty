@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { TicketStateService } from '@blockparty/festival/data-access/state/ticket';
 import { Browser } from '@capacitor/browser';
 import { EventsGroupedByType } from '@blockparty/festival/shared/types';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -25,8 +25,6 @@ import {
   styleUrls: ['./tickets.page.scss'],
   standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     IonHeader,
     IonToolbar,
@@ -39,8 +37,8 @@ import {
     IonItem,
     IonLabel,
     IonList,
-    IonIcon,
-  ],
+    IonIcon
+],
 })
 export class TicketsPage implements OnInit {
   private ticketStateService = inject(TicketStateService);
