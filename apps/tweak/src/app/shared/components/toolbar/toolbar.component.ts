@@ -11,7 +11,6 @@ import {
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
   styleUrls: ['./toolbar.component.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle],
 })

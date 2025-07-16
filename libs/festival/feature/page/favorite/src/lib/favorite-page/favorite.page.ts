@@ -9,7 +9,7 @@ import { ArtistStateService } from '@blockparty/festival/data-access/state/artis
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
-import { NgIf, AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -38,9 +38,7 @@ interface DayGroupedFavorites {
   templateUrl: './favorite.page.html',
   styleUrls: ['./favorite.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    NgIf,
     RouterLink,
     AsyncPipe,
     DatePipe,

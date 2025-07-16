@@ -3,7 +3,7 @@
     [src]="artist.imgUrl"
     alt="Image of {{ artist.name }}"
     [srcset]="artist.srcset"
-  />
+    />
 
   <div class="card-content">
     <div class="card-text" [routerLink]="['./', artist.name]">
@@ -11,17 +11,21 @@
         <span>
           {{ artist.name }}
         </span>
-        <span *ngIf="artist.country" class="country">
-          ({{ artist.country }})
-        </span>
+        @if (artist.country) {
+          <span class="country">
+            ({{ artist.country }})
+          </span>
+        }
       </h3>
-      <p *ngFor="let act of artist.timetable" class="act">
-        {{ act.stage.event.name }} |
-        {{ act.day.name }}
-        <ng-container *ngIf="act.start_time">
-          | {{ act.start_time | date: 'HH:mm' }}
-        </ng-container>
-      </p>
+      @for (act of artist.timetable; track act) {
+        <p class="act">
+          {{ act.stage.event.name }} |
+          {{ act.day.name }}
+          @if (act.start_time) {
+            | {{ act.start_time | date: 'HH:mm' }}
+          }
+        </p>
+      }
     </div>
 
     <div slot="end" class="card-actions">
@@ -30,7 +34,7 @@
         [color]="artist.isFavorite ? 'favorite' : ''"
         [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
         (click)="toggleFavorite(artist.id!)"
-      >
+        >
       </ion-icon>
     </div>
   </div>

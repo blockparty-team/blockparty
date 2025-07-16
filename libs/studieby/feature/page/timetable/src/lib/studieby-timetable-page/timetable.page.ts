@@ -9,15 +9,12 @@ import { combineLatest } from 'rxjs';
 import { isSameDay, sub } from 'date-fns';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
-import { filter, map, share, shareReplay, tap } from 'rxjs/operators';
-import { NgIf, AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
+import { filter, map, shareReplay, tap } from 'rxjs/operators';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import {
   IonHeader,
   IonContent,
-  IonFab,
-  IonFabButton,
-  IonIcon,
   IonList,
   IonLabel,
   IonItem,
@@ -35,7 +32,6 @@ import { RouterLink } from '@angular/router';
   styleUrls: ['timetable.page.scss'],
   providers: [TimetableStateService, EventFilterStateService],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     IonItemDivider,
     IonItemGroup,
@@ -43,16 +39,11 @@ import { RouterLink } from '@angular/router';
     IonLabel,
     IonList,
     EventFilterComponent,
-    NgIf,
     AsyncPipe,
     DatePipe,
-    JsonPipe,
     RouterLink,
     IonHeader,
     IonContent,
-    IonFab,
-    IonFabButton,
-    IonIcon,
   ],
 })
 export class TimetablePage implements OnInit {

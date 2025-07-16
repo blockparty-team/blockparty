@@ -5,29 +5,28 @@
       debounce="0"
       [formControl]="searchTerm"
       animated="true"
-    >
+      >
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content id="main" class="artist-list">
-  <ng-container *ngIf="filteredArtists$ | async as artists; else loading">
+  @if (filteredArtists$ | async; as artists) {
     <cdk-virtual-scroll-viewport
       itemSize="160"
       minBufferPx="900"
       maxBufferPx="1350"
-    >
+      >
       <app-artist-card
         *cdkVirtualFor="let artist of artists; trackBy:trackArtist; let i = index"
         [artist]="artist"
-      >
+        >
       </app-artist-card>
     </cdk-virtual-scroll-viewport>
-  </ng-container>
-
-  <ng-template #loading>
+  } @else {
     <div class="loading">
       <ion-spinner></ion-spinner>
     </div>
-  </ng-template>
+  }
+
 </ion-content>

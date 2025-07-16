@@ -5,7 +5,7 @@ import { MenuController } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { first, tap } from 'rxjs/operators';
 import { RouteName } from '@blockparty/festival/shared/types';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -31,10 +31,7 @@ interface NavigationItem {
   selector: 'app-sidebar',
   templateUrl: './sidebar.page.html',
   styleUrls: ['./sidebar.page.scss'],
-  standalone: true,
   imports: [
-    NgFor,
-    NgIf,
     AsyncPipe,
     IonHeader,
     IonToolbar,

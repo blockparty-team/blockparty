@@ -28,7 +28,7 @@ import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-mod
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';
 
@@ -43,8 +43,7 @@ import { IonHeader, IonContent } from '@ionic/angular/standalone';
     ...animations.fadeInOut,
     ...animations.slideUpDown,
   ],
-  standalone: true,
-  imports: [EventFilterComponent, NgIf, AsyncPipe, IonHeader, IonContent],
+  imports: [EventFilterComponent, AsyncPipe, IonHeader, IonContent],
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private mapService = inject(MapService);

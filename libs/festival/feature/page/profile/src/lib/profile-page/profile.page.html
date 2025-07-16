@@ -10,18 +10,17 @@
 
 <ion-content>
   <div class="container">
-    <ng-container *ngIf="userMetaData$ | async as userMeta; else login">
+    @if (userMetaData$ | async; as userMeta) {
       <ion-avatar class="ion-margin">
         <img [src]="userMeta['avatar_url']" />
       </ion-avatar>
       <h1 class="ion-text-center">{{userMeta['name']}}</h1>
-    </ng-container>
-
-    <ng-template #login>
+    } @else {
       <p>Login to view your profile</p>
       <ion-button color="light" fill="outline" routerLink="/login">
         Login
       </ion-button>
-    </ng-template>
+    }
+
   </div>
 </ion-content>

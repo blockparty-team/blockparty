@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe, NgFor } from '@angular/common';
+import { AsyncPipe, JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -53,7 +53,6 @@ export type KeyValueConfig = {
   templateUrl: './key-value.component.html',
   styleUrls: ['./key-value.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -62,7 +61,6 @@ export type KeyValueConfig = {
     },
   ],
   imports: [
-    NgFor,
     ReactiveFormsModule,
     IonInput,
     IonButton,
@@ -98,9 +96,9 @@ export class KeyValueComponent implements ControlValueAccessor {
       map((form) =>
         form.items
           ?.filter((item) => this.isFilled(item))
-          .map((item) => item![this.config().property1Key])
-      )
-    )
+          .map((item) => item![this.config().property1Key]),
+      ),
+    ),
   );
 
   get items() {
@@ -122,7 +120,7 @@ export class KeyValueComponent implements ControlValueAccessor {
       this.fb.group<Properties>({
         [this.config().property1Key]: '',
         [this.config().property2Key]: '',
-      })
+      }),
     );
   }
 
@@ -143,7 +141,7 @@ export class KeyValueComponent implements ControlValueAccessor {
           this.fb.group<Properties>({
             [this.config().property1Key]: item[this.config().property1Key],
             [this.config().property2Key]: item[this.config().property2Key],
-          })
+          }),
         );
       });
     }

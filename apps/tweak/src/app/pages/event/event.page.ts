@@ -8,7 +8,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import {
   FormBuilder,
   FormsModule,
@@ -16,7 +16,6 @@ import {
   Validators,
 } from '@angular/forms';
 import {
-  IonModal,
   IonInput,
   IonList,
   IonToggle,
@@ -29,7 +28,8 @@ import {
   IonButtons,
   IonToolbar,
   IonButton,
-  IonItem, IonFooter
+  IonItem,
+  IonFooter,
 } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '../../shared/components/toolbar/toolbar.component';
 import { MapService } from '../../services/map.service';
@@ -47,7 +47,6 @@ import {
   forkJoin,
   map,
   merge,
-  of,
   shareReplay,
   switchMap,
   tap,
@@ -94,10 +93,8 @@ type State = {
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
-  standalone: true,
   imports: [
     IonFooter,
-    CommonModule,
     ReactiveFormsModule,
     TableComponent,
     SelectComponent,
@@ -112,12 +109,10 @@ type State = {
     IonToolbar,
     IonButton,
     IonItem,
-    IonModal,
     IonContent,
     IonFab,
     IonFabButton,
     IonIcon,
-    CommonModule,
     FormsModule,
     ToolbarComponent,
   ],
@@ -153,8 +148,8 @@ export class EventPage {
   public selectedEventId = toSignal(
     merge(
       toObservable(this.eventIdFromMap),
-      toObservable(this.eventIdFromTable)
-    )
+      toObservable(this.eventIdFromTable),
+    ),
   );
   public selectedEvent = computed<Tables<'event'> | undefined>(() => {
     return this.events().find((event) => event.id === this.selectedEventId());
@@ -262,8 +257,8 @@ export class EventPage {
             });
 
             return EMPTY;
-          })
-        )
+          }),
+        ),
       ),
       map((events) =>
         events.map((event: any) => {
@@ -272,9 +267,9 @@ export class EventPage {
           }));
 
           return { ...event, days };
-        })
+        }),
       ),
-      shareReplay(1)
+      shareReplay(1),
     );
 
     const days$ = this.updateData$.pipe(
@@ -287,9 +282,9 @@ export class EventPage {
             });
 
             return EMPTY;
-          })
-        )
-      )
+          }),
+        ),
+      ),
     );
 
     connect(this.days, days$);
@@ -312,7 +307,7 @@ export class EventPage {
 
         this.form.patchValue(event as any);
       },
-      { allowSignalWrites: true }
+      { allowSignalWrites: true },
     );
 
     // effect(() => {
@@ -371,14 +366,14 @@ export class EventPage {
 
   async onDeleteEvent(id: string | undefined) {
     const confirmed = await this.notificationService.confirmAlert(
-      'Are you sure you want to delete this event?'
+      'Are you sure you want to delete this event?',
     );
 
     if (!confirmed) return;
 
     concat(
       this.supabase.deleteDayEvents(id!),
-      this.supabase.deleteEvent(id!)
+      this.supabase.deleteEvent(id!),
     ).subscribe(() => {
       this.updateData$.next();
     });
@@ -425,8 +420,8 @@ export class EventPage {
 
           const createDayEvents$ = forkJoin(
             (days as unknown as any[]).map((day) =>
-              this.supabase.upsertDayEvent(day.id, eventId)
-            )
+              this.supabase.upsertDayEvent(day.id, eventId),
+            ),
           );
 
           return concat(deleteDayEvents$, createDayEvents$);
@@ -437,7 +432,7 @@ export class EventPage {
             message: 'Event saved',
             color: 'success',
           });
-        })
+        }),
       )
       .subscribe();
 

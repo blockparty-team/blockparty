@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import {
@@ -40,11 +39,9 @@ export const appPages: AppPage[] = [
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  standalone: true,
   imports: [
     RouterLink,
     RouterLinkActive,
-    CommonModule,
     IonApp,
     IonFooter,
     IonSplitPane,

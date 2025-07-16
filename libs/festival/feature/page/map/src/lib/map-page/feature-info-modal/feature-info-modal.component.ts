@@ -5,22 +5,14 @@ import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { AssetComponent } from './asset/asset.component';
 import { StageTimetableComponent } from './stage-timetable/stage-timetable.component';
-import { NgIf, AsyncPipe } from '@angular/common';
-import { IonContent } from '@ionic/angular/standalone';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-feature-info-modal',
   templateUrl: './feature-info-modal.component.html',
   styleUrls: ['./feature-info-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    NgIf,
-    StageTimetableComponent,
-    AssetComponent,
-    AsyncPipe,
-    IonContent,
-  ],
+  imports: [StageTimetableComponent, AssetComponent, AsyncPipe],
 })
 export class FeatureInfoModalComponent {
   private mapStateService = inject(MapStateService);

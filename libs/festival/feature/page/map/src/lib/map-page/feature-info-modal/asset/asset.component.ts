@@ -3,7 +3,7 @@ import { MapClickedFeature, MapLayer } from '@blockparty/festival/shared/types';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonToolbar,
   IonTitle,
@@ -16,8 +16,7 @@ import {
   templateUrl: './asset.component.html',
   styleUrls: ['./asset.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [NgIf, AsyncPipe, IonToolbar, IonTitle, IonButtons, IonButton],
+  imports: [AsyncPipe, IonToolbar, IonTitle, IonButtons, IonButton],
 })
 export class AssetComponent {
   private mapStateService = inject(MapStateService);

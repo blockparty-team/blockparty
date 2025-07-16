@@ -9,9 +9,8 @@ describe('EventMapComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [EventMapComponent],
-      imports: [IonicModule.forRoot()],
-    }).compileComponents();
+    imports: [IonicModule.forRoot(), EventMapComponent],
+}).compileComponents();
 
     fixture = TestBed.createComponent(EventMapComponent);
     component = fixture.componentInstance;

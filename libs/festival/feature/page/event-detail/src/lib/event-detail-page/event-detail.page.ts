@@ -13,7 +13,7 @@ import {
   RouteName,
 } from '@blockparty/festival/shared/types';
 import { ModalController } from '@ionic/angular/standalone';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -37,10 +37,7 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
   selector: 'app-event-detail',
   templateUrl: './event-detail.page.html',
   styleUrls: ['./event-detail.page.scss'],
-  standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     RouterLink,
     AsyncPipe,
     IonHeader,

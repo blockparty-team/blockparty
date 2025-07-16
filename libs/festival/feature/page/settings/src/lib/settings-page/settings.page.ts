@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { LocalNotificationsService } from '@blockparty/festival/shared/service/local-notifications';
 import { BehaviorSubject, Observable, from } from 'rxjs';
 import { LocalNotificationSchema } from '@capacitor/local-notifications';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -19,10 +19,7 @@ import {
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
-  standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
     IonHeader,
     IonToolbar,

@@ -26,7 +26,6 @@ import {
   templateUrl: './stage-item.component.html',
   styleUrls: ['./stage-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [IonItem, IonThumbnail, IonLabel, IonIcon],
 })
 export class StageItemComponent {

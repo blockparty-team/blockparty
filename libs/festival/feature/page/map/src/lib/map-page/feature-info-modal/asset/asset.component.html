@@ -5,15 +5,15 @@
     </ion-title>
 
     <ion-buttons slot="end">
-      <ng-container *ngIf="location$ | async as location">
+      @if (location$ | async; as location) {
         <ion-button
           color="primary"
           fill="outline"
           (click)="onOpenGoogleMapsDirections(location)"
-        >
+          >
           Directions
         </ion-button>
-      </ng-container>
+      }
     </ion-buttons>
   </ion-toolbar>
 

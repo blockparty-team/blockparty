@@ -8,7 +8,7 @@
         mode="ios"
         [value]="selectedSearchMode$ | async"
         (ionChange)="onSearchModeChange($event)"
-      >
+        >
         <ion-segment-button color="secodary" [value]="searchMode.FreeText">
           <ion-label>All</ion-label>
         </ion-segment-button>
@@ -19,80 +19,75 @@
     </div>
   </ion-toolbar>
 
-  <ion-toolbar *ngIf="(selectedSearchMode$ | async) === searchMode.FreeText">
-    <ion-searchbar
-      mode="ios"
-      debounce="0"
-      [formControl]="searchTerm"
-      animated="true"
-    >
-    </ion-searchbar>
-  </ion-toolbar>
+  @if ((selectedSearchMode$ | async) === searchMode.FreeText) {
+    <ion-toolbar>
+      <ion-searchbar
+        mode="ios"
+        debounce="0"
+        [formControl]="searchTerm"
+        animated="true"
+        >
+      </ion-searchbar>
+    </ion-toolbar>
+  }
 </ion-header>
 
 <ion-content fullscreen="true">
-  <ng-container *ngIf="(selectedSearchMode$ | async) === searchMode.NearBy">
-    <ng-container *ngIf="nearBy$ | async as nearBy; else loading">
-      <ng-container *ngIf="nearBy.length === 0">
+  @if ((selectedSearchMode$ | async) === searchMode.NearBy) {
+    @if (nearBy$ | async; as nearBy) {
+      @if (nearBy.length === 0) {
         <h3 class="ion-text-center">No results</h3>
         <p class="ion-text-center">Needs to be within 1000 meters</p>
-      </ng-container>
-
+      }
       <ion-list>
-        <ion-item
-          *ngFor="let result of nearBy"
-          (click)="onShowOnMap(result.geom)"
-        >
-          <span slot="start">{{result.distance}} m</span>
-          <ion-badge slot="end" [color]="entityBadgeColor(result.entity)"
-            >{{result.entity}}</ion-badge
-          >
-          <ion-label>
-            <h2>{{result.name}}</h2>
-          </ion-label>
-          <ion-icon slot="end" name="map"> </ion-icon>
-        </ion-item>
-      </ion-list>
-    </ng-container>
+        @for (result of nearBy; track result) {
+          <ion-item
+            (click)="onShowOnMap(result.geom)"
+            >
+            <span slot="start">{{result.distance}} m</span>
+            <ion-badge slot="end" [color]="entityBadgeColor(result.entity)"
+              >{{result.entity}}</ion-badge
+              >
+              <ion-label>
+                <h2>{{result.name}}</h2>
+              </ion-label>
+              <ion-icon slot="end" name="map"> </ion-icon>
+            </ion-item>
+          }
+        </ion-list>
+      } @else {
+        <div class="ion-text-center">
+          <ion-spinner class="ion-margin"></ion-spinner>
+        </div>
+      }
+    }
 
-    <ng-template #loading>
-      <div class="ion-text-center">
-        <ion-spinner class="ion-margin"></ion-spinner>
-      </div>
-    </ng-template>
-  </ng-container>
+    @if ((selectedSearchMode$ | async) === searchMode.FreeText) {
+      @if (searchResults$ | async; as results) {
+        <ion-list>
+          @for (result of results; track result) {
+            @switch (entity[result!.entity!]) {
+              @case (entity.artist) {
+                <app-artist-item [artist]="result.artist!"></app-artist-item>
+              }
+              @case (entity.event) {
+                <app-event-item [event]="result.event!"></app-event-item>
+              }
+              @case (entity.stage) {
+                <app-stage-item [stage]="result.stage!"></app-stage-item>
+              }
+              @case (entity.asset) {
+                <app-asset-item [asset]="result.asset!"></app-asset-item>
+              }
+            }
+          }
+        </ion-list>
+      } @else {
+        <div class="ion-padding ion-text-center">
+          <p>Search for Artists, Stages, Bars or Events</p>
+          <p>or find things Near By</p>
+        </div>
+      }
+    }
 
-  <ng-container *ngIf="(selectedSearchMode$ | async) === searchMode.FreeText">
-    <ng-container *ngIf="searchResults$ | async as results; else intro">
-      <ion-list>
-        <ng-container
-          *ngFor="let result of results"
-          [ngSwitch]="entity[result!.entity!]"
-        >
-          <ng-container *ngSwitchCase="entity.artist">
-            <app-artist-item [artist]="result.artist!"></app-artist-item>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="entity.event">
-            <app-event-item [event]="result.event!"></app-event-item>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="entity.stage">
-            <app-stage-item [stage]="result.stage!"></app-stage-item>
-          </ng-container>
-
-          <ng-container *ngSwitchCase="entity.asset">
-            <app-asset-item [asset]="result.asset!"></app-asset-item>
-          </ng-container>
-        </ng-container>
-      </ion-list>
-    </ng-container>
-  </ng-container>
-
-  <ng-template #intro>
-    <div class="ion-padding ion-text-center">
-      <p>Search for Artists, Stages, Bars or Events</p>
-      <p>or find things Near By</p>
-    </div>
-  </ng-template>
-</ion-content>
+  </ion-content>

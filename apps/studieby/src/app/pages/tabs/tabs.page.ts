@@ -23,7 +23,6 @@ interface TabsChanged {
   templateUrl: 'tabs.page.html',
   styleUrls: ['tabs.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
     SidebarPage,
     AsyncPipe,

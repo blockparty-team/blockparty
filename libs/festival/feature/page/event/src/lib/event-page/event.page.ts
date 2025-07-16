@@ -9,7 +9,7 @@ import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';
 import { EventCardComponent } from './event-card/event-card.component';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -30,10 +30,7 @@ import {
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
-  standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     EventCardComponent,
     AsyncPipe,
     IonHeader,

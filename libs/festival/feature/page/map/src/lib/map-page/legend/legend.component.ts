@@ -5,7 +5,8 @@ import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
-import { NgIf, NgFor, AsyncPipe } from '@angular/common';
+import { SafePipe } from '@blockparty/festival/shared/pipes';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -26,12 +27,8 @@ interface IconsViewModel extends MapIconViewModel {
   templateUrl: './legend.component.html',
   styleUrls: ['./legend.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     AsyncPipe,
-    // SafePipe,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -40,6 +37,7 @@ interface IconsViewModel extends MapIconViewModel {
     IonThumbnail,
     IonLabel,
     IonToggle,
+    SafePipe,
   ],
 })
 export class LegendComponent implements OnInit {
@@ -82,7 +80,7 @@ export class LegendComponent implements OnInit {
     this.mapStateService.updateRemovedAssetIconNames(name!, visible);
   }
 
-  public trackBy(_index, asset: MapIconViewModel) {
+  public trackBy(_index: number, asset: MapIconViewModel) {
     return asset.name;
   }
 }

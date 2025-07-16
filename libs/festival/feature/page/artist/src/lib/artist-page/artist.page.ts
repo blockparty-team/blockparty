@@ -15,14 +15,10 @@ import {
   CdkFixedSizeVirtualScroll,
   CdkVirtualForOf,
 } from '@angular/cdk/scrolling';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
-  IonButtons,
-  IonButton,
-  IonIcon,
-  IonTitle,
   IonSearchbar,
   IonContent,
   IonSpinner,
@@ -33,9 +29,7 @@ import {
   styleUrls: ['./artist.page.scss'],
   templateUrl: './artist.page.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    NgIf,
     FormsModule,
     ReactiveFormsModule,
     CdkVirtualScrollViewport,
@@ -45,10 +39,6 @@ import {
     AsyncPipe,
     IonHeader,
     IonToolbar,
-    IonButtons,
-    IonButton,
-    IonIcon,
-    IonTitle,
     IonSearchbar,
     IonContent,
     IonSpinner,

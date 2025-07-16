@@ -22,7 +22,7 @@ import {
   RouteName,
 } from '@blockparty/festival/shared/types';
 import { RouterLink } from '@angular/router';
-import { NgIf, NgFor, NgClass, AsyncPipe, DatePipe } from '@angular/common';
+import { NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
@@ -31,10 +31,7 @@ import { FavoriteStateService } from '@blockparty/festival/data-access/state/fav
   templateUrl: './timetable-gantt.component.html',
   styleUrls: ['./timetable-gantt.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    NgIf,
-    NgFor,
     NgClass,
     RouterLink,
     AsyncPipe,

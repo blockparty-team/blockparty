@@ -12,7 +12,6 @@ import {
   selector: 'app-about',
   templateUrl: './about.page.html',
   styleUrls: ['./about.page.scss'],
-  standalone: true,
   imports: [
     IonHeader,
     IonToolbar,

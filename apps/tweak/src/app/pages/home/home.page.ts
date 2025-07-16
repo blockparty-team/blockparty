@@ -1,13 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  signal,
-} from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IonRouterLink } from '@ionic/angular/standalone';
 import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.component';
 import { AppPage, appPages } from '@tweak/app.component';
 
@@ -15,15 +9,8 @@ import { AppPage, appPages } from '@tweak/app.component';
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    IonicModule,
-    CommonModule,
-    FormsModule,
-    ToolbarComponent,
-    IonRouterLink,
-  ],
+  imports: [IonicModule, FormsModule, ToolbarComponent],
 })
 export class HomePage {
   appPages = signal<AppPage[]>(appPages);

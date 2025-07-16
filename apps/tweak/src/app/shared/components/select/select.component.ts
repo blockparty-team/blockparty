@@ -4,7 +4,6 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnInit,
   Output,
   WritableSignal,
   computed,
@@ -13,12 +12,10 @@ import {
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
-  IonContent,
   IonRadioGroup,
   IonRadio,
   IonToolbar,
   IonHeader,
-  IonTitle,
   IonButtons,
   IonButton,
   IonCheckbox,
@@ -52,7 +49,6 @@ const defaultCongig: ListSelectionConfig = {
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
@@ -63,13 +59,11 @@ const defaultCongig: ListSelectionConfig = {
     },
   ],
   imports: [
-    IonContent,
     IonToolbar,
     IonRadioGroup,
     IonRadio,
     IonHeader,
     IonSearchbar,
-    IonTitle,
     IonButtons,
     IonButton,
     IonCheckbox,

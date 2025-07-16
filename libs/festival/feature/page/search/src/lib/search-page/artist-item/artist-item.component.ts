@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ArtistViewModel, RouteName } from '@blockparty/festival/shared/types';
-import { NgFor, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
   IonItem,
@@ -14,16 +14,7 @@ import {
   templateUrl: './artist-item.component.html',
   styleUrls: ['./artist-item.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
-  imports: [
-    RouterLink,
-    NgFor,
-    DatePipe,
-    IonItem,
-    IonAvatar,
-    IonLabel,
-    IonRouterLink,
-  ],
+  imports: [RouterLink, DatePipe, IonItem, IonAvatar, IonLabel, IonRouterLink],
 })
 export class ArtistItemComponent {
   @Input() artist!: ArtistViewModel;

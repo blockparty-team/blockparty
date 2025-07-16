@@ -33,13 +33,7 @@ import { AssetItemComponent } from './asset-item/asset-item.component';
 import { StageItemComponent } from './stage-item/stage-item.component';
 import { EventItemComponent } from './event-item/event-item.component';
 import { ArtistItemComponent } from './artist-item/artist-item.component';
-import {
-  NgIf,
-  NgFor,
-  NgSwitch,
-  NgSwitchCase,
-  AsyncPipe,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -73,14 +67,9 @@ enum SearchMode {
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    NgIf,
     FormsModule,
     ReactiveFormsModule,
-    NgFor,
-    NgSwitch,
-    NgSwitchCase,
     ArtistItemComponent,
     EventItemComponent,
     StageItemComponent,

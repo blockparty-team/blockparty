@@ -4,7 +4,7 @@ import { UserMetadata } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
-import { NgIf, AsyncPipe } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   IonRouterLink,
   IonHeader,
@@ -22,9 +22,7 @@ import {
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
   imports: [
-    NgIf,
     RouterLink,
     AsyncPipe,
     IonRouterLink,

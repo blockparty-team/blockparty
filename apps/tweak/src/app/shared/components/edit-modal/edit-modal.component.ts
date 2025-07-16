@@ -5,7 +5,6 @@ import { IonModal } from '@ionic/angular/standalone';
   selector: 'app-edit-modal',
   templateUrl: './edit-modal.component.html',
   styleUrls: ['./edit-modal.component.scss'],
-  standalone: true,
   imports: [IonModal],
 })
 export class EditModalComponent {
