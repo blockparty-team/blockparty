@@ -21,7 +21,6 @@ import {
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-
   imports: [IonContent, IonFab, IonBackButton, IonButton, IonIcon],
 })
 export class LoginPage implements OnInit {
