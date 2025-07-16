@@ -5,6 +5,7 @@ import { Observable, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
+import { SafePipe } from '@blockparty/festival/shared/pipes';
 import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
@@ -36,6 +37,7 @@ interface IconsViewModel extends MapIconViewModel {
     IonThumbnail,
     IonLabel,
     IonToggle,
+    SafePipe,
   ],
 })
 export class LegendComponent implements OnInit {
