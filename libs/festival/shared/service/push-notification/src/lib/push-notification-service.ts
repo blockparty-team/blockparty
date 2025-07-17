@@ -1,12 +1,10 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, isDevMode } from '@angular/core';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 import { Device } from '@capacitor/device';
 import OneSignal from 'onesignal-cordova-plugin';
 import { OneSignal as OneSignalWeb } from 'onesignal-ngx';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class PushNotificationService {
   private oneSignalWeb = inject(OneSignalWeb);
   private oneSignalAppId = inject(AppConfigService).appConfig.oneSignalAppId;
@@ -26,6 +24,8 @@ export class PushNotificationService {
   }
 
   private initOneSignalWeb(): void {
+    if (isDevMode()) return;
+
     this.oneSignalWeb.init({
       appId: this.oneSignalAppId(),
       allowLocalhostAsSecureOrigin: true,
