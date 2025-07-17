@@ -1,5 +1,5 @@
 PODS:
-  - Capacitor (7.2.0):
+  - Capacitor (7.4.2):
     - CapacitorCordova
   - CapacitorApp (7.0.1):
     - Capacitor
@@ -7,7 +7,7 @@ PODS:
     - Capacitor
   - CapacitorClipboard (7.0.1):
     - Capacitor
-  - CapacitorCordova (7.2.0)
+  - CapacitorCordova (7.4.2)
   - CapacitorDevice (7.0.1):
     - Capacitor
   - CapacitorFilesystem (7.0.1):
@@ -29,7 +29,7 @@ PODS:
     - Capacitor
   - CapawesomeCapacitorAppUpdate (7.0.1):
     - Capacitor
-  - CordovaPluginsStatic (7.2.0):
+  - CordovaPluginsStatic (7.4.2):
     - CapacitorCordova
     - OneSignalXCFramework (= 5.2.10)
   - IONGeolocationLib (1.0.0)
@@ -139,11 +139,11 @@ EXTERNAL SOURCES:
     :path: "../capacitor-cordova-ios-plugins"
 
 SPEC CHECKSUMS:
-  Capacitor: 03bc7cbdde6a629a8b910a9d7d78c3cc7ed09ea7
+  Capacitor: 9d9e481b79ffaeacaf7a85d6a11adec32bd33b59
   CapacitorApp: febecbb9582cb353aed037e18ec765141f880fe9
   CapacitorBrowser: 6299776d496e968505464884d565992faa20444a
   CapacitorClipboard: 70bfdb42b877b320a6e511ab94fa7a6a55d57ecb
-  CapacitorCordova: 5967b9ba03915ef1d585469d6e31f31dc49be96f
+  CapacitorCordova: 5e58d04631bc5094894ac106e2bf1da18a9e6151
   CapacitorDevice: c6f6d587dd310527f8a48bf09c4e7b4a4cf14329
   CapacitorFilesystem: e6261c410436f54908c11f94336c5b58286b1db0
   CapacitorGeolocation: c0755715aaadf5c86dc0053e1127b368444c914b
@@ -154,7 +154,7 @@ SPEC CHECKSUMS:
   CapacitorSplashScreen: 1d67815a422a9b61539c94f283c08ed56667c0fc
   CapacitorStatusBar: 6e7af040d8fc4dd655999819625cae9c2d74c36f
   CapawesomeCapacitorAppUpdate: d1f04c1c870388248889908cf2ca960c7fdbf0ef
-  CordovaPluginsStatic: d39f5abacfc5a78150f4d0005ffa6ae9a55725d2
+  CordovaPluginsStatic: c356cbecece8234624ddd1bba314a07a8037cda6
   IONGeolocationLib: 81f33f88d025846946de2cf63b0c7628e7c6bc9d
   OneSignalXCFramework: 1a3b28dfbff23aabce585796d23c1bef37772774
 
