@@ -89,34 +89,22 @@
             }
           ]
         },
-        "ci": {
-          "progress": false
-        }
+        "ci": { "progress": false }
       }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
-      "options": {
-        "buildTarget": "distortion:build"
-      },
+      "options": { "buildTarget": "distortion:build" },
       "configurations": {
-        "production": {
-          "buildTarget": "distortion:build:production"
-        },
-        "development": {
-          "buildTarget": "distortion:build:development"
-        },
-        "ci": {
-          "progress": false
-        }
+        "production": { "buildTarget": "distortion:build:production" },
+        "development": { "buildTarget": "distortion:build:development" },
+        "ci": { "progress": false }
       },
       "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": {
-        "buildTarget": "distortion:build"
-      }
+      "options": { "buildTarget": "distortion:build" }
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
@@ -142,12 +130,7 @@
           "apps/distortion/src/OneSignalSDKWorker.js"
         ]
       },
-      "configurations": {
-        "ci": {
-          "progress": false,
-          "watch": false
-        }
-      }
+      "configurations": { "ci": { "progress": false, "watch": false } }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -187,16 +170,27 @@
     },
     "open-xcode": {
       "executor": "nx:run-commands",
-      "options": {
-        "cwd": "apps/distortion/",
-        "command": "npx cap open ios"
-      }
+      "options": { "cwd": "apps/distortion/", "command": "npx cap open ios" }
     },
     "open-android-studio": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/distortion/",
         "command": "npx cap open android"
+      }
+    },
+    "supabase-start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/distortion/data-access/supabase",
+        "commands": ["npx supabase start"]
+      }
+    },
+    "supabase-stop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/distortion/data-access/supabase",
+        "commands": ["npx supabase stop"]
       }
     }
   }
