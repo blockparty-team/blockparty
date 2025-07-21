@@ -1,0 +1,23 @@
+{
+  "name": "supabase",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/data-access/supabase/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/shared/data-access/supabase",
+        "main": "libs/shared/data-access/supabase/src/index.ts",
+        "tsConfig": "libs/shared/data-access/supabase/tsconfig.lib.json",
+        "assets": ["libs/shared/data-access/supabase/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    }
+  }
+}

@@ -9,7 +9,7 @@ import { FileService } from '@blockparty/festival/data-access/file-service';
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase-service';
+} from '@blockparty/shared/data-access/supabase';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {
   catchError,

@@ -11,7 +11,7 @@ import {
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase-service';
+} from '@blockparty/shared/data-access/supabase';
 import { FilesystemService } from '@blockparty/shared/data-access/filesystem';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { imgToBase64, imgFromUrl } from '@blockparty/util/file';

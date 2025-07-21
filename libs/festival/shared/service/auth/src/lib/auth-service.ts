@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { OAuthResponse, Session } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',

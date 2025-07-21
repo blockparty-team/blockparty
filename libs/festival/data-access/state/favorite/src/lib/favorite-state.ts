@@ -6,7 +6,7 @@ import {
 } from '@blockparty/festival/shared/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { DeviceService } from '@blockparty/shared/service/device';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase';
 import { BehaviorSubject, concat, Observable, ReplaySubject } from 'rxjs';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
 

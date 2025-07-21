@@ -148,8 +148,8 @@
       "@blockparty/shared/data-access/filesystem": [
         "libs/shared/data-access/filesystem/src/index.ts"
       ],
-      "@blockparty/shared/data-access/supabase-service": [
-        "libs/shared/data-access/supabase-service/src/index.ts"
+      "@blockparty/shared/data-access/supabase": [
+        "libs/shared/data-access/supabase/src/index.ts"
       ],
       "@blockparty/shared/service/device": [
         "libs/shared/service/device/src/index.ts"

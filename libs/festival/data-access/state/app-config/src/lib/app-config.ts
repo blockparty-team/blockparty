@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { AppConfig } from '@blockparty/festival/shared/types';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService } from '@blockparty/shared/data-access/supabase';
 import { catchError, concat, EMPTY, filter, tap } from 'rxjs';
 import { signalState, patchState } from '@ngrx/signals';
 

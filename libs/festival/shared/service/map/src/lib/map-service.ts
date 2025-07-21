@@ -27,7 +27,7 @@ import { Protocol, PMTiles } from 'pmtiles';
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase-service';
+} from '@blockparty/shared/data-access/supabase';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 function getCssVariable(cssVariable: string) {
