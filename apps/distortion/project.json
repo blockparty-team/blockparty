@@ -182,14 +182,17 @@
     "supabase-start": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "libs/distortion/data-access/supabase",
-        "commands": ["npx supabase start"]
+        "cwd": "libs/shared/data-access/supabase-service",
+        "commands": [
+          "cp supabase/.env.distortion supabase/.env",
+          "npx supabase start"
+        ]
       }
     },
     "supabase-stop": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "libs/distortion/data-access/supabase",
+        "cwd": "llibs/shared/data-access/supabase-service",
         "commands": ["npx supabase stop"]
       }
     }
