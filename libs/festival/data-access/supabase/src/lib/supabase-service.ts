@@ -26,11 +26,7 @@ import {
   TransformOptions,
   AppConfig,
 } from '@blockparty/festival/shared/types';
-import {
-  Database,
-  Tables,
-  Enums,
-} from '@blockparty/shared/data-access/supabase';
+import { Database, Tables, Enums } from './database-definitions';
 import { environment } from '@shared/environments';
 
 @Injectable({
