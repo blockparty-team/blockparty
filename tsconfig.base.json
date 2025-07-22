@@ -16,9 +16,6 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "@blockparty/distortion/data-access/supabase": [
-        "libs/distortion/data-access/supabase/src/index.ts"
-      ],
       "@blockparty/festival/data-access/file-service": [
         "libs/festival/data-access/file-service/src/index.ts"
       ],
