@@ -19,7 +19,7 @@ import {
   shareReplay,
   tap,
 } from 'rxjs/operators';
-import { Tables } from '@blockparty/distortion/data-access/supabase';
+import { Tables } from '@blockparty/shared/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',

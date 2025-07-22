@@ -34,10 +34,7 @@ import { ToolbarComponent } from '@tweak/shared/components/toolbar/toolbar.compo
 import { EditModalComponent } from '@tweak/shared/components/edit-modal/edit-modal.component';
 import { ImageUploadComponent } from 'libs/tweak/shared/image-upload';
 import { ImageCropperComponent } from 'libs/tweak/shared/image-cropper';
-import {
-  Tables,
-  TablesInsert,
-} from '@blockparty/distortion/data-access/supabase';
+import { Tables, TablesInsert } from '@blockparty/shared/data-access/supabase';
 import {
   TableComponent,
   TableConfig,

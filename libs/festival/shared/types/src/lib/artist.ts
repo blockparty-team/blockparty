@@ -1,4 +1,4 @@
-import { Tables } from '@blockparty/distortion/data-access/supabase';
+import { Tables } from '@blockparty/shared/data-access/supabase';
 
 interface Timetable {
   day: {

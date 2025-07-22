@@ -30,7 +30,7 @@ import {
   Database,
   Tables,
   Enums,
-} from '@blockparty/distortion/data-access/supabase';
+} from '@blockparty/shared/data-access/supabase';
 import { environment } from '@shared/environments';
 
 @Injectable({
