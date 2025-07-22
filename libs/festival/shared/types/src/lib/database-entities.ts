@@ -1,4 +1,4 @@
-import { Database } from '@blockparty/distortion/data-access/supabase';
+import { Database } from '@blockparty/shared/data-access/supabase';
 
 // Tables
 export type Event = Database['public']['Tables']['event']['Row'];
