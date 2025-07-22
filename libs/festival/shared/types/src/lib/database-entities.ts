@@ -1,4 +1,4 @@
-import { Database } from '@blockparty/shared/data-access/supabase';
+import { Database } from '@blockparty/festival/data-access/supabase';
 
 // Tables
 export type Event = Database['public']['Tables']['event']['Row'];

@@ -9,7 +9,7 @@ import { FileService } from '@blockparty/festival/data-access/file-service';
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase';
+} from '@blockparty/festival/data-access/supabase';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {
   catchError,
@@ -19,7 +19,7 @@ import {
   shareReplay,
   tap,
 } from 'rxjs/operators';
-import { Tables } from '@blockparty/shared/data-access/supabase';
+import { Tables } from '@blockparty/festival/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',

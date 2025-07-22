@@ -1,7 +1,7 @@
 {
   "name": "supabase",
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "libs/shared/data-access/supabase/src",
+  "sourceRoot": "libs/festival/data-access/supabase/src",
   "projectType": "library",
   "tags": [],
   "targets": {
@@ -9,10 +9,10 @@
       "executor": "@nx/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/libs/shared/data-access/supabase",
-        "main": "libs/shared/data-access/supabase/src/index.ts",
-        "tsConfig": "libs/shared/data-access/supabase/tsconfig.lib.json",
-        "assets": ["libs/shared/data-access/supabase/*.md"]
+        "outputPath": "dist/libs/festival/data-access/supabase",
+        "main": "libs/festival/data-access/supabase/src/index.ts",
+        "tsConfig": "libs/festival/data-access/supabase/tsconfig.lib.json",
+        "assets": ["libs/festival/data-access/supabase/*.md"]
       }
     },
     "lint": {

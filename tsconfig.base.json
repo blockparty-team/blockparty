@@ -55,6 +55,9 @@
       "@blockparty/festival/data-access/state/timetable-shared": [
         "libs/festival/data-access/state/timetable-shared/src/index.ts"
       ],
+      "@blockparty/festival/data-access/supabase": [
+        "libs/festival/data-access/supabase/src/index.ts"
+      ],
       "@blockparty/festival/feature/page/artist": [
         "libs/festival/feature/page/artist/src/index.ts"
       ],
@@ -147,9 +150,6 @@
       ],
       "@blockparty/shared/data-access/filesystem": [
         "libs/shared/data-access/filesystem/src/index.ts"
-      ],
-      "@blockparty/shared/data-access/supabase": [
-        "libs/shared/data-access/supabase/src/index.ts"
       ],
       "@blockparty/shared/service/device": [
         "libs/shared/service/device/src/index.ts"

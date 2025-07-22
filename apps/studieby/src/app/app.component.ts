@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { StatusBar } from '@capacitor/status-bar';
 import { Device } from '@capacitor/device';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase';
+import { SupabaseService } from '@blockparty/festival/data-access/supabase';
 import { App, URLOpenListenerEvent } from '@capacitor/app';
 import { SplashScreen } from '@capacitor/splash-screen';
 import { Router } from '@angular/router';

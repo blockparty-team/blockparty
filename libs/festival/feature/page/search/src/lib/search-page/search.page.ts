@@ -26,7 +26,7 @@ import {
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase';
+} from '@blockparty/festival/data-access/supabase';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { AssetItemComponent } from './asset-item/asset-item.component';

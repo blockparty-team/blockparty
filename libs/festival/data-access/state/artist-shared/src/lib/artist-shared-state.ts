@@ -5,7 +5,7 @@ import { ArtistViewModel } from '@blockparty/festival/shared/types';
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase';
+} from '@blockparty/festival/data-access/supabase';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@blockparty/festival/data-access/file-service';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
