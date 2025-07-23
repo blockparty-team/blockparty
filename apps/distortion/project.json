@@ -216,7 +216,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/festival/data-access/supabase/supabase",
-        "command": "npx supabase gen types typescript --local > ../src/lib/database-definitions.ts"
+        "command": "npx supabase gen types typescript --local > ../src/lib/types/database-definitions.ts"
       }
     }
   }
