@@ -7,7 +7,7 @@ import {
   DayEventStageTimetable,
   ArtistNotification,
   ArtistViewModel,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { ArtistSharedStateService } from '@blockparty/festival/data-access/state/artist-shared';
 import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 

@@ -3,7 +3,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { forkJoin, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { SupabaseService } from '@blockparty/festival/data-access/supabase';
-import { imageSize } from '@blockparty/festival/shared/types';
+import { imageSize } from '@blockparty/festival/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',

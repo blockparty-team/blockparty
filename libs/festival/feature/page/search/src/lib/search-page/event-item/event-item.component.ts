@@ -5,11 +5,11 @@ import {
   inject,
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   EventViewModel,
   MapLayer,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { EntityBadgeColor } from '../entity-badge-color';

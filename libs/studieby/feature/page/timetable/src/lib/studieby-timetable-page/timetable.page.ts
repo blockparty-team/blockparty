@@ -22,7 +22,7 @@ import {
   IonItemDivider,
 } from '@ionic/angular/standalone';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { EventTimetable } from '@blockparty/festival/shared/types';
+import { EventTimetable } from '@blockparty/festival/data-access/supabase';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 import { RouterLink } from '@angular/router';
 

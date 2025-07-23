@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { AppConfig } from '@blockparty/festival/shared/types';
+import { AppConfig } from '@blockparty/festival/data-access/supabase';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { SupabaseService } from '@blockparty/festival/data-access/supabase';
 import { catchError, concat, EMPTY, filter, tap } from 'rxjs';

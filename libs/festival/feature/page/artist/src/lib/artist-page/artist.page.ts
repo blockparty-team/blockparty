@@ -6,7 +6,7 @@ import {
 } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
-import { ArtistViewModel } from '@blockparty/festival/shared/types';
+import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { ArtistCardComponent } from '@blockparty/festival/ui/artist-card';

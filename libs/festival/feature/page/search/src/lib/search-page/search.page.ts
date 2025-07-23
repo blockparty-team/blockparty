@@ -6,11 +6,11 @@ import {
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { SearchService } from '@blockparty/festival/shared/service/search';
 import { SegmentCustomEvent } from '@ionic/core';

@@ -7,10 +7,8 @@ import {
 import { Router } from '@angular/router';
 import { Feature, Point, Position } from 'geojson';
 import { MapService } from '@blockparty/festival/shared/service/map';
-import {
-  AssetGeojsonProperties,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+import { RouteName } from '@blockparty/festival/shared/types';
+import { AssetGeojsonProperties } from '@blockparty/festival/data-access/supabase';
 import {
   IonItem,
   IonThumbnail,

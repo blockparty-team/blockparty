@@ -5,7 +5,7 @@ import {
   MapSource,
   StageGeojsonProperties,
   AssetGeojsonProperties,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from '@blockparty/shared/service/geolocation';

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MapLayer } from '@blockparty/festival/shared/types';
+import { MapLayer } from '@blockparty/festival/data-access/supabase';
 import { tap } from 'rxjs/operators';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { MapService } from '@blockparty/festival/shared/service/map';

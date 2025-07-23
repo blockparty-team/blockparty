@@ -15,17 +15,17 @@ import {
 import { FeatureCollection, LineString, Point, Polygon } from 'geojson';
 
 // import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
+import { AppConfig } from './types/app-config';
+import { ArtistViewModel } from './types/artist';
+import { MapSource } from './types/map-layer';
+import { DayEventStageTimetable } from './types/day-event-stage-timetable';
 import {
-  ArtistViewModel,
-  MapSource,
-  DayEventStageTimetable,
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-  EventWithRelations,
-  EventsGroupedByType,
-  TransformOptions,
-  AppConfig,
-} from '@blockparty/festival/shared/types';
+} from './types/entity-search-result';
+import { EventWithRelations } from './types/event';
+import { EventsGroupedByType } from './types/event-type';
+import { TransformOptions } from './types/image-size';
 import { Database, Tables, Enums } from './types/database-definitions';
 import { environment } from '@shared/environments';
 

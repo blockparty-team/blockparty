@@ -8,7 +8,8 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
-import { ArtistViewModel, RouteName } from '@blockparty/festival/shared/types';
+import { RouteName } from '@blockparty/festival/shared/types';
+import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { Observable, Subject, from } from 'rxjs';
 import { distinctUntilKeyChanged, map, switchMap } from 'rxjs/operators';

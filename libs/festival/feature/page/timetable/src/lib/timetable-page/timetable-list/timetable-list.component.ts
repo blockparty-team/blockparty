@@ -5,11 +5,11 @@ import {
   signal,
 } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   StageTimetable,
   TimetableWithStageName,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';

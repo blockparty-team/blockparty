@@ -7,11 +7,11 @@ import { Share } from '@capacitor/share';
 import { LngLatBoundsLike } from 'maplibre-gl';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   EventViewModel,
   MapLayer,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { ModalController } from '@ionic/angular/standalone';
 import { AsyncPipe } from '@angular/common';
 import {

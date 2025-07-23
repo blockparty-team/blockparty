@@ -1,4 +1,4 @@
-import { Tables } from '@blockparty/festival/data-access/supabase';
+import { Tables } from './database-definitions';
 import { Ticket } from './event';
 
 export interface Day {

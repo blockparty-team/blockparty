@@ -6,13 +6,13 @@ import { SupabaseService } from '@blockparty/festival/data-access/supabase';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { TimetableSharedStateService } from '@blockparty/festival/data-access/state/timetable-shared';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
+import { Tab } from '@blockparty/festival/shared/types';
 import {
   DayEvent,
   PartialEvent,
   PartialEventType,
   DayEventStageTimetable,
-  Tab,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 
 @Injectable()
 export class EventFilterStateService {

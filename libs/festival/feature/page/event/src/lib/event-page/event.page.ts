@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   EventViewModel,
   EventsGroupedByType,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { Observable } from 'rxjs';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';

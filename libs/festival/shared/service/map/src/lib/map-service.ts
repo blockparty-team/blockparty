@@ -21,13 +21,11 @@ import {
   MapSource,
   MapClickedFeature,
   MapIconViewModel,
-} from '@blockparty/festival/shared/types';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Protocol, PMTiles } from 'pmtiles';
-import {
   SupabaseService,
   getBucketAndPath,
 } from '@blockparty/festival/data-access/supabase';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Protocol, PMTiles } from 'pmtiles';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 function getCssVariable(cssVariable: string) {
