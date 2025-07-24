@@ -70,6 +70,7 @@
     "@angular/compiler-cli": "20.0.7",
     "@angular/language-service": "20.0.7",
     "@capacitor/cli": "7.4.2",
+    "@dotenvx/dotenvx": "^1.48.3",
     "@ionic/angular-toolkit": "12.2.0",
     "@ionic/cli": "7.2.1",
     "@nx/angular": "21.2.4",

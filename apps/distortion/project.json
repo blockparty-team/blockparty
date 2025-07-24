@@ -182,23 +182,22 @@
     "supabase-start": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "libs/festival/data-access/supabase/supabase",
-        "commands": ["cp .env.distortion .env", "npx supabase start"],
-        "parallel": false
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/distortion/.env -- npx supabase start"
       }
     },
     "supabase-stop": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "libs/festival/data-access/supabase/supabase",
-        "commands": ["cp .env.distortion .env", "npx supabase stop"]
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/distortion/.env -- npx supabase stop"
       }
     },
     "supabase-status": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "libs/festival/data-access/supabase/supabase",
-        "commands": ["cp .env.distortion .env", "npx supabase status"]
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/distortion/.env -- npx supabase status"
       }
     },
     "supabase-dump-remote-restore-local": {
@@ -217,6 +216,13 @@
       "options": {
         "cwd": "libs/festival/data-access/supabase/supabase",
         "command": "npx supabase gen types typescript --local > ../src/lib/types/database-definitions.ts"
+      }
+    },
+    "supabase-link": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "command": "npx dotenvx run --env-file=../../../../../apps/distortion/.env -- npx supabase link --project-ref $SUPABASE_PROJECT_ID -p $SUPABASE_DB_PASSWORD"
       }
     }
   }
