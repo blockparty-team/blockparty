@@ -1,88 +1,228 @@
 {
   "name": "karrusel",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/karrusel/src",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/karrusel/src",
-  "tags": [],
+  "generators": {},
   "targets": {
     "build": {
-      "executor": "@angular/build:application",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@angular-devkit/build-angular:browser",
       "options": {
         "outputPath": "dist/apps/karrusel",
-        "browser": "apps/karrusel/src/main.ts",
-        "polyfills": ["zone.js"],
+        "index": "apps/karrusel/src/index.html",
+        "main": "apps/karrusel/src/main.ts",
+        "polyfills": "apps/karrusel/src/polyfills.ts",
         "tsConfig": "apps/karrusel/tsconfig.app.json",
-        "inlineStyleLanguage": "scss",
         "assets": [
           {
             "glob": "**/*",
-            "input": "apps/karrusel/public"
-          }
+            "input": "apps/karrusel/src/assets",
+            "output": "assets"
+          },
+          "apps/karrusel/src/manifest.webmanifest",
+          "apps/karrusel/src/OneSignalSDKWorker.js"
         ],
-        "styles": ["apps/karrusel/src/styles.scss"]
+        "styles": [
+          "apps/karrusel/src/global.scss",
+          "apps/karrusel/src/theme/variables.scss"
+        ],
+        "scripts": [],
+        "vendorChunk": true,
+        "extractLicenses": false,
+        "buildOptimizer": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true,
+        "serviceWorker": false,
+        "ngswConfigPath": "ngsw-config.json",
+        "allowedCommonJsDependencies": [
+          "maplibre-gl",
+          "onesignal-cordova-plugin",
+          "ws"
+        ]
       },
       "configurations": {
         "production": {
+          "fileReplacements": [
+            {
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/karrusel.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "500kb",
-              "maximumError": "1mb"
-            },
+              "maximumWarning": "10mb",
+              "maximumError": "15mb"
+            }
+          ]
+        },
+        "development": {
+          "fileReplacements": [
             {
-              "type": "anyComponentStyle",
-              "maximumWarning": "4kb",
-              "maximumError": "8kb"
+              "replace": "libs/shared/enviroments/src/lib/environment.ts",
+              "with": "libs/shared/enviroments/src/lib/karrusel.dev.ts"
             }
           ],
-          "outputHashing": "all"
-        },
-        "development": {
           "optimization": false,
-          "extractLicenses": false,
-          "sourceMap": true
-        }
-      },
-      "defaultConfiguration": "production"
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "aot": true,
+          "extractLicenses": true,
+          "vendorChunk": false,
+          "buildOptimizer": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "10mb",
+              "maximumError": "15mb"
+            }
+          ]
+        },
+        "ci": { "progress": false }
+      }
     },
     "serve": {
-      "continuous": true,
-      "executor": "@angular/build:dev-server",
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "options": { "buildTarget": "karrusel:build" },
       "configurations": {
-        "production": {
-          "buildTarget": "karrusel:build:production"
-        },
-        "development": {
-          "buildTarget": "karrusel:build:development"
-        }
+        "production": { "buildTarget": "karrusel:build:production" },
+        "development": { "buildTarget": "karrusel:build:development" },
+        "ci": { "progress": false }
       },
-      "defaultConfiguration": "development"
+      "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular/build:extract-i18n",
-      "options": {
-        "buildTarget": "karrusel:build"
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": { "buildTarget": "karrusel:build" }
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular-devkit/build-angular:karma",
       "options": {
-        "jestConfig": "apps/karrusel/jest.config.ts"
+        "main": "apps/karrusel/src/test.ts",
+        "polyfills": "apps/karrusel/src/polyfills.ts",
+        "tsConfig": "apps/karrusel/tsconfig.spec.json",
+        "karmaConfig": "apps/karrusel/karma.conf.js",
+        "styles": [],
+        "scripts": [],
+        "assets": [
+          {
+            "glob": "favicon.ico",
+            "input": "apps/karrusel/src/",
+            "output": "/"
+          },
+          {
+            "glob": "**/*",
+            "input": "apps/karrusel/src/assets",
+            "output": "/assets"
+          },
+          "apps/karrusel/src/manifest.webmanifest",
+          "apps/karrusel/src/OneSignalSDKWorker.js"
+        ]
+      },
+      "configurations": { "ci": { "progress": false, "watch": false } }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
       }
     },
-    "serve-static": {
-      "continuous": true,
-      "executor": "@nx/web:file-server",
+    "build-sync-prod": {
+      "executor": "nx:run-commands",
       "options": {
-        "buildTarget": "karrusel:build",
-        "staticFilePath": "dist/apps/karrusel/browser",
-        "spa": true
+        "cwd": "apps/karrusel/",
+        "commands": [
+          "npx nx run karrusel:build --configuration=production",
+          "npx cap sync"
+        ],
+        "parallel": false
+      }
+    },
+    "build-sync-dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/karrusel/",
+        "commands": [
+          "npx nx run karrusel:build --configuration=development",
+          "npx cap sync"
+        ],
+        "parallel": false
+      }
+    },
+    "capacitor-sync": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/karrusel/",
+        "commands": ["npx cap sync"],
+        "parallel": false
+      }
+    },
+    "open-xcode": {
+      "executor": "nx:run-commands",
+      "options": { "cwd": "apps/karrusel/", "command": "npx cap open ios" }
+    },
+    "open-android-studio": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/karrusel/",
+        "command": "npx cap open android"
+      }
+    },
+    "supabase-start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/karrusel/.env -- npx supabase start"
+      }
+    },
+    "supabase-stop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/karrusel/.env -- npx supabase stop"
+      }
+    },
+    "supabase-status": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/karrusel/.env -- npx supabase status"
+      }
+    },
+    "supabase-dump-remote-restore-local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "commands": [
+          "npx supabase db reset",
+          "npx supabase db dump -s public --data-only | psql -h localhost -p 54322 -U postgres -d postgres"
+        ],
+        "parallel": false
+      }
+    },
+    "supabase-gen-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "command": "npx supabase gen types typescript --local > ../src/lib/types/database-definitions.ts"
+      }
+    },
+    "supabase-link": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "command": "npx dotenvx run --env-file=../../../../../apps/karrusel/.env -- npx supabase link --project-ref $SUPABASE_PROJECT_ID -p $SUPABASE_DB_PASSWORD"
       }
     }
   }
