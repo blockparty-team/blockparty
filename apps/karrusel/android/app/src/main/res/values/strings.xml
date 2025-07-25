@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">Distortion</string>
-    <string name="title_activity_main">Distortion</string>
-    <string name="package_name">dk.cphdistortion.app</string>
-    <string name="custom_url_scheme">distortion</string>
+    <string name="app_name">Karrusel</string>
+    <string name="title_activity_main">Karrusel</string>
+    <string name="package_name">dk.karrusel</string>
+    <string name="custom_url_scheme">dk.karrusel</string>
 </resources>
