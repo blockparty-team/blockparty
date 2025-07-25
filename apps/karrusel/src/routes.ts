@@ -5,7 +5,7 @@ import { CanLoadLoginGuard } from '@blockparty/festival/shared/guard/can-load';
 export const ROUTES: Route[] = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/routes').then((m) => m.routes),
+    loadChildren: () => import('./app/pages/tabs/routes').then((m) => m.routes),
   },
   {
     path: RouteName.Login,
@@ -24,7 +24,8 @@ export const ROUTES: Route[] = [
   {
     path: RouteName.About,
     title: 'About',
-    loadChildren: () => import('./pages/about/routes').then((m) => m.routes),
+    loadChildren: () =>
+      import('./app/pages/about/routes').then((m) => m.routes),
   },
   {
     path: RouteName.Event,
