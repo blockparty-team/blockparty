@@ -200,7 +200,7 @@
         "command": "npx dotenvx run --env-file=../../../../apps/karrusel/.env -- npx supabase status"
       }
     },
-    "supabase-dump-remote-restore-local": {
+    "supabase-db-dump-restore-local": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/festival/data-access/supabase/supabase",
@@ -209,6 +209,13 @@
           "npx supabase db dump -s public --data-only | psql -h localhost -p 54322 -U postgres -d postgres"
         ],
         "parallel": false
+      }
+    },
+    "supabase-db-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "command": "npx supabase db push"
       }
     },
     "supabase-gen-types": {
