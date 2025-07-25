@@ -40,7 +40,7 @@
     "targetVersion": "latest",
     "confirmedPackageUpdates": true,
     "runningMigrations": [
-      "rename-test-path-pattern"
+      "update-angular-cli-version-20-1-0"
     ],
     "completedMigrations": {
       "rename-test-path-pattern": {
@@ -60,7 +60,22 @@
             "type": "UPDATE"
           }
         ],
-        "ref": "7120dc753bfbf72eafaa1c60efaa669564c158c4",
+        "ref": "dc5029685ea23856a97eeb70307aa19432ac50a3",
+        "nextSteps": []
+      },
+      "replace-removed-matcher-aliases": {
+        "type": "skipped"
+      },
+      "update-angular-cli-version-20-1-0": {
+        "type": "successful",
+        "name": "update-angular-cli-version-20-1-0",
+        "changedFiles": [
+          {
+            "path": "package.json",
+            "type": "UPDATE"
+          }
+        ],
+        "ref": "af676ce8d4be403da6824a978946715d8c6616c4",
         "nextSteps": []
       }
     }
