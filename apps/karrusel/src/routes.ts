@@ -8,11 +8,6 @@ export const ROUTES: Route[] = [
     loadChildren: () => import('./pages/tabs/routes').then((m) => m.routes),
   },
   {
-    path: RouteName.Partners,
-    title: 'Partners',
-    loadChildren: () => import('./pages/partners/routes').then((m) => m.routes),
-  },
-  {
     path: RouteName.Login,
     title: 'Login',
     loadChildren: () =>
@@ -70,16 +65,5 @@ export const ROUTES: Route[] = [
     title: 'Search',
     loadChildren: () =>
       import('@blockparty/festival/feature/page/search').then((m) => m.routes),
-  },
-  {
-    path: RouteName.Transport,
-    title: 'transport',
-    loadChildren: () =>
-      import('./pages/transport/routes').then((m) => m.routes),
-  },
-  {
-    path: RouteName.Gadearmbaand,
-    loadChildren: () =>
-      import('./pages/gadearmbaand/routes').then((m) => m.routes),
   },
 ];

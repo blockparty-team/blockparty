@@ -6,6 +6,7 @@ import {
   IonBackButton,
   IonTitle,
   IonContent,
+  IonText,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -13,6 +14,7 @@ import {
   templateUrl: './about.page.html',
   styleUrls: ['./about.page.scss'],
   imports: [
+    IonText,
     IonHeader,
     IonToolbar,
     IonButtons,
