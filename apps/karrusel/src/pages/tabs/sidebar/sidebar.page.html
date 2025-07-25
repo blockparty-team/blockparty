@@ -1,0 +1,43 @@
+<div class="container">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title class="ion-text-center">More</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="onCloseSideBar()">
+          <ion-icon slot="icon-only" name="chevron-back"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="navigation">
+    <ion-list>
+      @for (item of navigationItems; track item) {
+        <ion-item
+          lines="none"
+          (click)="onGoTo(item.routeName)"
+          >
+          <ion-icon [name]="item.icon" slot="start"></ion-icon>
+          <ion-label>
+            <h2>{{item.name}}</h2>
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
+  </ion-content>
+
+  @if (enableLogin()) {
+    <ion-footer class="login">
+      <ion-item (click)="signInOrOut()" button lines="none">
+        <ion-icon
+          [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"
+          slot="start"
+          size="large"
+        ></ion-icon>
+        <ion-label>
+          <h2>{{ (authenticated$ | async) ? 'Logout' : 'Login'}}</h2>
+        </ion-label>
+      </ion-item>
+    </ion-footer>
+  }
+</div>
