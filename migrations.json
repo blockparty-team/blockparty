@@ -38,6 +38,31 @@
       "subject": "Used dotenvx for supabase environment setup"
     },
     "targetVersion": "latest",
-    "confirmedPackageUpdates": true
+    "confirmedPackageUpdates": true,
+    "runningMigrations": [
+      "rename-test-path-pattern"
+    ],
+    "completedMigrations": {
+      "rename-test-path-pattern": {
+        "type": "successful",
+        "name": "rename-test-path-pattern",
+        "changedFiles": [
+          {
+            "path": "libs/shared/data-access/device-storage/project.json",
+            "type": "UPDATE"
+          },
+          {
+            "path": "libs/tweak/shared/image-cropper/project.json",
+            "type": "UPDATE"
+          },
+          {
+            "path": "libs/tweak/shared/image-upload/project.json",
+            "type": "UPDATE"
+          }
+        ],
+        "ref": "7120dc753bfbf72eafaa1c60efaa669564c158c4",
+        "nextSteps": []
+      }
+    }
   }
 }
