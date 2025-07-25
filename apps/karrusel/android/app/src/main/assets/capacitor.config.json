@@ -1,7 +1,7 @@
 {
-	"appId": "dk.cphdistortion.app",
-	"appName": "Distortion",
-	"webDir": "../../dist/apps/distortion",
+	"appId": "dk.karrusel",
+	"appName": "Karrusel",
+	"webDir": "../../dist/apps/karrusel",
 	"plugins": {
 		"LocalNotifications": {
 			"smallIcon": "ic_launcher",

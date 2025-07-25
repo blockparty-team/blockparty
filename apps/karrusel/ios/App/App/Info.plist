@@ -23,18 +23,18 @@
       <dict>
         <key>CFBundleURLSchemes</key>
         <array>
-          <string>distortion</string>
+          <string>karrusel</string>
         </array>
       </dict>
     </array>
     <key>CFBundleVersion</key>
     <string>$(CURRENT_PROJECT_VERSION)</string>
     <key>ITSAppUsesNonExemptEncryption</key>
-    <false/>
+    <false />
     <key>LSApplicationCategoryType</key>
-    <string/>
+    <string />
     <key>LSRequiresIPhoneOS</key>
-    <true/>
+    <true />
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
     <string>Your location is needed to locate you on the map</string>
     <key>NSLocationWhenInUseUsageDescription</key>
@@ -65,6 +65,6 @@
       <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>UIViewControllerBasedStatusBarAppearance</key>
-    <true/>
+    <true />
   </dict>
 </plist>
