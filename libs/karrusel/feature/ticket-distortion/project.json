@@ -1,0 +1,29 @@
+{
+  "name": "ticket-distortion",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/karrusel/feature/ticket-distortion/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/karrusel/feature/ticket-distortion/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/karrusel/feature/ticket-distortion/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/karrusel/feature/ticket-distortion/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

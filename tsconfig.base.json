@@ -142,6 +142,12 @@
       "@blockparty/festival/ui/music-player": [
         "libs/festival/ui/music-player/src/index.ts"
       ],
+      "@blockparty/karrusel/feature/ticket-distortion": [
+        "libs/karrusel/feature/ticket-distortion/src/index.ts"
+      ],
+      "@blockparty/karrusel/feature/ticket-karrusel": [
+        "libs/karrusel/feature/ticket-karrusel/src/index.ts"
+      ],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
