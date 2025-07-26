@@ -58,7 +58,9 @@ export const ROUTES: Route[] = [
     path: RouteName.Tickets,
     title: 'Tickets',
     loadChildren: () =>
-      import('@blockparty/festival/feature/page/ticket').then((m) => m.routes),
+      import('@blockparty/karrusel/feature/ticket-karrusel').then(
+        (m) => m.ticketKarruselRoutes,
+      ),
   },
   {
     path: RouteName.Search,

@@ -63,7 +63,9 @@ export const ROUTES: Route[] = [
     path: RouteName.Tickets,
     title: 'Tickets',
     loadChildren: () =>
-      import('@blockparty/festival/feature/page/ticket').then((m) => m.routes),
+      import('@blockparty/distortion/feature/ticket-distortion').then(
+        (m) => m.ticketDistortionRoutes,
+      ),
   },
   {
     path: RouteName.Search,

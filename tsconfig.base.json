@@ -16,6 +16,9 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
+      "@blockparty/distortion/feature/ticket-distortion": [
+        "libs/distortion/feature/ticket-distortion/src/index.ts"
+      ],
       "@blockparty/festival/data-access/file-service": [
         "libs/festival/data-access/file-service/src/index.ts"
       ],
@@ -141,9 +144,6 @@
       ],
       "@blockparty/festival/ui/music-player": [
         "libs/festival/ui/music-player/src/index.ts"
-      ],
-      "@blockparty/karrusel/feature/ticket-distortion": [
-        "libs/karrusel/feature/ticket-distortion/src/index.ts"
       ],
       "@blockparty/karrusel/feature/ticket-karrusel": [
         "libs/karrusel/feature/ticket-karrusel/src/index.ts"

@@ -1,31 +1,23 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TicketsPage } from '@blockparty/festival/feature/page/ticket';
 import {
-  IonItem,
   IonAccordion,
-  IonLabel,
+  IonItem,
   IonList,
   IonIcon,
+  IonLabel,
 } from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
+import { TicketsPage } from '@blockparty/festival/feature/page/ticket';
 
 @Component({
-  selector: 'lib-ticket-karrusel',
-  imports: [
-    IonIcon,
-    IonList,
-    IonLabel,
-    IonAccordion,
-    IonItem,
-    CommonModule,
-    TicketsPage,
-  ],
-  templateUrl: './ticket-karrusel.component.html',
-  styleUrl: './ticket-karrusel.component.scss',
+  selector: 'lib-ticket-distortion',
+  imports: [IonLabel, IonIcon, IonList, IonItem, IonAccordion, TicketsPage],
+  templateUrl: './ticket-distortion.component.html',
+  styleUrl: './ticket-distortion.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TicketKarruselComponent {
+export class TicketDistortionComponent {
   onGoToTicket(ticketUrl: string): void {
     Browser.open({
       url: ticketUrl,
