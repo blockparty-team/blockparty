@@ -47,14 +47,10 @@ export class ArtistSharedStateService {
       artists.map((artist) => {
         const [bucket, path] = getBucketAndPath(artist.storage_path!);
         const imgUrl =
-          bucket && path
-            ? this.supabase.publicImageUrl(bucket, path)
-            : 'assets/distortion_logo.png';
+          bucket && path ? this.supabase.publicImageUrl(bucket, path) : '';
 
         const srcset =
-          bucket && path
-            ? this.fileService.imageSrcset(bucket, path)
-            : 'assets/distortion_logo.png';
+          bucket && path ? this.fileService.imageSrcset(bucket, path) : '';
 
         const isFavorite = favoriteArtistIds.includes(artist.id!);
 

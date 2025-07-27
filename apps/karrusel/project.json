@@ -228,8 +228,8 @@
     "supabase-link": {
       "executor": "nx:run-commands",
       "options": {
-        "cwd": "libs/festival/data-access/supabase/supabase",
-        "command": "npx dotenvx run --env-file=../../../../../apps/karrusel/.env -- npx supabase link --project-ref $SUPABASE_PROJECT_ID -p $SUPABASE_DB_PASSWORD"
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/karrusel/.env -- npx supabase link --project-ref qpimyiomwvxnczdcsbmh -p $SUPABASE_DB_PASSWORD"
       }
     }
   }

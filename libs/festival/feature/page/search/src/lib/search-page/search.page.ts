@@ -146,9 +146,7 @@ export class SearchPage {
 
   imgUrl(storagePath: string): string {
     const [bucket, path] = getBucketAndPath(storagePath);
-    return bucket && path
-      ? this.supabase.publicImageUrl(bucket, path)
-      : 'assets/distortion_logo.png';
+    return bucket && path ? this.supabase.publicImageUrl(bucket, path) : '';
   }
 
   onSearchModeChange(ev: Event): void {
