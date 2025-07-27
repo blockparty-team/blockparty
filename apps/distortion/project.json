@@ -229,7 +229,7 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "libs/festival/data-access/supabase/supabase",
-        "command": "npx dotenvx run --env-file=../../../../../apps/distortion/.env -- npx supabase link --project-ref $SUPABASE_PROJECT_ID -p $SUPABASE_DB_PASSWORD"
+        "command": "npx dotenvx run --env-file=../../../../../apps/distortion/.env -- npx supabase link --project-ref $SUPABASE_PROJECT_REF -p $SUPABASE_DB_PASSWORD"
       }
     }
   }
