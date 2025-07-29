@@ -4,6 +4,10 @@ ion-header {
   }
 }
 
+ion-item-divider {
+  border-bottom: unset;
+}
+
 ion-item {
   animation: popIn 0.2s calc(var(--animation-order) * 70ms) both ease-in;
 

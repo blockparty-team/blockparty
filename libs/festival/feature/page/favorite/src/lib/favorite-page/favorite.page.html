@@ -13,62 +13,57 @@
 </ion-header>
 
 <ion-content>
-  @if (favoriteArtists$ | async; as favoriteArtists) {
-    @if (showDayGroupedFavorites() === false) {
-      <ion-list>
-        @for (artist of favoriteArtists; track artist.id; let i = $index) {
-          <ion-item lines="none" [style.--animation-order]="i">
-            <ion-avatar slot="start">
-              <img [src]="artist.imgUrl" />
-            </ion-avatar>
-            <ion-label [routerLink]="['/tabs', 'artist', artist.name]"
-              >{{artist.name}}</ion-label
-              >
-              <div slot="end" (click)="toggleFavorite(artist.id!)">
-                <ion-icon slot="icon-only" name="close"></ion-icon>
-              </div>
-            </ion-item>
-            } @empty {
-            <p class="ion-text-center">No favorites added</p>
-          }
-        </ion-list>
-      }
+  @if (favoriteArtists$ | async; as favoriteArtists) { @if
+  (showDayGroupedFavorites() === false) {
+  <ion-list>
+    @for (artist of favoriteArtists; track artist.id; let i = $index) {
+    <ion-item lines="none" [style.--animation-order]="i">
+      <ion-avatar slot="start">
+        <img [src]="artist.imgUrl" />
+      </ion-avatar>
+      <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
+        {{artist.name}}
+      </ion-label>
+      <div slot="end" (click)="toggleFavorite(artist.id!)">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </div>
+    </ion-item>
+    } @empty {
+    <p class="ion-text-center">No favorites added</p>
     }
-
-    @if (dayGroupedFavorites$ | async; as dayGroupedFavorites) {
-      @if (showDayGroupedFavorites()) {
-        @for (group of dayGroupedFavorites; track group.day.day; let i = $index) {
-          <ion-item-group [style.--animation-order]="i">
-            <ion-item-divider sticky="true" color="medium">
-              <ion-label>{{group.day.name}}</ion-label>
-            </ion-item-divider>
-            @for (artist of group.artists; track artist.id) {
-              <ion-item lines="none">
-                <ion-avatar slot="start">
-                  <img [src]="artist.imgUrl" />
-                </ion-avatar>
-                <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
-                  <h3>
-                    <span class="artist-name">{{artist.name}}</span>
-                    <span class="time">
-                      {{artist.timetable[0]?.start_time | date:'HH:mm'}} -
-                      {{artist.timetable[0]?.end_time | date:'HH:mm'}}
-                    </span>
-                  </h3>
-                  @if (artist.timetable[0]; as timetable) { @if
-                    (!appConfig().simpleLabel) {
-                    <p>{{timetable.stage.event.name}} | {{timetable.stage.name}}</p>
-                    } }
-                  </ion-label>
-                  <div slot="end" (click)="toggleFavorite(artist.id!)">
-                    <ion-icon slot="icon-only" name="close"> </ion-icon>
-                  </div>
-                </ion-item>
-              }
-            </ion-item-group>
-            } @empty {
-            <p class="ion-text-center">No favorites added</p>
-          }
-        }
-      }
-    </ion-content>
+  </ion-list>
+  } } @if (dayGroupedFavorites$ | async; as dayGroupedFavorites) { @if
+  (showDayGroupedFavorites()) { @for (group of dayGroupedFavorites; track
+  group.day.day; let i = $index) {
+  <ion-item-group [style.--animation-order]="i">
+    <ion-item-divider sticky="true" color="secondary">
+      <ion-label>{{group.day.name}}</ion-label>
+    </ion-item-divider>
+    @for (artist of group.artists; track artist.id) {
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <img [src]="artist.imgUrl" />
+      </ion-avatar>
+      <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
+        <h3>
+          <span class="artist-name">{{artist.name}}</span>
+          <span class="time">
+            {{artist.timetable[0]?.start_time | date:'HH:mm'}} -
+            {{artist.timetable[0]?.end_time | date:'HH:mm'}}
+          </span>
+        </h3>
+        @if (artist.timetable[0]; as timetable) { @if (!appConfig().simpleLabel)
+        {
+        <p>{{timetable.stage.event.name}} | {{timetable.stage.name}}</p>
+        } }
+      </ion-label>
+      <div slot="end" (click)="toggleFavorite(artist.id!)">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </div>
+    </ion-item>
+    }
+  </ion-item-group>
+  } @empty {
+  <p class="ion-text-center">No favorites added</p>
+  } } }
+</ion-content>
