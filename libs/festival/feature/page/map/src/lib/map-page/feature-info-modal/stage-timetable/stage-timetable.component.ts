@@ -14,6 +14,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Browser } from '@capacitor/browser';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   MapLayer,
   Day,
@@ -21,8 +22,7 @@ import {
   Timetable,
   MapClickedFeature,
   Ticket,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import {
   IonToolbar,

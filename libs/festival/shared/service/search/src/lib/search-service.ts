@@ -5,11 +5,11 @@ import {
   MapSource,
   StageGeojsonProperties,
   AssetGeojsonProperties,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
 import { GeolocationService } from '@blockparty/shared/service/geolocation';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService } from '@blockparty/festival/data-access/supabase';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';

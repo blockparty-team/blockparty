@@ -3,13 +3,13 @@ import {
   EventViewModel,
   EventWithRelations,
   EventsGroupedByType,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@blockparty/festival/data-access/file-service';
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase-service';
+} from '@blockparty/festival/data-access/supabase';
 import { BehaviorSubject, concat, EMPTY, Observable } from 'rxjs';
 import {
   catchError,
@@ -19,7 +19,7 @@ import {
   shareReplay,
   tap,
 } from 'rxjs/operators';
-import { Tables } from '@blockparty/distortion/data-access/supabase';
+import { Tables } from '@blockparty/festival/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',

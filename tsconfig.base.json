@@ -16,8 +16,8 @@
     "useDefineForClassFields": false,
     "rootDir": ".",
     "paths": {
-      "@blockparty/distortion/data-access/supabase": [
-        "libs/distortion/data-access/supabase/src/index.ts"
+      "@blockparty/distortion/feature/ticket-distortion": [
+        "libs/distortion/feature/ticket-distortion/src/index.ts"
       ],
       "@blockparty/festival/data-access/file-service": [
         "libs/festival/data-access/file-service/src/index.ts"
@@ -54,6 +54,9 @@
       ],
       "@blockparty/festival/data-access/state/timetable-shared": [
         "libs/festival/data-access/state/timetable-shared/src/index.ts"
+      ],
+      "@blockparty/festival/data-access/supabase": [
+        "libs/festival/data-access/supabase/src/index.ts"
       ],
       "@blockparty/festival/feature/page/artist": [
         "libs/festival/feature/page/artist/src/index.ts"
@@ -142,14 +145,14 @@
       "@blockparty/festival/ui/music-player": [
         "libs/festival/ui/music-player/src/index.ts"
       ],
+      "@blockparty/karrusel/feature/ticket-karrusel": [
+        "libs/karrusel/feature/ticket-karrusel/src/index.ts"
+      ],
       "@blockparty/shared/data-access/device-storage": [
         "libs/shared/data-access/device-storage/src/index.ts"
       ],
       "@blockparty/shared/data-access/filesystem": [
         "libs/shared/data-access/filesystem/src/index.ts"
-      ],
-      "@blockparty/shared/data-access/supabase-service": [
-        "libs/shared/data-access/supabase-service/src/index.ts"
       ],
       "@blockparty/shared/service/device": [
         "libs/shared/service/device/src/index.ts"
@@ -165,9 +168,6 @@
       ],
       "@blockparty/util/file": ["libs/festival/util/file/src/index.ts"],
       "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
-      "@studieby/data-access/supabase": [
-        "libs/studieby/data-access/supabase/src/index.ts"
-      ],
       "@tweak/*": ["apps/tweak/src/app/*"],
       "libs/tweak/shared/image-cropper": [
         "libs/tweak/shared/image-cropper/src/index.ts"

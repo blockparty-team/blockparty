@@ -1,4 +1,4 @@
-import { Database } from '@blockparty/distortion/data-access/supabase';
+import { Database } from '@blockparty/festival/data-access/supabase';
 
 // Select Tables
 export type Day = Database['public']['Tables']['day']['Row'];

@@ -13,7 +13,7 @@ import {
   IonLabel,
 } from '@ionic/angular/standalone';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
-import { AppConfig } from '@blockparty/festival/shared/types';
+import { AppConfig } from '@blockparty/festival/data-access/supabase';
 
 @Component({
   selector: 'app-event-filter',

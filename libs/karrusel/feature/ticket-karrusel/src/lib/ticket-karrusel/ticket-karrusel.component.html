@@ -1,0 +1,29 @@
+<app-tickets>
+  <ion-accordion>
+    <ion-item slot="header" color="light">
+      <ion-label color="dark">
+        <h2>Full Festival Pass</h2>
+      </ion-label>
+    </ion-item>
+    <div
+      class="ion-padding"
+      slot="content"
+      [style.background-color]="'var(--ion-color-light)'"
+    >
+      <ion-list lines="none">
+        <ion-item
+          (click)="
+            onGoToTicket(
+              'https://www.ticketmaster.dk/event/553467?language=da-dk'
+            )
+          "
+          button="true"
+          color="light"
+        >
+          <ion-icon name="ticket" slot="start"></ion-icon>
+          Festival Pass – access to all 3 days
+        </ion-item>
+      </ion-list>
+    </div>
+  </ion-accordion>
+</app-tickets>

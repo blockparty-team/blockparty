@@ -4,7 +4,7 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { ArtistViewModel } from '@blockparty/festival/shared/types';
+import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

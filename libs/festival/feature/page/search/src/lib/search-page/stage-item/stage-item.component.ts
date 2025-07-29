@@ -5,12 +5,12 @@ import {
   inject,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   MapClickedFeature,
   MapLayer,
   StageGeojsonProperties,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { Feature, Point } from 'geojson';

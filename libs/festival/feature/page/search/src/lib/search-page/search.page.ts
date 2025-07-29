@@ -6,11 +6,11 @@ import {
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { RouteName } from '@blockparty/festival/shared/types';
 import {
   EntityDistanceSearchResult,
   EntityFreeTextSearchResult,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { SearchService } from '@blockparty/festival/shared/service/search';
 import { SegmentCustomEvent } from '@ionic/core';
@@ -26,7 +26,7 @@ import {
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase-service';
+} from '@blockparty/festival/data-access/supabase';
 import { EntityBadgeColor } from './entity-badge-color';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { AssetItemComponent } from './asset-item/asset-item.component';
@@ -146,9 +146,7 @@ export class SearchPage {
 
   imgUrl(storagePath: string): string {
     const [bucket, path] = getBucketAndPath(storagePath);
-    return bucket && path
-      ? this.supabase.publicImageUrl(bucket, path)
-      : 'assets/distortion_logo.png';
+    return bucket && path ? this.supabase.publicImageUrl(bucket, path) : '';
   }
 
   onSearchModeChange(ev: Event): void {

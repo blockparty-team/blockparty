@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { EventsGroupedByType } from '@blockparty/festival/shared/types';
+import { EventsGroupedByType } from '@blockparty/festival/data-access/supabase';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';

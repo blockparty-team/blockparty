@@ -4,7 +4,7 @@ import {
   Input,
   inject,
 } from '@angular/core';
-import { ArtistViewModel } from '@blockparty/festival/shared/types';
+import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';

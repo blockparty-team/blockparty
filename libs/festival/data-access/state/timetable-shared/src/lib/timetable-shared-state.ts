@@ -1,13 +1,13 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, concat } from 'rxjs';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { SupabaseService } from '@blockparty/shared/data-access/supabase-service';
+import { SupabaseService } from '@blockparty/festival/data-access/supabase';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import {
   DayEventStageTimetable,
   ArtistNotification,
   ArtistViewModel,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { ArtistSharedStateService } from '@blockparty/festival/data-access/state/artist-shared';
 import { RefreshService } from '@blockparty/festival/shared/service/refresh';
 

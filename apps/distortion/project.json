@@ -89,34 +89,22 @@
             }
           ]
         },
-        "ci": {
-          "progress": false
-        }
+        "ci": { "progress": false }
       }
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
-      "options": {
-        "buildTarget": "distortion:build"
-      },
+      "options": { "buildTarget": "distortion:build" },
       "configurations": {
-        "production": {
-          "buildTarget": "distortion:build:production"
-        },
-        "development": {
-          "buildTarget": "distortion:build:development"
-        },
-        "ci": {
-          "progress": false
-        }
+        "production": { "buildTarget": "distortion:build:production" },
+        "development": { "buildTarget": "distortion:build:development" },
+        "ci": { "progress": false }
       },
       "continuous": true
     },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": {
-        "buildTarget": "distortion:build"
-      }
+      "options": { "buildTarget": "distortion:build" }
     },
     "test": {
       "executor": "@angular-devkit/build-angular:karma",
@@ -142,12 +130,7 @@
           "apps/distortion/src/OneSignalSDKWorker.js"
         ]
       },
-      "configurations": {
-        "ci": {
-          "progress": false,
-          "watch": false
-        }
-      }
+      "configurations": { "ci": { "progress": false, "watch": false } }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
@@ -187,16 +170,66 @@
     },
     "open-xcode": {
       "executor": "nx:run-commands",
-      "options": {
-        "cwd": "apps/distortion/",
-        "command": "npx cap open ios"
-      }
+      "options": { "cwd": "apps/distortion/", "command": "npx cap open ios" }
     },
     "open-android-studio": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/distortion/",
         "command": "npx cap open android"
+      }
+    },
+    "supabase-start": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/distortion/.env -- npx supabase start"
+      }
+    },
+    "supabase-stop": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/distortion/.env -- npx supabase stop"
+      }
+    },
+    "supabase-status": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase",
+        "command": "npx dotenvx run --env-file=../../../../apps/distortion/.env -- npx supabase status"
+      }
+    },
+    "supabase-db-dump-restore-local": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "commands": [
+          "npx supabase db reset",
+          "npx supabase db dump -s public --data-only | psql -h localhost -p 54322 -U postgres -d postgres"
+        ],
+        "parallel": false
+      }
+    },
+    "supabase-db-push": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "command": "npx supabase db push"
+      }
+    },
+    "supabase-gen-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "command": "npx supabase gen types typescript --local > ../src/lib/types/database-definitions.ts"
+      }
+    },
+    "supabase-link": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/festival/data-access/supabase/supabase",
+        "command": "npx dotenvx run --env-file=../../../../../apps/distortion/.env -- npx supabase link --project-ref $SUPABASE_PROJECT_REF -p $SUPABASE_DB_PASSWORD"
       }
     }
   }

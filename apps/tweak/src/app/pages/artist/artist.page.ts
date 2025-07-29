@@ -37,7 +37,7 @@ import { ImageCropperComponent } from 'libs/tweak/shared/image-cropper';
 import {
   Tables,
   TablesInsert,
-} from '@blockparty/distortion/data-access/supabase';
+} from '@blockparty/festival/data-access/supabase';
 import {
   TableComponent,
   TableConfig,

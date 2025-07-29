@@ -8,69 +8,42 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content fullscreen="true">
   <section class="ion-padding ion-text-center">
-    <p>Select event types below to buy tickets</p>
+    <p>Buy tickets below</p>
   </section>
 
-  @if (eventsGroupedByType$ | async; as eventTypes) {
-    <ion-accordion-group>
-      <!-- Custom Accordion with full festival pass -->
-      <ion-accordion>
-        <ion-item slot="header" color="light">
-          <ion-label color="dark">
-            <h2>Festival Pass</h2>
-          </ion-label>
-        </ion-item>
-        <div
-          class="ion-padding"
-          slot="content"
-          [style.background-color]="'var(--ion-color-light)'"
-          >
-          <ion-list lines="none">
-            <ion-item
-              (click)="onGoToTicket('https://www.ticketmaster.dk/event/distortion-2025-festival-pass-tickets/550887')"
-              button="true"
-              color="light"
-              >
-              <ion-icon name="ticket" slot="start"></ion-icon>
-              Full Festival Pass
-            </ion-item>
-          </ion-list>
-        </div>
-      </ion-accordion>
-      <!-- Generated accordions from event/types -->
-      @for (eventType of eventTypes; track eventType) {
-        <ion-accordion>
-          <ion-item
-            slot="header"
-            [style.--background]="eventType.color ? eventType.color : 'gray'"
-            >
-            <ion-label color="dark">
-              <h2>{{eventType.name}}</h2>
-            </ion-label>
+  <ion-accordion-group>
+    <ng-content />
+
+    <!-- Generated accordions from event/types -->
+    @if (eventsGroupedByType$ | async; as eventTypes) { @for (eventType of
+    eventTypes; track eventType) {
+    <ion-accordion>
+      <ion-item
+        slot="header"
+        [style.--background]="eventType.color ? eventType.color : 'gray'"
+      >
+        <ion-label color="dark">
+          <h2>{{eventType.name}}</h2>
+        </ion-label>
+      </ion-item>
+      <div
+        class="ion-padding"
+        slot="content"
+        [style.background-color]="eventType.color"
+      >
+        <ion-list lines="none">
+          @for (event of eventType.event; track event) { @for (ticket of
+          event.tickets; track ticket) {
+          <ion-item (click)="onGoToTicket(ticket.url)" button="true">
+            <ion-icon name="ticket" color="light" slot="start"> </ion-icon>
+            {{ticket.name}}
           </ion-item>
-          <div
-            class="ion-padding"
-            slot="content"
-            [style.background-color]="eventType.color"
-            >
-            <ion-list lines="none">
-              @for (event of eventType.event; track event) {
-                @for (ticket of event.tickets; track ticket) {
-                  <ion-item
-                    (click)="onGoToTicket(ticket.url)"
-                    button="true"
-                    >
-                    <ion-icon name="ticket" color="light" slot="start"> </ion-icon>
-                    {{ticket.name}}
-                  </ion-item>
-                }
-              }
-            </ion-list>
-          </div>
-        </ion-accordion>
-      }
-    </ion-accordion-group>
-  }
+          } }
+        </ion-list>
+      </div>
+    </ion-accordion>
+    } }
+  </ion-accordion-group>
 </ion-content>

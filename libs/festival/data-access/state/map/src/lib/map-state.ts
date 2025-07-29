@@ -11,7 +11,7 @@ import {
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase-service';
+} from '@blockparty/festival/data-access/supabase';
 import { FilesystemService } from '@blockparty/shared/data-access/filesystem';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { imgToBase64, imgFromUrl } from '@blockparty/util/file';
@@ -23,9 +23,9 @@ import {
   MapClickedFeature,
   MapIconViewModel,
   MaskGeojsonProperties,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
 import { RefreshService } from '@blockparty/festival/shared/service/refresh';
-import { Tables } from '@blockparty/distortion/data-access/supabase';
+import { Tables } from '@blockparty/festival/data-access/supabase';
 
 @Injectable({
   providedIn: 'root',

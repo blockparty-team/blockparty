@@ -19,8 +19,8 @@ import {
   StageTimetableViewModel,
   TimetableViewModel,
   TimeLabel,
-  RouteName,
-} from '@blockparty/festival/shared/types';
+} from '@blockparty/festival/data-access/supabase';
+import { RouteName } from '@blockparty/festival/shared/types';
 import { RouterLink } from '@angular/router';
 import { NgClass, AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';

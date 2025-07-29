@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { combineLatest, concat, Observable } from 'rxjs';
 import { filter, map, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { ArtistViewModel } from '@blockparty/festival/shared/types';
+import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import {
   SupabaseService,
   getBucketAndPath,
-} from '@blockparty/shared/data-access/supabase-service';
+} from '@blockparty/festival/data-access/supabase';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { FileService } from '@blockparty/festival/data-access/file-service';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
@@ -47,14 +47,10 @@ export class ArtistSharedStateService {
       artists.map((artist) => {
         const [bucket, path] = getBucketAndPath(artist.storage_path!);
         const imgUrl =
-          bucket && path
-            ? this.supabase.publicImageUrl(bucket, path)
-            : 'assets/distortion_logo.png';
+          bucket && path ? this.supabase.publicImageUrl(bucket, path) : '';
 
         const srcset =
-          bucket && path
-            ? this.fileService.imageSrcset(bucket, path)
-            : 'assets/distortion_logo.png';
+          bucket && path ? this.fileService.imageSrcset(bucket, path) : '';
 
         const isFavorite = favoriteArtistIds.includes(artist.id!);
 

@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ArtistViewModel, RouteName } from '@blockparty/festival/shared/types';
+import { RouteName } from '@blockparty/festival/shared/types';
+import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import {
