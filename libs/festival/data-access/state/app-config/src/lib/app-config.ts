@@ -38,6 +38,7 @@ const initialAppConfig: AppConfig = {
     showDays: true,
     showEventTypes: true,
     showEvents: true,
+    showOnMap: true,
   },
   iosAppId: '',
 };

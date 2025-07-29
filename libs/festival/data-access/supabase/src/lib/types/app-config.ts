@@ -34,6 +34,7 @@ export type AppConfig = {
     showDays: boolean;
     showEventTypes: boolean;
     showEvents: boolean;
+    showOnMap: boolean;
   };
   iosAppId: string;
 };
