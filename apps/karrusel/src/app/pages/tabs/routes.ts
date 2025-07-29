@@ -50,14 +50,14 @@ export const routes: Route[] = [
       },
       {
         path: '',
-        redirectTo: '/tabs/map',
+        redirectTo: `/${RouteName.Tabs}/${RouteName.Artist}`,
         pathMatch: 'full',
       },
     ],
   },
   {
     path: '',
-    redirectTo: '/tabs/map',
+    redirectTo: `/${RouteName.Tabs}/${RouteName.Artist}`,
     pathMatch: 'full',
   },
 ];
