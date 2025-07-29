@@ -32,6 +32,7 @@ import { RouteHistoryService } from '@blockparty/festival/shared/service/route-h
 import { AsyncPipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';
+import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 
 @Component({
   selector: 'app-map',
@@ -53,6 +54,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private tabStateService = inject(TabsStateService);
   private modalCtrl = inject(ModalController);
   private routeHistoryService = inject(RouteHistoryService);
+  public showEventFilter =
+    inject(AppConfigService).appConfig.eventFilter.showOnMap;
 
   private modal!: HTMLIonModalElement;
   mapLoaded$ = this.mapStateService.mapLoaded$;
