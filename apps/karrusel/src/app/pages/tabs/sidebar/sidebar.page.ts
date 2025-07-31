@@ -20,6 +20,9 @@ import {
   IonFooter,
 } from '@ionic/angular/standalone';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { Browser } from '@capacitor/browser';
+import { addIcons } from 'ionicons';
+import { playOutline } from 'ionicons/icons';
 
 interface NavigationItem {
   name: string;
@@ -55,42 +58,16 @@ export class SidebarPage implements OnInit {
 
   authenticated$: Observable<boolean>;
 
+  constructor() {
+    addIcons({ playOutline });
+  }
+
   navigationItems: NavigationItem[] = [
     {
       name: 'Tickets',
       icon: 'ticket-outline',
       routeName: RouteName.Tickets,
     },
-    // {
-    //   name: 'Events',
-    //   icon: 'musical-notes-outline',
-    //   routeName: RouteName.Event,
-    // },
-    // {
-    //   name: 'Playlists',
-    //   icon: 'play-outline',
-    //   routeName: RouteName.Playlists
-    // },
-    // {
-    //   name: 'Sponsors & Partners',
-    //   icon: 'rocket-outline',
-    //   routeName: RouteName.Partners
-    // },
-    // {
-    //   name: 'Merch',
-    //   icon: 'cash-outline',
-    //   routeName: RouteName.Merch
-    // },
-    // {
-    //   name: 'Transport',
-    //   icon: 'car-outline',
-    //   routeName: RouteName.Transport,
-    // },
-    // {
-    //   name: 'Gadearmbånd - support us!',
-    //   icon: 'thumbs-up-outline',
-    //   routeName: RouteName.Gadearmbaand,
-    // },
     {
       name: 'About',
       icon: 'information-circle-outline',
@@ -129,6 +106,10 @@ export class SidebarPage implements OnInit {
   onGoTo(route: RouteName): void {
     this.menu.close();
     this.router.navigate([route]);
+  }
+
+  onGoToUrl(url: string): void {
+    Browser.open({ url });
   }
 
   onCloseSideBar(): void {
