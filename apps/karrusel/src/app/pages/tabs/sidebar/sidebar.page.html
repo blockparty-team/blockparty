@@ -13,31 +13,38 @@
   <ion-content class="navigation">
     <ion-list>
       @for (item of navigationItems; track item) {
-        <ion-item
-          lines="none"
-          (click)="onGoTo(item.routeName)"
-          >
-          <ion-icon [name]="item.icon" slot="start"></ion-icon>
-          <ion-label>
-            <h2>{{item.name}}</h2>
-          </ion-label>
-        </ion-item>
+      <ion-item lines="none" (click)="onGoTo(item.routeName)">
+        <ion-icon [name]="item.icon" slot="start"></ion-icon>
+        <ion-label>
+          <h2>{{item.name}}</h2>
+        </ion-label>
+      </ion-item>
       }
+
+      <ion-item
+        lines="none"
+        (click)="onGoToUrl('https://open.spotify.com/playlist/3vYBDYiOVyZAfDb3pvbqAV?go=1&sp_cid=aea5237f435a55b4a0b0c5f1ea73b443&utm_source=embed_player_p&utm_medium=desktop&nd=1&dlsi=d23598d9eb9845f1')"
+      >
+        <ion-icon name="play-outline" slot="start"></ion-icon>
+        <ion-label>
+          <h2>Playlist</h2>
+        </ion-label>
+      </ion-item>
     </ion-list>
   </ion-content>
 
   @if (enableLogin()) {
-    <ion-footer class="login">
-      <ion-item (click)="signInOrOut()" button lines="none">
-        <ion-icon
-          [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"
-          slot="start"
-          size="large"
-        ></ion-icon>
-        <ion-label>
-          <h2>{{ (authenticated$ | async) ? 'Logout' : 'Login'}}</h2>
-        </ion-label>
-      </ion-item>
-    </ion-footer>
+  <ion-footer class="login">
+    <ion-item (click)="signInOrOut()" button lines="none">
+      <ion-icon
+        [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"
+        slot="start"
+        size="large"
+      ></ion-icon>
+      <ion-label>
+        <h2>{{ (authenticated$ | async) ? 'Logout' : 'Login'}}</h2>
+      </ion-label>
+    </ion-item>
+  </ion-footer>
   }
 </div>
