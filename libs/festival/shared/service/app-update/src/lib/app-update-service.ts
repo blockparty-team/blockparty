@@ -2,8 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 import { DeviceStorageService } from '@blockparty/shared/data-access/device-storage';
 import { Capacitor } from '@capacitor/core';
-import { AppUpdate } from '@capawesome/capacitor-app-update';
+import { AppUpdate, AppUpdateInfo } from '@capawesome/capacitor-app-update';
 import { AlertController } from '@ionic/angular/standalone';
+import { a } from 'node_modules/@angular/cdk/scrolling-module.d-3Rw5UxLk';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,7 @@ export class AppUpdateService {
 
   private async appUpdateInfo(): Promise<{
     isNewVersionAvailable: boolean;
-    newVersion: string | undefined;
+    newVersion: AppUpdateInfo['availableVersionCode'];
   }> {
     const platform = Capacitor.getPlatform();
     if (platform === 'web')
@@ -30,12 +31,14 @@ export class AppUpdateService {
     return platform === 'android'
       ? {
           isNewVersionAvailable:
-            result.currentVersionCode !== result.availableVersionCode,
+            result.currentVersionCode.toString() !==
+            result.availableVersionCode?.toString(),
           newVersion: result.availableVersionCode,
         }
       : {
           isNewVersionAvailable:
-            result.currentVersionName !== result.availableVersionName,
+            result.currentVersionName.toString() !==
+            result.availableVersionName?.toString(),
           newVersion: result.availableVersionName,
         };
   }
@@ -46,7 +49,11 @@ export class AppUpdateService {
       'skipAppUpdateVersion',
     );
 
-    if (!isNewVersionAvailable || newVersion === skipAppUpdateVersion) return;
+    if (
+      !isNewVersionAvailable ||
+      newVersion?.toString() === skipAppUpdateVersion.toString()
+    )
+      return;
 
     const alert = await this.alertContoller.create({
       header: 'Update available',
@@ -71,5 +78,8 @@ export class AppUpdateService {
     });
 
     await alert.present();
+    alert.onDidDismiss().then(() => {
+      this.deviceStorage.set('skipAppUpdateVersion', newVersion);
+    });
   }
 }
