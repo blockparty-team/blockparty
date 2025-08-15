@@ -11,7 +11,7 @@ import {
   TimetableWithStageName,
 } from '@blockparty/festival/data-access/supabase';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@blockparty/util/animation';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
@@ -100,7 +100,19 @@ export class TimetableListComponent {
     );
 
   public timetableByStage$: Observable<StageTimetable[] | null> =
-    this.event$.pipe(map((event) => event?.stages ?? null));
+    this.event$.pipe(
+      map(
+        (event) =>
+          event?.stages.map((stage) => ({
+            ...stage,
+            timetable: stage.timetable.sort(
+              (a, b) =>
+                new Date(a.start_time).getTime() -
+                new Date(b.start_time).getTime(),
+            ),
+          })) ?? null,
+      ),
+    );
 
   public routeName = RouteName;
 
