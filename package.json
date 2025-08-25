@@ -74,7 +74,7 @@
     "@dotenvx/dotenvx": "^1.48.3",
     "@ionic/angular-toolkit": "12.2.0",
     "@ionic/cli": "7.2.1",
-    "@nx/angular": "21.3.5",
+    "@nx/angular": "21.4.1",
     "@nx/eslint": "21.3.5",
     "@nx/eslint-plugin": "21.3.5",
     "@nx/jest": "21.3.5",
