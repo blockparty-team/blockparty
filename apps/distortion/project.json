@@ -94,12 +94,13 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
-      "options": { "buildTarget": "distortion:build" },
+      "options": { "buildTarget": "distortion:build:development" },
       "configurations": {
         "production": { "buildTarget": "distortion:build:production" },
         "development": { "buildTarget": "distortion:build:development" },
         "ci": { "progress": false }
       },
+      "defaultConfiguration": "development",
       "continuous": true
     },
     "extract-i18n": {
