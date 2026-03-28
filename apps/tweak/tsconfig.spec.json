@@ -3,7 +3,10 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "types": ["jasmine"],
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "module": "preserve",
+    "lib": ["dom", "es2022"],
+    "isolatedModules": true
   },
   "files": ["src/test.ts", "src/polyfills.ts"],
   "include": ["src/**/*.spec.ts", "src/**/*.d.ts"]
