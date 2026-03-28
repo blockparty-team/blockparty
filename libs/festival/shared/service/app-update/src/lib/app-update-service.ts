@@ -4,7 +4,6 @@ import { DeviceStorageService } from '@blockparty/shared/data-access/device-stor
 import { Capacitor } from '@capacitor/core';
 import { AppUpdate, AppUpdateInfo } from '@capawesome/capacitor-app-update';
 import { AlertController } from '@ionic/angular/standalone';
-import { a } from 'node_modules/@angular/cdk/scrolling-module.d-3Rw5UxLk';
 
 @Injectable({
   providedIn: 'root',
