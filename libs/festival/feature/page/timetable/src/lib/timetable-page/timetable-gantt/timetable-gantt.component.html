@@ -36,7 +36,7 @@
             [style.--act-column-end]="act.columnEnd"
             [style.--act-row-start]="act.rowStart"
             [style.background-color]="eventTypeColor$ | async"
-            [ngClass]="{ favorite: act.isFavorite }"
+            [class.favorite]="act.isFavorite"
             >
             <div class="act-content">
               <div class="act-sticky">

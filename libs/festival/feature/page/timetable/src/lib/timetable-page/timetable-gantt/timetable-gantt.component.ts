@@ -22,7 +22,7 @@ import {
 } from '@blockparty/festival/data-access/supabase';
 import { RouteName } from '@blockparty/festival/shared/types';
 import { RouterLink } from '@angular/router';
-import { NgClass, AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
@@ -32,14 +32,13 @@ import { FavoriteStateService } from '@blockparty/festival/data-access/state/fav
   styleUrls: ['./timetable-gantt.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    NgClass,
     RouterLink,
     AsyncPipe,
     DatePipe,
     IonIcon,
     IonText,
-    IonRouterLink,
-  ],
+    IonRouterLink
+],
 })
 export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);

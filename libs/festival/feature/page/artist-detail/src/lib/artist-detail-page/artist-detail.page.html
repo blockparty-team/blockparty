@@ -68,7 +68,7 @@
     </div>
     <section
       class="artist-info"
-      [ngClass]="{'music-player-padding': showMusicPlayer()}"
+      [class.music-player-padding]="showMusicPlayer()"
       >
       <h1 class="artist-title">
         {{artist.name}}
