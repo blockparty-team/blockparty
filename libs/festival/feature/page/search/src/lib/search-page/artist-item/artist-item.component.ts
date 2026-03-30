@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { RouteName } from '@blockparty/festival/shared/types';
 import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { DatePipe } from '@angular/common';
@@ -18,7 +18,7 @@ import {
   imports: [RouterLink, DatePipe, IonItem, IonAvatar, IonLabel, IonRouterLink],
 })
 export class ArtistItemComponent {
-  @Input() artist!: ArtistViewModel;
+  readonly artist = input.required<ArtistViewModel>();
 
   routeName = RouteName;
 }

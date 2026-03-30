@@ -1,23 +1,23 @@
 <ion-card>
   <img
-    [src]="artist.imgUrl"
-    alt="Image of {{ artist.name }}"
-    [srcset]="artist.srcset"
+    [src]="artist().imgUrl"
+    alt="Image of {{ artist().name }}"
+    [srcset]="artist().srcset"
     />
 
   <div class="card-content">
-    <div class="card-text" [routerLink]="['./', artist.name]">
+    <div class="card-text" [routerLink]="['./', artist().name]">
       <h3 tabindex="1" class="artist-name-country">
         <span>
-          {{ artist.name }}
+          {{ artist().name }}
         </span>
-        @if (artist.country) {
+        @if (artist().country) {
           <span class="country">
-            ({{ artist.country }})
+            ({{ artist().country }})
           </span>
         }
       </h3>
-      @for (act of artist.timetable; track act) {
+      @for (act of artist().timetable; track act) {
         <p class="act">
           {{ act.stage.event.name }} |
           {{ act.day.name }}
@@ -31,9 +31,9 @@
     <div slot="end" class="card-actions">
       <ion-icon
         slot="icon-only"
-        [color]="artist.isFavorite ? 'favorite' : ''"
-        [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
-        (click)="toggleFavorite(artist.id!)"
+        [color]="artist().isFavorite ? 'favorite' : ''"
+        [name]="artist().isFavorite ? 'heart' : 'heart-outline'"
+        (click)="toggleFavorite(artist().id!)"
         >
       </ion-icon>
     </div>

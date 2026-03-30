@@ -1,4 +1,4 @@
-import { Component, Input, WritableSignal, signal } from '@angular/core';
+import { Component, WritableSignal, signal, input } from '@angular/core';
 import { IonModal } from '@ionic/angular/standalone';
 
 @Component({
@@ -8,9 +8,9 @@ import { IonModal } from '@ionic/angular/standalone';
   imports: [IonModal],
 })
 export class EditModalComponent {
-  @Input() isOpen: WritableSignal<boolean> = signal(false);
+  readonly isOpen = input<WritableSignal<boolean>>(signal(false));
 
   onDismiss() {
-    this.isOpen.set(false);
+    this.isOpen().set(false);
   }
 }

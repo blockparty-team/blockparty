@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { EventViewModel } from '@blockparty/festival/data-access/supabase';
 
 import { RouterLink } from '@angular/router';
@@ -12,5 +12,5 @@ import { IonCard, IonBadge, IonRouterLink } from '@ionic/angular/standalone';
   imports: [RouterLink, IonCard, IonBadge, IonRouterLink],
 })
 export class EventCardComponent {
-  @Input() event!: EventViewModel;
+  readonly event = input.required<EventViewModel>();
 }

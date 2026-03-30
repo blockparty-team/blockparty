@@ -2,10 +2,10 @@ import { AsyncPipe, JsonPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   WritableSignal,
   forwardRef,
   inject,
+  input
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -83,7 +83,7 @@ export type KeyValueConfig = {
   ],
 })
 export class KeyValueComponent implements ControlValueAccessor {
-  @Input() public config!: WritableSignal<KeyValueConfig>;
+  public readonly config = input.required<WritableSignal<KeyValueConfig>>();
 
   private fb = inject(FormBuilder);
 
@@ -96,7 +96,7 @@ export class KeyValueComponent implements ControlValueAccessor {
       map((form) =>
         form.items
           ?.filter((item) => this.isFilled(item))
-          .map((item) => item![this.config().property1Key]),
+          .map((item) => item![this.config()().property1Key]),
       ),
     ),
   );
@@ -118,8 +118,8 @@ export class KeyValueComponent implements ControlValueAccessor {
   onAddKeyValueGroup() {
     this.items.push(
       this.fb.group<Properties>({
-        [this.config().property1Key]: '',
-        [this.config().property2Key]: '',
+        [this.config()().property1Key]: '',
+        [this.config()().property2Key]: '',
       }),
     );
   }
@@ -139,8 +139,8 @@ export class KeyValueComponent implements ControlValueAccessor {
       items.forEach((item) => {
         this.items.push(
           this.fb.group<Properties>({
-            [this.config().property1Key]: item[this.config().property1Key],
-            [this.config().property2Key]: item[this.config().property2Key],
+            [this.config()().property1Key]: item[this.config()().property1Key],
+            [this.config()().property2Key]: item[this.config()().property2Key],
           }),
         );
       });
@@ -175,7 +175,7 @@ export class KeyValueComponent implements ControlValueAccessor {
   isFilled(item: Properties | null) {
     return (
       !!item &&
-      (!!item[this.config().property1Key] || !!item[this.config().property2Key])
+      (!!item[this.config()().property1Key] || !!item[this.config()().property2Key])
     );
   }
 }

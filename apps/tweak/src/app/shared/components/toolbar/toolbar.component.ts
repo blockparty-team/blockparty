@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -15,5 +15,5 @@ import {
   imports: [IonHeader, IonToolbar, IonButtons, IonMenuButton, IonTitle],
 })
 export class ToolbarComponent {
-  @Input() title: string | undefined;
+  readonly title = input<string | undefined>(undefined);
 }

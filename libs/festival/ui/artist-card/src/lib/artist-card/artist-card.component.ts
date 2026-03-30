@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input
 } from '@angular/core';
 import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
@@ -20,7 +20,7 @@ import { IonCard, IonIcon, IonRouterLink } from '@ionic/angular/standalone';
 export class ArtistCardComponent {
   private artistStateService = inject(ArtistStateService);
 
-  @Input() artist!: ArtistViewModel;
+  readonly artist = input.required<ArtistViewModel>();
 
   toggleFavorite(id: string): void {
     this.artistStateService.toggleArtistFavorite(id);

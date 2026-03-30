@@ -1,5 +1,5 @@
 <ion-button size="medium" color="light" shape="round" fill="outline" id="test">
-  {{ config().buttonName }}
+  {{ config()().buttonName }}
 </ion-button>
 <div>
   @for (chip of chips(); let i = $index; track i;) {
@@ -36,17 +36,17 @@
             <div class="fields" [formGroupName]="idx">
               <ion-input
                 type="text"
-                [formControlName]="config().property1Key"
-                [placeholder]="config().property1Label"
+                [formControlName]="config()().property1Key"
+                [placeholder]="config()().property1Label"
                 labelPlacement="stacked"
-                [label]="config().property1Label"
+                [label]="config()().property1Label"
               ></ion-input>
               <ion-input
                 type="text"
                 labelPlacement="stacked"
-                [placeholder]="config().property2Label"
-                [formControlName]="config().property2Key"
-                [label]="config().property2Label"
+                [placeholder]="config()().property2Label"
+                [formControlName]="config()().property2Key"
+                [label]="config()().property2Label"
               ></ion-input>
             </div>
             <!-- </ion-label> -->

@@ -5,10 +5,10 @@
       color="light"
       shape="round"
       fill="outline"
-      id="select-{{ config().entity }}"
+      id="select-{{ config()().entity }}"
     >
       <ion-icon slot="end" name="add-outline"></ion-icon>
-      {{ config().entity }}
+      {{ config()().entity }}
     </ion-button>
     <!-- Add {{ config().entity }}
     <ion-fab-button
@@ -31,7 +31,7 @@
   </div>
 </div>
 
-<ion-modal trigger="select-{{ config().entity }}" class="centered-modal" #modal>
+<ion-modal trigger="select-{{ config()().entity }}" class="centered-modal" #modal>
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -41,7 +41,7 @@
           </ion-button>
         </ion-buttons>
       </ion-toolbar>
-      @if (config().searchable) {
+      @if (config()().searchable) {
       <ion-toolbar>
         <ion-searchbar
           animated="true"
@@ -54,7 +54,7 @@
     </ion-header>
     <!-- <ion-content> -->
     <ion-list>
-      @if (config().multiSelect) { @for (item of filteredItems(); track $index)
+      @if (config()().multiSelect) { @for (item of filteredItems(); track $index)
       {
       <ion-item [button]="true" (click)="onSelectItem(item)">
         <ion-label [aria-label]="displayName(item)">

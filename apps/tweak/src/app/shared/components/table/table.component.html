@@ -1,5 +1,5 @@
 <div class="container">
-  @if (config().searchable) {
+  @if (config()().searchable) {
   <div class="searchbar">
     <ion-searchbar
       animated="true"
@@ -18,7 +18,7 @@
       [dataSource]="dataSource()"
       class="mat-elevation-z1 table"
     >
-      @for (column of config().columns; track $index) {
+      @for (column of config()().columns; track $index) {
       <ng-container [matColumnDef]="column.columnDef">
         <th mat-header-cell mat-sort-header *matHeaderCellDef>
           {{ column.header }}

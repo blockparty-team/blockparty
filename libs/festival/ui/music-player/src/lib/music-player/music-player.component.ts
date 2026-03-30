@@ -1,12 +1,11 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   OnInit,
   WritableSignal,
   inject,
   input,
-  signal,
+  signal
 } from '@angular/core';
 import { animations } from '@blockparty/util/animation';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
@@ -39,7 +38,7 @@ export class MusicPlayerComponent implements OnInit {
   soundcloudUrl = input<string>();
   bandcampUrl = input<string>();
 
-  @Input() showPlayer!: WritableSignal<boolean>;
+  readonly showPlayer = input.required<WritableSignal<boolean>>();
 
   public selectedSource = signal<PlayerSource>(PlayerSource.Soundcloud);
   public playerSource = PlayerSource;
@@ -60,7 +59,7 @@ export class MusicPlayerComponent implements OnInit {
   }
 
   close(): void {
-    this.showPlayer.set(false);
+    this.showPlayer().set(false);
   }
 
   sanitizeUrl(url: string): SafeResourceUrl {
