@@ -10,7 +10,10 @@
     "noImplicitReturns": false,
     "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "module": "preserve",
+    "moduleResolution": "bundler",
+    "lib": ["dom", "es2022"]
   },
   "files": [],
   "include": [],

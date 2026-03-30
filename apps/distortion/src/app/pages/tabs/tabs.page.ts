@@ -2,8 +2,6 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Tab, RouteName } from '@blockparty/festival/shared/types';
 import { MenuController } from '@ionic/angular/standalone';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
-import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
 import { SidebarPage } from './sidebar/sidebar.page';
 import {
   IonTabs,
@@ -13,6 +11,7 @@ import {
   IonLabel,
   IonMenu,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface TabsChanged {
   tab: string;
@@ -25,7 +24,6 @@ interface TabsChanged {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     SidebarPage,
-    AsyncPipe,
     IonTabs,
     IonTabBar,
     IonTabButton,
@@ -41,7 +39,7 @@ export class TabsPage {
   tabName = Tab;
   routeName = RouteName;
 
-  currentTab$: Observable<Tab> = this.tabStateService.currentTab$;
+  currentTab = toSignal(this.tabStateService.currentTab$);
 
   onTabChange(tab: TabsChanged): void {
     this.tabStateService.updateCurrentTab(tab.tab as Tab);

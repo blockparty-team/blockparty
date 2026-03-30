@@ -1,13 +1,13 @@
 <div class="container">
   <header>
-    @if (days$ | async; as days) {
+    @if (days().length > 0) {
       <ion-toolbar>
         <ion-segment
           scrollable
           (ionChange)="onSelectDay($event)"
-          [value]="selectedDay$ | async"
-          >
-          @for (day of days; track day.id) {
+          [value]="selectedDay()"
+        >
+          @for (day of days(); track day.id) {
             <ion-segment-button [value]="day.id">
               <ion-label>{{ day.name }}</ion-label>
             </ion-segment-button>
@@ -17,16 +17,16 @@
     } @else {
       <ion-toolbar>
         <ion-title>
-          {{ stageName$ | async }}
+          {{ stageName() }}
         </ion-title>
       </ion-toolbar>
     }
   </header>
 
   <main (touchmove)="$event.stopPropagation()">
-    @if (timetable$ | async; as timetable) {
+    @if (timetable().length > 0) {
       <ion-list lines="none">
-        @for (act of timetable; track act.artist_id; let i = $index) {
+        @for (act of timetable(); track act.artist_id; let i = $index) {
           <ion-item [style.--animation-order]="i">
             @if (act.start_time) {
               <span slot="start" class="time-slot">
@@ -51,8 +51,8 @@
     } @else {
       <div class="description">
         <div class="no-timetable ion-margin">
-          @if (tags$ | async; as tags) {
-            @for (tag of tags; track $index) {
+          @if (tags().length > 0) {
+            @for (tag of tags(); track $index) {
               <ion-badge color="tertiary" class="tag">
                 {{ tag }}
               </ion-badge>
@@ -60,7 +60,7 @@
           }
         </div>
 
-        @if (stageDescription$ | async; as description) {
+        @if (stageDescription(); as description) {
           <p class="stage-description">{{ description }}</p>
         } @else {
           <div class="no-timetable ion-margin">
@@ -74,23 +74,23 @@
   </main>
 
   <ion-footer>
-    @if (location$ | async; as location) {
+    @if (location(); as location) {
       <ion-button fill="outline" (click)="onOpenGoogleMapsDirections(location)">
         <ion-icon slot="start" name="compass-outline"></ion-icon>
         Directions
       </ion-button>
     }
-    @if ((hasTimetable$ | async) && (stageDescription$ | async)) {
+    @if (hasTimetable() && stageDescription()) {
       <ion-button id="open-description-modal" fill="outline">
         <ion-icon name="information-outline"></ion-icon>
       </ion-button>
     }
-    @if (url$ | async; as url) {
+    @if (url(); as url) {
       <ion-button fill="outline" (click)="onGoToUrl(url)">
         More info
       </ion-button>
     }
-    @if (tickets$ | async) {
+    @if (tickets().length > 0) {
       <ion-button fill="outline" id="open-tickets-modal">
         <ion-icon slot="start" name="ticket-outline"></ion-icon>
         Tickets
@@ -100,12 +100,12 @@
 </div>
 
 <!-- Modals for tickets and description -->
-@if ((hasTimetable$ | async) && (stageDescription$ | async)) {
+@if (hasTimetable() && stageDescription()) {
   <ion-modal
     trigger="open-description-modal"
     [initialBreakpoint]="0.4"
     [breakpoints]="[0.4, 0.75, 1]"
-    >
+  >
     <ng-template>
       <ion-toolbar>
         <ion-buttons slot="end">
@@ -116,19 +116,19 @@
         <ion-title>Stage description</ion-title>
       </ion-toolbar>
       <ion-content class="ion-padding">
-        <h3>{{ stageName$ | async }}</h3>
-        <p class="stage-description">{{ stageDescription$ | async }}</p>
+        <h3>{{ stageName() }}</h3>
+        <p class="stage-description">{{ stageDescription() }}</p>
       </ion-content>
     </ng-template>
   </ion-modal>
 }
 
-@if (tickets$ | async) {
+@if (tickets().length > 0) {
   <ion-modal
     trigger="open-tickets-modal"
     [initialBreakpoint]="0.4"
     [breakpoints]="[0.4, 0.75]"
-    >
+  >
     <ng-template>
       <ion-toolbar>
         <ion-buttons slot="end">
@@ -140,7 +140,7 @@
       </ion-toolbar>
       <ion-content class="ion-padding">
         <ion-list>
-          @for (ticket of tickets$ | async; track ticket) {
+          @for (ticket of tickets(); track ticket) {
             <ion-item [href]="ticket.url">
               {{ ticket.name }}
             </ion-item>

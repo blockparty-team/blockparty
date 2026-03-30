@@ -1,4 +1,4 @@
-@if (selectedFeature$ | async; as selectedFeature) {
+@if (selectedFeature(); as selectedFeature) {
   @switch (selectedFeature.mapLayer) {
     @case (mapLayer.Stage) {
       <app-stage-timetable></app-stage-timetable>

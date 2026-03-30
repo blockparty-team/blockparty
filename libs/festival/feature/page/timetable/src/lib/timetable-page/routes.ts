@@ -1,9 +1,9 @@
 import { Route } from '@angular/router';
-import { TimetablePage } from './timetable.page';
+
 
 export const routes: Route[] = [
   {
     path: '',
-    component: TimetablePage,
+    loadComponent: () => import('./timetable.page').then(m => m.TimetablePage),
   },
 ];

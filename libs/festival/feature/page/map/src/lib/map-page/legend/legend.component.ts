@@ -1,15 +1,14 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   MapIconViewModel,
   MapLayer,
 } from '@blockparty/festival/data-access/supabase';
 import { ToggleCustomEvent } from '@ionic/angular/standalone';
-import { Observable, combineLatest } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { MapService } from '@blockparty/festival/shared/service/map';
 import { MapStateService } from '@blockparty/festival/data-access/state/map';
 import { SafePipe } from '@blockparty/festival/shared/pipes';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -20,6 +19,7 @@ import {
   IonLabel,
   IonToggle,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface IconsViewModel extends MapIconViewModel {
   visible: boolean;
@@ -31,7 +31,6 @@ interface IconsViewModel extends MapIconViewModel {
   styleUrls: ['./legend.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -43,16 +42,12 @@ interface IconsViewModel extends MapIconViewModel {
     SafePipe,
   ],
 })
-export class LegendComponent implements OnInit {
-  iconsWithToggleState$!: Observable<IconsViewModel[]>;
+export class LegendComponent {
+  private mapService = inject(MapService);
+  private mapStateService = inject(MapStateService);
 
-  constructor(
-    private mapService: MapService,
-    private mapStateService: MapStateService,
-  ) {}
-
-  ngOnInit() {
-    this.iconsWithToggleState$ = combineLatest([
+  iconsWithToggleState = toSignal(
+    combineLatest([
       this.mapStateService.mapIcons$,
       this.mapStateService.removedAssetIconNames$,
     ]).pipe(
@@ -74,8 +69,9 @@ export class LegendComponent implements OnInit {
         this.mapService.filterLayer(MapLayer.AssetIcon, 'icon', visible as any);
         this.mapService.filterLayer(MapLayer.Asset, 'icon', visible as any);
       }),
-    );
-  }
+    ),
+    { initialValue: [] },
+  );
 
   onToggleChange(event: Event) {
     const name = (event as ToggleCustomEvent).target.value;
@@ -83,7 +79,7 @@ export class LegendComponent implements OnInit {
     this.mapStateService.updateRemovedAssetIconNames(name!, visible);
   }
 
-  public trackBy(_index: number, asset: MapIconViewModel) {
-    return asset.name;
+  public trackBy(_index: number, asset: MapIconViewModel): string {
+    return asset.name ?? '';
   }
 }

@@ -1,15 +1,14 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
   Signal,
-  ViewChild,
   WritableSignal,
   computed,
   effect,
   signal,
+  input,
+  output,
+  viewChild
 } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -58,19 +57,19 @@ export interface TableConfig<T> {
   ],
 })
 export class TableComponent {
-  @Input({ required: true }) config!: Signal<TableConfig<any>>;
-  @Output() selected = new EventEmitter();
+  readonly config = input.required<Signal<TableConfig<any>>>();
+  readonly selected = output();
 
-  @ViewChild(MatSort) sort!: MatSort;
+  readonly sort = viewChild.required(MatSort);
 
   public dataSource = computed(() => {
-    const dataSource = new MatTableDataSource(this.config().data);
+    const dataSource = new MatTableDataSource(this.config()().data);
     dataSource.filter = this.searchTerm();
     return dataSource;
   });
 
   public displayedColumns = computed(() => {
-    return this.config().columns.map((column) => column.columnDef);
+    return this.config()().columns.map((column) => column.columnDef);
   });
 
   private searchTerm: WritableSignal<string> = signal('');
@@ -88,7 +87,7 @@ export class TableComponent {
   constructor() {
     // Enable sorting
     effect(() => {
-      this.dataSource().sort = this.sort;
+      this.dataSource().sort = this.sort();
     });
   }
 }

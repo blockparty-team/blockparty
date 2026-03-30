@@ -1,4 +1,8 @@
-import { APP_INITIALIZER, isDevMode } from '@angular/core';
+import {
+  APP_INITIALIZER,
+  isDevMode,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -19,6 +23,7 @@ function configFactory(configService: AppConfigService): () => void {
 
 bootstrapApplication(AppComponent, {
   providers: [
+    provideZonelessChangeDetection(),
     provideRouter(ROUTES),
     provideIonicAngular({ mode: 'md' }),
     provideServiceWorker('ngsw-worker.js', {

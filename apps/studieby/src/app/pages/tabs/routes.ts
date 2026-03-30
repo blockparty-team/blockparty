@@ -1,11 +1,11 @@
 import { Route } from '@angular/router';
-import { TabsPage } from './tabs.page';
+
 import { RouteName } from '@blockparty/festival/shared/types';
 
 export const routes: Route[] = [
   {
     path: RouteName.Tabs,
-    component: TabsPage,
+    loadComponent: () => import('./tabs.page').then(m => m.TabsPage),
     children: [
       {
         path: RouteName.Map,

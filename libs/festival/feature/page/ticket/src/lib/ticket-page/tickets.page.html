@@ -17,8 +17,8 @@
     <ng-content />
 
     <!-- Generated accordions from event/types -->
-    @if (eventsGroupedByType$ | async; as eventTypes) { @for (eventType of
-    eventTypes; track eventType) {
+    @if (eventsGroupedByType(); as eventTypes) { @for (eventType of eventTypes;
+    track eventType) {
     <ion-accordion>
       <ion-item
         slot="header"

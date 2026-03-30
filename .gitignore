@@ -18,7 +18,6 @@ log.txt
 npm-debug.log*
 
 /.angular
-/.idea
 /.ionic
 /.sass-cache
 /.sourcemaps
@@ -35,10 +34,8 @@ node_modules
 resources/android/**/*
 resources/ios/**/*
 
-/android/.idea/deploymentTargetDropDown.xml
 
-
-/.idea
+.idea
 /.fleet
 /.vscode
 dist
@@ -98,3 +95,6 @@ CHANGELOG.md
 
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
+
+.claude/worktrees
+.claude/settings.local.json

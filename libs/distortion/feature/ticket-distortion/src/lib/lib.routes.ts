@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
-import { TicketDistortionComponent } from './ticket-distortion/ticket-distortion.component';
+
 
 export const ticketDistortionRoutes: Route[] = [
-  { path: '', component: TicketDistortionComponent },
+  { path: '', loadComponent: () => import('./ticket-distortion/ticket-distortion.component').then(m => m.TicketDistortionComponent) },
 ];

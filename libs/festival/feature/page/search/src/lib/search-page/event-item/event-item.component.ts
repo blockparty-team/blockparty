@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { RouteName } from '@blockparty/festival/shared/types';
@@ -32,7 +32,7 @@ export class EventItemComponent {
   private router = inject(Router);
   private mapService = inject(MapService);
 
-  @Input() event!: EventViewModel;
+  readonly event = input.required<EventViewModel>();
 
   routeName = RouteName;
   badgeColor = EntityBadgeColor;

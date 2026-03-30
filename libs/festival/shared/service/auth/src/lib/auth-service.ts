@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { OAuthResponse, Session } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { SupabaseService } from '@blockparty/festival/data-access/supabase';
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private supabase: SupabaseService) {}
+  private supabase = inject(SupabaseService);
 
   get session$(): Observable<Session | null> {
     return this.supabase.session$;

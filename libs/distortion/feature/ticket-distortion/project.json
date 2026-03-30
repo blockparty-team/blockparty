@@ -10,15 +10,14 @@
       "executor": "@nx/angular:ng-packagr-lite",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "libs/distortion/feature/ticket-distortion/ng-package.json"
+        "project": "libs/distortion/feature/ticket-distortion/ng-package.json",
+        "tsConfig": "libs/distortion/feature/ticket-distortion/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
           "tsConfig": "libs/distortion/feature/ticket-distortion/tsconfig.lib.prod.json"
         },
-        "development": {
-          "tsConfig": "libs/distortion/feature/ticket-distortion/tsconfig.lib.json"
-        }
+        "development": {}
       },
       "defaultConfiguration": "production"
     },

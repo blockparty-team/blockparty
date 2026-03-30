@@ -1,16 +1,16 @@
-@if (asset$ | async; as asset) {
+@if (asset(); as asset) {
   <ion-toolbar>
     <ion-title>
       {{ asset.properties.name }}
     </ion-title>
 
     <ion-buttons slot="end">
-      @if (location$ | async; as location) {
+      @if (location(); as location) {
         <ion-button
           color="primary"
           fill="outline"
           (click)="onOpenGoogleMapsDirections(location)"
-          >
+        >
           Directions
         </ion-button>
       }

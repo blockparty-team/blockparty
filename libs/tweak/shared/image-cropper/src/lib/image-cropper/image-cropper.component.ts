@@ -1,10 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   inject,
   input,
+  output
 } from '@angular/core';
 
 import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';
@@ -19,7 +18,7 @@ import { NotificationService } from '@tweak/services/notification.service';
 })
 export class ImageCropperComponent {
   public imageEvent = input<Event | null>(null);
-  @Output() croppedImage = new EventEmitter<ImageCroppedEvent>();
+  readonly croppedImage = output<ImageCroppedEvent>();
 
   private notificationService = inject(NotificationService);
 

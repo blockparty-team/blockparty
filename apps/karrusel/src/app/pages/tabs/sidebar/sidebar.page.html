@@ -37,12 +37,12 @@
   <ion-footer class="login">
     <ion-item (click)="signInOrOut()" button lines="none">
       <ion-icon
-        [name]="(authenticated$ | async) ? 'log-out-outline': 'log-in-outline'"
+        [name]="authenticated() ? 'log-out-outline': 'log-in-outline'"
         slot="start"
         size="large"
       ></ion-icon>
       <ion-label>
-        <h2>{{ (authenticated$ | async) ? 'Logout' : 'Login'}}</h2>
+        <h2>{{ authenticated() ? 'Logout' : 'Login'}}</h2>
       </ion-label>
     </ion-item>
   </ion-footer>

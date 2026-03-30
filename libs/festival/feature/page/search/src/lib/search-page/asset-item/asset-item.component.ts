@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Feature, Point, Position } from 'geojson';
@@ -27,7 +27,7 @@ export class AssetItemComponent {
   private router = inject(Router);
   private mapService = inject(MapService);
 
-  @Input() asset!: Feature<Point, AssetGeojsonProperties>;
+  readonly asset = input.required<Feature<Point, AssetGeojsonProperties>>();
 
   onShowOnMap(coords: Position) {
     this.router.navigate(['/tabs', RouteName.Map]);

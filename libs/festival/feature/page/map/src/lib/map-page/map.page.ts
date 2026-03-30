@@ -29,10 +29,10 @@ import { FeatureInfoModalComponent } from './feature-info-modal/feature-info-mod
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
-import { AsyncPipe } from '@angular/common';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
 import { IonHeader, IonContent } from '@ionic/angular/standalone';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-map',
@@ -45,7 +45,7 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
     ...animations.fadeInOut,
     ...animations.slideUpDown,
   ],
-  imports: [EventFilterComponent, AsyncPipe, IonHeader, IonContent],
+  imports: [EventFilterComponent, IonHeader, IonContent],
 })
 export class MapPage implements OnInit, AfterViewInit, OnDestroy {
   private mapService = inject(MapService);
@@ -59,7 +59,7 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
 
   private modal!: HTMLIonModalElement;
   mapLoaded$ = this.mapStateService.mapLoaded$;
-  mapIdle$ = this.mapStateService.mapIdle$;
+  mapIdle = toSignal(this.mapStateService.mapIdle$, { initialValue: false });
   hideHeader$ = this.mapStateService.mapInteraction$.pipe(
     map((interaction) => !interaction),
   );

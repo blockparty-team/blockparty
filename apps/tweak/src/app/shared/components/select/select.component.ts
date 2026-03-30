@@ -2,13 +2,12 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Input,
-  Output,
   WritableSignal,
   computed,
   forwardRef,
   signal,
+  input,
+  output
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -75,17 +74,16 @@ const defaultCongig: ListSelectionConfig = {
   ],
 })
 export class SelectComponent implements ControlValueAccessor {
-  @Input() public items: WritableSignal<any[]> = signal([]);
-  @Input() public config: WritableSignal<ListSelectionConfig> =
-    signal(defaultCongig);
-  @Output() selected = new EventEmitter<any[]>();
+  public readonly items = input<WritableSignal<any[]>>(signal([]));
+  public readonly config = input<WritableSignal<ListSelectionConfig>>(signal(defaultCongig));
+  readonly selected = output<any[]>();
 
   private searchTerm: WritableSignal<string | null> = signal(null);
 
   selectedItems: WritableSignal<any[]> = signal([]);
 
   public filteredItems = computed(() => {
-    const items = this.items();
+    const items = this.items()();
     const searchTerm = this.searchTerm();
 
     if (!searchTerm || searchTerm.length === 0) {
@@ -114,7 +112,7 @@ export class SelectComponent implements ControlValueAccessor {
   }
 
   displayName(item: any): string {
-    return item[this.config().displayProperty];
+    return item[this.config()().displayProperty];
   }
 
   isSelected(item: any) {
@@ -127,7 +125,7 @@ export class SelectComponent implements ControlValueAccessor {
 
   onSelectItem(item: any) {
     this.selectedItems.update((items) => {
-      if (!this.config().multiSelect) {
+      if (!this.config()().multiSelect) {
         return [item];
       }
 

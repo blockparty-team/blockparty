@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  Input,
   inject,
+  input
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteName } from '@blockparty/festival/shared/types';
@@ -33,21 +33,22 @@ export class StageItemComponent {
   private mapService = inject(MapService);
   private mapStateService = inject(MapStateService);
 
-  @Input() stage!: Feature<Point, StageGeojsonProperties>;
+  readonly stage = input.required<Feature<Point, StageGeojsonProperties>>();
 
   onShowOnMap() {
     this.router.navigate(['/tabs', RouteName.Map]);
-    this.mapService.flyTo(this.stage.geometry.coordinates as [number, number]);
+    const stage = this.stage();
+    this.mapService.flyTo(stage.geometry.coordinates as [number, number]);
 
     const feature: MapClickedFeature<StageGeojsonProperties> = {
-      id: this.stage.properties.id,
+      id: stage.properties.id,
       mapLayer: MapLayer.Stage,
       properties: {
-        ...this.stage.properties,
-        timetables: this.stage.properties.timetables,
-        tickets: this.stage.properties.tickets,
+        ...stage.properties,
+        timetables: stage.properties.timetables,
+        tickets: stage.properties.tickets,
       },
-      geometry: this.stage.geometry,
+      geometry: stage.geometry,
     };
 
     this.mapStateService.selectMapFeatures([feature]);
