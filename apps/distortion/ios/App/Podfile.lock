@@ -28,7 +28,7 @@ PODS:
     - Capacitor
   - CapacitorStatusBar (8.0.2):
     - Capacitor
-  - CapawesomeCapacitorAppUpdate (7.0.1):
+  - CapawesomeCapacitorAppUpdate (8.0.3):
     - Capacitor
   - CordovaPluginsStatic (8.3.0):
     - CapacitorCordova
@@ -156,7 +156,7 @@ SPEC CHECKSUMS:
   CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
   CapacitorSplashScreen: 4b46c72298db552b3c57ce021ef028b6dc7f1fa7
   CapacitorStatusBar: 01d5763b4ed720de5ce2edbc938de6a98f4c8f32
-  CapawesomeCapacitorAppUpdate: d1f04c1c870388248889908cf2ca960c7fdbf0ef
+  CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
   CordovaPluginsStatic: 20d24da07eed8f952de3c389ae3e3b4502a051cf
   IONFilesystemLib: 21a63377696b2d8fab5632ecfb7d2ac67bddb68a
   IONGeolocationLib: a5e40b54edc2ee9902036eda5aaa41ddf07bb68d
