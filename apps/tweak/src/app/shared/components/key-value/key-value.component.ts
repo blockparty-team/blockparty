@@ -1,4 +1,4 @@
-import { AsyncPipe, JsonPipe } from '@angular/common';
+
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,7 +17,6 @@ import {
 } from '@angular/forms';
 import {
   ItemReorderEventDetail,
-  IonContent,
   IonReorder,
   IonReorderGroup,
   IonChip,
@@ -32,7 +31,7 @@ import {
   IonModal,
   IonHeader,
   IonToolbar,
-  IonButtons,
+  IonButtons
 } from '@ionic/angular/standalone';
 import { map } from 'rxjs';
 
@@ -70,7 +69,6 @@ export type KeyValueConfig = {
     IonHeader,
     IonToolbar,
     IonButtons,
-    IonContent,
     IonLabel,
     IonFooter,
     IonList,
@@ -78,9 +76,7 @@ export type KeyValueConfig = {
     IonChip,
     IonReorderGroup,
     IonReorder,
-    JsonPipe,
-    AsyncPipe,
-  ],
+    ],
 })
 export class KeyValueComponent implements ControlValueAccessor {
   public readonly config = input.required<WritableSignal<KeyValueConfig>>();
