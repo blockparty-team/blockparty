@@ -2,13 +2,12 @@ import {
   CUSTOM_ELEMENTS_SCHEMA,
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
-  Output,
   WritableSignal,
   computed,
   forwardRef,
   signal,
-  input
+  input,
+  output
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -77,7 +76,7 @@ const defaultCongig: ListSelectionConfig = {
 export class SelectComponent implements ControlValueAccessor {
   public readonly items = input<WritableSignal<any[]>>(signal([]));
   public readonly config = input<WritableSignal<ListSelectionConfig>>(signal(defaultCongig));
-  @Output() selected = new EventEmitter<any[]>();
+  readonly selected = output<any[]>();
 
   private searchTerm: WritableSignal<string | null> = signal(null);
 
