@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ViewChild,
   inject,
+  viewChild
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -103,7 +103,7 @@ export class SearchPage {
   // badgeColor = EntityBadgeColor;
 
   searchTerm = new FormControl('');
-  @ViewChild(IonSearchbar) searchElement!: IonSearchbar;
+  readonly searchElement = viewChild.required(IonSearchbar);
 
   private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(
     SearchMode.FreeText,
@@ -133,7 +133,7 @@ export class SearchPage {
   ionViewDidEnter(): void {
     if (this._selectedSearchMode$.value === SearchMode.FreeText) {
       setTimeout(() => {
-        this.searchElement.setFocus();
+        this.searchElement().setFocus();
       }, 150);
     }
   }

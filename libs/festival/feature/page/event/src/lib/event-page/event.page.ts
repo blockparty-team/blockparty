@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { Component, OnInit, inject, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteName } from '@blockparty/festival/shared/types';
 import {
@@ -52,7 +52,7 @@ export class EventPage implements OnInit {
   private eventStateService = inject(EventStateService);
   private router = inject(Router);
 
-  @ViewChild(IonModal) modal!: IonModal;
+  readonly modal = viewChild.required(IonModal);
 
   events$!: Observable<EventViewModel[]>;
   eventTypes$!: Observable<EventsGroupedByType[]>;
@@ -75,6 +75,6 @@ export class EventPage implements OnInit {
   }
 
   dismiss() {
-    this.modal.dismiss(null, 'cancel');
+    this.modal().dismiss(null, 'cancel');
   }
 }

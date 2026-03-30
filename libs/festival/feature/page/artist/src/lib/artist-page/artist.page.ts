@@ -1,8 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  ViewChild,
   inject,
+  viewChild
 } from '@angular/core';
 import { combineLatest, Observable } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
@@ -47,7 +47,7 @@ import {
 export class ArtistPage {
   private artistStateService = inject(ArtistStateService);
 
-  @ViewChild(IonSearchbar) searchElement!: IonSearchbar;
+  readonly searchElement = viewChild.required(IonSearchbar);
 
   searchTerm = new FormControl('');
 
