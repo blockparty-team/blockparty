@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { isPlatform, Platform } from '@ionic/angular/standalone';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -33,15 +33,14 @@ import { environment } from '@shared/environments';
   providedIn: 'root',
 })
 export class SupabaseService {
+  private platform = inject(Platform);
+
   private supabase: SupabaseClient;
 
   private _session$ = new BehaviorSubject<AuthSession | null>(null);
   session$: Observable<AuthSession | null> = this._session$.asObservable();
 
-  constructor(
-    // private deviceStorage: DeviceStorageService,
-    private platform: Platform,
-  ) {
+  constructor() {
     this.supabase = createClient<Database>(
       environment.supabaseUrl,
       environment.supabaseAnonKey,

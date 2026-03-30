@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { UserMetadata } from '@supabase/supabase-js';
 import { Observable } from 'rxjs';
@@ -37,11 +42,11 @@ import {
   ],
 })
 export class ProfilePage implements OnInit {
+  private authService = inject(AuthService);
+
   userMetaData$!: Observable<UserMetadata>;
   name$!: Observable<string>;
   avatarUrl$!: Observable<string>;
-
-  constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.userMetaData$ = this.authService.session$.pipe(

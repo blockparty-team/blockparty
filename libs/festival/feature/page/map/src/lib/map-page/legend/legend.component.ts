@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject,
+} from '@angular/core';
 import {
   MapIconViewModel,
   MapLayer,
@@ -44,12 +49,10 @@ interface IconsViewModel extends MapIconViewModel {
   ],
 })
 export class LegendComponent implements OnInit {
-  iconsWithToggleState$!: Observable<IconsViewModel[]>;
+  private mapService = inject(MapService);
+  private mapStateService = inject(MapStateService);
 
-  constructor(
-    private mapService: MapService,
-    private mapStateService: MapStateService,
-  ) {}
+  iconsWithToggleState$!: Observable<IconsViewModel[]>;
 
   ngOnInit() {
     this.iconsWithToggleState$ = combineLatest([
