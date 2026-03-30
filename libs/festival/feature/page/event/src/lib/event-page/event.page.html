@@ -12,12 +12,9 @@
 </ion-header>
 
 <ion-content>
-  @if (events$ | async; as events) {
-    @for (event of events; track event) {
-      <app-event-card [event]="event">
-      </app-event-card>
-    }
-  }
+  @if (events(); as events) { @for (event of events; track event) {
+  <app-event-card [event]="event"> </app-event-card>
+  } }
 
   <ion-modal trigger="open-event-type-modal">
     <ng-template>
@@ -35,28 +32,28 @@
         <section class="ion-padding ion-text-center">
           <p>Select event types below to se info</p>
         </section>
-        @if (eventTypes$ | async; as eventTypes) {
-          <ion-accordion-group class="">
-            @for (eventType of eventTypes; track eventType) {
-              <ion-accordion>
-                <ion-item
-                  slot="header"
-                  [style.--background]="eventType.color ? eventType.color : 'gray'"
-                  >
-                  <ion-label color="dark">
-                    <h2>{{eventType.name}}</h2>
-                  </ion-label>
-                </ion-item>
-                <div
-                  class="content ion-padding"
-                  slot="content"
-                  [style.background-color]="eventType.color"
-                  >
-                  <p>{{eventType.description}}</p>
-                </div>
-              </ion-accordion>
-            }
-          </ion-accordion-group>
+        @if (eventTypes(); as eventTypes) {
+        <ion-accordion-group class="">
+          @for (eventType of eventTypes; track eventType) {
+          <ion-accordion>
+            <ion-item
+              slot="header"
+              [style.--background]="eventType.color ? eventType.color : 'gray'"
+            >
+              <ion-label color="dark">
+                <h2>{{eventType.name}}</h2>
+              </ion-label>
+            </ion-item>
+            <div
+              class="content ion-padding"
+              slot="content"
+              [style.background-color]="eventType.color"
+            >
+              <p>{{eventType.description}}</p>
+            </div>
+          </ion-accordion>
+          }
+        </ion-accordion-group>
         }
       </ion-content>
     </ng-template>

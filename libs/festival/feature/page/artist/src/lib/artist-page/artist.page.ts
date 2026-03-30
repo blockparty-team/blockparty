@@ -2,9 +2,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  viewChild
+  viewChild,
 } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,7 +15,6 @@ import {
   CdkFixedSizeVirtualScroll,
   CdkVirtualForOf,
 } from '@angular/cdk/scrolling';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -23,6 +22,7 @@ import {
   IonContent,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-artist',
@@ -36,7 +36,6 @@ import {
     CdkFixedSizeVirtualScroll,
     CdkVirtualForOf,
     ArtistCardComponent,
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonSearchbar,
@@ -51,26 +50,29 @@ export class ArtistPage {
 
   searchTerm = new FormControl('');
 
-  filteredArtists$: Observable<ArtistViewModel[]> = combineLatest([
-    this.artistStateService.artists$,
-    this.searchTerm.valueChanges.pipe(startWith('')),
-  ]).pipe(
-    debounceTime(100),
-    filter(([artists, ,]) => !!artists),
-    map(([artists, term]) =>
-      artists
-        .filter((artist) => artist.is_visible)
-        .filter((artist) =>
-          artist.name!.toLowerCase().includes(term!.toLowerCase()),
-        ),
+  filteredArtists = toSignal<ArtistViewModel[] | null>(
+    combineLatest([
+      this.artistStateService.artists$,
+      this.searchTerm.valueChanges.pipe(startWith('')),
+    ]).pipe(
+      debounceTime(100),
+      filter(([artists]) => !!artists),
+      map(([artists, term]) =>
+        artists
+          .filter((artist) => artist.is_visible)
+          .filter((artist) =>
+            artist.name!.toLowerCase().includes(term!.toLowerCase()),
+          ),
+      ),
     ),
+    { initialValue: null },
   );
 
   toggleFavorite(id: string): void {
     this.artistStateService.toggleArtistFavorite(id);
   }
 
-  trackArtist(index: number, item: ArtistViewModel) {
-    return item.id;
+  trackArtist(index: number, item: ArtistViewModel): string {
+    return item.id ?? index.toString();
   }
 }

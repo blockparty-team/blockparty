@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, viewChild } from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteName } from '@blockparty/festival/shared/types';
 import {
@@ -6,10 +6,8 @@ import {
   EventsGroupedByType,
 } from '@blockparty/festival/data-access/supabase';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
-import { Observable } from 'rxjs';
 import { EventStateService } from '@blockparty/festival/data-access/state/event';
 import { EventCardComponent } from './event-card/event-card.component';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -25,6 +23,7 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-event',
@@ -32,7 +31,6 @@ import {
   styleUrls: ['./event.page.scss'],
   imports: [
     EventCardComponent,
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -48,21 +46,20 @@ import {
     IonLabel,
   ],
 })
-export class EventPage implements OnInit {
+export class EventPage {
   private eventStateService = inject(EventStateService);
   private router = inject(Router);
+  private emptyEvents: EventViewModel[] = [];
+  private emptyEventTypes: EventsGroupedByType[] = [];
 
   readonly modal = viewChild.required(IonModal);
 
-  events$!: Observable<EventViewModel[]>;
-  eventTypes$!: Observable<EventsGroupedByType[]>;
-  selectedEventTypeId$!: Observable<string | null>;
-
-  ngOnInit() {
-    this.events$ = this.eventStateService.events$;
-    this.eventTypes$ = this.eventStateService.eventsGroupedByType;
-    this.selectedEventTypeId$ = this.eventStateService.selectedEventTypeId$;
-  }
+  events = toSignal(this.eventStateService.events$, {
+    initialValue: this.emptyEvents,
+  });
+  eventTypes = toSignal(this.eventStateService.eventsGroupedByType, {
+    initialValue: this.emptyEventTypes,
+  });
 
   onGoToEvent(eventId: string): void {
     this.router.navigate([RouteName.Event, eventId]);

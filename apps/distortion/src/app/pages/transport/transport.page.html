@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-back-button
-      [defaultHref]="previousRoute$ | async"
+      [defaultHref]="previousRoute()"
       icon="chevron-back"
       slot="start"
     >

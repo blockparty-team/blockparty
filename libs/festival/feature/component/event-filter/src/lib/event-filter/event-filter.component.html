@@ -1,8 +1,8 @@
 <div class="event-filter-container">
   @if (inputConfig()?.showDays ?? filterConfig().showDays) {
-    @if (days$ | async; as days) {
+    @if (days(); as days) {
       <ion-toolbar>
-        <ion-segment scrollable [value]="selectedDayId$ | async">
+        <ion-segment scrollable [value]="selectedDayId()">
           @for (day of days; track $index) {
             <ion-segment-button [value]="day.id" (click)="onDaySelect(day.id)">
               <ion-label>{{ day.name }}</ion-label>
@@ -13,28 +13,30 @@
     }
   }
   @if (inputConfig()?.showEventTypes ?? filterConfig().showEventTypes) {
-    @if (eventTypes$ | async; as eventTypes) {
-      <ion-toolbar class="event-type-filter">
-        <ion-segment scrollable [value]="selectedEventTypeId$ | async">
-          @for (eventType of eventTypes; track $index) {
-            <ion-segment-button
-              (click)="onEventTypeSelect(eventType.id)"
-              [value]="eventType.id"
-            >
-              <ion-label>{{ eventType.name }}</ion-label>
-              <span
-                class="event-type-color"
-                [style.background-color]="eventType.color"
+    @if (eventTypes(); as eventTypes) {
+      @if (selectedDayId() && eventTypes.length > 0) {
+        <ion-toolbar class="event-type-filter">
+          <ion-segment scrollable [value]="selectedEventTypeId()">
+            @for (eventType of eventTypes; track $index) {
+              <ion-segment-button
+                (click)="onEventTypeSelect(eventType.id)"
+                [value]="eventType.id"
               >
-              </span>
-            </ion-segment-button>
-          }
-        </ion-segment>
-      </ion-toolbar>
+                <ion-label>{{ eventType.name }}</ion-label>
+                <span
+                  class="event-type-color"
+                  [style.background-color]="eventType.color"
+                >
+                </span>
+              </ion-segment-button>
+            }
+          </ion-segment>
+        </ion-toolbar>
+      }
     }
   }
   @if (inputConfig()?.showEvents ?? filterConfig().showEvents) {
-    @if (events$ | async; as events) {
+    @if (events(); as events) {
       @if (events.length > 1) {
         <ion-toolbar
           class="event-filter"
@@ -42,7 +44,7 @@
         >
           <ion-segment
             scrollable
-            [value]="selectedEventId$ | async"
+            [value]="selectedEventId()"
             [style.background]="events[0].event_type.color"
           >
             @for (event of events; track $index) {

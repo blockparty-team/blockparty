@@ -1,15 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-  inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { UserMetadata } from '@supabase/supabase-js';
-import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe } from '@angular/common';
 import {
   IonRouterLink,
   IonHeader,
@@ -21,6 +14,7 @@ import {
   IonAvatar,
   IonButton,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-profile',
@@ -29,7 +23,6 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
-    AsyncPipe,
     IonRouterLink,
     IonHeader,
     IonToolbar,
@@ -41,17 +34,14 @@ import {
     IonButton,
   ],
 })
-export class ProfilePage implements OnInit {
+export class ProfilePage {
   private authService = inject(AuthService);
 
-  userMetaData$!: Observable<UserMetadata>;
-  name$!: Observable<string>;
-  avatarUrl$!: Observable<string>;
-
-  ngOnInit() {
-    this.userMetaData$ = this.authService.session$.pipe(
+  userMetaData = toSignal<UserMetadata | null>(
+    this.authService.session$.pipe(
       filter((session) => !!session),
       map((session) => session.user.user_metadata),
-    );
-  }
+    ),
+    { initialValue: null },
+  );
 }

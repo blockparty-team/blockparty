@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  viewChild
+  viewChild,
 } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { MapService } from '@blockparty/festival/shared/service/map';
 import { SearchService } from '@blockparty/festival/shared/service/search';
 import { SegmentCustomEvent } from '@ionic/core';
 import { Point } from 'geojson';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -33,7 +33,6 @@ import { AssetItemComponent } from './asset-item/asset-item.component';
 import { StageItemComponent } from './stage-item/stage-item.component';
 import { EventItemComponent } from './event-item/event-item.component';
 import { ArtistItemComponent } from './artist-item/artist-item.component';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -49,6 +48,7 @@ import {
   IonIcon,
   IonSpinner,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 enum Entity {
   artist = 'artist',
@@ -74,7 +74,6 @@ enum SearchMode {
     EventItemComponent,
     StageItemComponent,
     AssetItemComponent,
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonBackButton,
@@ -108,30 +107,37 @@ export class SearchPage {
   private _selectedSearchMode$ = new BehaviorSubject<SearchMode>(
     SearchMode.FreeText,
   );
-  selectedSearchMode$: Observable<SearchMode> =
-    this._selectedSearchMode$.asObservable();
+  selectedSearchMode = toSignal(this._selectedSearchMode$.asObservable(), {
+    initialValue: SearchMode.FreeText,
+  });
 
   previousRoute$ = this.routeHistoryService.history$.pipe(
     map((history) => (history.previous ? history.previous : '/')),
   );
 
-  searchResults$: Observable<EntityFreeTextSearchResult[]> =
-    this.searchTerm.valueChanges.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      switchMap((term) => this.searchService.textSearch(term!)),
-    );
+  private searchResults$ = this.searchTerm.valueChanges.pipe(
+    debounceTime(200),
+    distinctUntilChanged(),
+    switchMap((term) => this.searchService.textSearch(term!)),
+  );
+  searchResults = toSignal<EntityFreeTextSearchResult[] | null>(
+    this.searchResults$,
+    { initialValue: null },
+  );
 
-  nearBy$: Observable<EntityDistanceSearchResult[]> = combineLatest([
+  private nearBy$ = combineLatest([
     this.searchService.nearBy$,
     this._selectedSearchMode$,
   ]).pipe(
     filter(([, mode]) => mode === SearchMode.NearBy),
     map(([nearBy]) => nearBy),
   );
+  nearBy = toSignal<EntityDistanceSearchResult[] | null>(this.nearBy$, {
+    initialValue: null,
+  });
 
   ionViewDidEnter(): void {
-    if (this._selectedSearchMode$.value === SearchMode.FreeText) {
+    if (this.selectedSearchMode() === SearchMode.FreeText) {
       setTimeout(() => {
         this.searchElement().setFocus();
       }, 150);

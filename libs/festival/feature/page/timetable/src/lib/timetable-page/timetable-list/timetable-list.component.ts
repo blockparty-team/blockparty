@@ -4,19 +4,19 @@ import {
   inject,
   signal,
 } from '@angular/core';
-import { Observable, combineLatest } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { RouteName } from '@blockparty/festival/shared/types';
 import {
   StageTimetable,
   TimetableWithStageName,
 } from '@blockparty/festival/data-access/supabase';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
-import { filter, map, shareReplay, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';
 import { animations } from '@blockparty/util/animation';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   IonFooter,
   IonList,
@@ -31,6 +31,7 @@ import {
 } from '@ionic/angular/standalone';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 enum ListViewMode {
   ByTime = 'byTime',
@@ -44,7 +45,6 @@ enum ListViewMode {
   animations: animations.slideLeft,
   imports: [
     RouterLink,
-    AsyncPipe,
     DatePipe,
     IonFooter,
     IonList,
@@ -80,7 +80,7 @@ export class TimetableListComponent {
     ),
   );
 
-  public timetableByTime$: Observable<TimetableWithStageName[] | null> =
+  public timetableByTime = toSignal<TimetableWithStageName[] | null>(
     this.event$.pipe(
       map(
         (event) =>
@@ -97,9 +97,11 @@ export class TimetableListComponent {
                 new Date(b.start_time).getTime(),
             ) ?? null,
       ),
-    );
+    ),
+    { initialValue: null },
+  );
 
-  public timetableByStage$: Observable<StageTimetable[] | null> =
+  public timetableByStage = toSignal<StageTimetable[] | null>(
     this.event$.pipe(
       map(
         (event) =>
@@ -112,7 +114,9 @@ export class TimetableListComponent {
             ),
           })) ?? null,
       ),
-    );
+    ),
+    { initialValue: null },
+  );
 
   public routeName = RouteName;
 

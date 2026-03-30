@@ -5,28 +5,27 @@
       debounce="0"
       [formControl]="searchTerm"
       animated="true"
-      >
+    >
     </ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
 <ion-content id="main" class="artist-list">
-  @if (filteredArtists$ | async; as artists) {
-    <cdk-virtual-scroll-viewport
-      itemSize="160"
-      minBufferPx="900"
-      maxBufferPx="1350"
-      >
-      <app-artist-card
-        *cdkVirtualFor="let artist of artists; trackBy:trackArtist; let i = index"
-        [artist]="artist"
-        >
-      </app-artist-card>
-    </cdk-virtual-scroll-viewport>
+  @if (filteredArtists(); as artists) {
+  <cdk-virtual-scroll-viewport
+    itemSize="160"
+    minBufferPx="900"
+    maxBufferPx="1350"
+  >
+    <app-artist-card
+      *cdkVirtualFor="let artist of artists; trackBy:trackArtist; let i = index"
+      [artist]="artist"
+    >
+    </app-artist-card>
+  </cdk-virtual-scroll-viewport>
   } @else {
-    <div class="loading">
-      <ion-spinner></ion-spinner>
-    </div>
+  <div class="loading">
+    <ion-spinner></ion-spinner>
+  </div>
   }
-
 </ion-content>

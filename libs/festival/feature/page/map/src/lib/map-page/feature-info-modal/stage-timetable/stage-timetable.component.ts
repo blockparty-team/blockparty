@@ -1,12 +1,12 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  OnInit,
+  computed,
   inject,
+  signal,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import {
   ModalController,
   SegmentCustomEvent,
@@ -23,7 +23,7 @@ import {
   MapClickedFeature,
   Ticket,
 } from '@blockparty/festival/data-access/supabase';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   IonToolbar,
   IonTitle,
@@ -40,6 +40,7 @@ import {
   IonList,
 } from '@ionic/angular/standalone';
 import { isSameDay, sub } from 'date-fns';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
   onAir: boolean;
@@ -53,7 +54,6 @@ interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     IonFooter,
-    AsyncPipe,
     DatePipe,
     IonToolbar,
     IonTitle,
@@ -70,99 +70,99 @@ interface TimetableViewModel extends Omit<Timetable, 'artist_name'> {
     IonList,
   ],
 })
-export class StageTimetableComponent implements OnInit {
+export class StageTimetableComponent {
   private mapStateService = inject(MapStateService);
   private modalCtrl = inject(ModalController);
   private router = inject(Router);
 
-  stageName$!: Observable<string>;
-  stageDescription$!: Observable<string | null>;
-  tickets$!: Observable<Ticket[]>;
-  days$!: Observable<Day[]>;
-  timetable$!: Observable<TimetableViewModel[]>;
-  hasTimetable$!: Observable<boolean>;
-  location$!: Observable<[number, number]>;
-  tags$!: Observable<string[] | null | undefined>;
-  url$!: Observable<string | undefined | null>;
-
-  private _selectedDay$ = new BehaviorSubject<string | null>(null);
-  selectedDay$: Observable<string | null> = this._selectedDay$.asObservable();
-
-  ngOnInit() {
-    const stage$: Observable<MapClickedFeature<StageGeojsonProperties>> =
-      this.mapStateService.selectedMapFeature$.pipe(
-        filter((feature) => feature.mapLayer === MapLayer.Stage),
-        map((stage) => stage as MapClickedFeature<StageGeojsonProperties>),
-      );
-
-    this.stageName$ = stage$.pipe(map((stage) => stage.properties.name));
-
-    this.stageDescription$ = stage$.pipe(
-      map((stage) => stage.properties.description),
-    );
-
-    this.url$ = stage$.pipe(map((stage) => stage.properties.url));
-
-    this.days$ = stage$.pipe(
-      // If no timetables assigned to stage, backend returns [null] for timetables array
-      filter((stage) => stage.properties.timetables[0] !== null),
-      map((stage) =>
-        stage.properties.timetables
-          .map((t) => t.day)
-          .sort(
-            (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
-          ),
+  stage = toSignal<MapClickedFeature<StageGeojsonProperties> | null>(
+    this.mapStateService.selectedMapFeature$.pipe(
+      map((feature) =>
+        feature.mapLayer === MapLayer.Stage
+          ? (feature as MapClickedFeature<StageGeojsonProperties>)
+          : null,
       ),
-      tap((days) => {
-        // Change day at 7am next day (for events running during nighttime)
-        const now = sub(new Date(), { hours: 7 });
-        const day = days.find((day) => isSameDay(now, new Date(day.date)));
+    ),
+    { initialValue: null },
+  );
 
-        if (day) {
-          this._selectedDay$.next(day.id);
-        } else {
-          this._selectedDay$.next(days[0].id);
-        }
-      }),
+  stageName = computed(() => this.stage()?.properties.name ?? '');
+
+  stageDescription = computed(
+    () => this.stage()?.properties.description ?? null,
+  );
+
+  url = computed(() => this.stage()?.properties.url ?? null);
+
+  // If no timetables assigned to stage, backend returns [null] for timetables array.
+  hasTimetable = computed(
+    () => this.stage()?.properties.timetables[0] !== null,
+  );
+
+  days = computed(() => {
+    const stage = this.stage();
+    if (!stage || !this.hasTimetable()) {
+      return [] as Day[];
+    }
+
+    return stage.properties.timetables
+      .map((timetable) => timetable.day)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  });
+
+  selectedDay = signal<string | null>(this.getInitialSelectedDay());
+
+  timetable = computed(() => {
+    const stage = this.stage();
+    const day = this.selectedDay();
+    if (!stage || !day) {
+      return [] as TimetableViewModel[];
+    }
+
+    const dayTimetable = stage.properties.timetables.find(
+      (timetable) => timetable.day.id === day,
+    );
+    if (!dayTimetable) {
+      return [] as TimetableViewModel[];
+    }
+
+    return dayTimetable.timetable.map((slot) => ({
+      ...slot,
+      onAir:
+        new Date() > new Date(slot.start_time!) &&
+        new Date() < new Date(slot.end_time!),
+    })) as unknown as TimetableViewModel[];
+  });
+
+  tickets = computed(
+    () => this.stage()?.properties.tickets ?? ([] as Ticket[]),
+  );
+
+  tags = computed(() => this.stage()?.properties.tags ?? ([] as string[]));
+
+  location = computed(() => {
+    const stage = this.stage();
+    return stage ? (stage.geometry.coordinates as [number, number]) : null;
+  });
+
+  private getInitialSelectedDay(): string | null {
+    const days = this.days();
+    if (days.length === 0) {
+      return null;
+    }
+
+    // Change day at 7am next day (for events running during nighttime).
+    const now = sub(new Date(), { hours: 7 });
+    const day = days.find((currentDay) =>
+      isSameDay(now, new Date(currentDay.date)),
     );
 
-    this.timetable$ = combineLatest([stage$, this.selectedDay$]).pipe(
-      filter(([stage, day]) => !!stage && !!day),
-      map(
-        ([stage, day]) =>
-          stage.properties.timetables.find(
-            (timetable) => timetable.day.id === day,
-          )!.timetable,
-      ),
-      map(
-        (timetable) =>
-          timetable.map((slot) => ({
-            ...slot,
-            onAir:
-              new Date() > new Date(slot.start_time!) &&
-              new Date() < new Date(slot.end_time!),
-          })) as unknown as TimetableViewModel[],
-      ),
-    );
-
-    // If no timetables assigned to stage, backend returns [null] for timetables array
-    this.hasTimetable$ = stage$.pipe(
-      map((stage) => stage.properties.timetables[0] !== null),
-    );
-
-    this.tickets$ = stage$.pipe(map((stage) => stage.properties.tickets));
-
-    this.tags$ = stage$.pipe(map((stage) => stage.properties.tags));
-
-    this.location$ = stage$.pipe(
-      map((stage) => stage.geometry.coordinates as [number, number]),
-    );
+    return day?.id ?? days[0].id;
   }
 
   onSelectDay(event: Event): void {
-    this._selectedDay$.next(
-      (event as SegmentCustomEvent).detail.value!.toString(),
-    );
+    const value = (event as SegmentCustomEvent).detail.value;
+    this.selectedDay.set(value ? value.toString() : null);
   }
 
   onGoToArtist(name: string): void {

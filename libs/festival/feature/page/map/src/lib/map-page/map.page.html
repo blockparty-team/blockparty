@@ -6,9 +6,9 @@
 
 <ion-content>
   <div id="map-container">
-    @if ((mapIdle$ | async)) {
+    @if (mapIdle()) {
     <div [@fadeInOut] class="map-loading-animation">
-      @if (mapIdle$ | async) {
+      @if (mapIdle()) {
       <p>Map loading...</p>
       }
     </div>

@@ -10,17 +10,16 @@
 
 <ion-content>
   <div class="container">
-    @if (userMetaData$ | async; as userMeta) {
-      <ion-avatar class="ion-margin">
-        <img [src]="userMeta['avatar_url']" />
-      </ion-avatar>
-      <h1 class="ion-text-center">{{userMeta['name']}}</h1>
+    @if (userMetaData(); as userMeta) {
+    <ion-avatar class="ion-margin">
+      <img [src]="userMeta['avatar_url']" />
+    </ion-avatar>
+    <h1 class="ion-text-center">{{userMeta['name']}}</h1>
     } @else {
-      <p>Login to view your profile</p>
-      <ion-button color="light" fill="outline" routerLink="/login">
-        Login
-      </ion-button>
+    <p>Login to view your profile</p>
+    <ion-button color="light" fill="outline" routerLink="/login">
+      Login
+    </ion-button>
     }
-
   </div>
 </ion-content>

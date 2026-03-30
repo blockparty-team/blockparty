@@ -3,7 +3,7 @@
     <ion-title>Legend and filtering</ion-title>
   </ion-toolbar>
 </ion-header>
-@if (iconsWithToggleState$ | async; as icons) {
+@if (iconsWithToggleState(); as icons) {
   <ion-list>
     @for (icon of icons; track trackBy($index, icon)) {
       <ion-item>
@@ -17,7 +17,7 @@
           [checked]="icon.visible"
           [value]="icon.name"
           (ionChange)="onToggleChange($event)"
-          >
+        >
         </ion-toggle>
       </ion-item>
     }

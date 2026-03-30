@@ -2,35 +2,35 @@
   <ion-tab-bar slot="bottom">
     <ion-tab-button [tab]="routeName.Artist">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Artist ? 'musical-notes' : 'musical-notes-outline'"
+        [name]="currentTab() === tabName.Artist ? 'musical-notes' : 'musical-notes-outline'"
       ></ion-icon>
       <ion-label>Artists</ion-label>
     </ion-tab-button>
 
     <ion-tab-button [tab]="routeName.Timetable">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Timetable ? 'calendar' : 'calendar-outline'"
+        [name]="currentTab() === tabName.Timetable ? 'calendar' : 'calendar-outline'"
       ></ion-icon>
       <ion-label>Timetable</ion-label>
     </ion-tab-button>
 
     <ion-tab-button [tab]="routeName.Favorite">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Favorite ? 'heart' : 'heart-outline'"
+        [name]="currentTab() === tabName.Favorite ? 'heart' : 'heart-outline'"
       ></ion-icon>
       <ion-label>Favorites</ion-label>
     </ion-tab-button>
 
     <ion-tab-button [tab]="routeName.Map">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Map ? 'location' : 'location-outline'"
+        [name]="currentTab() === tabName.Map ? 'location' : 'location-outline'"
       ></ion-icon>
       <ion-label>Map</ion-label>
     </ion-tab-button>
 
     <ion-tab-button (click)="openSidebar()">
       <ion-icon
-        [name]="(currentTab$ | async) === tabName.Favorite ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'"
+        [name]="currentTab() === tabName.Favorite ? 'ellipsis-horizontal' : 'ellipsis-horizontal-outline'"
       ></ion-icon>
       <ion-label>More</ion-label>
     </ion-tab-button>

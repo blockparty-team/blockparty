@@ -22,7 +22,7 @@ import {
 } from '@blockparty/festival/data-access/supabase';
 import { RouteName } from '@blockparty/festival/shared/types';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { IonIcon, IonText, IonRouterLink } from '@ionic/angular/standalone';
 import { FavoriteStateService } from '@blockparty/festival/data-access/state/favorite';
 
@@ -31,14 +31,7 @@ import { FavoriteStateService } from '@blockparty/festival/data-access/state/fav
   templateUrl: './timetable-gantt.component.html',
   styleUrls: ['./timetable-gantt.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [
-    RouterLink,
-    AsyncPipe,
-    DatePipe,
-    IonIcon,
-    IonText,
-    IonRouterLink
-],
+  imports: [RouterLink, DatePipe, IonIcon, IonText, IonRouterLink],
 })
 export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);
@@ -48,10 +41,11 @@ export class TimetableGanttComponent {
 
   private currentTimeElement = viewChild<ElementRef>('currentTime');
 
-  timetableConfig$: Observable<DayTimetableViewModel | null> =
+  private timetableConfig$: Observable<DayTimetableViewModel | null> =
     this.timetableStateService.dayEvents$.pipe(
       map((day) => this.timetableGridConfig(day!)),
     );
+  timetableConfig = toSignal(this.timetableConfig$, { initialValue: null });
 
   private currentTimeWithinTimetable$: Observable<boolean> =
     this.timetableConfig$.pipe(
@@ -68,7 +62,7 @@ export class TimetableGanttComponent {
     this.currentTimeWithinTimetable$,
   );
 
-  currentTimeColumn$: Observable<number | null> = combineLatest([
+  private currentTimeColumn$: Observable<number | null> = combineLatest([
     interval(1000 * 60).pipe(startWith(0)),
     this.timetableConfig$,
     this.currentTimeWithinTimetable$,
@@ -86,8 +80,11 @@ export class TimetableGanttComponent {
     }),
     shareReplay(1),
   );
+  currentTimeColumn = toSignal(this.currentTimeColumn$, { initialValue: null });
 
-  eventTypeColor$ = this.timetableStateService.eventTypeColor$;
+  eventTypeColor = toSignal(this.timetableStateService.eventTypeColor$, {
+    initialValue: '',
+  });
 
   EVENT_ROW_GAP = 3;
   ACT_ROW_SPAN = 2;

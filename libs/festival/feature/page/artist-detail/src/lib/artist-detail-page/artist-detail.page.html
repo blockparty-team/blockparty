@@ -1,124 +1,105 @@
-@if (artist$ | async; as artist) {
-  <ion-content scrollEvents="true" (ionScroll)="onScroll($event)">
-    <header>
-      @if (coverIosStatusBar$ | async) {
-        <div
-          class="ios-status-bar-background"
-        ></div>
+@if (artist(); as artist) {
+<ion-content scrollEvents="true" (ionScroll)="onScroll($event)">
+  <header>
+    @if (coverIosStatusBar()) {
+    <div class="ios-status-bar-background"></div>
+    }
+    <img
+      [src]="artist.imgUrl"
+      alt="Image of {{artist.name}}"
+      [srcset]="artist.srcset"
+      [style.transform]="imageScale()"
+      [style.filter]="imageBlur()"
+    />
+  </header>
+  <ion-back-button
+    [defaultHref]="previousRoute()"
+    icon="chevron-back"
+    mode="md"
+  >
+  </ion-back-button>
+  <div class="fab-actions">
+    @if (canShare()) {
+    <ion-fab-button
+      size="small"
+      class="share"
+      color="secondary"
+      (click)="share(artist)"
+    >
+      <ion-icon name="share-social-outline"></ion-icon>
+    </ion-fab-button>
+    } @if (soMeLinks().length > 0) {
+    <ion-fab class="so-me">
+      <ion-fab-button color="secondary" size="small">
+        <ion-icon name="open-outline"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-list side="bottom">
+        @for (soMe of soMeLinks(); track soMe) {
+        <ion-fab-button color="secondary" (click)="openUrl(soMe.url!)">
+          @if (soMe.icon) {
+          <ion-icon size="large" [name]="soMe.icon"> </ion-icon>
+          } @if (soMe.svg) {
+          <ion-icon size="large" [src]="soMe.svg"> </ion-icon>
+          }
+        </ion-fab-button>
+        }
+      </ion-fab-list>
+    </ion-fab>
+    } @if ((artist.bandcamp_iframe || artist.soundcloud_iframe) &&
+    !showMusicPlayer()) {
+    <ion-fab-button
+      class="toggle-player"
+      size="small"
+      color="secondary"
+      (click)="toggleMusicPlayer()"
+    >
+      <ion-icon name="musical-note-outline"></ion-icon>
+    </ion-fab-button>
+    }
+  </div>
+  <section class="artist-info" [class.music-player-padding]="showMusicPlayer()">
+    <h1 class="artist-title">
+      {{artist.name}} @if (artist.country) {
+      <span class="country"> ({{artist.country}}) </span>
       }
-      <img
-        [src]="artist.imgUrl"
-        alt="Image of {{artist.name}}"
-        [srcset]="artist.srcset"
-        [style.transform]="imageScale$ | async"
-        [style.filter]="imageBlur$ | async"
-        />
-    </header>
-    <ion-back-button
-      [defaultHref]="previousRoute$ | async"
-      icon="chevron-back"
-      mode="md"
+      <ion-icon
+        slot="icon-only"
+        class="favorite-icon"
+        [color]="artist.isFavorite ? 'favorite' : ''"
+        [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
+        (click)="toggleFavorite(artist.id!)"
       >
-    </ion-back-button>
-    <div class="fab-actions">
-      @if (canShare$ | async) {
+      </ion-icon>
+    </h1>
+    <div class="acts">
+      @for (act of artist.timetable; track act) {
+      <div class="act">
+        <span>
+          {{act.day.name}} | @if (act.start_time) { {{act.start_time |
+          date:'HH:mm'}} - {{act.end_time | date:'HH:mm'}} | }
+          {{act.stage.name}}
+        </span>
         <ion-fab-button
           size="small"
-          class="share"
           color="secondary"
-          (click)="share(artist)"
-          >
-          <ion-icon name="share-social-outline"></ion-icon>
+          (click)="goToStageOnMap(act.stage.geom)"
+        >
+          <ion-icon name="map-outline"> </ion-icon>
         </ion-fab-button>
-      }
-      @if ((soMeLinks$ | async)?.length! > 0) {
-        <ion-fab class="so-me">
-          <ion-fab-button color="secondary" size="small">
-            <ion-icon name="open-outline"></ion-icon>
-          </ion-fab-button>
-          <ion-fab-list side="bottom">
-            @for (soMe of soMeLinks$ | async; track soMe) {
-              <ion-fab-button
-                color="secondary"
-                (click)="openUrl(soMe.url!)"
-                >
-                @if (soMe.icon) {
-                  <ion-icon size="large" [name]="soMe.icon">
-                  </ion-icon>
-                }
-                @if (soMe.svg) {
-                  <ion-icon size="large" [src]="soMe.svg">
-                  </ion-icon>
-                }
-              </ion-fab-button>
-            }
-          </ion-fab-list>
-        </ion-fab>
-      }
-      @if ((artist.bandcamp_iframe || artist.soundcloud_iframe) && !showMusicPlayer()) {
-        <ion-fab-button
-          class="toggle-player"
-          size="small"
-          color="secondary"
-          (click)="toggleMusicPlayer()"
-          >
-          <ion-icon name="musical-note-outline"></ion-icon>
-        </ion-fab-button>
+      </div>
       }
     </div>
-    <section
-      class="artist-info"
-      [class.music-player-padding]="showMusicPlayer()"
-      >
-      <h1 class="artist-title">
-        {{artist.name}}
-        @if (artist.country) {
-          <span class="country">
-            ({{artist.country}})
-          </span>
-        }
-        <ion-icon
-          slot="icon-only"
-          class="favorite-icon"
-          [color]="artist.isFavorite ? 'favorite' : ''"
-          [name]="artist.isFavorite ? 'heart' : 'heart-outline'"
-          (click)="toggleFavorite(artist.id!)"
-          >
-        </ion-icon>
-      </h1>
-      <div class="acts">
-        @for (act of artist.timetable; track act) {
-          <div class="act">
-            <span>
-              {{act.day.name}} |
-              @if (act.start_time) {
-                {{act.start_time | date:'HH:mm'}} - {{act.end_time |
-                date:'HH:mm'}} |
-              }
-              {{act.stage.name}}
-            </span>
-            <ion-fab-button
-              size="small"
-              color="secondary"
-              (click)="goToStageOnMap(act.stage.geom)"
-              >
-              <ion-icon name="map-outline"> </ion-icon>
-            </ion-fab-button>
-          </div>
-        }
-      </div>
-      <p class="description">{{artist.description}}</p>
-    </section>
-    <app-music-player
-      [showPlayer]="showMusicPlayer"
-      [soundcloudUrl]="artist.soundcloud_iframe!"
-      [bandcampUrl]="artist.bandcamp_iframe!"
-      >
-    </app-music-player>
-  </ion-content>
+    <p class="description">{{artist.description}}</p>
+  </section>
+  <app-music-player
+    [showPlayer]="showMusicPlayer"
+    [soundcloudUrl]="artist.soundcloud_iframe!"
+    [bandcampUrl]="artist.bandcamp_iframe!"
+  >
+  </app-music-player>
+</ion-content>
 } @else {
-  <div class="loading">
-    <ion-spinner></ion-spinner>
-  </div>
+<div class="loading">
+  <ion-spinner></ion-spinner>
+</div>
 }
-

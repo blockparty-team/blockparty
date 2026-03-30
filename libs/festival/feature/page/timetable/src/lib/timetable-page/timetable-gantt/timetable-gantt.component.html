@@ -1,16 +1,16 @@
-@if (timetableConfig$ | async; as config) {
+@if (timetableConfig(); as config) {
   <div
     class="timetable"
     [style.--template-columns]="config.gridTemplateColumns"
     [style.--template-rows]="config.gridTemplateRows"
-    >
+  >
     <!-- TIME LABELS -->
     @for (label of config.timeLabels; track label) {
       <div
         class="time-label"
         [style.--time-label-column-start]="label.columnStart"
         [style.--time-label-column-end]="label.columnEnd"
-        >
+      >
         {{ label.label | date: 'HH:mm' }}
       </div>
       <div
@@ -20,7 +20,7 @@
       <div
         #currentTime
         class="current-time"
-        [style.--current-time-column-start]="currentTimeColumn$ | async"
+        [style.--current-time-column-start]="currentTimeColumn()"
       ></div>
     }
     <!-- TIMETABLE -->
@@ -35,18 +35,20 @@
             [style.--act-column-start]="act.columnStart"
             [style.--act-column-end]="act.columnEnd"
             [style.--act-row-start]="act.rowStart"
-            [style.background-color]="eventTypeColor$ | async"
+            [style.background-color]="eventTypeColor()"
             [class.favorite]="act.isFavorite"
-            >
+          >
             <div class="act-content">
               <div class="act-sticky">
-                <div [routerLink]="['/tabs', routeName.Artist, act.artist_name]">
+                <div
+                  [routerLink]="['/tabs', routeName.Artist, act.artist_name]"
+                >
                   <h6>
                     {{ act.artist_name }}
                   </h6>
                   <p>
                     {{ act.start_time | date: 'HH:mm' }}-{{
-                    act.end_time | date: 'HH:mm'
+                      act.end_time | date: 'HH:mm'
                     }}
                   </p>
                 </div>
@@ -54,7 +56,7 @@
                   slot="icon-only"
                   [name]="act.isFavorite ? 'heart' : 'heart-outline'"
                   (click)="onToggleArtistFavorite(act.artist_id)"
-                  >
+                >
                 </ion-icon>
               </div>
             </div>
@@ -73,4 +75,3 @@
     </h5>
   </div>
 }
-

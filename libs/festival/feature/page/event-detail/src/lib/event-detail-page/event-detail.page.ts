@@ -1,6 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { Observable, from } from 'rxjs';
+import { from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { Browser } from '@capacitor/browser';
 import { Share } from '@capacitor/share';
@@ -13,7 +13,6 @@ import {
   MapLayer,
 } from '@blockparty/festival/data-access/supabase';
 import { ModalController } from '@ionic/angular/standalone';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -32,6 +31,7 @@ import {
   IonRouterLink,
 } from '@ionic/angular/standalone';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-event-detail',
@@ -39,7 +39,6 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
   styleUrls: ['./event-detail.page.scss'],
   imports: [
     RouterLink,
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -57,7 +56,7 @@ import { AppConfigService } from '@blockparty/festival/data-access/state/app-con
     IonRouterLink,
   ],
 })
-export class EventDetailPage implements OnInit {
+export class EventDetailPage {
   private activatedRoute = inject(ActivatedRoute);
   private modalCtrl = inject(ModalController);
   private eventStateService = inject(EventStateService);
@@ -67,21 +66,23 @@ export class EventDetailPage implements OnInit {
 
   routeName = RouteName;
 
-  event$!: Observable<EventViewModel | undefined>;
-  canShare$ = from(Share.canShare()).pipe(map((res) => res.value));
-
-  ngOnInit() {
-    this.event$ = this.activatedRoute.paramMap.pipe(
+  event = toSignal<EventViewModel | null>(
+    this.activatedRoute.paramMap.pipe(
       map((paramMap) => paramMap.get('id')),
       switchMap((id) =>
         this.eventStateService.events$.pipe(
-          map((events) => events.find((event) => event.id === id)),
+          map((events) => events.find((event) => event.id === id) ?? null),
         ),
       ),
-    );
-  }
+    ),
+    { initialValue: null },
+  );
 
-  onZoomToEventOnMap(id: string, bounds: number[]) {
+  canShare = toSignal(from(Share.canShare()).pipe(map((res) => res.value)), {
+    initialValue: false,
+  });
+
+  onZoomToEventOnMap(id: string, bounds: number[]): void {
     this.router.navigate(['/tabs', RouteName.Map]);
     this.mapService.fitBounds(bounds as LngLatBoundsLike);
     this.mapService.highlightFeature(MapLayer.EventHighLight, id, true);

@@ -12,7 +12,7 @@
         "outputPath": "dist/apps/karrusel",
         "index": "apps/karrusel/src/index.html",
         "main": "apps/karrusel/src/main.ts",
-        "polyfills": "apps/karrusel/src/polyfills.ts",
+        "polyfills": [],
         "tsConfig": "apps/karrusel/tsconfig.app.json",
         "assets": [
           {
@@ -110,7 +110,7 @@
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
         "main": "apps/karrusel/src/test.ts",
-        "polyfills": "apps/karrusel/src/polyfills.ts",
+        "polyfills": [],
         "tsConfig": "apps/karrusel/tsconfig.spec.json",
         "karmaConfig": "apps/karrusel/karma.conf.js",
         "styles": [],

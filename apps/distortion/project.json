@@ -12,7 +12,7 @@
         "outputPath": "dist/apps/distortion",
         "index": "apps/distortion/src/index.html",
         "main": "apps/distortion/src/main.ts",
-        "polyfills": "apps/distortion/src/polyfills.ts",
+        "polyfills": [],
         "tsConfig": "apps/distortion/tsconfig.app.json",
         "assets": [
           {
@@ -111,7 +111,7 @@
       "executor": "@angular-devkit/build-angular:karma",
       "options": {
         "main": "apps/distortion/src/test.ts",
-        "polyfills": "apps/distortion/src/polyfills.ts",
+        "polyfills": [],
         "tsConfig": "apps/distortion/tsconfig.spec.json",
         "karmaConfig": "apps/distortion/karma.conf.js",
         "styles": [],

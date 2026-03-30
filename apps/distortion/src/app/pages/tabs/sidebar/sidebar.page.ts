@@ -1,11 +1,8 @@
-import { Component, OnInit, computed, inject, isDevMode } from '@angular/core';
+import { Component, inject, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { MenuController } from '@ionic/angular/standalone';
-import { Observable } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
 import { RouteName } from '@blockparty/festival/shared/types';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -20,6 +17,7 @@ import {
   IonFooter,
 } from '@ionic/angular/standalone';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface NavigationItem {
   name: string;
@@ -32,7 +30,6 @@ interface NavigationItem {
   templateUrl: './sidebar.page.html',
   styleUrls: ['./sidebar.page.scss'],
   imports: [
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonTitle,
@@ -46,14 +43,16 @@ interface NavigationItem {
     IonFooter,
   ],
 })
-export class SidebarPage implements OnInit {
+export class SidebarPage {
   private authService = inject(AuthService);
   private router = inject(Router);
   private menu = inject(MenuController);
   public enableLogin =
     inject(AppConfigService).appConfig.featureToggle.enableLogin;
 
-  authenticated$: Observable<boolean>;
+  authenticated = toSignal(this.authService.authenticated$, {
+    initialValue: false,
+  });
 
   navigationItems: NavigationItem[] = [
     {
@@ -122,10 +121,6 @@ export class SidebarPage implements OnInit {
       !isDevMode() && navItem.routeName === RouteName.Settings ? false : true,
     ); // Show settings menu item when not in production
 
-  ngOnInit() {
-    this.authenticated$ = this.authService.authenticated$;
-  }
-
   onGoTo(route: RouteName): void {
     this.menu.close();
     this.router.navigate([route]);
@@ -135,18 +130,12 @@ export class SidebarPage implements OnInit {
     this.menu.close();
   }
 
-  signInOrOut() {
-    this.authService.authenticated$
-      .pipe(
-        first(),
-        tap((authenticated) => {
-          if (authenticated) {
-            this.authService.logOut();
-          } else {
-            this.router.navigate([RouteName.Login]);
-          }
-        }),
-      )
-      .subscribe();
+  signInOrOut(): void {
+    if (this.authenticated()) {
+      this.authService.logOut();
+      return;
+    }
+
+    this.router.navigate([RouteName.Login]);
   }
 }

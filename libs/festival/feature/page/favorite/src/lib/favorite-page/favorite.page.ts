@@ -6,10 +6,9 @@ import {
 } from '@angular/core';
 import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';
-import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RouterLink } from '@angular/router';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -27,6 +26,7 @@ import {
   IonRouterLink,
 } from '@ionic/angular/standalone';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 interface DayGroupedFavorites {
   day: { name: string | null; day: string };
@@ -40,7 +40,6 @@ interface DayGroupedFavorites {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
-    AsyncPipe,
     DatePipe,
     IonHeader,
     IonToolbar,
@@ -64,12 +63,15 @@ export class FavoritePage {
 
   public showDayGroupedFavorites = signal<boolean>(true);
 
-  favoriteArtists$: Observable<ArtistViewModel[]> =
-    this.artistStateService.artists$.pipe(
-      map((artists) => artists.filter((artist) => artist.isFavorite)),
-    );
+  private favoriteArtists$ = this.artistStateService.artists$.pipe(
+    map((artists) => artists.filter((artist) => artist.isFavorite)),
+  );
 
-  dayGroupedFavorites$: Observable<DayGroupedFavorites[]> =
+  favoriteArtists = toSignal(this.favoriteArtists$, {
+    initialValue: [] as ArtistViewModel[],
+  });
+
+  dayGroupedFavorites = toSignal(
     this.favoriteArtists$.pipe(
       map((artists) => {
         return artists
@@ -105,7 +107,9 @@ export class FavoritePage {
               new Date(a.day.day).getTime() - new Date(b.day.day).getTime(),
           );
       }),
-    );
+    ),
+    { initialValue: [] as DayGroupedFavorites[] },
+  );
 
   toggleFavorite(id: string): void {
     this.artistStateService.toggleArtistFavorite(id);

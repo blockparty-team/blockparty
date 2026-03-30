@@ -1,8 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { LocalNotificationsService } from '@blockparty/festival/shared/service/local-notifications';
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import { BehaviorSubject, from } from 'rxjs';
 import { LocalNotificationSchema } from '@capacitor/local-notifications';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -14,13 +13,13 @@ import {
   IonItem,
   IonLabel,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.page.html',
   styleUrls: ['./settings.page.scss'],
   imports: [
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -32,16 +31,15 @@ import {
     IonLabel,
   ],
 })
-export class SettingsPage implements OnInit {
+export class SettingsPage {
   private localNotificationsService = inject(LocalNotificationsService);
 
   private _localNotifications$ = new BehaviorSubject<
     LocalNotificationSchema[] | null
   >(null);
-  localNotifications$: Observable<LocalNotificationSchema[] | null> =
-    this._localNotifications$.asObservable();
-
-  ngOnInit() {}
+  localNotifications = toSignal(this._localNotifications$.asObservable(), {
+    initialValue: null,
+  });
 
   setSampleNotification(): void {
     from(

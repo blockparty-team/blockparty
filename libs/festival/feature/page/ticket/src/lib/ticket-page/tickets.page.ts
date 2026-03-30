@@ -1,9 +1,7 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, inject } from '@angular/core';
 import { TicketStateService } from '@blockparty/festival/data-access/state/ticket';
 import { Browser } from '@capacitor/browser';
 import { EventsGroupedByType } from '@blockparty/festival/data-access/supabase';
-import { AsyncPipe } from '@angular/common';
 import {
   IonHeader,
   IonToolbar,
@@ -18,13 +16,13 @@ import {
   IonList,
   IonIcon,
 } from '@ionic/angular/standalone';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.page.html',
   styleUrls: ['./tickets.page.scss'],
   imports: [
-    AsyncPipe,
     IonHeader,
     IonToolbar,
     IonButtons,
@@ -39,14 +37,13 @@ import {
     IonIcon,
   ],
 })
-export class TicketsPage implements OnInit {
+export class TicketsPage {
   private ticketStateService = inject(TicketStateService);
+  private emptyEventTypes: EventsGroupedByType[] = [];
 
-  eventsGroupedByType$!: Observable<EventsGroupedByType[]>;
-
-  ngOnInit() {
-    this.eventsGroupedByType$ = this.ticketStateService.eventsGroupedByType$;
-  }
+  eventsGroupedByType = toSignal(this.ticketStateService.eventsGroupedByType$, {
+    initialValue: this.emptyEventTypes,
+  });
 
   onGoToTicket(ticketUrl: string): void {
     Browser.open({
