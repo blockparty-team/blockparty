@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'dk.karrusel',
   appName: 'Karrusel',
-  webDir: '../../dist/apps/karrusel',
+  webDir: '../../dist/apps/karrusel/browser',
   plugins: {
     LocalNotifications: {
       smallIcon: 'ic_launcher',

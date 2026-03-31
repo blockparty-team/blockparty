@@ -1,7 +1,7 @@
 {
 	"appId": "dk.karrusel",
 	"appName": "Karrusel",
-	"webDir": "../../dist/apps/karrusel",
+	"webDir": "../../dist/apps/karrusel/browser",
 	"plugins": {
 		"LocalNotifications": {
 			"smallIcon": "ic_launcher",

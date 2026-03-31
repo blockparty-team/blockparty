@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'dk.cphdistortion.app',
   appName: 'Distortion',
-  webDir: '../../dist/apps/distortion',
+  webDir: '../../dist/apps/distortion/browser',
   plugins: {
     LocalNotifications: {
       smallIcon: 'ic_launcher',
