@@ -7,12 +7,11 @@
   "generators": {},
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular/build:application",
       "options": {
         "outputPath": "dist/apps/studieby",
         "index": "apps/studieby/src/index.html",
-        "main": "apps/studieby/src/main.ts",
-        "polyfills": "apps/studieby/src/polyfills.ts",
+        "polyfills": ["apps/studieby/src/polyfills.ts"],
         "tsConfig": "apps/studieby/tsconfig.app.json",
         "assets": [
           {
@@ -28,19 +27,17 @@
           "apps/studieby/src/theme/variables.scss"
         ],
         "scripts": [],
-        "vendorChunk": true,
         "extractLicenses": false,
-        "buildOptimizer": false,
         "sourceMap": true,
         "optimization": false,
         "namedChunks": true,
-        "serviceWorker": false,
-        "ngswConfigPath": "ngsw-config.json",
+        "serviceWorker": "apps/studieby/ngsw-config.json",
         "allowedCommonJsDependencies": [
           "maplibre-gl",
           "onesignal-cordova-plugin",
           "ws"
-        ]
+        ],
+        "browser": "apps/studieby/src/main.ts"
       },
       "configurations": {
         "production": {
@@ -56,8 +53,6 @@
           "namedChunks": false,
           "aot": true,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -79,8 +74,6 @@
           "namedChunks": false,
           "aot": true,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -95,7 +88,7 @@
       }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
       "options": {
         "buildTarget": "studieby:build"
       },
@@ -113,13 +106,13 @@
       "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "studieby:build"
       }
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@angular/build:karma",
       "options": {
         "main": "apps/studieby/src/test.ts",
         "polyfills": "apps/studieby/src/polyfills.ts",
