@@ -9,6 +9,7 @@ import {
 import { isSameDay, sub } from 'date-fns';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
+import { combineLatest } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
@@ -49,10 +50,16 @@ export class TimetablePage implements OnInit {
   timetableMode = this._timetableMode.asReadonly();
 
   ngOnInit(): void {
-    // Default select first day, event type and event
-    this.eventFilterStateService.days$
+    combineLatest([
+      this.eventFilterStateService.days$,
+      this.eventFilterStateService.selectedDayId$,
+    ])
       .pipe(
-        tap((days) => {
+        tap(([days, selectedDayId]) => {
+          if (selectedDayId && days.some((day) => day.id === selectedDayId)) {
+            return;
+          }
+
           // Change day at 7am next day (for events running during nighttime)
           const now = sub(new Date(), { hours: 7 });
           const day = days.find((day) => isSameDay(now, new Date(day.day)));
@@ -67,19 +74,45 @@ export class TimetablePage implements OnInit {
       )
       .subscribe();
 
-    this.eventFilterStateService.eventTypes$
+    combineLatest([
+      this.eventFilterStateService.eventTypes$,
+      this.eventFilterStateService.selectedEventTypeId$,
+    ])
       .pipe(
-        tap((eventTypes) =>
-          this.eventFilterStateService.selectEventType(eventTypes[0].id),
-        ),
+        tap(([eventTypes, selectedEventTypeId]) => {
+          if (eventTypes.length === 0) {
+            return;
+          }
+
+          if (
+            selectedEventTypeId &&
+            eventTypes.some((eventType) => eventType.id === selectedEventTypeId)
+          ) {
+            return;
+          }
+
+          this.eventFilterStateService.selectEventType(eventTypes[0].id);
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
 
-    this.eventFilterStateService.events$
+    combineLatest([
+      this.eventFilterStateService.events$,
+      this.eventFilterStateService.selectedEventId$,
+    ])
       .pipe(
-        filter((events) => !!events),
-        tap((events) => this.eventFilterStateService.selectEvent(events[0].id)),
+        filter(([events]) => !!events && events.length > 0),
+        tap(([events, selectedEventId]) => {
+          if (
+            selectedEventId &&
+            events.some((event) => event.id === selectedEventId)
+          ) {
+            return;
+          }
+
+          this.eventFilterStateService.selectEvent(events[0].id);
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
