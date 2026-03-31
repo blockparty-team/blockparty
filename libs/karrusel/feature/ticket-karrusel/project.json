@@ -8,7 +8,9 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
       "options": {
         "project": "libs/karrusel/feature/ticket-karrusel/ng-package.json",
         "tsConfig": "libs/karrusel/feature/ticket-karrusel/tsconfig.lib.json"

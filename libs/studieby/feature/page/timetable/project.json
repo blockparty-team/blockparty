@@ -8,7 +8,9 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
       "options": {
         "project": "libs/studieby/feature/page/timetable/ng-package.json",
         "tsConfig": "libs/studieby/feature/page/timetable/tsconfig.lib.json"
@@ -22,11 +24,15 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular/build:unit-test",
       "options": {
-        "jestConfig": "libs/studieby/feature/page/timetable/jest.config.ts",
-        "tsConfig": "libs/studieby/feature/page/timetable/tsconfig.spec.json"
+        "tsConfig": "libs/studieby/feature/page/timetable/tsconfig.spec.json",
+        "runnerConfig": true
+      },
+      "configurations": {
+        "ci": {
+          "watch": false
+        }
       }
     },
     "lint": {

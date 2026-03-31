@@ -8,7 +8,9 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/dist/{projectRoot}"
+      ],
       "options": {
         "project": "libs/festival/feature/page/settings/ng-package.json",
         "tsConfig": "libs/festival/feature/page/settings/tsconfig.lib.json"
@@ -22,11 +24,15 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular/build:unit-test",
       "options": {
-        "jestConfig": "libs/festival/feature/page/settings/jest.config.ts",
-        "tsConfig": "libs/festival/feature/page/settings/tsconfig.spec.json"
+        "tsConfig": "libs/festival/feature/page/settings/tsconfig.spec.json",
+        "runnerConfig": true
+      },
+      "configurations": {
+        "ci": {
+          "watch": false
+        }
       }
     },
     "lint": {

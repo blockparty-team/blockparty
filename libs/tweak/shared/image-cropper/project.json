@@ -7,16 +7,24 @@
   "tags": [],
   "targets": {
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
-        "jestConfig": "libs/tweak/shared/image-cropper/jest.config.ts",
-        "tsConfig": "libs/tweak/shared/image-cropper/tsconfig.spec.json"
+        "configFile": "vitest.config.ts"
+      },
+      "configurations": {
+        "ci": {
+          "coverage": true
+        }
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     }
   }
 }

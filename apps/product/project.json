@@ -79,13 +79,15 @@
       ]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "executor": "@angular/build:unit-test",
       "options": {
-        "jestConfig": "apps/product/jest.config.ts",
-        "tsConfig": "apps/product/tsconfig.spec.json"
+        "tsConfig": "apps/product/tsconfig.spec.json",
+        "runnerConfig": true
+      },
+      "configurations": {
+        "ci": {
+          "watch": false
+        }
       }
     }
   }

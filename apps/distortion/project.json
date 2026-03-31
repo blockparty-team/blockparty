@@ -113,32 +113,13 @@
       }
     },
     "test": {
-      "executor": "@angular/build:karma",
+      "executor": "@angular/build:unit-test",
       "options": {
-        "main": "apps/distortion/src/test.ts",
-        "polyfills": [],
         "tsConfig": "apps/distortion/tsconfig.spec.json",
-        "karmaConfig": "apps/distortion/karma.conf.js",
-        "styles": [],
-        "scripts": [],
-        "assets": [
-          {
-            "glob": "favicon.ico",
-            "input": "apps/distortion/src/",
-            "output": "/"
-          },
-          {
-            "glob": "**/*",
-            "input": "apps/distortion/src/assets",
-            "output": "/assets"
-          },
-          "apps/distortion/src/manifest.webmanifest",
-          "apps/distortion/src/OneSignalSDKWorker.js"
-        ]
+        "runnerConfig": true
       },
       "configurations": {
         "ci": {
-          "progress": false,
           "watch": false
         }
       }
@@ -146,7 +127,10 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.ts",
+          "{projectRoot}/**/*.html"
+        ]
       }
     },
     "capacitor": {
@@ -170,7 +154,9 @@
           "parallel": false
         },
         "sync": {
-          "commands": ["npx cap sync"],
+          "commands": [
+            "npx cap sync"
+          ],
           "parallel": false
         },
         "open-ios": {

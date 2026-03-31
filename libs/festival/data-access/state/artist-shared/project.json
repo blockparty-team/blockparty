@@ -7,7 +7,9 @@
   "targets": {
     "build": {
       "executor": "@nx/js:tsc",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/libs/festival/data-access/state/artist-shared",
         "main": "libs/festival/data-access/state/artist-shared/src/index.ts",
@@ -19,11 +21,17 @@
       "executor": "@nx/eslint:lint"
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nx/vitest:test",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
-        "jestConfig": "libs/festival/data-access/state/artist-shared/jest.config.ts",
-        "tsConfig": "libs/festival/data-access/state/artist-shared/tsconfig.spec.json"
+        "configFile": "vitest.config.ts"
+      },
+      "configurations": {
+        "ci": {
+          "coverage": true
+        }
       }
     }
   }

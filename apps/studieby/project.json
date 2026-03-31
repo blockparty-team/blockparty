@@ -11,7 +11,9 @@
       "options": {
         "outputPath": "dist/apps/studieby",
         "index": "apps/studieby/src/index.html",
-        "polyfills": ["apps/studieby/src/polyfills.ts"],
+        "polyfills": [
+          "apps/studieby/src/polyfills.ts"
+        ],
         "tsConfig": "apps/studieby/tsconfig.app.json",
         "assets": [
           {
@@ -112,32 +114,13 @@
       }
     },
     "test": {
-      "executor": "@angular/build:karma",
+      "executor": "@angular/build:unit-test",
       "options": {
-        "main": "apps/studieby/src/test.ts",
-        "polyfills": "apps/studieby/src/polyfills.ts",
         "tsConfig": "apps/studieby/tsconfig.spec.json",
-        "karmaConfig": "apps/studieby/karma.conf.js",
-        "styles": [],
-        "scripts": [],
-        "assets": [
-          {
-            "glob": "favicon.ico",
-            "input": "apps/studieby/src/",
-            "output": "/"
-          },
-          {
-            "glob": "**/*",
-            "input": "apps/studieby/src/assets",
-            "output": "/assets"
-          },
-          "apps/studieby/src/manifest.webmanifest",
-          "apps/studieby/src/OneSignalSDKWorker.js"
-        ]
+        "runnerConfig": true
       },
       "configurations": {
         "ci": {
-          "progress": false,
           "watch": false
         }
       }
@@ -145,14 +128,20 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.ts",
+          "{projectRoot}/**/*.html"
+        ]
       }
     },
     "build-sync-prod": {
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/studieby/",
-        "commands": ["nx run studieby:build:production", "npx cap sync"],
+        "commands": [
+          "nx run studieby:build:production",
+          "npx cap sync"
+        ],
         "parallel": false
       }
     },
@@ -160,7 +149,10 @@
       "executor": "nx:run-commands",
       "options": {
         "cwd": "apps/studieby/",
-        "commands": ["npx nx run studieby:build", "npx cap sync"],
+        "commands": [
+          "npx nx run studieby:build",
+          "npx cap sync"
+        ],
         "parallel": false
       }
     },
