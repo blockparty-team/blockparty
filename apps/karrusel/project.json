@@ -7,11 +7,10 @@
   "generators": {},
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular/build:application",
       "options": {
         "outputPath": "dist/apps/karrusel",
         "index": "apps/karrusel/src/index.html",
-        "main": "apps/karrusel/src/main.ts",
         "polyfills": [],
         "tsConfig": "apps/karrusel/tsconfig.app.json",
         "assets": [
@@ -28,19 +27,17 @@
           "apps/karrusel/src/theme/variables.scss"
         ],
         "scripts": [],
-        "vendorChunk": true,
         "extractLicenses": false,
-        "buildOptimizer": false,
         "sourceMap": true,
         "optimization": false,
         "namedChunks": true,
-        "serviceWorker": false,
-        "ngswConfigPath": "ngsw-config.json",
+        "serviceWorker": "apps/karrusel/ngsw-config.json",
         "allowedCommonJsDependencies": [
           "maplibre-gl",
           "onesignal-cordova-plugin",
           "ws"
-        ]
+        ],
+        "browser": "apps/karrusel/src/main.ts"
       },
       "configurations": {
         "production": {
@@ -56,8 +53,6 @@
           "namedChunks": false,
           "aot": true,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -79,8 +74,6 @@
           "namedChunks": false,
           "aot": true,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -89,53 +82,54 @@
             }
           ]
         },
-        "ci": { "progress": false }
+        "ci": {
+          "progress": false
+        }
       }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
-      "options": { "buildTarget": "karrusel:build" },
+      "executor": "@angular/build:dev-server",
+      "options": {
+        "buildTarget": "karrusel:build"
+      },
       "configurations": {
-        "production": { "buildTarget": "karrusel:build:production" },
-        "development": { "buildTarget": "karrusel:build:development" },
-        "ci": { "progress": false }
+        "production": {
+          "buildTarget": "karrusel:build:production"
+        },
+        "development": {
+          "buildTarget": "karrusel:build:development"
+        },
+        "ci": {
+          "progress": false
+        }
       },
       "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": { "buildTarget": "karrusel:build" }
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "karrusel:build"
+      }
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@angular/build:unit-test",
       "options": {
-        "main": "apps/karrusel/src/test.ts",
-        "polyfills": [],
         "tsConfig": "apps/karrusel/tsconfig.spec.json",
-        "karmaConfig": "apps/karrusel/karma.conf.js",
-        "styles": [],
-        "scripts": [],
-        "assets": [
-          {
-            "glob": "favicon.ico",
-            "input": "apps/karrusel/src/",
-            "output": "/"
-          },
-          {
-            "glob": "**/*",
-            "input": "apps/karrusel/src/assets",
-            "output": "/assets"
-          },
-          "apps/karrusel/src/manifest.webmanifest",
-          "apps/karrusel/src/OneSignalSDKWorker.js"
-        ]
+        "runnerConfig": true
       },
-      "configurations": { "ci": { "progress": false, "watch": false } }
+      "configurations": {
+        "ci": {
+          "watch": false
+        }
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.ts",
+          "{projectRoot}/**/*.html"
+        ]
       }
     },
     "capacitor": {
@@ -159,7 +153,9 @@
           "parallel": false
         },
         "sync": {
-          "commands": ["npx cap sync"],
+          "commands": [
+            "npx cap sync"
+          ],
           "parallel": false
         },
         "open-ios": {

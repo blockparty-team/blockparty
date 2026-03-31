@@ -51,9 +51,15 @@ export class TimetableGanttComponent {
     this.timetableConfig$.pipe(
       filter((config) => !!config),
       map((config) => {
+        const firstTimeLabel = config.timeLabels[0];
+        const lastTimeLabel = config.timeLabels.at(-1);
+        if (!firstTimeLabel || !lastTimeLabel) {
+          return false;
+        }
+
         const now = new Date();
-        const firstActStart = config.timeLabels[0].label;
-        const lastActEnd = config.timeLabels.slice(-1)[0].label;
+        const firstActStart = firstTimeLabel.label;
+        const lastActEnd = lastTimeLabel.label;
 
         return now >= firstActStart && now <= lastActEnd;
       }),
@@ -67,13 +73,22 @@ export class TimetableGanttComponent {
     this.timetableConfig$,
     this.currentTimeWithinTimetable$,
   ]).pipe(
-    filter(([, config, withinTimetable]) => withinTimetable),
+    filter(([, , withinTimetable]) => withinTimetable),
     map(([, config, withinTimetable]) => {
+      if (!config) {
+        return null;
+      }
+
+      const firstTimeLabel = config.timeLabels[0];
+      if (!firstTimeLabel) {
+        return null;
+      }
+
       const now = new Date();
-      const firstActStart = config?.timeLabels[0].label;
+      const firstActStart = firstTimeLabel.label;
 
       if (withinTimetable) {
-        return differenceInMinutes(now, firstActStart!);
+        return differenceInMinutes(now, firstActStart);
       }
 
       return null;
@@ -123,8 +138,13 @@ export class TimetableGanttComponent {
     rowStart: number,
     timeLabels: TimeLabel[],
   ): StageTimetableViewModel {
+    const firstTimeLabel = timeLabels[0];
+    if (!firstTimeLabel) {
+      throw new Error('Expected at least one timetable time label');
+    }
+
     const offset =
-      (firstStartTime.getTime() - timeLabels[0].label.getTime()) / (1000 * 60);
+      (firstStartTime.getTime() - firstTimeLabel.label.getTime()) / (1000 * 60);
 
     const timetable: TimetableViewModel[] = stage.timetable.map((timetable) => {
       const relativeStartTime =

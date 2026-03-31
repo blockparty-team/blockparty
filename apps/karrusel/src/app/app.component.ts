@@ -66,7 +66,7 @@ export class AppComponent implements OnInit {
     });
 
     this.supabase.authChanges((event, session) => {
-      if (event === 'SIGNED_IN') {
+      if (event === 'SIGNED_IN' && session) {
         this.supabase.setSession(session);
       } else {
         this.supabase.setSession(null);
@@ -109,16 +109,20 @@ export class AppComponent implements OnInit {
       });
 
       if (this.featureToggle.enableLogin()) {
-        const access = openUrl.split('#access_token=').pop().split('&')[0];
-        const refresh = openUrl.split('&refresh_token=').pop().split('&')[0];
+        const hash = openUrl.split('#')[1];
+        const hashParams = new URLSearchParams(hash ?? '');
+        const access = hashParams.get('access_token');
+        const refresh = hashParams.get('refresh_token');
 
-        if (!access && !refresh) return;
+        if (!access || !refresh) return;
 
-        const { data, error } = await this.supabase.externalSetSession(
+        const { data } = await this.supabase.externalSetSession(
           access,
           refresh,
         );
-        this.supabase.setSession(data.session);
+        if (data.session) {
+          this.supabase.setSession(data.session);
+        }
 
         this.zone.run(() => {
           this.router.navigateByUrl('/tabs/map', { replaceUrl: true });

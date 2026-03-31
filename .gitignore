@@ -45,7 +45,6 @@ dist
 .DS_Store
 tmp
 *.log
-jest.debug.config.js
 .tool-versions
 /.nx-cache
 /.nx

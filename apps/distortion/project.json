@@ -7,11 +7,10 @@
   "generators": {},
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular/build:application",
       "options": {
         "outputPath": "dist/apps/distortion",
         "index": "apps/distortion/src/index.html",
-        "main": "apps/distortion/src/main.ts",
         "polyfills": [],
         "tsConfig": "apps/distortion/tsconfig.app.json",
         "assets": [
@@ -28,19 +27,17 @@
           "apps/distortion/src/theme/variables.scss"
         ],
         "scripts": [],
-        "vendorChunk": true,
         "extractLicenses": false,
-        "buildOptimizer": false,
         "sourceMap": true,
         "optimization": false,
         "namedChunks": true,
-        "serviceWorker": false,
-        "ngswConfigPath": "ngsw-config.json",
+        "serviceWorker": "apps/distortion/ngsw-config.json",
         "allowedCommonJsDependencies": [
           "maplibre-gl",
           "onesignal-cordova-plugin",
           "ws"
-        ]
+        ],
+        "browser": "apps/distortion/src/main.ts"
       },
       "configurations": {
         "production": {
@@ -56,8 +53,6 @@
           "namedChunks": false,
           "aot": true,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -74,13 +69,11 @@
             }
           ],
           "optimization": false,
-          "outputHashing": "all",
+          "outputHashing": "none",
           "sourceMap": false,
           "namedChunks": false,
           "aot": true,
           "extractLicenses": true,
-          "vendorChunk": false,
-          "buildOptimizer": true,
           "budgets": [
             {
               "type": "initial",
@@ -89,54 +82,55 @@
             }
           ]
         },
-        "ci": { "progress": false }
+        "ci": {
+          "progress": false
+        }
       }
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
-      "options": { "buildTarget": "distortion:build:development" },
+      "executor": "@angular/build:dev-server",
+      "options": {
+        "buildTarget": "distortion:build:development"
+      },
       "configurations": {
-        "production": { "buildTarget": "distortion:build:production" },
-        "development": { "buildTarget": "distortion:build:development" },
-        "ci": { "progress": false }
+        "production": {
+          "buildTarget": "distortion:build:production"
+        },
+        "development": {
+          "buildTarget": "distortion:build:development"
+        },
+        "ci": {
+          "progress": false
+        }
       },
       "defaultConfiguration": "development",
       "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
-      "options": { "buildTarget": "distortion:build" }
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "distortion:build"
+      }
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@angular/build:unit-test",
       "options": {
-        "main": "apps/distortion/src/test.ts",
-        "polyfills": [],
         "tsConfig": "apps/distortion/tsconfig.spec.json",
-        "karmaConfig": "apps/distortion/karma.conf.js",
-        "styles": [],
-        "scripts": [],
-        "assets": [
-          {
-            "glob": "favicon.ico",
-            "input": "apps/distortion/src/",
-            "output": "/"
-          },
-          {
-            "glob": "**/*",
-            "input": "apps/distortion/src/assets",
-            "output": "/assets"
-          },
-          "apps/distortion/src/manifest.webmanifest",
-          "apps/distortion/src/OneSignalSDKWorker.js"
-        ]
+        "runnerConfig": true
       },
-      "configurations": { "ci": { "progress": false, "watch": false } }
+      "configurations": {
+        "ci": {
+          "watch": false
+        }
+      }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.ts",
+          "{projectRoot}/**/*.html"
+        ]
       }
     },
     "capacitor": {
@@ -160,7 +154,9 @@
           "parallel": false
         },
         "sync": {
-          "commands": ["npx cap sync"],
+          "commands": [
+            "npx cap sync"
+          ],
           "parallel": false
         },
         "open-ios": {

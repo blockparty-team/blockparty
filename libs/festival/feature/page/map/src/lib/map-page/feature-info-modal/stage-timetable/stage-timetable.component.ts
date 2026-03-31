@@ -147,7 +147,8 @@ export class StageTimetableComponent {
 
   private getInitialSelectedDay(): string | null {
     const days = this.days();
-    if (days.length === 0) {
+    const firstDay = days[0];
+    if (!firstDay) {
       return null;
     }
 
@@ -157,7 +158,7 @@ export class StageTimetableComponent {
       isSameDay(now, new Date(currentDay.date)),
     );
 
-    return day?.id ?? days[0].id;
+    return day?.id ?? firstDay.id;
   }
 
   onSelectDay(event: Event): void {

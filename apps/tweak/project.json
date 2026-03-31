@@ -12,12 +12,13 @@
   },
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular/build:application",
       "options": {
         "outputPath": "dist/apps/tweak",
         "index": "apps/tweak/src/index.html",
-        "main": "apps/tweak/src/main.ts",
-        "polyfills": "apps/tweak/src/polyfills.ts",
+        "polyfills": [
+          "apps/tweak/src/polyfills.ts"
+        ],
         "tsConfig": "apps/tweak/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -34,8 +35,8 @@
           "apps/tweak/src/global.scss"
         ],
         "scripts": [],
-        "serviceWorker": false,
-        "ngswConfigPath": "ngsw-config.json"
+        "serviceWorker": "apps/tweak/ngsw-config.json",
+        "browser": "apps/tweak/src/main.ts"
       },
       "configurations": {
         "production": {
@@ -60,9 +61,7 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
           "sourceMap": true,
           "namedChunks": true
@@ -74,7 +73,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "tweak:build:production"
@@ -90,37 +89,19 @@
       "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "tweak:build"
       }
     },
     "test": {
-      "executor": "@angular-devkit/build-angular:karma",
+      "executor": "@angular/build:unit-test",
       "options": {
-        "main": "apps/tweak/src/test.ts",
-        "polyfills": "apps/tweak/src/polyfills.ts",
         "tsConfig": "apps/tweak/tsconfig.spec.json",
-        "karmaConfig": "apps/tweak/karma.conf.js",
-        "inlineStyleLanguage": "scss",
-        "assets": [
-          {
-            "glob": "**/*",
-            "input": "apps/tweak/src/assets",
-            "output": "assets"
-          },
-          "apps/tweak/src/manifest.webmanifest"
-        ],
-        "styles": [
-          "@angular/material/prebuilt-themes/deeppurple-amber.css",
-          "apps/tweak/src/theme/variables.scss",
-          "apps/tweak/src/global.scss"
-        ],
-        "scripts": []
+        "runnerConfig": true
       },
       "configurations": {
         "ci": {
-          "progress": false,
           "watch": false
         }
       }
@@ -128,7 +109,10 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+        "lintFilePatterns": [
+          "{projectRoot}/**/*.ts",
+          "{projectRoot}/**/*.html"
+        ]
       }
     }
   }

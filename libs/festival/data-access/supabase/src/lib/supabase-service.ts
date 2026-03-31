@@ -1,5 +1,5 @@
-import { Injectable, inject } from '@angular/core';
-import { isPlatform, Platform } from '@ionic/angular/standalone';
+import { Injectable } from '@angular/core';
+import { isPlatform } from '@ionic/angular/standalone';
 import { BehaviorSubject, EMPTY, from, Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import {
@@ -33,8 +33,6 @@ import { environment } from '@shared/environments';
   providedIn: 'root',
 })
 export class SupabaseService {
-  private platform = inject(Platform);
-
   private supabase: SupabaseClient;
 
   private _session$ = new BehaviorSubject<AuthSession | null>(null);
@@ -65,14 +63,14 @@ export class SupabaseService {
     return this.supabase.auth.setSession({ access_token, refresh_token });
   }
 
-  setSession(session: Session): void {
+  setSession(session: Session | null): void {
     this._session$.next(session);
   }
 
   signIn(email: string) {
     return from(this.supabase.auth.signInWithOtp({ email })).pipe(
       map(({ data, error }) => (error ? throwError(error) : data)),
-      catchError((err) => EMPTY),
+      catchError(() => EMPTY),
     );
   }
 
@@ -339,7 +337,7 @@ export class SupabaseService {
   publicImageUrl(
     bucket: string,
     path: string,
-    imageSize?: TransformOptions,
+    _imageSize?: TransformOptions,
   ): string {
     // const { data } = this.supabase
     //   .storage

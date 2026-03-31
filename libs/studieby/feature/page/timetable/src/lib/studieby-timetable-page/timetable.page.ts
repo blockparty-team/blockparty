@@ -97,6 +97,11 @@ export class TimetablePage implements OnInit {
     this.eventFilterStateService.days$
       .pipe(
         tap((days) => {
+          const firstDay = days[0];
+          if (!firstDay) {
+            return;
+          }
+
           // Change day at 7am next day (for events running during nighttime)
           const now = sub(new Date(), { hours: 7 });
           const day = days.find((day) => isSameDay(now, new Date(day.day)));
@@ -104,7 +109,7 @@ export class TimetablePage implements OnInit {
           if (day) {
             this.eventFilterStateService.selectDay(day.id);
           } else {
-            this.eventFilterStateService.selectDay(days[0].id);
+            this.eventFilterStateService.selectDay(firstDay.id);
           }
         }),
         takeUntilDestroyed(this.destroyRef),
@@ -113,9 +118,14 @@ export class TimetablePage implements OnInit {
 
     this.eventFilterStateService.eventTypes$
       .pipe(
-        tap((eventTypes) =>
-          this.eventFilterStateService.selectEventType(eventTypes[0].id),
-        ),
+        tap((eventTypes) => {
+          const firstEventType = eventTypes[0];
+          if (!firstEventType) {
+            return;
+          }
+
+          this.eventFilterStateService.selectEventType(firstEventType.id);
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
@@ -123,7 +133,14 @@ export class TimetablePage implements OnInit {
     this.eventFilterStateService.events$
       .pipe(
         filter((events) => !!events),
-        tap((events) => this.eventFilterStateService.selectEvent(events[0].id)),
+        tap((events) => {
+          const firstEvent = events[0];
+          if (!firstEvent) {
+            return;
+          }
+
+          this.eventFilterStateService.selectEvent(firstEvent.id);
+        }),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
@@ -133,10 +150,14 @@ export class TimetablePage implements OnInit {
     [key: string]: EventTimetable[];
   } {
     return events.reduce((acc: { [key: string]: EventTimetable[] }, event) => {
-      if (!acc[event.event_type_id]) {
-        acc[event.event_type_id] = [];
+      const eventTypeId = event.event_type_id;
+      const grouped = acc[eventTypeId] ?? [];
+
+      if (!acc[eventTypeId]) {
+        acc[eventTypeId] = grouped;
       }
-      acc[event.event_type_id].push(event);
+
+      grouped.push(event);
       return acc;
     }, {});
   }

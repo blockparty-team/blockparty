@@ -49,9 +49,19 @@ export class MapStateService {
   >(null);
   selectedMapFeature$: Observable<MapClickedFeature<GeojsonProperties>> =
     this._selectedMapFeatures$.asObservable().pipe(
-      filter((features) => !!features),
+      filter(
+        (features): features is MapClickedFeature<GeojsonProperties>[] =>
+          Array.isArray(features) && features.length > 0,
+      ),
       // Only provide first clicked layer
-      map((features) => features![0]),
+      map((features) => {
+        const firstFeature = features[0];
+        if (!firstFeature) {
+          throw new Error('Expected at least one selected map feature');
+        }
+
+        return firstFeature;
+      }),
     );
 
   private _mapInteraction$ = new BehaviorSubject<boolean>(false);
@@ -114,7 +124,7 @@ export class MapStateService {
       switchMap((icons) =>
         forkJoin(icons.map((icon) => imgFromUrl(icon.fileUrl))).pipe(
           map((images) =>
-            icons.map((icon, i) => ({ ...icon, image: images[i] })),
+            icons.map((icon, i) => ({ ...icon, image: images[i] ?? null })),
           ),
         ),
       ),
@@ -150,7 +160,7 @@ export class MapStateService {
                 icons.map((icon, i) => ({
                   ...icon,
                   fileUrl: null,
-                  image: images[i],
+                  image: images[i] ?? null,
                 })),
               ),
             ),

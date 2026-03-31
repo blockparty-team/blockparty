@@ -453,12 +453,17 @@ export class MapService {
         geometry: feature.geometry as Point,
       }));
 
-      switch (features[0].mapLayer) {
+      const firstFeature = features[0];
+      if (!firstFeature) {
+        return;
+      }
+
+      switch (firstFeature.mapLayer) {
         case 'stage':
-          this.highlightFeature(MapLayer.StageHighlight, features[0].id);
+          this.highlightFeature(MapLayer.StageHighlight, firstFeature.id);
           break;
         case 'asset_geojson-icon':
-          this.highlightFeature(MapLayer.AssetHighlight, features[0].id);
+          this.highlightFeature(MapLayer.AssetHighlight, firstFeature.id);
           break;
         default:
           break;
@@ -581,7 +586,6 @@ export class MapService {
   ): StyleImageInterface {
     let context: CanvasRenderingContext2D;
 
-    const self = this;
     return {
       width: size,
       height: size,

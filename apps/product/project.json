@@ -7,17 +7,26 @@
   "tags": [],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@angular/build:application",
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/apps/product/",
         "index": "apps/product/src/index.html",
         "browser": "apps/product/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "apps/product/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["apps/product/src/favicon.ico", "apps/product/src/assets"],
-        "styles": ["apps/product/src/styles.scss"],
+        "assets": [
+          "apps/product/src/favicon.ico",
+          "apps/product/src/assets"
+        ],
+        "styles": [
+          "apps/product/src/styles.scss"
+        ],
         "scripts": []
       },
       "configurations": {
@@ -45,7 +54,7 @@
       "defaultConfiguration": "production"
     },
     "serve": {
-      "executor": "@angular-devkit/build-angular:dev-server",
+      "executor": "@angular/build:dev-server",
       "configurations": {
         "production": {
           "buildTarget": "product:build:production"
@@ -58,21 +67,27 @@
       "continuous": true
     },
     "extract-i18n": {
-      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "executor": "@angular/build:extract-i18n",
       "options": {
         "buildTarget": "product:build"
       }
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"]
+      "outputs": [
+        "{options.outputFile}"
+      ]
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@angular/build:unit-test",
       "options": {
-        "jestConfig": "apps/product/jest.config.ts",
-        "tsConfig": "apps/product/tsconfig.spec.json"
+        "tsConfig": "apps/product/tsconfig.spec.json",
+        "runnerConfig": true
+      },
+      "configurations": {
+        "ci": {
+          "watch": false
+        }
       }
     }
   }

@@ -15,7 +15,7 @@ export class GeolocationService {
     enableHighAccuracy: true,
   };
 
-  constructor() { }
+  constructor() {}
 
   checkPermissions(): Observable<PermissionStatus> {
     return from(Geolocation.checkPermissions());
@@ -29,7 +29,12 @@ export class GeolocationService {
     return from(Geolocation.getCurrentPosition(this.positionOptions));
   }
 
-  watchPosition(): any {
-    Geolocation.watchPosition(this.positionOptions, (position, err) => { });
+  watchPosition(): Promise<string> {
+    return Geolocation.watchPosition(
+      this.positionOptions,
+      (_position, _err) => {
+        // Consumers can subscribe to updates via Capacitor callback side effects.
+      },
+    );
   }
 }

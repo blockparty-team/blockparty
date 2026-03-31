@@ -60,7 +60,7 @@ export class LocalNotificationsService {
   }
 
   public async cancelAllNotifications(
-    minutesBefore: number = 60,
+    _minutesBefore: number = 60,
   ): Promise<void> {
     // const now = new Date();
     // const pending: PendingResult = await LocalNotifications.getPending();
