@@ -45,22 +45,38 @@ export class SearchService {
       map(([results, artists, events, mapLayers]) =>
         results.map((result) => {
           switch (result.entity) {
-            case 'artist':
+            case 'artist': {
+              const artist = artists.find((item) => item.id === result.id);
+              if (!artist) {
+                return result;
+              }
+
               return {
                 ...result,
-                artist: artists.find((artist) => artist.id === result.id),
+                artist,
               };
-            case 'event':
+            }
+            case 'event': {
+              const event = events.find((item) => item.id === result.id);
+              if (!event) {
+                return result;
+              }
+
               return {
                 ...result,
-                event: events.find((event) => event.id === result.id),
+                event,
               };
-            case 'stage':
-              const stage = mapLayers
-                .find((layer) => layer.mapSource === MapSource.Stage)!
-                .geojson.features.find(
-                  (feature) => feature.properties.id === result.id,
-                ) as Feature<Point, StageGeojsonProperties>;
+            }
+            case 'stage': {
+              const stageLayer = mapLayers.find(
+                (layer) => layer.mapSource === MapSource.Stage,
+              );
+              const stage = stageLayer?.geojson.features.find(
+                (feature) => feature.properties.id === result.id,
+              ) as Feature<Point, StageGeojsonProperties> | undefined;
+              if (!stage) {
+                return result;
+              }
 
               return {
                 ...result,
@@ -75,12 +91,17 @@ export class SearchService {
                   },
                 },
               };
-            case 'asset':
-              const asset = mapLayers
-                .find((layer) => layer.mapSource === MapSource.Asset)!
-                .geojson.features.find(
-                  (feature) => feature.properties.id === result.id,
-                ) as Feature<Point, AssetGeojsonProperties>;
+            }
+            case 'asset': {
+              const assetLayer = mapLayers.find(
+                (layer) => layer.mapSource === MapSource.Asset,
+              );
+              const asset = assetLayer?.geojson.features.find(
+                (feature) => feature.properties.id === result.id,
+              ) as Feature<Point, AssetGeojsonProperties> | undefined;
+              if (!asset) {
+                return result;
+              }
 
               return {
                 ...result,
@@ -95,6 +116,7 @@ export class SearchService {
                   },
                 },
               };
+            }
             default:
               return result;
           }

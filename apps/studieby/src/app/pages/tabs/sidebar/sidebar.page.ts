@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, inject, isDevMode } from '@angular/core';
+import { Component, inject, isDevMode } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { MenuController } from '@ionic/angular/standalone';
@@ -46,14 +46,14 @@ interface NavigationItem {
     IonFooter,
   ],
 })
-export class SidebarPage implements OnInit {
+export class SidebarPage {
   private authService = inject(AuthService);
   private router = inject(Router);
   private menu = inject(MenuController);
   public enableLogin =
     inject(AppConfigService).appConfig.featureToggle.enableLogin;
 
-  authenticated$: Observable<boolean>;
+  authenticated$: Observable<boolean> = this.authService.authenticated$;
 
   navigationItems: NavigationItem[] = [
     {
@@ -81,10 +81,6 @@ export class SidebarPage implements OnInit {
     .filter((navItem) =>
       !isDevMode() && navItem.routeName === RouteName.Settings ? false : true,
     ); // Show settings menu item when not in production
-
-  ngOnInit() {
-    this.authenticated$ = this.authService.authenticated$;
-  }
 
   onGoTo(route: RouteName): void {
     this.menu.close();

@@ -40,12 +40,12 @@
       @if (events.length > 1) {
         <ion-toolbar
           class="event-filter"
-          [style.--background]="events[0].event_type.color"
+          [style.--background]="events[0]?.event_type?.color ?? null"
         >
           <ion-segment
             scrollable
             [value]="selectedEventId()"
-            [style.background]="events[0].event_type.color"
+            [style.background]="events[0]?.event_type?.color ?? null"
           >
             @for (event of events; track $index) {
               <ion-segment-button

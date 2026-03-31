@@ -80,18 +80,25 @@ export class TimetableStateService {
         });
         if (timetableEvents.length === 0) return null;
 
+        const firstTimetableEvent = timetableEvents[0];
+        if (!firstTimetableEvent) return null;
+
         // Find first and last time for events
-        const timeSpan = timetableEvents.reduce((acc, val) => {
-          (acc[0] as Date) =
-            acc[0] === undefined || val.first_start_time < (acc[0] as Date)
-              ? val.first_start_time
-              : acc[0];
-          (acc[1] as Date) =
-            acc[1] === undefined || val.last_end_time > (acc[1] as Date)
-              ? val.last_end_time
-              : acc[1];
-          return acc;
-        }, []);
+        const timeSpan = timetableEvents.slice(1).reduce<[Date, Date]>(
+          (acc, val) => {
+            const [firstStartTime, lastEndTime] = acc;
+            return [
+              val.first_start_time < firstStartTime
+                ? val.first_start_time
+                : firstStartTime,
+              val.last_end_time > lastEndTime ? val.last_end_time : lastEndTime,
+            ];
+          },
+          [
+            firstTimetableEvent.first_start_time,
+            firstTimetableEvent.last_end_time,
+          ],
+        );
 
         return {
           ...timetableDay,

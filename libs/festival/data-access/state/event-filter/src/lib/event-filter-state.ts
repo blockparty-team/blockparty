@@ -61,6 +61,11 @@ export class EventFilterStateService {
     filter((days) => !!days),
     tap((days: DayEvent[]) => {
       const selectedDayId = this._selectedDayId$.getValue();
+      const firstDay = days[0];
+
+      if (!firstDay) {
+        return;
+      }
 
       // Preserve user selection when it is still available.
       if (selectedDayId && days.some((day) => day.id === selectedDayId)) {
@@ -68,7 +73,7 @@ export class EventFilterStateService {
       }
 
       if (days.length === 1) {
-        this.selectDay(days[0].id);
+        this.selectDay(firstDay.id);
         return;
       }
 
@@ -79,7 +84,7 @@ export class EventFilterStateService {
       if (day) {
         this.selectDay(day.id);
       } else {
-        this.selectDay(days[0].id);
+        this.selectDay(firstDay.id);
       }
     }),
     shareReplay(1),

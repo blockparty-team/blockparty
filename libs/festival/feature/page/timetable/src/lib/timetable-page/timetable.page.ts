@@ -56,6 +56,11 @@ export class TimetablePage implements OnInit {
     ])
       .pipe(
         tap(([days, selectedDayId]) => {
+          const firstDay = days[0];
+          if (!firstDay) {
+            return;
+          }
+
           if (selectedDayId && days.some((day) => day.id === selectedDayId)) {
             return;
           }
@@ -67,7 +72,7 @@ export class TimetablePage implements OnInit {
           if (day) {
             this.eventFilterStateService.selectDay(day.id);
           } else {
-            this.eventFilterStateService.selectDay(days[0].id);
+            this.eventFilterStateService.selectDay(firstDay.id);
           }
         }),
         takeUntilDestroyed(this.destroyRef),
@@ -80,6 +85,11 @@ export class TimetablePage implements OnInit {
     ])
       .pipe(
         tap(([eventTypes, selectedEventTypeId]) => {
+          const firstEventType = eventTypes[0];
+          if (!firstEventType) {
+            return;
+          }
+
           if (eventTypes.length === 0) {
             return;
           }
@@ -91,7 +101,7 @@ export class TimetablePage implements OnInit {
             return;
           }
 
-          this.eventFilterStateService.selectEventType(eventTypes[0].id);
+          this.eventFilterStateService.selectEventType(firstEventType.id);
         }),
         takeUntilDestroyed(this.destroyRef),
       )
@@ -104,6 +114,11 @@ export class TimetablePage implements OnInit {
       .pipe(
         filter(([events]) => !!events && events.length > 0),
         tap(([events, selectedEventId]) => {
+          const firstEvent = events[0];
+          if (!firstEvent) {
+            return;
+          }
+
           if (
             selectedEventId &&
             events.some((event) => event.id === selectedEventId)
@@ -111,7 +126,7 @@ export class TimetablePage implements OnInit {
             return;
           }
 
-          this.eventFilterStateService.selectEvent(events[0].id);
+          this.eventFilterStateService.selectEvent(firstEvent.id);
         }),
         takeUntilDestroyed(this.destroyRef),
       )

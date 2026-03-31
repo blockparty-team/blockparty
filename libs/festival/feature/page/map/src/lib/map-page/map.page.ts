@@ -81,6 +81,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           mask: masks.find((mask) => mask.id === dayId),
         })),
         tap(({ eventTypes, mask }) => {
+          const firstEventType = eventTypes[0];
+
           this.mapService.fitBounds(
             mask!.bounds as LngLatBoundsLike,
             80,
@@ -93,8 +95,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           this.mapStateService.updateMapInteraction(true);
 
           // Default select event type if only one
-          eventTypes.length === 1
-            ? this.eventFilterStateService.selectEventType(eventTypes[0].id)
+          eventTypes.length === 1 && firstEventType
+            ? this.eventFilterStateService.selectEventType(firstEventType.id)
             : this.eventFilterStateService.selectEventType('');
           this.eventFilterStateService.selectEvent('');
         }),
@@ -123,6 +125,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           mask: masks.find((mask) => mask.id === `${dayId}_${eventTypeId}`),
         })),
         tap(({ mask, events }) => {
+          const firstEvent = events[0];
+
           this.mapService.fitBounds(
             mask!.bounds as LngLatBoundsLike,
             80,
@@ -134,8 +138,8 @@ export class MapPage implements OnInit, AfterViewInit, OnDestroy {
           this.mapStateService.updateMapInteraction(true);
 
           // Select event if only one
-          events.length === 0
-            ? this.eventFilterStateService.selectEvent(events[0].id)
+          events.length === 1 && firstEvent
+            ? this.eventFilterStateService.selectEvent(firstEvent.id)
             : this.eventFilterStateService.selectEvent('');
         }),
         takeUntil(this.abandon$),

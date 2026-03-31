@@ -1,9 +1,9 @@
-import { Routes, RouterModule } from '@angular/router';
-
+import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./artist-detail.page').then(m => m.ArtistDetailPage),
+    loadComponent: () =>
+      import('./artist-detail.page').then((m) => m.ArtistDetailPage),
   },
 ];

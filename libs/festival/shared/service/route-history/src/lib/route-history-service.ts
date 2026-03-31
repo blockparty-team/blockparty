@@ -21,9 +21,11 @@ export class RouteHistoryService {
 
   private historyAfterFirstNavigation$: Observable<RouteHistory> =
     this.router.events.pipe(
-      filter((event: any) => event instanceof RoutesRecognized),
+      filter(
+        (event): event is RoutesRecognized => event instanceof RoutesRecognized,
+      ),
       pairwise(),
-      map((events: RoutesRecognized[]) => {
+      map((events) => {
         return {
           previous: events[0].urlAfterRedirects,
           current: events[1].urlAfterRedirects,
