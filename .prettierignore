@@ -3,5 +3,16 @@
 /coverage
 /.nx/cache
 .angular
+node_modules
+
+# Generated mobile platform artifacts
+apps/*/android
+apps/*/ios
+apps/*/resources
+
+# Temporary and build artifacts
+tmp
+**/build
+**/.gradle
 
 /.nx/workspace-data

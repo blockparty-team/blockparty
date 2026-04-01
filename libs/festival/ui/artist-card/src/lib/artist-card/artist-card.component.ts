@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  input
+  input,
 } from '@angular/core';
 import { ArtistViewModel } from '@blockparty/festival/data-access/supabase';
 import { ArtistStateService } from '@blockparty/festival/data-access/state/artist';

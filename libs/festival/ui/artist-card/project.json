@@ -8,9 +8,7 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": [
-        "{workspaceRoot}/dist/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "libs/festival/ui/artist-card/ng-package.json",
         "tsConfig": "libs/festival/ui/artist-card/tsconfig.lib.json"

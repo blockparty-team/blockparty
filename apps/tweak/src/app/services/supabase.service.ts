@@ -33,7 +33,7 @@ export class SupabaseService {
   constructor() {
     this.supabase = createClient<Database>(
       environment.supabaseUrl,
-      environment.supabaseAnonKey
+      environment.supabaseAnonKey,
     );
   }
 
@@ -59,13 +59,13 @@ export class SupabaseService {
 
   fetchDays(): Observable<Day[]> {
     return from(
-      this.supabase.from('day').select('*').order('day', { ascending: true })
+      this.supabase.from('day').select('*').order('day', { ascending: true }),
     ).pipe(
       map(({ data: days, error }) => {
         if (error) throw error;
 
         return days as Day[];
-      })
+      }),
     );
   }
 
@@ -87,20 +87,20 @@ export class SupabaseService {
                 day_event(
                     day(id, name)
                 )
-            `
+            `,
         )
-        .order('name', { ascending: true })
+        .order('name', { ascending: true }),
     ).pipe(
       map(({ data: events, error }) => {
         if (error) throw error;
 
         return events;
-      })
+      }),
     );
   }
 
   upsertEvent(
-    event: TablesInsert<'event'> | TablesUpdate<'event'>
+    event: TablesInsert<'event'> | TablesUpdate<'event'>,
   ): Observable<Tables<'event'>[]> {
     return this.upsert<'event'>('event', event);
   }
@@ -114,23 +114,23 @@ export class SupabaseService {
       this.supabase
         .from('day_event')
         .upsert({ day_id: dayId, event_id: eventId })
-        .select()
+        .select(),
     ).pipe(
       map(({ data: dayEvent, error }) => {
         if (error) throw error;
 
         return dayEvent;
-      })
+      }),
     );
   }
 
   deleteDayEvents(eventId: string): Observable<void> {
     return from(
-      this.supabase.from('day_event').delete().eq('event_id', eventId)
+      this.supabase.from('day_event').delete().eq('event_id', eventId),
     ).pipe(
       map(({ error }) => {
         if (error) throw error;
-      })
+      }),
     );
   }
 
@@ -139,31 +139,31 @@ export class SupabaseService {
       this.supabase
         .from('artist')
         .select('*')
-        .order('name', { ascending: true })
+        .order('name', { ascending: true }),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
 
         return data as Tables<'artist'>[];
-      })
+      }),
     );
   }
 
-  upsertArtist(artist: TablesInsert<'artist'> | TablesUpdate<'artist'>): Observable<Tables<'artist'>[]> {
+  upsertArtist(
+    artist: TablesInsert<'artist'> | TablesUpdate<'artist'>,
+  ): Observable<Tables<'artist'>[]> {
     return this.upsert<'artist'>('artist', artist);
   }
 
-  updateArtist(id: string, update: Partial<Tables<'artist'>>): Observable<void> {
-    return from(
-      this.supabase
-        .from('artist')
-        .update(update)
-        .eq('id', id)
-    ).pipe(
+  updateArtist(
+    id: string,
+    update: Partial<Tables<'artist'>>,
+  ): Observable<void> {
+    return from(this.supabase.from('artist').update(update).eq('id', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
-      })
-    )
+      }),
+    );
   }
 
   deleteArtist(id: string): Observable<void> {
@@ -174,25 +174,23 @@ export class SupabaseService {
     return from(
       this.supabase.storage
         .from(bucket)
-        .upload(fileName, image, { upsert: true })
+        .upload(fileName, image, { upsert: true }),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
 
         return data;
-      })
+      }),
     );
   }
 
   deleteFile(bucket: Bucket, fileName: string): Observable<any> {
-    return from(
-      this.supabase.storage.from(bucket).remove([fileName])
-    ).pipe(
+    return from(this.supabase.storage.from(bucket).remove([fileName])).pipe(
       map(({ data, error }) => {
         if (error) throw error;
 
-        return data
-      })
+        return data;
+      }),
     );
   }
 
@@ -204,40 +202,37 @@ export class SupabaseService {
   //   })
   // }
 
-  publicImageUrl(
-    bucket: string,
-    path: string,
-  ): string {
+  publicImageUrl(bucket: string, path: string): string {
     return `${environment.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
   }
 
   private upsert<T extends keyof Database['public']['Tables']>(
     tableName: T,
-    payload: TablesInsert<T> | TablesUpdate<T>
+    payload: TablesInsert<T> | TablesUpdate<T>,
   ): Observable<Tables<T>[]> {
     return from(
       this.supabase
         .from(tableName)
         .upsert(payload)
         .select()
-        .returns<Tables<T>[]>()
+        .returns<Tables<T>[]>(),
     ).pipe(
       map(({ data, error }) => {
         if (error) throw error;
 
         return data;
-      })
+      }),
     );
   }
 
   private delete<T extends keyof Database['public']['Tables']>(
     tableName: T,
-    id: string
+    id: string,
   ): Observable<void> {
     return from(this.supabase.from(tableName).delete().eq('id', id)).pipe(
       map(({ error }) => {
         if (error) throw error;
-      })
+      }),
     );
   }
 
@@ -252,10 +247,8 @@ export class SupabaseService {
 
   // UTILS
   public getBucketAndPath(storagePath: string): [string, string] {
-
     const [bucket, ...path] = storagePath.split('/');
 
     return [bucket, path.join('/')];
-  };
-
+  }
 }

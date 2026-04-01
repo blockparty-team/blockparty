@@ -80,7 +80,7 @@ export class MapService {
     const vectorSource = new VectorSource({
       features: new GeoJSON({ featureProjection: 'EPSG:4326' }).readFeatures(
         geojson,
-        { featureProjection: 'EPSG:3857' }
+        { featureProjection: 'EPSG:3857' },
       ),
     }) as VectorSource<Feature<Geometry>>;
 
@@ -173,7 +173,7 @@ export class MapService {
 
   toggleBaseMap() {
     this.currentBaseMap.update((basemap) =>
-      basemap === 'satelite' ? 'streets' : 'satelite'
+      basemap === 'satelite' ? 'streets' : 'satelite',
     );
   }
 

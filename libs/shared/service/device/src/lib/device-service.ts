@@ -8,6 +8,6 @@ import { Device } from '@capacitor/device';
 })
 export class DeviceService {
   public deviceId: Observable<string> = from(Device.getId()).pipe(
-    map((device) => device.identifier)
+    map((device) => device.identifier),
   );
 }

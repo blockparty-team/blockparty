@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 export class FilesystemService {
   public writeFile(
     base64Data: string,
-    path: string
+    path: string,
   ): Observable<WriteFileResult> {
     return from(
       Filesystem.writeFile({
@@ -17,12 +17,12 @@ export class FilesystemService {
         path,
         data: base64Data,
         recursive: true,
-      })
+      }),
     ).pipe(
       catchError((error) => {
         console.error(error);
         return EMPTY;
-      })
+      }),
     );
   }
 
@@ -31,12 +31,12 @@ export class FilesystemService {
       Filesystem.readFile({
         directory: Directory.Cache,
         path,
-      })
+      }),
     ).pipe(
       map((result) => result.data),
       catchError(() => {
         return of(null);
-      })
+      }),
     );
   }
 
@@ -45,12 +45,12 @@ export class FilesystemService {
       Filesystem.deleteFile({
         directory: Directory.Cache,
         path,
-      })
+      }),
     ).pipe(
       catchError((error) => {
         console.error(error);
         return EMPTY;
-      })
+      }),
     );
   }
 }

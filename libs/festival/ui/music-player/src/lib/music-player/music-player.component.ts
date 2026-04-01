@@ -5,7 +5,7 @@ import {
   WritableSignal,
   inject,
   input,
-  signal
+  signal,
 } from '@angular/core';
 import { animations } from '@blockparty/util/animation';
 import { SegmentCustomEvent } from '@ionic/angular/standalone';

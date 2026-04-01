@@ -7,7 +7,7 @@ import {
   forwardRef,
   signal,
   input,
-  output
+  output,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import {
@@ -75,7 +75,9 @@ const defaultCongig: ListSelectionConfig = {
 })
 export class SelectComponent implements ControlValueAccessor {
   public readonly items = input<WritableSignal<any[]>>(signal([]));
-  public readonly config = input<WritableSignal<ListSelectionConfig>>(signal(defaultCongig));
+  public readonly config = input<WritableSignal<ListSelectionConfig>>(
+    signal(defaultCongig),
+  );
   readonly selected = output<any[]>();
 
   private searchTerm: WritableSignal<string | null> = signal(null);

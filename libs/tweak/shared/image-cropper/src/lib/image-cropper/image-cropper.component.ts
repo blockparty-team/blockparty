@@ -3,7 +3,7 @@ import {
   Component,
   inject,
   input,
-  output
+  output,
 } from '@angular/core';
 
 import { ImageCropperModule, ImageCroppedEvent } from 'ngx-image-cropper';

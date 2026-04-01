@@ -12,16 +12,13 @@
           ></ion-input>
         </ion-item>
         @if ((email?.dirty || email?.touched) && email?.errors) {
-          <div
-            class="errors"
-            >
-            @if (email?.errors?.['required']) {
-              <span>Email is required</span>
-            }
-            @if (email?.errors?.['email']) {
-              <span>Email is invalid</span>
-            }
-          </div>
+        <div class="errors">
+          @if (email?.errors?.['required']) {
+          <span>Email is required</span>
+          } @if (email?.errors?.['email']) {
+          <span>Email is invalid</span>
+          }
+        </div>
         }
         <ion-item>
           <ion-input
@@ -31,26 +28,19 @@
           ></ion-input>
         </ion-item>
         @if ((password?.dirty || password?.touched) && password?.errors) {
-          <div
-            class="errors"
-            >
-            @if (password?.errors?.['required']) {
-              <span
-                >Password is required</span
-                >
-              }
-              @if (password?.errors?.['minlength']) {
-                <span
-                  >Password needs to be 6 characters</span
-                  >
-                }
-              </div>
-            }
-          </div>
-
-          <ion-button type="submit" expand="block" [disabled]="!credentials.valid"
-            >Login</ion-button
-            >
-          </form>
+        <div class="errors">
+          @if (password?.errors?.['required']) {
+          <span>Password is required</span>
+          } @if (password?.errors?.['minlength']) {
+          <span>Password needs to be 6 characters</span>
+          }
         </div>
-      </ion-content>
+        }
+      </div>
+
+      <ion-button type="submit" expand="block" [disabled]="!credentials.valid"
+        >Login</ion-button
+      >
+    </form>
+  </div>
+</ion-content>

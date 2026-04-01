@@ -1,14 +1,14 @@
 <div class="container">
   @if (config()().searchable) {
-  <div class="searchbar">
-    <ion-searchbar
-      animated="true"
-      placeholder="Search table"
-      type="text"
-      mode="ios"
-      (ionInput)="onInputChange($event.detail.value)"
-    ></ion-searchbar>
-  </div>
+    <div class="searchbar">
+      <ion-searchbar
+        animated="true"
+        placeholder="Search table"
+        type="text"
+        mode="ios"
+        (ionInput)="onInputChange($event.detail.value)"
+      ></ion-searchbar>
+    </div>
   }
 
   <div class="table-container">
@@ -19,23 +19,27 @@
       class="mat-elevation-z1 table"
     >
       @for (column of config()().columns; track $index) {
-      <ng-container [matColumnDef]="column.columnDef">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef>
-          {{ column.header }}
-        </th>
-        <td mat-cell *matCellDef="let row">
-          @switch (column.type) { @case ('boolean') {
-          <ion-checkbox [checked]="row[column.columnDef]" disabled="true">
-          </ion-checkbox>
-          } @case ('image') {
-          <ion-thumbnail>
-            <ion-img [src]="row[column.columnDef]"></ion-img>
-          </ion-thumbnail>
-          } @default {
-          {{ row[column.columnDef] }}
-          } }
-        </td>
-      </ng-container>
+        <ng-container [matColumnDef]="column.columnDef">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            {{ column.header }}
+          </th>
+          <td mat-cell *matCellDef="let row">
+            @switch (column.type) {
+              @case ('boolean') {
+                <ion-checkbox [checked]="row[column.columnDef]" disabled="true">
+                </ion-checkbox>
+              }
+              @case ('image') {
+                <ion-thumbnail>
+                  <ion-img [src]="row[column.columnDef]"></ion-img>
+                </ion-thumbnail>
+              }
+              @default {
+                {{ row[column.columnDef] }}
+              }
+            }
+          </td>
+        </ng-container>
       }
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>

@@ -1,9 +1,8 @@
 import { Route } from '@angular/router';
 
-
 export const routes: Route[] = [
   {
     path: '',
-    loadComponent: () => import('./profile.page').then(m => m.ProfilePage),
+    loadComponent: () => import('./profile.page').then((m) => m.ProfilePage),
   },
 ];

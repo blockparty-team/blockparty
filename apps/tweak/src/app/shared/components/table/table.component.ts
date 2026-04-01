@@ -8,7 +8,7 @@ import {
   signal,
   input,
   output,
-  viewChild
+  viewChild,
 } from '@angular/core';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';

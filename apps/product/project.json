@@ -8,25 +8,16 @@
   "targets": {
     "build": {
       "executor": "@angular/build:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/apps/product/",
         "index": "apps/product/src/index.html",
         "browser": "apps/product/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
+        "polyfills": ["zone.js"],
         "tsConfig": "apps/product/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/product/src/favicon.ico",
-          "apps/product/src/assets"
-        ],
-        "styles": [
-          "apps/product/src/styles.scss"
-        ],
+        "assets": ["apps/product/src/favicon.ico", "apps/product/src/assets"],
+        "styles": ["apps/product/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -74,9 +65,7 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ]
+      "outputs": ["{options.outputFile}"]
     },
     "test": {
       "executor": "@angular/build:unit-test",
