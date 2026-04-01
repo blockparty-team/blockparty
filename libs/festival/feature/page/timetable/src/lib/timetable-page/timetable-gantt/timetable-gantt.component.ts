@@ -105,6 +105,8 @@ export class TimetableGanttComponent {
   ACT_ROW_SPAN = 2;
   STAGE_ROW_SPAN = 1;
   COLUMN_SIZE = 3.5; // 1min = COLUMN_SIZE - Defined in CSS
+  TINY_SLOT_MAX_MINUTES = 20;
+  COMPACT_SLOT_MAX_MINUTES = 35;
 
   constructor() {
     effect(() => {
@@ -225,5 +227,20 @@ export class TimetableGanttComponent {
 
   onToggleArtistFavorite(id: string): void {
     this.favoriteStateService.toggleFavorite('artist', id);
+  }
+
+  isTinyAct(act: TimetableViewModel): boolean {
+    return this.actDurationMinutes(act) <= this.TINY_SLOT_MAX_MINUTES;
+  }
+
+  isCompactAct(act: TimetableViewModel): boolean {
+    return this.actDurationMinutes(act) <= this.COMPACT_SLOT_MAX_MINUTES;
+  }
+
+  private actDurationMinutes(act: TimetableViewModel): number {
+    return Math.max(
+      0,
+      differenceInMinutes(new Date(act.end_time), new Date(act.start_time)),
+    );
   }
 }

@@ -37,27 +37,35 @@
             [style.--act-row-start]="act.rowStart"
             [style.background-color]="eventTypeColor()"
             [class.favorite]="act.isFavorite"
+            [class.act-compact]="isCompactAct(act)"
+            [class.act-tiny]="isTinyAct(act)"
           >
             <div class="act-content">
               <div class="act-sticky">
                 <div
+                  class="act-text"
                   [routerLink]="['/tabs', routeName.Artist, act.artist_name]"
                 >
                   <h6>
                     {{ act.artist_name }}
                   </h6>
-                  <p>
-                    {{ act.start_time | date: 'HH:mm' }}-{{
-                      act.end_time | date: 'HH:mm'
-                    }}
-                  </p>
+                  @if (!isTinyAct(act)) {
+                    <p>
+                      {{ act.start_time | date: 'HH:mm' }}-{{
+                        act.end_time | date: 'HH:mm'
+                      }}
+                    </p>
+                  }
                 </div>
-                <ion-icon
-                  slot="icon-only"
-                  [name]="act.isFavorite ? 'heart' : 'heart-outline'"
-                  (click)="onToggleArtistFavorite(act.artist_id)"
-                >
-                </ion-icon>
+                @if (!isCompactAct(act)) {
+                  <ion-icon
+                    class="favorite-icon"
+                    slot="icon-only"
+                    [name]="act.isFavorite ? 'heart' : 'heart-outline'"
+                    (click)="onToggleArtistFavorite(act.artist_id)"
+                  >
+                  </ion-icon>
+                }
               </div>
             </div>
           </div>
