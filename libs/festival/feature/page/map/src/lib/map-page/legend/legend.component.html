@@ -8,7 +8,7 @@
     @for (icon of icons; track trackBy($index, icon)) {
       <ion-item>
         <ion-thumbnail slot="start">
-          <img [src]="icon.fileUrl | safe: 'url'" />
+          <img [src]="icon.fileUrl | safe: 'url'" [alt]="icon.name + ' icon'" />
         </ion-thumbnail>
         <ion-label>{{ icon.name }}</ion-label>
         <ion-toggle

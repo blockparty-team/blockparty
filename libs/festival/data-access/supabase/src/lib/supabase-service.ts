@@ -76,7 +76,7 @@ export class SupabaseService {
 
   signInWithProvider(
     provider: Provider,
-    redirectTo: string = '/',
+    redirectTo = '/',
   ): Observable<OAuthResponse['data']> {
     return from(
       this.supabase.auth.signInWithOAuth({

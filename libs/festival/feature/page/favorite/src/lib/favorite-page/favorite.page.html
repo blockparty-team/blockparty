@@ -19,14 +19,19 @@
     @for (artist of favoriteArtists; track artist.id; let i = $index) {
     <ion-item lines="none" [style.--animation-order]="i">
       <ion-avatar slot="start">
-        <img [src]="artist.imgUrl" />
+        <img [src]="artist.imgUrl" [alt]="artist.name + ' photo'" />
       </ion-avatar>
       <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
         {{artist.name}}
       </ion-label>
-      <div slot="end" (click)="toggleFavorite(artist.id!)">
+      <ion-button
+        slot="end"
+        fill="clear"
+        [attr.aria-label]="'Remove ' + artist.name + ' from favorites'"
+        (click)="toggleFavorite(artist.id!)"
+      >
         <ion-icon slot="icon-only" name="close"></ion-icon>
-      </div>
+      </ion-button>
     </ion-item>
     } @empty {
     <p class="ion-text-center">No favorites added</p>
@@ -42,7 +47,7 @@
     @for (artist of group.artists; track artist.id) {
     <ion-item lines="none">
       <ion-avatar slot="start">
-        <img [src]="artist.imgUrl" />
+        <img [src]="artist.imgUrl" [alt]="artist.name + ' photo'" />
       </ion-avatar>
       <ion-label [routerLink]="['/tabs', 'artist', artist.name]">
         <h3>
@@ -57,9 +62,14 @@
         <p>{{timetable.stage.event.name}} | {{timetable.stage.name}}</p>
         } }
       </ion-label>
-      <div slot="end" (click)="toggleFavorite(artist.id!)">
+      <ion-button
+        slot="end"
+        fill="clear"
+        [attr.aria-label]="'Remove ' + artist.name + ' from favorites'"
+        (click)="toggleFavorite(artist.id!)"
+      >
         <ion-icon slot="icon-only" name="close"></ion-icon>
-      </div>
+      </ion-button>
     </ion-item>
     }
   </ion-item-group>

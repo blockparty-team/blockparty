@@ -109,7 +109,7 @@ export class AppComponent implements OnInit {
       setTimeout(() => {
         this.copied.set(false);
       }, 2000);
-    } catch (error) {
+    } catch {
       this.copied.set(false);
     }
   }

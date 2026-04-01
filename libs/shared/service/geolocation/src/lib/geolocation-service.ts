@@ -15,8 +15,6 @@ export class GeolocationService {
     enableHighAccuracy: true,
   };
 
-  constructor() {}
-
   checkPermissions(): Observable<PermissionStatus> {
     return from(Geolocation.checkPermissions());
   }

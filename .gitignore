@@ -92,8 +92,10 @@ CHANGELOG.md
 .profile
 .rustup/
 
+# Agents
+.agents/
 .cursor/rules/nx-rules.mdc
 .github/instructions/nx.instructions.md
-
 .claude/worktrees
 .claude/settings.local.json
+skills-lock.json

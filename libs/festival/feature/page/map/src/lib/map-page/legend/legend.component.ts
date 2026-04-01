@@ -21,10 +21,6 @@ import {
 } from '@ionic/angular/standalone';
 import { toSignal } from '@angular/core/rxjs-interop';
 
-interface IconsViewModel extends MapIconViewModel {
-  visible: boolean;
-}
-
 @Component({
   selector: 'app-legend',
   templateUrl: './legend.component.html',

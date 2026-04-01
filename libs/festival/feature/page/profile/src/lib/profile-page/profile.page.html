@@ -12,7 +12,10 @@
   <div class="container">
     @if (userMetaData(); as userMeta) {
     <ion-avatar class="ion-margin">
-      <img [src]="userMeta['avatar_url']" />
+      <img
+        [src]="userMeta['avatar_url']"
+        [alt]="userMeta['name'] + ' avatar'"
+      />
     </ion-avatar>
     <h1 class="ion-text-center">{{userMeta['name']}}</h1>
     } @else {
