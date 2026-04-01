@@ -3,7 +3,10 @@
   overflow: scroll;
   display: grid;
   grid-template-columns: repeat(calc(var(--template-columns) * 60), 3.5px);
-  grid-template-rows: [time-labels] 40px repeat(var(--template-rows), 35px);
+  grid-template-rows: [time-labels] 40px repeat(
+      var(--template-rows),
+      35px
+    ) minmax(0, 1fr);
   grid-auto-rows: 27px;
   grid-gap: 5px 0;
 
