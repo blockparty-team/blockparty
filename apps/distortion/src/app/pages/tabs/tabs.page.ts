@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { Tab, RouteName } from '@blockparty/festival/shared/types';
 import { MenuController } from '@ionic/angular/standalone';
 import { TabsStateService } from '@blockparty/festival/data-access/state/tabs';
@@ -35,6 +36,7 @@ interface TabsChanged {
 export class TabsPage {
   private tabStateService = inject(TabsStateService);
   private menu = inject(MenuController);
+  private router = inject(Router);
 
   tabName = Tab;
   routeName = RouteName;
@@ -43,6 +45,12 @@ export class TabsPage {
 
   onTabChange(tab: TabsChanged): void {
     this.tabStateService.updateCurrentTab(tab.tab as Tab);
+  }
+
+  onArtistTabClick(): void {
+    this.router.navigate(['/', RouteName.Tabs, RouteName.Artist], {
+      replaceUrl: true,
+    });
   }
 
   openSidebar(): void {
