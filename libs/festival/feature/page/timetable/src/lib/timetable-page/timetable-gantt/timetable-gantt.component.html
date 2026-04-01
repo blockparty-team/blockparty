@@ -5,7 +5,7 @@
     [style.--template-rows]="config.gridTemplateRows"
   >
     <!-- TIME LABELS -->
-    @for (label of config.timeLabels; track label) {
+    @for (label of config.timeLabels; track label.columnStart) {
       <div
         class="time-label"
         [style.--time-label-column-start]="label.columnStart"
@@ -24,12 +24,18 @@
       ></div>
     }
     <!-- TIMETABLE -->
-    @for (event of config.events; track event) {
-      @for (stage of event.stages; track stage) {
+    @for (event of config.events; track event.eventId) {
+      @for (
+        stage of event.stages;
+        track stage.stageName + '-' + stage.rowStart
+      ) {
         <div class="stage" [style.--stage-row-start]="stage.rowStart">
           <span>{{ stage.stageName }}</span>
         </div>
-        @for (act of stage.timetable; track act) {
+        @for (
+          act of stage.timetable;
+          track act.artist_id + '-' + act.start_time
+        ) {
           <div
             class="act"
             [style.--act-column-start]="act.columnStart"
