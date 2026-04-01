@@ -3,10 +3,9 @@
   overflow: scroll;
   display: grid;
   grid-template-columns: repeat(calc(var(--template-columns) * 60), 3.5px);
-  grid-template-rows: [time-labels] 40px repeat(
-      var(--template-rows),
-      35px
-    ) minmax(0, 1fr);
+  grid-template-rows:
+    [time-labels] 40px repeat(var(--template-rows), 35px)
+    minmax(0, 1fr);
   grid-auto-rows: 27px;
   grid-gap: 5px 0;
 
@@ -84,9 +83,65 @@
           font-size: small;
         }
 
-        ion-icon {
+        .favorite-icon {
           font-size: x-large;
           margin: 0 10px;
+        }
+      }
+    }
+
+    &.act-compact {
+      overflow: hidden;
+
+      .act-sticky {
+        position: static;
+        margin: 0 8px;
+        width: 100%;
+        min-width: 0;
+        gap: 8px;
+
+        .act-text {
+          min-width: 0;
+          flex: 1 1 auto;
+
+          h6 {
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: normal;
+            line-height: 1.1;
+          }
+
+          p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+
+    &.act-tiny {
+      overflow: hidden;
+
+      .act-sticky {
+        justify-content: flex-start;
+        margin: 0 8px;
+
+        .act-text {
+          display: block;
+
+          h6 {
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+          }
+
+          p {
+            display: none;
+          }
         }
       }
     }

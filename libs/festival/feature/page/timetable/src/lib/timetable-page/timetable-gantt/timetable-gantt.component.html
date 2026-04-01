@@ -5,7 +5,7 @@
     [style.--template-rows]="config.gridTemplateRows"
   >
     <!-- TIME LABELS -->
-    @for (label of config.timeLabels; track label) {
+    @for (label of config.timeLabels; track label.columnStart) {
       <div
         class="time-label"
         [style.--time-label-column-start]="label.columnStart"
@@ -24,12 +24,18 @@
       ></div>
     }
     <!-- TIMETABLE -->
-    @for (event of config.events; track event) {
-      @for (stage of event.stages; track stage) {
+    @for (event of config.events; track event.eventId) {
+      @for (
+        stage of event.stages;
+        track stage.stageName + '-' + stage.rowStart
+      ) {
         <div class="stage" [style.--stage-row-start]="stage.rowStart">
           <span>{{ stage.stageName }}</span>
         </div>
-        @for (act of stage.timetable; track act) {
+        @for (
+          act of stage.timetable;
+          track act.artist_id + '-' + act.start_time
+        ) {
           <div
             class="act"
             [style.--act-column-start]="act.columnStart"
@@ -37,27 +43,35 @@
             [style.--act-row-start]="act.rowStart"
             [style.background-color]="eventTypeColor()"
             [class.favorite]="act.isFavorite"
+            [class.act-compact]="isCompactAct(act)"
+            [class.act-tiny]="isTinyAct(act)"
           >
             <div class="act-content">
               <div class="act-sticky">
                 <div
+                  class="act-text"
                   [routerLink]="['/tabs', routeName.Artist, act.artist_name]"
                 >
                   <h6>
                     {{ act.artist_name }}
                   </h6>
-                  <p>
-                    {{ act.start_time | date: 'HH:mm' }}-{{
-                      act.end_time | date: 'HH:mm'
-                    }}
-                  </p>
+                  @if (!isTinyAct(act)) {
+                    <p>
+                      {{ act.start_time | date: 'HH:mm' }}-{{
+                        act.end_time | date: 'HH:mm'
+                      }}
+                    </p>
+                  }
                 </div>
-                <ion-icon
-                  slot="icon-only"
-                  [name]="act.isFavorite ? 'heart' : 'heart-outline'"
-                  (click)="onToggleArtistFavorite(act.artist_id)"
-                >
-                </ion-icon>
+                @if (!isCompactAct(act)) {
+                  <ion-icon
+                    class="favorite-icon"
+                    slot="icon-only"
+                    [name]="act.isFavorite ? 'heart' : 'heart-outline'"
+                    (click)="onToggleArtistFavorite(act.artist_id)"
+                  >
+                  </ion-icon>
+                }
               </div>
             </div>
           </div>
