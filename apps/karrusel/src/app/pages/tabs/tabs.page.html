@@ -1,6 +1,6 @@
 <ion-tabs (ionTabsDidChange)="onTabChange($event)" id="tabs">
   <ion-tab-bar slot="bottom">
-    <ion-tab-button [tab]="routeName.Artist">
+    <ion-tab-button [tab]="routeName.Artist" (click)="onArtistTabClick()">
       <ion-icon
         [name]="currentTab() === tabName.Artist ? 'musical-notes' : 'musical-notes-outline'"
       ></ion-icon>

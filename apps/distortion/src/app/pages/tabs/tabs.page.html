@@ -7,7 +7,7 @@
       <ion-label>Map</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button [tab]="routeName.Artist">
+    <ion-tab-button [tab]="routeName.Artist" (click)="onArtistTabClick()">
       <ion-icon
         [name]="currentTab() === tabName.Artist ? 'musical-notes' : 'musical-notes-outline'"
       ></ion-icon>
