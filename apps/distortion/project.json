@@ -127,10 +127,7 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "options": {
-        "lintFilePatterns": [
-          "{projectRoot}/**/*.ts",
-          "{projectRoot}/**/*.html"
-        ]
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
       }
     },
     "capacitor": {
@@ -154,9 +151,7 @@
           "parallel": false
         },
         "sync": {
-          "commands": [
-            "npx cap sync"
-          ],
+          "commands": ["npx cap sync"],
           "parallel": false
         },
         "open-ios": {

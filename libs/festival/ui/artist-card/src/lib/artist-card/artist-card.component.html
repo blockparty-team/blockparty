@@ -3,7 +3,7 @@
     [src]="artist().imgUrl"
     alt="Image of {{ artist().name }}"
     [srcset]="artist().srcset"
-    />
+  />
 
   <div class="card-content">
     <div class="card-text" [routerLink]="['./', artist().name]">
@@ -12,9 +12,7 @@
           {{ artist().name }}
         </span>
         @if (artist().country) {
-          <span class="country">
-            ({{ artist().country }})
-          </span>
+          <span class="country"> ({{ artist().country }}) </span>
         }
       </h3>
       @for (act of artist().timetable; track act) {
@@ -34,7 +32,7 @@
         [color]="artist().isFavorite ? 'favorite' : ''"
         [name]="artist().isFavorite ? 'heart' : 'heart-outline'"
         (click)="toggleFavorite(artist().id!)"
-        >
+      >
       </ion-icon>
     </div>
   </div>

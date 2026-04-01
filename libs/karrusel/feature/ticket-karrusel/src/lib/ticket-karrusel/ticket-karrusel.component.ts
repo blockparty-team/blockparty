@@ -12,14 +12,7 @@ import { Browser } from '@capacitor/browser';
 
 @Component({
   selector: 'lib-ticket-karrusel',
-  imports: [
-    IonIcon,
-    IonList,
-    IonLabel,
-    IonAccordion,
-    IonItem,
-    TicketsPage
-],
+  imports: [IonIcon, IonList, IonLabel, IonAccordion, IonItem, TicketsPage],
   templateUrl: './ticket-karrusel.component.html',
   styleUrl: './ticket-karrusel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

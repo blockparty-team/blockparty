@@ -8,9 +8,7 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": [
-        "{workspaceRoot}/dist/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "libs/festival/feature/page/ticket/ng-package.json",
         "tsConfig": "libs/festival/feature/page/ticket/tsconfig.lib.json"

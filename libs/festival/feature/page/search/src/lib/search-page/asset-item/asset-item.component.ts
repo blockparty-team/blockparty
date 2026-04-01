@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  input
+  input,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Feature, Point, Position } from 'geojson';

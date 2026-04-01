@@ -1,11 +1,10 @@
-
 import {
   ChangeDetectionStrategy,
   Component,
   WritableSignal,
   forwardRef,
   inject,
-  input
+  input,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import {
@@ -31,7 +30,7 @@ import {
   IonModal,
   IonHeader,
   IonToolbar,
-  IonButtons
+  IonButtons,
 } from '@ionic/angular/standalone';
 import { map } from 'rxjs';
 
@@ -76,7 +75,7 @@ export type KeyValueConfig = {
     IonChip,
     IonReorderGroup,
     IonReorder,
-    ],
+  ],
 })
 export class KeyValueComponent implements ControlValueAccessor {
   public readonly config = input.required<WritableSignal<KeyValueConfig>>();
@@ -171,7 +170,8 @@ export class KeyValueComponent implements ControlValueAccessor {
   isFilled(item: Properties | null) {
     return (
       !!item &&
-      (!!item[this.config()().property1Key] || !!item[this.config()().property2Key])
+      (!!item[this.config()().property1Key] ||
+        !!item[this.config()().property2Key])
     );
   }
 }

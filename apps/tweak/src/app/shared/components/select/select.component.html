@@ -21,17 +21,21 @@
   </div>
   <div>
     @for (item of selectedItems(); track $index) {
-    <ion-chip color="primary">
-      <ion-label>
-        {{ displayName(item) }}
-      </ion-label>
-      <ion-icon name="close" (click)="onDeleteItem(item.id)"></ion-icon>
-    </ion-chip>
+      <ion-chip color="primary">
+        <ion-label>
+          {{ displayName(item) }}
+        </ion-label>
+        <ion-icon name="close" (click)="onDeleteItem(item.id)"></ion-icon>
+      </ion-chip>
     }
   </div>
 </div>
 
-<ion-modal trigger="select-{{ config()().entity }}" class="centered-modal" #modal>
+<ion-modal
+  trigger="select-{{ config()().entity }}"
+  class="centered-modal"
+  #modal
+>
   <ng-template>
     <ion-header>
       <ion-toolbar>
@@ -42,43 +46,44 @@
         </ion-buttons>
       </ion-toolbar>
       @if (config()().searchable) {
-      <ion-toolbar>
-        <ion-searchbar
-          animated="true"
-          type="text"
-          mode="ios"
-          (ionInput)="onInputChange($event.detail.value)"
-        ></ion-searchbar>
-      </ion-toolbar>
+        <ion-toolbar>
+          <ion-searchbar
+            animated="true"
+            type="text"
+            mode="ios"
+            (ionInput)="onInputChange($event.detail.value)"
+          ></ion-searchbar>
+        </ion-toolbar>
       }
     </ion-header>
     <!-- <ion-content> -->
     <ion-list>
-      @if (config()().multiSelect) { @for (item of filteredItems(); track $index)
-      {
-      <ion-item [button]="true" (click)="onSelectItem(item)">
-        <ion-label [aria-label]="displayName(item)">
-          {{ displayName(item) }}
-        </ion-label>
-        <ion-checkbox
-          [aria-label]="displayName(item)"
-          slot="start"
-          [checked]="isSelected(item)"
-        ></ion-checkbox>
-      </ion-item>
-      } } @else {
-      <ion-radio-group
-        [value]="selectedItems()[0]?.id"
-        [compareWith]="compareWith"
-      >
-        @for (item of filteredItems(); track item.id) {
-        <ion-item>
-          <ion-radio [value]="item?.id" (click)="onSelectItem(item)">
-            {{ displayName(item) }}
-          </ion-radio>
-        </ion-item>
+      @if (config()().multiSelect) {
+        @for (item of filteredItems(); track $index) {
+          <ion-item [button]="true" (click)="onSelectItem(item)">
+            <ion-label [aria-label]="displayName(item)">
+              {{ displayName(item) }}
+            </ion-label>
+            <ion-checkbox
+              [aria-label]="displayName(item)"
+              slot="start"
+              [checked]="isSelected(item)"
+            ></ion-checkbox>
+          </ion-item>
         }
-      </ion-radio-group>
+      } @else {
+        <ion-radio-group
+          [value]="selectedItems()[0]?.id"
+          [compareWith]="compareWith"
+        >
+          @for (item of filteredItems(); track item.id) {
+            <ion-item>
+              <ion-radio [value]="item?.id" (click)="onSelectItem(item)">
+                {{ displayName(item) }}
+              </ion-radio>
+            </ion-item>
+          }
+        </ion-radio-group>
       }
     </ion-list>
     <!-- </ion-content> -->

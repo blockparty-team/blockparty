@@ -8,12 +8,12 @@ export const blobToBase64 = (blob: Blob): Observable<string | ArrayBuffer> => {
   return fromEvent(reader, 'load').pipe(
     map(() => reader.result as string | ArrayBuffer),
     takeUntil(fromEvent(reader, 'error')),
-    takeUntil(fromEvent(reader, 'abort'))
+    takeUntil(fromEvent(reader, 'abort')),
   );
 };
 
 export const imgFromUrl = (
-  url: string
+  url: string,
 ): Observable<HTMLImageElement | null> => {
   return new Observable((observer) => {
     const img = new Image();
@@ -29,7 +29,7 @@ export const imgFromUrl = (
     catchError<any, any>((error) => {
       console.error('map loadImage failed:', error);
       return of(null);
-    })
+    }),
   );
 };
 

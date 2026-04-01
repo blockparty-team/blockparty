@@ -3,14 +3,14 @@
 
 /** Ionic CSS Variables **/
 :root {
-  --ion-color-primary: #E82B0B;
+  --ion-color-primary: #e82b0b;
   --ion-color-primary-rgb: 232, 43, 11;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 0, 0, 0;
   --ion-color-primary-shade: #cc260a;
   --ion-color-primary-tint: #ea4023;
 
-  --ion-color-secondary: #FDE2CD;
+  --ion-color-secondary: #fde2cd;
   --ion-color-secondary-rgb: 253, 226, 205;
   --ion-color-secondary-contrast: #000000;
   --ion-color-secondary-contrast-rgb: 0, 0, 0;
@@ -59,7 +59,7 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
-  --ion-color-favorite: #E82B0B;
+  --ion-color-favorite: #e82b0b;
   --ion-color-favorite-rgb: 232, 43, 11;
   --ion-color-favorite-contrast: #000000;
   --ion-color-favorite-contrast-rgb: 0, 0, 0;
@@ -67,13 +67,13 @@
   --ion-color-favorite-tint: #ea4023;
 
   // Background
-  --ion-background-color: #0013C7;
+  --ion-background-color: #0013c7;
   --ion-background-color-rgb: 68, 63, 63;
 
-  --ion-background-color: #0013C7;
+  --ion-background-color: #0013c7;
   --ion-background-color-rgb: 68, 63, 63;
 
-  --ion-font-family: "Roboto", sans-serif;
+  --ion-font-family: 'Roboto', sans-serif;
   --ion-text-color: #ffffff;
   --ion-text-color-rgb: 255, 255, 255;
 
@@ -97,13 +97,13 @@
   --ion-color-step-900: #ececec;
   --ion-color-step-950: #f6f5f5;
 
-  --ion-item-background: #0013C7;
+  --ion-item-background: #0013c7;
 
-  --ion-toolbar-background: #0013C7;
+  --ion-toolbar-background: #0013c7;
   --ion-toolbar-background-shade: #0011af;
   --ion-toolbar-background-tint: #1a2bcd;
 
-  --ion-tab-bar-background: #0013C7;
+  --ion-tab-bar-background: #0013c7;
 }
 
 .ion-color-favorite {
