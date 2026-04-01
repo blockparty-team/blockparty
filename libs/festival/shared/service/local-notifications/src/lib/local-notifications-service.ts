@@ -12,11 +12,8 @@ import { sub } from 'date-fns';
   providedIn: 'root',
 })
 export class LocalNotificationsService {
-  constructor() {}
-
   public async getNextId(): Promise<number> {
-    let currentId: number;
-    currentId = await LocalNotifications.getPending().then((pending) => {
+    const currentId = await LocalNotifications.getPending().then((pending) => {
       return pending.notifications.length > 0
         ? Math.max(
             ...pending.notifications.map((notification) => notification.id),
@@ -33,7 +30,7 @@ export class LocalNotificationsService {
     scheduleAt: Date,
   ): Promise<void> {
     this.getNextId().then((id) => {
-      let notification: LocalNotificationSchema = {
+      const notification: LocalNotificationSchema = {
         title: title,
         body: body,
         extra: { id: artistId },
@@ -59,9 +56,7 @@ export class LocalNotificationsService {
     await LocalNotifications.cancel({ notifications: [{ id }] });
   }
 
-  public async cancelAllNotifications(
-    _minutesBefore: number = 60,
-  ): Promise<void> {
+  public async cancelAllNotifications(_minutesBefore = 60): Promise<void> {
     // const now = new Date();
     // const pending: PendingResult = await LocalNotifications.getPending();
     // const cancelIds: LocalNotificationDescriptor[] = pending.notifications
@@ -71,7 +66,7 @@ export class LocalNotificationsService {
     // console.log("Cancelling: ", cancelIds)
 
     // if (cancelIds.length > 0) LocalNotifications.cancel({ notifications: cancelIds });
-    let pending = await LocalNotifications.getPending();
+    const pending = await LocalNotifications.getPending();
     await LocalNotifications.cancel({
       notifications: pending.notifications,
     });
@@ -81,10 +76,10 @@ export class LocalNotificationsService {
     artistId: string,
   ): Promise<number | null> {
     return LocalNotifications.getPending().then((pending) => {
-      let notification = pending.notifications.find(
+      const notification = pending.notifications.find(
         (notification) => notification.extra.id === artistId,
       );
-      if (!!notification) {
+      if (notification) {
         return notification.id;
       }
 
@@ -95,7 +90,7 @@ export class LocalNotificationsService {
   public artistNotificationPayload(
     id: number,
     artistAct: ArtistNotification,
-    minutesBefore: number = 60,
+    minutesBefore = 60,
   ): LocalNotificationSchema {
     const startTime = new Date(artistAct.startTime);
     return {

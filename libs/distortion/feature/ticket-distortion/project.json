@@ -8,9 +8,7 @@
   "targets": {
     "build": {
       "executor": "@nx/angular:ng-packagr-lite",
-      "outputs": [
-        "{workspaceRoot}/dist/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "libs/distortion/feature/ticket-distortion/ng-package.json",
         "tsConfig": "libs/distortion/feature/ticket-distortion/tsconfig.lib.json"
@@ -24,7 +22,10 @@
       "defaultConfiguration": "production"
     },
     "lint": {
-      "executor": "@nx/eslint:lint"
+      "executor": "@nx/eslint:lint",
+      "options": {
+        "lintFilePatterns": ["{projectRoot}/**/*.ts", "{projectRoot}/**/*.html"]
+      }
     }
   }
 }

@@ -1,6 +1,9 @@
 <ion-item (click)="onShowOnMap()">
   <ion-thumbnail slot="start">
-    <img [src]="stage().properties.imgUrl" />
+    <img
+      [src]="stage().properties.imgUrl"
+      [alt]="stage().properties.name + ' image'"
+    />
   </ion-thumbnail>
 
   <ion-label>

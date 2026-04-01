@@ -483,7 +483,7 @@ export class MapService {
   public flyTo(
     center: [number, number],
     offset: PointLike = [0, 0],
-    zoom: number = 18,
+    zoom = 18,
   ): void {
     this.mapStateService.mapLoaded$
       .pipe(
@@ -502,7 +502,7 @@ export class MapService {
 
   public fitBounds(
     bounds: LngLatBoundsLike,
-    padding: number = 10,
+    padding = 10,
     offset: PointLike = [0, 0],
   ): void {
     this.mapStateService.mapLoaded$
@@ -582,7 +582,7 @@ export class MapService {
   private pulsingDot(
     map: Map,
     size: number,
-    drawInnerCircle: boolean = false,
+    drawInnerCircle = false,
   ): StyleImageInterface {
     let context: CanvasRenderingContext2D;
 

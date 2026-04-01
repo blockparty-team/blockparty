@@ -48,9 +48,7 @@ export class FavoriteStateService {
 
   toggleFavorite(entity: FavoriteEntity, id: string) {
     let update: Partial<Favorite>[];
-    let isFavorite: boolean;
-
-    isFavorite = this._favorites$.value
+    const isFavorite = this._favorites$.value
       .find((favorite) => favorite.entity === entity)!
       .ids?.includes(id)!;
 

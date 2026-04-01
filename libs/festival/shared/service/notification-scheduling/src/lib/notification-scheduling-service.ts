@@ -98,7 +98,7 @@ export class NotificationSchedulingService implements OnDestroy {
             ),
           ).pipe(
             switchMap((_) => {
-              let favoriteArtists = artists.filter((artist) =>
+              const favoriteArtists = artists.filter((artist) =>
                 favoriteIds.includes(artist.artistId),
               );
               const now = new Date();
