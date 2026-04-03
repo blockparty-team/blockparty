@@ -75,23 +75,21 @@
 
   <ion-footer>
     @if (location(); as location) {
-      <ion-button fill="outline" (click)="onOpenGoogleMapsDirections(location)">
+      <ion-button fill="clear" (click)="onOpenGoogleMapsDirections(location)">
         <ion-icon slot="start" name="compass-outline"></ion-icon>
         Directions
       </ion-button>
     }
     @if (hasTimetable() && stageDescription()) {
-      <ion-button id="open-description-modal" fill="outline">
+      <ion-button id="open-description-modal" fill="clear">
         <ion-icon name="information-outline"></ion-icon>
       </ion-button>
     }
     @if (url(); as url) {
-      <ion-button fill="outline" (click)="onGoToUrl(url)">
-        More info
-      </ion-button>
+      <ion-button fill="clear" (click)="onGoToUrl(url)"> More info </ion-button>
     }
     @if (tickets().length > 0) {
-      <ion-button fill="outline" id="open-tickets-modal">
+      <ion-button fill="clear" id="open-tickets-modal">
         <ion-icon slot="start" name="ticket-outline"></ion-icon>
         Tickets
       </ion-button>
