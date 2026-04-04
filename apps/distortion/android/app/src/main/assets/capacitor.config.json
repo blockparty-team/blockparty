@@ -4,7 +4,10 @@
 	"webDir": "../../dist/apps/distortion/browser",
 	"plugins": {
 		"SystemBars": {
-			"insetsHandling": "css"
+			"insetsHandling": "css",
+			"style": "DARK",
+			"hidden": false,
+			"animation": "NONE"
 		},
 		"LocalNotifications": {
 			"smallIcon": "ic_launcher",

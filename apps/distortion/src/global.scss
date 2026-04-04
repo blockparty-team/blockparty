@@ -31,11 +31,28 @@
 // Font
 @import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400&display=swap');
 
-:root {
+html {
+  --app-safe-area-top: var(
+    --safe-area-inset-top,
+    env(safe-area-inset-top, 0px)
+  );
   --app-safe-area-bottom: var(
     --safe-area-inset-bottom,
     env(safe-area-inset-bottom, 0px)
   );
+  --app-safe-area-left: var(
+    --safe-area-inset-left,
+    env(safe-area-inset-left, 0px)
+  );
+  --app-safe-area-right: var(
+    --safe-area-inset-right,
+    env(safe-area-inset-right, 0px)
+  );
+
+  --ion-safe-area-top: var(--app-safe-area-top);
+  --ion-safe-area-bottom: var(--app-safe-area-bottom);
+  --ion-safe-area-left: var(--app-safe-area-left);
+  --ion-safe-area-right: var(--app-safe-area-right);
 }
 
 h1,
@@ -64,14 +81,5 @@ ion-modal.feature-info-modal {
 }
 
 ion-modal.feature-info-modal::part(content) {
-  padding-bottom: var(--app-safe-area-bottom);
-}
-
-ion-tab-bar[slot='bottom'] {
-  padding-bottom: var(--app-safe-area-bottom);
-  height: calc(56px + var(--app-safe-area-bottom));
-}
-
-ion-footer {
   padding-bottom: var(--app-safe-area-bottom);
 }

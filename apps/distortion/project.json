@@ -159,6 +159,9 @@
         },
         "open-android": {
           "command": "npx cap open android"
+        },
+        "run-android-live": {
+          "command": "npx nx run distortion:serve --host=0.0.0.0 --port=8100 & npx cap run android --live-reload --host=127.0.0.1 --port=8100 --forwardPorts 8100:8100"
         }
       },
       "defaultConfiguration": "sync",
