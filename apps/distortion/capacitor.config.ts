@@ -5,6 +5,9 @@ const config: CapacitorConfig = {
   appName: 'Distortion',
   webDir: '../../dist/apps/distortion/browser',
   plugins: {
+    SystemBars: {
+      insetsHandling: 'css',
+    },
     LocalNotifications: {
       smallIcon: 'ic_launcher',
       iconColor: '#488AFF',

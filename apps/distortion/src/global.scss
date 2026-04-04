@@ -31,6 +31,13 @@
 // Font
 @import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400&display=swap');
 
+:root {
+  --app-safe-area-bottom: var(
+    --safe-area-inset-bottom,
+    env(safe-area-inset-bottom, 0px)
+  );
+}
+
 h1,
 h2,
 h3 {
@@ -54,4 +61,17 @@ h3 {
 ion-modal.feature-info-modal {
   --border-radius: 10px 10px 0 0;
   --height: 50%;
+}
+
+ion-modal.feature-info-modal::part(content) {
+  padding-bottom: var(--app-safe-area-bottom);
+}
+
+ion-tab-bar[slot='bottom'] {
+  padding-bottom: var(--app-safe-area-bottom);
+  height: calc(56px + var(--app-safe-area-bottom));
+}
+
+ion-footer {
+  padding-bottom: var(--app-safe-area-bottom);
 }
