@@ -5,6 +5,12 @@ const config: CapacitorConfig = {
   appName: 'Karrusel',
   webDir: '../../dist/apps/karrusel/browser',
   plugins: {
+    SystemBars: {
+      insetsHandling: 'css',
+      style: 'DARK',
+      hidden: false,
+      animation: 'NONE',
+    },
     LocalNotifications: {
       smallIcon: 'ic_launcher',
       iconColor: '#488AFF',
@@ -12,9 +18,6 @@ const config: CapacitorConfig = {
   },
   ios: {
     handleApplicationNotifications: false,
-  },
-  android: {
-    adjustMarginsForEdgeToEdge: 'force',
   },
 };
 

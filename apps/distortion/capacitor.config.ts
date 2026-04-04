@@ -7,6 +7,9 @@ const config: CapacitorConfig = {
   plugins: {
     SystemBars: {
       insetsHandling: 'css',
+      style: 'DARK',
+      hidden: false,
+      animation: 'NONE',
     },
     LocalNotifications: {
       smallIcon: 'ic_launcher',
