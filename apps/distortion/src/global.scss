@@ -31,7 +31,7 @@
 // Font
 @import url('https://fonts.googleapis.com/css2?family=Anuphan:wght@400&display=swap');
 
-html {
+html.plt-android.plt-capacitor {
   --app-safe-area-top: var(
     --safe-area-inset-top,
     env(safe-area-inset-top, 0px)
@@ -53,6 +53,10 @@ html {
   --ion-safe-area-bottom: var(--app-safe-area-bottom);
   --ion-safe-area-left: var(--app-safe-area-left);
   --ion-safe-area-right: var(--app-safe-area-right);
+
+  ion-modal.feature-info-modal::part(content) {
+    padding-bottom: var(--app-safe-area-bottom);
+  }
 }
 
 h1,
@@ -78,8 +82,4 @@ h3 {
 ion-modal.feature-info-modal {
   --border-radius: 10px 10px 0 0;
   --height: 50%;
-}
-
-ion-modal.feature-info-modal::part(content) {
-  padding-bottom: var(--app-safe-area-bottom);
 }
