@@ -3,7 +3,8 @@ export const getBucketAndPath = (storagePath: string | null) => {
     return [null, null];
   }
 
-  const [bucket, ...path] = storagePath.split('/');
+  const normalizedStoragePath = storagePath.replace(/^\/+/, '');
+  const [bucket, ...path] = normalizedStoragePath.split('/');
 
   return [bucket, path.join('/')];
 };

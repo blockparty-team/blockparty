@@ -348,7 +348,21 @@ export class SupabaseService {
 
     // return data.publicUrl;
 
-    return `${environment.supabaseUrl}/storage/v1/object/public/${bucket}/${path}`;
+    const normalizedBucket = bucket.trim().replace(/^\/+|\/+$/g, '');
+    const normalizedPath = path
+      .trim()
+      .replace(/^\/+/, '')
+      .split('/')
+      .map((segment) => {
+        try {
+          return encodeURIComponent(decodeURIComponent(segment));
+        } catch {
+          return encodeURIComponent(segment);
+        }
+      })
+      .join('/');
+
+    return `${environment.supabaseUrl}/storage/v1/object/public/${normalizedBucket}/${normalizedPath}`;
   }
 
   get mapIcons$(): Observable<Tables<'map_icon'>[]> {

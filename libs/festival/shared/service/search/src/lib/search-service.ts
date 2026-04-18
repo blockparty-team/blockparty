@@ -5,6 +5,7 @@ import {
   MapSource,
   StageGeojsonProperties,
   AssetGeojsonProperties,
+  getBucketAndPath,
 } from '@blockparty/festival/data-access/supabase';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, withLatestFrom } from 'rxjs/operators';
@@ -25,6 +26,36 @@ export class SearchService {
   private eventStateService = inject(EventStateService);
   private mapStateService = inject(MapStateService);
 
+  private iconImageUrl(
+    icon: string | null | undefined,
+    iconStoragePathByName: Map<string, string>,
+  ): string {
+    const normalizedIcon = icon?.trim();
+
+    if (!normalizedIcon) {
+      return '';
+    }
+
+    if (/^https?:\/\//i.test(normalizedIcon)) {
+      return normalizedIcon;
+    }
+
+    const storagePath = iconStoragePathByName.get(normalizedIcon);
+    if (storagePath) {
+      const [bucket, path] = getBucketAndPath(storagePath);
+
+      if (bucket && path) {
+        return this.supabase.publicImageUrl(bucket, path);
+      }
+    }
+
+    const iconPath = /\.(png|svg|jpe?g|webp|avif)$/i.test(normalizedIcon)
+      ? normalizedIcon
+      : `${normalizedIcon}.png`;
+
+    return this.supabase.publicImageUrl('icon', iconPath);
+  }
+
   get nearBy$(): Observable<EntityDistanceSearchResult[]> {
     return this.geolocationService.getCurrentPosition().pipe(
       map((position) => position.coords),
@@ -40,10 +71,18 @@ export class SearchService {
         this.artistSateService.artists$,
         this.eventStateService.events$,
         this.mapStateService.mapLayers$,
+        this.supabase.mapIcons$,
       ),
       filter(([results]) => !!results),
-      map(([results, artists, events, mapLayers]) =>
-        results.map((result) => {
+      map(([results, artists, events, mapLayers, mapIcons]) => {
+        const icons = mapIcons ?? [];
+        const iconStoragePathByName = new Map(
+          icons
+            .filter((icon) => !!icon.name && !!icon.storage_path)
+            .map((icon) => [icon.name!, icon.storage_path!]),
+        );
+
+        return results.map((result) => {
           switch (result.entity) {
             case 'artist': {
               const artist = artists.find((item) => item.id === result.id);
@@ -84,9 +123,9 @@ export class SearchService {
                   ...stage,
                   properties: {
                     ...stage.properties,
-                    imgUrl: this.supabase.publicImageUrl(
-                      'icon',
-                      `${stage.properties.icon}.png`,
+                    imgUrl: this.iconImageUrl(
+                      stage.properties.icon,
+                      iconStoragePathByName,
                     ),
                   },
                 },
@@ -109,9 +148,9 @@ export class SearchService {
                   ...asset,
                   properties: {
                     ...asset.properties,
-                    imgUrl: this.supabase.publicImageUrl(
-                      'icon',
-                      `${asset.properties.icon}.png`,
+                    imgUrl: this.iconImageUrl(
+                      asset.properties.icon,
+                      iconStoragePathByName,
                     ),
                   },
                 },
@@ -120,8 +159,8 @@ export class SearchService {
             default:
               return result;
           }
-        }),
-      ),
+        });
+      }),
     );
   }
 }

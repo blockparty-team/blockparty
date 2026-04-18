@@ -1,8 +1,9 @@
 <ion-item>
   <ion-thumbnail slot="start">
     <img
-      [src]="asset().properties.imgUrl"
+      [src]="imageSrc()"
       [alt]="asset().properties.name + ' image'"
+      (error)="onImageError($event)"
     />
   </ion-thumbnail>
 

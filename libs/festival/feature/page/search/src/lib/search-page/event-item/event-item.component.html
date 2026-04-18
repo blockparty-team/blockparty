@@ -1,5 +1,7 @@
 <ion-item>
-  <ion-badge slot="start" [color]="badgeColor.event">Event </ion-badge>
+  <div slot="start" class="start-slot">
+    <ion-badge [color]="badgeColor.event">Event </ion-badge>
+  </div>
 
   <ion-label [routerLink]="['/', routeName.Event, event().id]">
     <h2>{{ event().name }}</h2>

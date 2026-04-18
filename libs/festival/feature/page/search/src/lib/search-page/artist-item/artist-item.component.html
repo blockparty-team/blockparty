@@ -1,6 +1,14 @@
 <ion-item [routerLink]="['/tabs', routeName.Artist, artist().name]">
   <ion-avatar slot="start">
-    <img [src]="artist().imgUrl" [alt]="artist().name + ' photo'" />
+    @if (showPlaceholder()) {
+      <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+    } @else {
+      <img
+        [src]="imageSrc()"
+        [alt]="artist().name + ' photo'"
+        (error)="onImageError()"
+      />
+    }
   </ion-avatar>
 
   <ion-label>
