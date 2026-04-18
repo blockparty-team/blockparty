@@ -1,0 +1,19 @@
+ion-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ion-color-step-100, #5f5b66);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  ion-icon {
+    width: 24px;
+    height: 24px;
+    font-size: 24px;
+    color: #f4f1ff;
+  }
+}
