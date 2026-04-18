@@ -1,7 +1,10 @@
 ion-tab-bar {
+  --color-selected: var(--ion-color-primary);
+  --color: var(--ion-color-medium);
+
   ion-tab-button {
-    --color-selected: var(--ion-color-secondary);
-    --color: var(--ion-text-color);
+    --color-selected: var(--ion-color-primary);
+    --color: var(--ion-color-medium);
   }
 }
 
