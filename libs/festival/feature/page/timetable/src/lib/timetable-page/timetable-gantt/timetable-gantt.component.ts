@@ -37,6 +37,12 @@ export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);
   private favoriteStateService = inject(FavoriteStateService);
 
+  private readonly EVENT_ROW_GAP = 3;
+  private readonly ACT_ROW_SPAN = 2;
+  private readonly STAGE_ROW_SPAN = 1;
+  private readonly TINY_SLOT_MAX_MINUTES = 20;
+  private readonly COMPACT_SLOT_MAX_MINUTES = 35;
+
   routeName = RouteName;
 
   private currentTimeElement = viewChild<ElementRef>('currentTime');
@@ -100,13 +106,6 @@ export class TimetableGanttComponent {
   eventTypeColor = toSignal(this.timetableStateService.eventTypeColor$, {
     initialValue: '',
   });
-
-  EVENT_ROW_GAP = 3;
-  ACT_ROW_SPAN = 2;
-  STAGE_ROW_SPAN = 1;
-  COLUMN_SIZE = 3.5; // 1min = COLUMN_SIZE - Defined in CSS
-  TINY_SLOT_MAX_MINUTES = 20;
-  COMPACT_SLOT_MAX_MINUTES = 35;
 
   constructor() {
     effect(() => {
