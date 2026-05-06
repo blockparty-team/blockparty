@@ -107,7 +107,7 @@ export class TimetableListComponent {
         (event) =>
           event?.stages.map((stage) => ({
             ...stage,
-            timetable: stage.timetable.sort(
+            timetable: [...stage.timetable].sort(
               (a, b) =>
                 new Date(a.start_time).getTime() -
                 new Date(b.start_time).getTime(),
