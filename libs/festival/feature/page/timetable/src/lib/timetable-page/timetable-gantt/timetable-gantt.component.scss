@@ -32,7 +32,9 @@
   .vertical-time-line {
     grid-column: var(--time-label-column-start) / span 1;
     grid-row: 1 / -1;
-    border-left: 0.2px solid var(--ion-text-color);
+    justify-self: start;
+    width: 1px;
+    background-color: rgba(var(--ion-text-color-rgb), 0.35);
   }
 
   .stage {
