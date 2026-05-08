@@ -25,7 +25,10 @@ export class AppUpdateService {
     if (platform === 'web')
       return { isNewVersionAvailable: false, newVersion: undefined };
 
-    const result = await AppUpdate.getAppUpdateInfo();
+    const country = this.config.iosAppStoreCountry?.();
+    const result = await AppUpdate.getAppUpdateInfo(
+      country ? { country } : undefined,
+    );
 
     return platform === 'android'
       ? {
@@ -36,21 +39,30 @@ export class AppUpdateService {
         }
       : {
           isNewVersionAvailable:
+            !!result.availableVersionName &&
             result.currentVersionName.toString() !==
-            result.availableVersionName?.toString(),
+              result.availableVersionName.toString(),
           newVersion: result.availableVersionName,
         };
   }
 
   public async checkForUpdate(): Promise<void> {
-    const { isNewVersionAvailable, newVersion } = await this.appUpdateInfo();
+    let isNewVersionAvailable: boolean;
+    let newVersion: AppUpdateInfo['availableVersionCode'];
+    try {
+      ({ isNewVersionAvailable, newVersion } = await this.appUpdateInfo());
+    } catch (error) {
+      console.error('AppUpdateService: failed to fetch app update info', error);
+      return;
+    }
     const skipAppUpdateVersion = await this.deviceStorage.getAsync(
       'skipAppUpdateVersion',
     );
 
     if (
       !isNewVersionAvailable ||
-      newVersion?.toString() === skipAppUpdateVersion.toString()
+      (skipAppUpdateVersion != null &&
+        newVersion?.toString() === skipAppUpdateVersion.toString())
     )
       return;
 
@@ -77,8 +89,5 @@ export class AppUpdateService {
     });
 
     await alert.present();
-    alert.onDidDismiss().then(() => {
-      this.deviceStorage.set('skipAppUpdateVersion', newVersion);
-    });
   }
 }
