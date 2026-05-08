@@ -40,6 +40,8 @@ $actions-height: 42px;
       background-color: var(--music-player-actions-background);
       color: var(--music-player-actions-icon-color);
       border-radius: 15px 15px 0 0;
+      margin-left: auto;
+      flex-shrink: 0;
       padding: 5px;
       right: 3px;
       bottom: $music-player-height;

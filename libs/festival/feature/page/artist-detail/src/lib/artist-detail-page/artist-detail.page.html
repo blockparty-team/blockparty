@@ -45,8 +45,7 @@
         }
       </ion-fab-list>
     </ion-fab>
-    } @if ((artist.bandcamp_iframe || artist.soundcloud_iframe) &&
-    !showMusicPlayer()) {
+    } @if ((artist.bandcamp_iframe || artist.soundcloud_iframe)) {
     <ion-fab-button
       class="toggle-player"
       size="small"
