@@ -41,6 +41,7 @@ const initialAppConfig: AppConfig = {
     showOnMap: true,
   },
   iosAppId: '',
+  iosAppStoreCountry: 'dk',
 };
 
 @Injectable({

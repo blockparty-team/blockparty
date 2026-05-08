@@ -37,4 +37,12 @@ export type AppConfig = {
     showOnMap: boolean;
   };
   iosAppId: string;
+  /**
+   * ISO 3166-1 alpha-2 country code used when querying the iOS App Store
+   * for available app updates (e.g. 'dk', 'us'). Defaults to 'us' when omitted.
+   *
+   * Passed as the `country` option to `AppUpdate.getAppUpdateInfo()`.
+   * @see https://capawesome.io/plugins/app-update/#getappupdateinfooptions
+   */
+  iosAppStoreCountry?: string;
 };
