@@ -1,6 +1,11 @@
 $music-player-height: 120px;
 $actions-height: 42px;
 
+:host {
+  --music-player-actions-background: var(--ion-color-medium);
+  --music-player-actions-icon-color: var(--ion-color-medium-contrast);
+}
+
 .music-player {
   position: fixed;
   bottom: 0;
@@ -16,17 +21,24 @@ $actions-height: 42px;
 
     ion-segment {
       width: unset;
-      --background: #303030;
+      --background: var(--music-player-actions-background);
       border-radius: 15px 15px 0 0;
 
       ion-segment-button {
         --indicator-color: var(--ion-color-primary);
+        --color: var(--music-player-actions-icon-color);
+        --color-checked: var(--music-player-actions-icon-color);
         --border-radius: 15px 15px 0 0;
+
+        ion-icon {
+          color: var(--music-player-actions-icon-color);
+        }
       }
     }
 
     .close-player {
-      background-color: #303030;
+      background-color: var(--music-player-actions-background);
+      color: var(--music-player-actions-icon-color);
       border-radius: 15px 15px 0 0;
       padding: 5px;
       right: 3px;
