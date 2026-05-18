@@ -10,7 +10,13 @@ import { isSameDay, sub } from 'date-fns';
 import { EventFilterStateService } from '@blockparty/festival/data-access/state/event-filter';
 import { TimetableStateService } from '@blockparty/festival/data-access/state/timetable';
 import { combineLatest } from 'rxjs';
-import { filter, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { TimetableListComponent } from './timetable-list/timetable-list.component';
 import { TimetableGanttComponent } from './timetable-gantt/timetable-gantt.component';
 import { EventFilterComponent } from '@blockparty/festival/featurecomponent/event-filter';
@@ -79,6 +85,18 @@ export class TimetablePage implements OnInit {
       )
       .subscribe();
 
+    this.eventFilterStateService.selectedDayId$
+      .pipe(
+        filter((selectedDayId) => !!selectedDayId),
+        distinctUntilChanged(),
+        switchMap(() => this.eventFilterStateService.eventTypes$.pipe(take(1))),
+        tap((eventTypes) => {
+          this.eventFilterStateService.selectEventType(eventTypes[0]?.id ?? '');
+        }),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe();
+
     combineLatest([
       this.eventFilterStateService.eventTypes$,
       this.eventFilterStateService.selectedEventTypeId$,
@@ -86,11 +104,8 @@ export class TimetablePage implements OnInit {
       .pipe(
         tap(([eventTypes, selectedEventTypeId]) => {
           const firstEventType = eventTypes[0];
-          if (!firstEventType) {
-            return;
-          }
 
-          if (eventTypes.length === 0) {
+          if (!firstEventType) {
             return;
           }
 
