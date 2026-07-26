@@ -76,7 +76,7 @@
     "@eslint/eslintrc": "^2.1.1",
     "@ionic/angular-toolkit": "12.3.0",
     "@ionic/cli": "7.2.1",
-    "@nx/angular": "22.6.3",
+    "@nx/angular": "23.1.0",
     "@nx/eslint": "22.6.3",
     "@nx/eslint-plugin": "22.6.3",
     "@nx/js": "22.6.3",
