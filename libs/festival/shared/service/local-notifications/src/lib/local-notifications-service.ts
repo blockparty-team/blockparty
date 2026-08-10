@@ -12,6 +12,24 @@ import { sub } from 'date-fns';
   providedIn: 'root',
 })
 export class LocalNotificationsService {
+  public getArtistNotificationTime(
+    artistAct: ArtistNotification,
+    minutesBefore = 60,
+  ): Date {
+    return sub(new Date(artistAct.startTime), { minutes: minutesBefore });
+  }
+
+  public shouldScheduleArtistNotification(
+    artistAct: ArtistNotification,
+    minutesBefore = 60,
+    now = new Date(),
+  ): boolean {
+    return (
+      this.getArtistNotificationTime(artistAct, minutesBefore).getTime() >
+      now.getTime()
+    );
+  }
+
   public async getNextId(): Promise<number> {
     const currentId = await LocalNotifications.getPending().then((pending) => {
       return pending.notifications.length > 0
@@ -102,7 +120,9 @@ export class LocalNotificationsService {
         [],
         { hour: '2-digit', minute: '2-digit' },
       )}`,
-      schedule: { at: sub(startTime, { minutes: minutesBefore }) },
+      schedule: {
+        at: this.getArtistNotificationTime(artistAct, minutesBefore),
+      },
       extra: { id: artistAct.artistId, artistName: artistAct.artistName },
       largeIcon: 'ic_launcher',
       smallIcon: 'ic_launcher',

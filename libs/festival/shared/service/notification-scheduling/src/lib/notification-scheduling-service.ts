@@ -43,11 +43,18 @@ export class NotificationSchedulingService implements OnDestroy {
                     ),
                   ),
                   filter((artistNotificaton) => !!artistNotificaton),
+                  take(1),
+                  filter((artistNotification) =>
+                    this.localNotificationService.shouldScheduleArtistNotification(
+                      artistNotification,
+                      this.MINUTES_BEFORE,
+                    ),
+                  ),
                   map((artistNotification) => [
                     this.localNotificationService.artistNotificationPayload(
                       id,
                       artistNotification,
-                      60,
+                      this.MINUTES_BEFORE,
                     ),
                   ]),
                   mergeMap((notifications) =>
@@ -103,16 +110,20 @@ export class NotificationSchedulingService implements OnDestroy {
               );
               const now = new Date();
               const notifications = favoriteArtists
+                .filter((artist) =>
+                  this.localNotificationService.shouldScheduleArtistNotification(
+                    artist,
+                    this.MINUTES_BEFORE,
+                    now,
+                  ),
+                )
                 .map((artist, index) =>
                   this.localNotificationService.artistNotificationPayload(
                     index,
                     artist,
                     this.MINUTES_BEFORE,
                   ),
-                )
-                .filter((n) => {
-                  return n.schedule!.at! >= now;
-                });
+                );
               if (notifications.length > 0) {
                 this.localNotificationService
                   .schedule(notifications)
