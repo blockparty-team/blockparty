@@ -69,7 +69,7 @@
             }
           ],
           "optimization": false,
-          "outputHashing": "all",
+          "outputHashing": "none",
           "sourceMap": false,
           "namedChunks": false,
           "aot": true,
@@ -90,7 +90,7 @@
     "serve": {
       "executor": "@angular/build:dev-server",
       "options": {
-        "buildTarget": "karrusel:build"
+        "buildTarget": "karrusel:build:development"
       },
       "configurations": {
         "production": {
@@ -103,6 +103,7 @@
           "progress": false
         }
       },
+      "defaultConfiguration": "development",
       "continuous": true
     },
     "extract-i18n": {
