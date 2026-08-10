@@ -11,6 +11,10 @@ ion-item-divider {
 ion-item {
   animation: popIn 0.2s calc(var(--animation-order) * 70ms) both ease-in;
 
+  ion-button {
+    --color: currentColor;
+  }
+
   ion-label {
     outline: none;
 
