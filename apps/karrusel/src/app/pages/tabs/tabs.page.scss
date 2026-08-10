@@ -3,6 +3,10 @@ ion-tab-bar {
     --color-selected: var(--ion-color-secondary);
     --color: var(--ion-text-color);
   }
+
+  ion-tab-button.tab-selected ion-label {
+    font-weight: 700;
+  }
 }
 
 app-sidebar {
