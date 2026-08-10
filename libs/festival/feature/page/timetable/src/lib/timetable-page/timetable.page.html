@@ -4,7 +4,9 @@
 
 <ion-content #content>
   @if (timetableMode() === 'gantt') {
-  <app-timetable-gantt></app-timetable-gantt>
+  <app-timetable-gantt
+    [activationTick]="ganttActivationTick()"
+  ></app-timetable-gantt>
   } @else {
   <app-timetable-list></app-timetable-list>
   }

@@ -54,6 +54,8 @@ export class TimetablePage implements OnInit {
 
   private _timetableMode = signal(this.timetableConfig.mode());
   timetableMode = this._timetableMode.asReadonly();
+  private _ganttActivationTick = signal(0);
+  ganttActivationTick = this._ganttActivationTick.asReadonly();
 
   ngOnInit(): void {
     combineLatest([
@@ -152,5 +154,9 @@ export class TimetablePage implements OnInit {
     this.timetableMode() === 'gantt'
       ? this._timetableMode.set('list')
       : this._timetableMode.set('gantt');
+  }
+
+  ionViewDidEnter(): void {
+    this._ganttActivationTick.update((tick) => tick + 1);
   }
 }

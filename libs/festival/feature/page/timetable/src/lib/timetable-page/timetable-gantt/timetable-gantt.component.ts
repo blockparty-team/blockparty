@@ -4,6 +4,7 @@ import {
   ElementRef,
   effect,
   inject,
+  input,
   viewChild,
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
@@ -36,6 +37,7 @@ import { FavoriteStateService } from '@blockparty/festival/data-access/state/fav
 export class TimetableGanttComponent {
   private timetableStateService = inject(TimetableStateService);
   private favoriteStateService = inject(FavoriteStateService);
+  private lastScrolledActivationTick = -1;
 
   private readonly EVENT_ROW_GAP = 3;
   private readonly ACT_ROW_SPAN = 2;
@@ -44,6 +46,7 @@ export class TimetableGanttComponent {
   private readonly COMPACT_SLOT_MAX_MINUTES = 35;
 
   routeName = RouteName;
+  activationTick = input(0);
 
   private currentTimeElement = viewChild<ElementRef>('currentTime');
 
@@ -70,6 +73,7 @@ export class TimetableGanttComponent {
         return now >= firstActStart && now <= lastActEnd;
       }),
     );
+
   private currentTimeWithinTimetable = toSignal(
     this.currentTimeWithinTimetable$,
   );
@@ -109,14 +113,20 @@ export class TimetableGanttComponent {
 
   constructor() {
     effect(() => {
+      const activationTick = this.activationTick();
       const withinTimetable = this.currentTimeWithinTimetable();
       const currentTimeElement = this.currentTimeElement()?.nativeElement;
 
+      if (activationTick === this.lastScrolledActivationTick) {
+        return;
+      }
+
       if (withinTimetable && currentTimeElement) {
+        this.lastScrolledActivationTick = activationTick;
         currentTimeElement.scrollIntoView({
           block: 'center',
           inline: 'center',
-          behavior: 'smooth',
+          behavior: 'auto',
         });
       }
     });
