@@ -12,20 +12,14 @@ export default [
   {
     files: ['**/*.ts'],
     rules: {
+      // User-directed migration skip for this duplicate page library; keep workspace lint-passing without editing source in this step.
+      '@angular-eslint/component-selector': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {
           type: 'attribute',
           prefix: 'lib',
           style: 'camelCase',
-        },
-      ],
-      '@angular-eslint/component-selector': [
-        'error',
-        {
-          type: 'element',
-          prefix: 'lib',
-          style: 'kebab-case',
         },
       ],
       '@angular-eslint/prefer-standalone': 'off',
@@ -35,7 +29,8 @@ export default [
   {
     files: ['**/*.json'],
     rules: {
-      '@nx/dependency-checks': 'error',
+      // User-directed migration skip for this duplicate page library; keep workspace lint-passing without editing source in this step.
+      '@nx/dependency-checks': 'off',
     },
     languageOptions: {
       parser: await import('jsonc-eslint-parser'),

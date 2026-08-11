@@ -78,7 +78,10 @@
         >
           @for (item of filteredItems(); track item.id) {
             <ion-item>
-              <ion-radio [value]="$safeNavigationMigration(item?.id)" (click)="onSelectItem(item)">
+              <ion-radio
+                [value]="$safeNavigationMigration(item?.id)"
+                (click)="onSelectItem(item)"
+              >
                 {{ displayName(item) }}
               </ion-radio>
             </ion-item>

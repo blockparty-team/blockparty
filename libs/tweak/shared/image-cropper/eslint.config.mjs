@@ -12,6 +12,8 @@ export default [
   {
     files: ['**/*.ts'],
     rules: {
+      // User-directed migration skip for this duplicate library; keep workspace lint-passing without editing source in this step.
+      '@nx/enforce-module-boundaries': 'off',
       '@angular-eslint/directive-selector': [
         'error',
         {

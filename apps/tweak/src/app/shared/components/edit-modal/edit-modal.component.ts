@@ -1,4 +1,10 @@
-import { Component, WritableSignal, signal, input, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  WritableSignal,
+  signal,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { IonModal } from '@ionic/angular/standalone';
 
 @Component({

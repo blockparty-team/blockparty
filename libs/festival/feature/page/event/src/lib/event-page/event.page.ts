@@ -1,4 +1,9 @@
-import { Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  viewChild,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteName } from '@blockparty/festival/shared/types';
 import {

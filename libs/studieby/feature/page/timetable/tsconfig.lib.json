@@ -9,9 +9,7 @@
     "moduleResolution": "bundler"
   },
   "exclude": ["src/**/*.spec.ts", "src/test-setup.ts", "src/**/*.test.ts"],
-  "include": [
-    "src/**/*.ts"
-  ],
+  "include": ["src/**/*.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {

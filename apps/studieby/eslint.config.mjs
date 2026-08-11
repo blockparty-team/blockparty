@@ -13,6 +13,8 @@ export default [
     files: ['**/*.ts'],
     rules: {
       semi: ['error', 'always'],
+      // Newly enabled by the ESLint v9 Angular recommended presets; this app was not enforcing it before the upgrade.
+      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
       '@angular-eslint/component-class-suffix': [
         'error',
         {

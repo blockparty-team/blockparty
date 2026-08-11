@@ -53,8 +53,10 @@
         <h3>
           <span class="artist-name">{{artist.name}}</span>
           <span class="time">
-            {{$safeNavigationMigration(artist.timetable[0]?.start_time) | date:'HH:mm'}} -
-            {{$safeNavigationMigration(artist.timetable[0]?.end_time) | date:'HH:mm'}}
+            {{$safeNavigationMigration(artist.timetable[0]?.start_time) |
+            date:'HH:mm'}} -
+            {{$safeNavigationMigration(artist.timetable[0]?.end_time) |
+            date:'HH:mm'}}
           </span>
         </h3>
         @if (artist.timetable[0]; as timetable) { @if (!appConfig().simpleLabel)

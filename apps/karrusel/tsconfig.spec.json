@@ -8,11 +8,7 @@
     "moduleResolution": "bundler",
     "isolatedModules": true
   },
-  "include": [
-    "src/**/*.test.ts",
-    "src/**/*.spec.ts",
-    "src/**/*.d.ts"
-  ],
+  "include": ["src/**/*.test.ts", "src/**/*.spec.ts", "src/**/*.d.ts"],
   "angularCompilerOptions": {
     "extendedDiagnostics": {
       "checks": {

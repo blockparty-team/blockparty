@@ -1,4 +1,9 @@
-import { Component, inject, isDevMode, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  inject,
+  isDevMode,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { MenuController } from '@ionic/angular/standalone';
