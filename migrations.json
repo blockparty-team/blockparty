@@ -340,7 +340,7 @@
     "targetVersion": "latest",
     "confirmedPackageUpdates": true,
     "runningMigrations": [
-      "23-0-0-consolidate-release-tag-config"
+      "23-0-0-add-migrate-runs-to-git-ignore"
     ],
     "completedMigrations": {
       "22-7-0-add-polygraph-to-git-ignore": {
@@ -357,7 +357,14 @@
         "type": "successful",
         "name": "23-0-0-consolidate-release-tag-config",
         "changedFiles": [],
-        "ref": "6643ec8c2be2edbeafffa60a245f79028de78ea0",
+        "ref": "7d65a3056ae7700cc194d5bd7c5877e6246cf294",
+        "nextSteps": []
+      },
+      "23-0-0-add-migrate-runs-to-git-ignore": {
+        "type": "successful",
+        "name": "23-0-0-add-migrate-runs-to-git-ignore",
+        "changedFiles": [],
+        "ref": "1f03d0d658ee3cd3fb26d838ca69cf83a3a81a29",
         "nextSteps": []
       }
     }
