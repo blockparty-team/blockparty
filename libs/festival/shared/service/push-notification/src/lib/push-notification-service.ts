@@ -1,7 +1,7 @@
 import { inject, Injectable, isDevMode } from '@angular/core';
 import { AppConfigService } from '@blockparty/festival/data-access/state/app-config';
 import { Device } from '@capacitor/device';
-import OneSignal from 'onesignal-cordova-plugin';
+import OneSignal from '@onesignal/capacitor-plugin';
 import { OneSignal as OneSignalWeb } from 'onesignal-ngx';
 
 @Injectable({ providedIn: 'root' })

@@ -1,4 +1,9 @@
-import { Component, inject, isDevMode } from '@angular/core';
+import {
+  Component,
+  inject,
+  isDevMode,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@blockparty/festival/shared/service/auth';
 import { MenuController } from '@ionic/angular/standalone';
@@ -32,6 +37,7 @@ interface NavigationItem {
   selector: 'app-sidebar',
   templateUrl: './sidebar.page.html',
   styleUrls: ['./sidebar.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

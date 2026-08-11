@@ -1,10 +1,17 @@
-import { Component, WritableSignal, signal, input } from '@angular/core';
+import {
+  Component,
+  WritableSignal,
+  signal,
+  input,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import { IonModal } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-edit-modal',
   templateUrl: './edit-modal.component.html',
   styleUrls: ['./edit-modal.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [IonModal],
 })
 export class EditModalComponent {

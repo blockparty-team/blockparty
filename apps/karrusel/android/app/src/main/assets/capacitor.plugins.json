@@ -50,5 +50,9 @@
 	{
 		"pkg": "@capawesome/capacitor-app-update",
 		"classpath": "io.capawesome.capacitorjs.plugins.appupdate.AppUpdatePlugin"
+	},
+	{
+		"pkg": "@onesignal/capacitor-plugin",
+		"classpath": "com.onesignal.capacitor.OneSignalCapacitorPlugin"
 	}
 ]

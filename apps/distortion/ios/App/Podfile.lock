@@ -1,43 +1,43 @@
 PODS:
-  - Capacitor (8.3.0):
+  - Capacitor (8.5.0):
     - CapacitorCordova
-  - CapacitorApp (8.1.0):
+  - CapacitorApp (8.1.1):
     - Capacitor
-  - CapacitorBrowser (8.0.3):
+  - CapacitorBrowser (8.0.4):
     - Capacitor
   - CapacitorClipboard (8.0.1):
     - Capacitor
-  - CapacitorCordova (8.3.0)
-  - CapacitorDevice (8.0.2):
+  - CapacitorCordova (8.5.0)
+  - CapacitorDevice (8.0.3):
     - Capacitor
   - CapacitorFilesystem (8.1.2):
     - Capacitor
     - IONFilesystemLib (~> 1.1.1)
-  - CapacitorGeolocation (8.1.0):
+  - CapacitorGeolocation (8.2.1):
     - Capacitor
-    - IONGeolocationLib (= 2.0.0)
-  - CapacitorKeyboard (8.0.2):
+    - IONGeolocationLib (= 2.1.0)
+  - CapacitorKeyboard (8.0.5):
     - Capacitor
-  - CapacitorLocalNotifications (8.0.2):
+  - CapacitorLocalNotifications (8.2.1):
     - Capacitor
   - CapacitorPreferences (8.0.1):
     - Capacitor
   - CapacitorShare (8.0.1):
     - Capacitor
-  - CapacitorSplashScreen (8.0.1):
+  - CapacitorSplashScreen (8.0.2):
     - Capacitor
-  - CapacitorStatusBar (8.0.2):
+  - CapacitorStatusBar (8.0.3):
     - Capacitor
   - CapawesomeCapacitorAppUpdate (8.0.3):
     - Capacitor
-  - CordovaPluginsStatic (8.3.0):
-    - CapacitorCordova
-    - OneSignalXCFramework (= 5.5.0)
   - IONFilesystemLib (1.1.2)
-  - IONGeolocationLib (2.0.0)
-  - OneSignalXCFramework (5.5.0):
-    - OneSignalXCFramework/OneSignalComplete (= 5.5.0)
-  - OneSignalXCFramework/OneSignal (5.5.0):
+  - IONGeolocationLib (2.1.0)
+  - OnesignalCapacitorPlugin (1.1.7):
+    - Capacitor
+    - OneSignalXCFramework (= 5.5.5)
+  - OneSignalXCFramework (5.5.5):
+    - OneSignalXCFramework/OneSignalComplete (= 5.5.5)
+  - OneSignalXCFramework/OneSignal (5.5.5):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalExtension
     - OneSignalXCFramework/OneSignalLiveActivities
@@ -45,38 +45,41 @@ PODS:
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalComplete (5.5.0):
+  - OneSignalXCFramework/OneSignalComplete (5.5.5):
     - OneSignalXCFramework/OneSignal
     - OneSignalXCFramework/OneSignalInAppMessages
     - OneSignalXCFramework/OneSignalLocation
-  - OneSignalXCFramework/OneSignalCore (5.5.0)
-  - OneSignalXCFramework/OneSignalExtension (5.5.0):
+  - OneSignalXCFramework/OneSignalCore (5.5.5)
+  - OneSignalXCFramework/OneSignalExtension (5.5.5):
     - OneSignalXCFramework/OneSignalCore
+    - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalInAppMessages (5.5.0):
+  - OneSignalXCFramework/OneSignalInAppMessages (5.5.5):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalLiveActivities (5.5.0):
+  - OneSignalXCFramework/OneSignalLiveActivities (5.5.5):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalLocation (5.5.0):
+  - OneSignalXCFramework/OneSignalLocation (5.5.5):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalUser
-  - OneSignalXCFramework/OneSignalNotifications (5.5.0):
+  - OneSignalXCFramework/OneSignalNotifications (5.5.5):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalExtension
+    - OneSignalXCFramework/OneSignalOSCore
     - OneSignalXCFramework/OneSignalOutcomes
-  - OneSignalXCFramework/OneSignalOSCore (5.5.0):
+  - OneSignalXCFramework/OneSignalOSCore (5.5.5):
     - OneSignalXCFramework/OneSignalCore
-  - OneSignalXCFramework/OneSignalOutcomes (5.5.0):
+  - OneSignalXCFramework/OneSignalOutcomes (5.5.5):
     - OneSignalXCFramework/OneSignalCore
-  - OneSignalXCFramework/OneSignalUser (5.5.0):
+    - OneSignalXCFramework/OneSignalOSCore
+  - OneSignalXCFramework/OneSignalUser (5.5.5):
     - OneSignalXCFramework/OneSignalCore
     - OneSignalXCFramework/OneSignalNotifications
     - OneSignalXCFramework/OneSignalOSCore
@@ -98,8 +101,8 @@ DEPENDENCIES:
   - "CapacitorSplashScreen (from `../../../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../../../node_modules/@capacitor/status-bar`)"
   - "CapawesomeCapacitorAppUpdate (from `../../../../node_modules/@capawesome/capacitor-app-update`)"
-  - CordovaPluginsStatic (from `../capacitor-cordova-ios-plugins`)
-  - OneSignalXCFramework (< 6.0, >= 5.0)
+  - "OnesignalCapacitorPlugin (from `../../../../node_modules/@onesignal/capacitor-plugin`)"
+  - OneSignalXCFramework/OneSignal (< 6.0, >= 5.0.0)
 
 SPEC REPOS:
   trunk:
@@ -138,30 +141,30 @@ EXTERNAL SOURCES:
     :path: "../../../../node_modules/@capacitor/status-bar"
   CapawesomeCapacitorAppUpdate:
     :path: "../../../../node_modules/@capawesome/capacitor-app-update"
-  CordovaPluginsStatic:
-    :path: "../capacitor-cordova-ios-plugins"
+  OnesignalCapacitorPlugin:
+    :path: "../../../../node_modules/@onesignal/capacitor-plugin"
 
 SPEC CHECKSUMS:
-  Capacitor: 22e541237135648c9aa736232bb4d2eec35fddcb
-  CapacitorApp: 449ffe26375e96f8aaaee625ac6e01e5c57c8650
-  CapacitorBrowser: c987c73d09d8bd3b5ec13f06338b1e14d5d2be69
+  Capacitor: 00b87168591cc006ea6f5c0de681ec5c39a2c8eb
+  CapacitorApp: 305bd13c44f6f9d164e2ee66a4faa956ed8c0e06
+  CapacitorBrowser: 752e0208aa07c7aa63d1f7cde895a3e9519b2656
   CapacitorClipboard: c75fdaa6e622111119f35e7914ecfc67b05efecb
-  CapacitorCordova: 2e1e2bb93b2f365309dc4ff18b72b9a69a7814a9
-  CapacitorDevice: 14cba6f88d1c3074cbf825fea977c8c526453ff8
+  CapacitorCordova: 9d3acbb574048e7167d2af127a0af2123e619f2f
+  CapacitorDevice: 708e742b60a61572cd593e44c809592e8f31da14
   CapacitorFilesystem: 2db285a1ac6e475cc27cae2e1bea999000f9e2be
-  CapacitorGeolocation: 7132de914f9d853ec4642dc1d36e4e2018a4e8a8
-  CapacitorKeyboard: 8aa4f4ae80b2c92f92c07bf0181c464c2e7f5ff0
-  CapacitorLocalNotifications: 4db83a7f6bdd2f30dcedf5c6f92c415065467a24
+  CapacitorGeolocation: 039806032910adee1101791520c7ff00e2de0e1b
+  CapacitorKeyboard: b6b0744890cdb1d9a96e2cafcc9253fdcc55de3b
+  CapacitorLocalNotifications: 908a69a3cf7ae345426de3223d4980befb0103c6
   CapacitorPreferences: cca2021f386efb75947c850334447d9ff22b14f1
   CapacitorShare: 0c58305114538568059bfc07111f22dcb9cb2a82
-  CapacitorSplashScreen: 4b46c72298db552b3c57ce021ef028b6dc7f1fa7
-  CapacitorStatusBar: 01d5763b4ed720de5ce2edbc938de6a98f4c8f32
+  CapacitorSplashScreen: 7bf61c2001557ff9e195e601c6b87344480d3c65
+  CapacitorStatusBar: eca7bc2b58d9f886f1ef9edb66e57a9b29c121af
   CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
-  CordovaPluginsStatic: 20d24da07eed8f952de3c389ae3e3b4502a051cf
   IONFilesystemLib: 21a63377696b2d8fab5632ecfb7d2ac67bddb68a
-  IONGeolocationLib: a5e40b54edc2ee9902036eda5aaa41ddf07bb68d
-  OneSignalXCFramework: 943852e7d70d719f73e9669d48620aeec1b93022
+  IONGeolocationLib: 6a7b6f76063fb1b01cfb14fae7d0f526e3c9b271
+  OnesignalCapacitorPlugin: 894318abe0522be3428e9799c774c8b7c0b7fba5
+  OneSignalXCFramework: 48e5b7c5b51d4e67bab3405229f963efde1a3894
 
-PODFILE CHECKSUM: 9c4313599506e9a4f364b005cea7b6425e6e6e7c
+PODFILE CHECKSUM: 9f47ce0b6e9ee0081dabdb05e7a5c9f1c9cc1354
 
 COCOAPODS: 1.16.2

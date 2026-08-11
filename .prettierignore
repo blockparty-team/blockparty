@@ -16,3 +16,4 @@ tmp
 **/.gradle
 
 /.nx/workspace-data
+.nx/self-healing

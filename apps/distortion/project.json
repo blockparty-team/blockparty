@@ -34,7 +34,6 @@
         "serviceWorker": "apps/distortion/ngsw-config.json",
         "allowedCommonJsDependencies": [
           "maplibre-gl",
-          "onesignal-cordova-plugin",
           "ws"
         ],
         "browser": "apps/distortion/src/main.ts"

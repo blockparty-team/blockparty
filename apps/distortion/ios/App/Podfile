@@ -1,6 +1,6 @@
 require_relative '../../../../node_modules/@capacitor/ios/scripts/pods_helpers'
 
-platform :ios, '15.0'
+platform :ios, '15.6'
 use_frameworks!
 
 # workaround to avoid Xcode caching of Pods that requires
@@ -24,7 +24,7 @@ def capacitor_pods
   pod 'CapacitorSplashScreen', :path => '../../../../node_modules/@capacitor/splash-screen'
   pod 'CapacitorStatusBar', :path => '../../../../node_modules/@capacitor/status-bar'
   pod 'CapawesomeCapacitorAppUpdate', :path => '../../../../node_modules/@capawesome/capacitor-app-update'
-  pod 'CordovaPluginsStatic', :path => '../capacitor-cordova-ios-plugins'
+  pod 'OnesignalCapacitorPlugin', :path => '../../../../node_modules/@onesignal/capacitor-plugin'
 end
 
 target 'App' do
@@ -37,5 +37,5 @@ post_install do |installer|
 end
 
 target 'OneSignalNotificationServiceExtension' do
-  pod 'OneSignalXCFramework', '>= 5.0', '< 6.0'
+  pod 'OneSignalXCFramework/OneSignal', '>= 5.0.0', '< 6.0'
 end

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   IonContent,
@@ -13,6 +13,7 @@ import {
   selector: 'app-partners',
   templateUrl: './partners.page.html',
   styleUrls: ['./partners.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     IonContent,

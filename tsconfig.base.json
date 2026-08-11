@@ -1,17 +1,19 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": ".",
     "outDir": "./dist/out-tsc",
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": ["es2018", "es2019", "dom"],
+    "lib": [
+      "es2018",
+      "es2019",
+      "dom"
+    ],
     "skipLibCheck": true,
     "strict": true,
     "noImplicitAny": true,
@@ -29,165 +31,177 @@
     "rootDir": ".",
     "paths": {
       "@blockparty/distortion/feature/ticket-distortion": [
-        "libs/distortion/feature/ticket-distortion/src/index.ts"
+        "./libs/distortion/feature/ticket-distortion/src/index.ts"
       ],
       "@blockparty/festival/data-access/file-service": [
-        "libs/festival/data-access/file-service/src/index.ts"
+        "./libs/festival/data-access/file-service/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/app-config": [
-        "libs/festival/data-access/state/app-config/src/index.ts"
+        "./libs/festival/data-access/state/app-config/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/artist": [
-        "libs/festival/data-access/state/artist/src/index.ts"
+        "./libs/festival/data-access/state/artist/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/artist-shared": [
-        "libs/festival/data-access/state/artist-shared/src/index.ts"
+        "./libs/festival/data-access/state/artist-shared/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/event": [
-        "libs/festival/data-access/state/event/src/index.ts"
+        "./libs/festival/data-access/state/event/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/event-filter": [
-        "libs/festival/data-access/state/event-filter/src/index.ts"
+        "./libs/festival/data-access/state/event-filter/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/favorite": [
-        "libs/festival/data-access/state/favorite/src/index.ts"
+        "./libs/festival/data-access/state/favorite/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/map": [
-        "libs/festival/data-access/state/map/src/index.ts"
+        "./libs/festival/data-access/state/map/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/tabs": [
-        "libs/festival/data-access/state/tabs/src/index.ts"
+        "./libs/festival/data-access/state/tabs/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/ticket": [
-        "libs/festival/data-access/state/ticket/src/index.ts"
+        "./libs/festival/data-access/state/ticket/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/timetable": [
-        "libs/festival/data-access/state/timetable/src/index.ts"
+        "./libs/festival/data-access/state/timetable/src/index.ts"
       ],
       "@blockparty/festival/data-access/state/timetable-shared": [
-        "libs/festival/data-access/state/timetable-shared/src/index.ts"
+        "./libs/festival/data-access/state/timetable-shared/src/index.ts"
       ],
       "@blockparty/festival/data-access/supabase": [
-        "libs/festival/data-access/supabase/src/index.ts"
+        "./libs/festival/data-access/supabase/src/index.ts"
       ],
       "@blockparty/festival/feature/page/artist": [
-        "libs/festival/feature/page/artist/src/index.ts"
+        "./libs/festival/feature/page/artist/src/index.ts"
       ],
       "@blockparty/festival/feature/page/artist-detail": [
-        "libs/festival/feature/page/artist-detail/src/index.ts"
+        "./libs/festival/feature/page/artist-detail/src/index.ts"
       ],
       "@blockparty/festival/feature/page/event": [
-        "libs/festival/feature/page/event/src/index.ts"
+        "./libs/festival/feature/page/event/src/index.ts"
       ],
       "@blockparty/festival/feature/page/event-detail": [
-        "libs/festival/feature/page/event-detail/src/index.ts"
+        "./libs/festival/feature/page/event-detail/src/index.ts"
       ],
       "@blockparty/festival/feature/page/favorite": [
-        "libs/festival/feature/page/favorite/src/index.ts"
+        "./libs/festival/feature/page/favorite/src/index.ts"
       ],
       "@blockparty/festival/feature/page/login": [
-        "libs/festival/feature/page/login/src/index.ts"
+        "./libs/festival/feature/page/login/src/index.ts"
       ],
       "@blockparty/festival/feature/page/map": [
-        "libs/festival/feature/page/map/src/index.ts"
+        "./libs/festival/feature/page/map/src/index.ts"
       ],
       "@blockparty/festival/feature/page/profile": [
-        "libs/festival/feature/page/profile/src/index.ts"
+        "./libs/festival/feature/page/profile/src/index.ts"
       ],
       "@blockparty/festival/feature/page/search": [
-        "libs/festival/feature/page/search/src/index.ts"
+        "./libs/festival/feature/page/search/src/index.ts"
       ],
       "@blockparty/festival/feature/page/settings": [
-        "libs/festival/feature/page/settings/src/index.ts"
+        "./libs/festival/feature/page/settings/src/index.ts"
       ],
       "@blockparty/festival/feature/page/ticket": [
-        "libs/festival/feature/page/ticket/src/index.ts"
+        "./libs/festival/feature/page/ticket/src/index.ts"
       ],
       "@blockparty/festival/feature/page/timetable": [
-        "libs/festival/feature/page/timetable/src/index.ts"
+        "./libs/festival/feature/page/timetable/src/index.ts"
       ],
       "@blockparty/festival/featurecomponent/event-filter": [
-        "libs/festival/feature/component/event-filter/src/index.ts"
+        "./libs/festival/feature/component/event-filter/src/index.ts"
       ],
       "@blockparty/festival/shared/directives": [
-        "libs/festival/shared/directives/src/index.ts"
+        "./libs/festival/shared/directives/src/index.ts"
       ],
       "@blockparty/festival/shared/guard/can-load": [
-        "libs/festival/shared/guard/can-load/src/index.ts"
+        "./libs/festival/shared/guard/can-load/src/index.ts"
       ],
       "@blockparty/festival/shared/icons": [
-        "libs/festival/shared/icons/src/index.ts"
+        "./libs/festival/shared/icons/src/index.ts"
       ],
       "@blockparty/festival/shared/pipes": [
-        "libs/festival/shared/pipes/src/index.ts"
+        "./libs/festival/shared/pipes/src/index.ts"
       ],
       "@blockparty/festival/shared/service/app-update": [
-        "libs/festival/shared/service/app-update/src/index.ts"
+        "./libs/festival/shared/service/app-update/src/index.ts"
       ],
       "@blockparty/festival/shared/service/auth": [
-        "libs/festival/shared/service/auth/src/index.ts"
+        "./libs/festival/shared/service/auth/src/index.ts"
       ],
       "@blockparty/festival/shared/service/local-notifications": [
-        "libs/festival/shared/service/local-notifications/src/index.ts"
+        "./libs/festival/shared/service/local-notifications/src/index.ts"
       ],
       "@blockparty/festival/shared/service/map": [
-        "libs/festival/shared/service/map/src/index.ts"
+        "./libs/festival/shared/service/map/src/index.ts"
       ],
       "@blockparty/festival/shared/service/notification-scheduling": [
-        "libs/festival/shared/service/notification-scheduling/src/index.ts"
+        "./libs/festival/shared/service/notification-scheduling/src/index.ts"
       ],
       "@blockparty/festival/shared/service/push-notification": [
-        "libs/festival/shared/service/push-notification/src/index.ts"
+        "./libs/festival/shared/service/push-notification/src/index.ts"
       ],
       "@blockparty/festival/shared/service/refresh": [
-        "libs/festival/shared/service/refresh/src/index.ts"
+        "./libs/festival/shared/service/refresh/src/index.ts"
       ],
       "@blockparty/festival/shared/service/route-history": [
-        "libs/festival/shared/service/route-history/src/index.ts"
+        "./libs/festival/shared/service/route-history/src/index.ts"
       ],
       "@blockparty/festival/shared/service/search": [
-        "libs/festival/shared/service/search/src/index.ts"
+        "./libs/festival/shared/service/search/src/index.ts"
       ],
       "@blockparty/festival/shared/types": [
-        "libs/festival/shared/types/src/index.ts"
+        "./libs/festival/shared/types/src/index.ts"
       ],
       "@blockparty/festival/ui/artist-card": [
-        "libs/festival/ui/artist-card/src/index.ts"
+        "./libs/festival/ui/artist-card/src/index.ts"
       ],
       "@blockparty/festival/ui/music-player": [
-        "libs/festival/ui/music-player/src/index.ts"
+        "./libs/festival/ui/music-player/src/index.ts"
       ],
       "@blockparty/karrusel/feature/ticket-karrusel": [
-        "libs/karrusel/feature/ticket-karrusel/src/index.ts"
+        "./libs/karrusel/feature/ticket-karrusel/src/index.ts"
       ],
       "@blockparty/shared/data-access/device-storage": [
-        "libs/shared/data-access/device-storage/src/index.ts"
+        "./libs/shared/data-access/device-storage/src/index.ts"
       ],
       "@blockparty/shared/data-access/filesystem": [
-        "libs/shared/data-access/filesystem/src/index.ts"
+        "./libs/shared/data-access/filesystem/src/index.ts"
       ],
       "@blockparty/shared/service/device": [
-        "libs/shared/service/device/src/index.ts"
+        "./libs/shared/service/device/src/index.ts"
       ],
       "@blockparty/shared/service/geolocation": [
-        "libs/shared/service/geolocation/src/index.ts"
+        "./libs/shared/service/geolocation/src/index.ts"
       ],
       "@blockparty/studieby/feature/page/timetable": [
-        "libs/studieby/feature/page/timetable/src/index.ts"
+        "./libs/studieby/feature/page/timetable/src/index.ts"
       ],
       "@blockparty/util/animation": [
-        "libs/festival/util/animation/src/index.ts"
+        "./libs/festival/util/animation/src/index.ts"
       ],
-      "@blockparty/util/file": ["libs/festival/util/file/src/index.ts"],
-      "@shared/environments": ["libs/shared/enviroments/src/index.ts"],
-      "@tweak/*": ["apps/tweak/src/app/*"],
+      "@blockparty/util/file": [
+        "./libs/festival/util/file/src/index.ts"
+      ],
+      "@shared/environments": [
+        "./libs/shared/enviroments/src/index.ts"
+      ],
+      "@tweak/*": [
+        "./apps/tweak/src/app/*"
+      ],
       "libs/tweak/shared/image-cropper": [
-        "libs/tweak/shared/image-cropper/src/index.ts"
+        "./libs/tweak/shared/image-cropper/src/index.ts"
       ],
       "libs/tweak/shared/image-upload": [
-        "libs/tweak/shared/image-upload/src/index.ts"
+        "./libs/tweak/shared/image-upload/src/index.ts"
       ]
-    }
+    },
+    "noUncheckedSideEffectImports": false,
+    "types": [
+      "*"
+    ],
+    "esModuleInterop": false,
+    "ignoreDeprecations": "6.0"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -197,5 +211,8 @@
     "typeCheckHostBindings": true,
     "strictStandalone": true
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }

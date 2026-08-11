@@ -5,7 +5,9 @@ ion-tab-bar {
   }
 
   ion-tab-button.tab-selected ion-label {
-    font-weight: 700;
+    text-shadow:
+      0.02em 0 currentColor,
+      -0.02em 0 currentColor;
   }
 }
 

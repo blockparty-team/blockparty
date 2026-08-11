@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { map } from 'rxjs';
 import { Browser } from '@capacitor/browser';
@@ -16,6 +16,7 @@ import {
   selector: 'app-transport',
   templateUrl: './transport.page.html',
   styleUrls: ['./transport.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     AsyncPipe,
     IonHeader,

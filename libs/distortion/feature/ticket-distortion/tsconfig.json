@@ -8,7 +8,8 @@
     "noFallthroughCasesInSwitch": true,
     "module": "preserve",
     "lib": ["dom", "es2022"],
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "ignoreDeprecations": "6.0"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

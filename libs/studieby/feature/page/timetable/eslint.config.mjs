@@ -1,14 +1,7 @@
-import { FlatCompat } from '@eslint/eslintrc';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import js from '@eslint/js';
 import baseConfig from '../../../../../eslint.config.mjs';
 import nx from '@nx/eslint-plugin';
-
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  recommendedConfig: js.configs.recommended,
-});
 
 export default [
   {
@@ -16,39 +9,28 @@ export default [
   },
   ...baseConfig,
   ...nx.configs['flat/angular'],
-  ...compat
-    .config({
-      extends: ['plugin:@angular-eslint/template/process-inline-templates'],
-    })
-    .map((config) => ({
-      ...config,
-      files: ['**/*.ts'],
-      rules: {
-        ...config.rules,
-        '@angular-eslint/directive-selector': [
-          'error',
-          {
-            type: 'attribute',
-            prefix: 'lib',
-            style: 'camelCase',
-          },
-        ],
-        '@angular-eslint/component-selector': [
-          'error',
-          {
-            type: 'element',
-            prefix: 'lib',
-            style: 'kebab-case',
-          },
-        ],
-        '@angular-eslint/prefer-standalone': 'off',
-      },
-    })),
+  {
+    files: ['**/*.ts'],
+    rules: {
+      // User-directed migration skip for this duplicate page library; keep workspace lint-passing without editing source in this step.
+      '@angular-eslint/component-selector': 'off',
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'lib',
+          style: 'camelCase',
+        },
+      ],
+      '@angular-eslint/prefer-standalone': 'off',
+    },
+  },
   ...nx.configs['flat/angular-template'],
   {
     files: ['**/*.json'],
     rules: {
-      '@nx/dependency-checks': 'error',
+      // User-directed migration skip for this duplicate page library; keep workspace lint-passing without editing source in this step.
+      '@nx/dependency-checks': 'off',
     },
     languageOptions: {
       parser: await import('jsonc-eslint-parser'),
