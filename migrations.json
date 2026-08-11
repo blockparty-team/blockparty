@@ -340,7 +340,7 @@
     "targetVersion": "latest",
     "confirmedPackageUpdates": true,
     "runningMigrations": [
-      "rewrite-eslint-internal-subpath-imports"
+      "update-23-0-0-migrate-create-nodes-v2-import"
     ],
     "completedMigrations": {
       "22-7-0-add-polygraph-to-git-ignore": {
@@ -378,7 +378,14 @@
         "type": "successful",
         "name": "rewrite-eslint-internal-subpath-imports",
         "changedFiles": [],
-        "ref": "6fa73ad0a6c96180bb6b9b4d675a54ffb92b77d0",
+        "ref": "33be56fcce4a124c7e8843a1f571b4f8d4941a2f",
+        "nextSteps": []
+      },
+      "update-23-0-0-migrate-create-nodes-v2-import": {
+        "type": "successful",
+        "name": "update-23-0-0-migrate-create-nodes-v2-import",
+        "changedFiles": [],
+        "ref": "165e7dcc3a9fbf3a82cbfe0bbe83f928e7f4c739",
         "nextSteps": []
       }
     }
