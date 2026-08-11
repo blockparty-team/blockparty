@@ -339,9 +339,7 @@
     },
     "targetVersion": "latest",
     "confirmedPackageUpdates": true,
-    "runningMigrations": [
-      "update-23-0-0-migrate-create-nodes-v2-import"
-    ],
+    "runningMigrations": [],
     "completedMigrations": {
       "22-7-0-add-polygraph-to-git-ignore": {
         "type": "skipped"
@@ -385,8 +383,13 @@
         "type": "successful",
         "name": "update-23-0-0-migrate-create-nodes-v2-import",
         "changedFiles": [],
-        "ref": "165e7dcc3a9fbf3a82cbfe0bbe83f928e7f4c739",
+        "ref": "e65e911eb323c7f38a11ed3f3934d5ecb05a9d35",
         "nextSteps": []
+      },
+      "update-23-1-0-convert-to-flat-config": {
+        "type": "failed",
+        "name": "update-23-1-0-convert-to-flat-config",
+        "error": "Migration process exited with code null"
       }
     }
   }
