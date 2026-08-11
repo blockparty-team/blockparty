@@ -339,12 +339,19 @@
     },
     "targetVersion": "latest",
     "confirmedPackageUpdates": true,
-    "runningMigrations": [],
+    "runningMigrations": [
+      "22-7-0-add-self-healing-to-gitignore"
+    ],
     "completedMigrations": {
       "22-7-0-add-polygraph-to-git-ignore": {
-        "type": "failed",
-        "name": "22-7-0-add-polygraph-to-git-ignore",
-        "error": "Cannot find module './run-migration-process.js'\nRequire stack:\n- /Users/baffioso/repos/blockparty/node_modules/nx/src/command-line/migrate/migrate-ui-api.js\n- /Users/baffioso/.vscode/extensions/nrwl.angular-console-18.101.1/main.js\n- /Applications/Visual Studio Code.app/Contents/Resources/app/out/vs/workbench/api/node/extensionHostProcess.js"
+        "type": "skipped"
+      },
+      "22-7-0-add-self-healing-to-gitignore": {
+        "type": "successful",
+        "name": "22-7-0-add-self-healing-to-gitignore",
+        "changedFiles": [],
+        "ref": "51648a96f98911cb783c7c52d5f6082377dbb4cc",
+        "nextSteps": []
       }
     }
   }
