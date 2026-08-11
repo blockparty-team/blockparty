@@ -30,12 +30,10 @@ PODS:
     - Capacitor
   - CapawesomeCapacitorAppUpdate (8.0.3):
     - Capacitor
-  - CordovaPluginsStatic (8.5.0):
-    - CapacitorCordova
-    - OneSignalCordovaDependencies
   - IONFilesystemLib (1.1.2)
   - IONGeolocationLib (2.1.0)
-  - OneSignalCordovaDependencies (5.5.2):
+  - OnesignalCapacitorPlugin (1.1.7):
+    - Capacitor
     - OneSignalXCFramework (= 5.5.5)
   - OneSignalXCFramework (5.5.5):
     - OneSignalXCFramework/OneSignalComplete (= 5.5.5)
@@ -103,8 +101,7 @@ DEPENDENCIES:
   - "CapacitorSplashScreen (from `../../../../node_modules/@capacitor/splash-screen`)"
   - "CapacitorStatusBar (from `../../../../node_modules/@capacitor/status-bar`)"
   - "CapawesomeCapacitorAppUpdate (from `../../../../node_modules/@capawesome/capacitor-app-update`)"
-  - CordovaPluginsStatic (from `../capacitor-cordova-ios-plugins`)
-  - OneSignalCordovaDependencies (from `https://github.com/OneSignal/OneSignal-Cordova-SDK.git`, tag `5.5.2`)
+  - "OnesignalCapacitorPlugin (from `../../../../node_modules/@onesignal/capacitor-plugin`)"
   - OneSignalXCFramework/OneSignal (< 6.0, >= 5.0.0)
 
 SPEC REPOS:
@@ -144,16 +141,8 @@ EXTERNAL SOURCES:
     :path: "../../../../node_modules/@capacitor/status-bar"
   CapawesomeCapacitorAppUpdate:
     :path: "../../../../node_modules/@capawesome/capacitor-app-update"
-  CordovaPluginsStatic:
-    :path: "../capacitor-cordova-ios-plugins"
-  OneSignalCordovaDependencies:
-    :git: https://github.com/OneSignal/OneSignal-Cordova-SDK.git
-    :tag: 5.5.2
-
-CHECKOUT OPTIONS:
-  OneSignalCordovaDependencies:
-    :git: https://github.com/OneSignal/OneSignal-Cordova-SDK.git
-    :tag: 5.5.2
+  OnesignalCapacitorPlugin:
+    :path: "../../../../node_modules/@onesignal/capacitor-plugin"
 
 SPEC CHECKSUMS:
   Capacitor: 00b87168591cc006ea6f5c0de681ec5c39a2c8eb
@@ -171,12 +160,11 @@ SPEC CHECKSUMS:
   CapacitorSplashScreen: 7bf61c2001557ff9e195e601c6b87344480d3c65
   CapacitorStatusBar: eca7bc2b58d9f886f1ef9edb66e57a9b29c121af
   CapawesomeCapacitorAppUpdate: 3a7537c6a6696837b51d06f26b2e909fd7b9226f
-  CordovaPluginsStatic: caf26469d65071ae6a1cf9fd53145fed2b30a533
   IONFilesystemLib: 21a63377696b2d8fab5632ecfb7d2ac67bddb68a
   IONGeolocationLib: 6a7b6f76063fb1b01cfb14fae7d0f526e3c9b271
-  OneSignalCordovaDependencies: 5f039a8e7a114ad9a27884c9c56c260c05468cbf
+  OnesignalCapacitorPlugin: 894318abe0522be3428e9799c774c8b7c0b7fba5
   OneSignalXCFramework: 48e5b7c5b51d4e67bab3405229f963efde1a3894
 
-PODFILE CHECKSUM: 6261dde2b90d705951c5283c9f85cbcfcd2f1594
+PODFILE CHECKSUM: 9f47ce0b6e9ee0081dabdb05e7a5c9f1c9cc1354
 
 COCOAPODS: 1.16.2

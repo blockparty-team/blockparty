@@ -22,9 +22,10 @@ dependencies {
     implementation project(':capacitor-splash-screen')
     implementation project(':capacitor-status-bar')
     implementation project(':capawesome-capacitor-app-update')
+    implementation project(':onesignal-capacitor-plugin')
 
 }
-apply from: "../../../../node_modules/onesignal-cordova-plugin/build-extras-onesignal.gradle"
+
 
 if (hasProperty('postBuildExtras')) {
   postBuildExtras()

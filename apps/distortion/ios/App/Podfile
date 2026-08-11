@@ -24,8 +24,7 @@ def capacitor_pods
   pod 'CapacitorSplashScreen', :path => '../../../../node_modules/@capacitor/splash-screen'
   pod 'CapacitorStatusBar', :path => '../../../../node_modules/@capacitor/status-bar'
   pod 'CapawesomeCapacitorAppUpdate', :path => '../../../../node_modules/@capawesome/capacitor-app-update'
-  pod 'OneSignalCordovaDependencies', :git => 'https://github.com/OneSignal/OneSignal-Cordova-SDK.git', :tag => '5.5.2'
-  pod 'CordovaPluginsStatic', :path => '../capacitor-cordova-ios-plugins'
+  pod 'OnesignalCapacitorPlugin', :path => '../../../../node_modules/@onesignal/capacitor-plugin'
 end
 
 target 'App' do

@@ -34,7 +34,6 @@
         "serviceWorker": "apps/karrusel/ngsw-config.json",
         "allowedCommonJsDependencies": [
           "maplibre-gl",
-          "onesignal-cordova-plugin",
           "ws"
         ],
         "browser": "apps/karrusel/src/main.ts"
