@@ -1,4 +1,4 @@
-import { Component, inject, viewChild } from '@angular/core';
+import { Component, inject, viewChild, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { RouteName } from '@blockparty/festival/shared/types';
 import {
@@ -29,6 +29,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     EventCardComponent,
     IonHeader,

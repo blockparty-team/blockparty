@@ -50,9 +50,11 @@
     "@nx/eslint:lint": {
       "inputs": [
         "default",
+        "^default",
         "{workspaceRoot}/.eslintrc.json",
         "{workspaceRoot}/eslint.config.js",
-        "{workspaceRoot}/eslint.config.mjs"
+        "{workspaceRoot}/eslint.config.mjs",
+        "{workspaceRoot}/tools/eslint-rules/**/*"
       ],
       "cache": true
     },
@@ -154,5 +156,6 @@
     "libsDir": "libs"
   },
   "defaultBase": "main",
-  "analytics": true
+  "analytics": true,
+  "neverConnectToCloud": true
 }

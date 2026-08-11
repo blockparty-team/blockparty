@@ -73,12 +73,12 @@
         }
       } @else {
         <ion-radio-group
-          [value]="selectedItems()[0]?.id"
+          [value]="$safeNavigationMigration(selectedItems()[0]?.id)"
           [compareWith]="compareWith"
         >
           @for (item of filteredItems(); track item.id) {
             <ion-item>
-              <ion-radio [value]="item?.id" (click)="onSelectItem(item)">
+              <ion-radio [value]="$safeNavigationMigration(item?.id)" (click)="onSelectItem(item)">
                 {{ displayName(item) }}
               </ion-radio>
             </ion-item>

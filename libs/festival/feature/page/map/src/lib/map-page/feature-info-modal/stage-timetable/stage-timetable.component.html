@@ -30,14 +30,14 @@
           <ion-item [style.--animation-order]="i">
             @if (act.start_time) {
               <span slot="start" class="time-slot">
-                {{ act?.start_time | date: 'HH:mm' }} -
-                {{ act?.end_time | date: 'HH:mm' }}
+                {{ $safeNavigationMigration(act?.start_time) | date: 'HH:mm' }} -
+                {{ $safeNavigationMigration(act?.end_time) | date: 'HH:mm' }}
               </span>
             } @else {
               <span slot="start" class="time-slot">N/A</span>
             }
 
-            <ion-label (click)="onGoToArtist(act?.name!)">
+            <ion-label (click)="onGoToArtist($safeNavigationMigration(act?.name)!)">
               {{ act?.name }}
             </ion-label>
             @if (act.onAir) {

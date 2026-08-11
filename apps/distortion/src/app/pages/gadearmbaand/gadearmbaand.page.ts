@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import {
   IonHeader,
   IonToolbar,
@@ -13,6 +13,7 @@ import {
   selector: 'app-gadearmbaand',
   templateUrl: './gadearmbaand.page.html',
   styleUrls: ['./gadearmbaand.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

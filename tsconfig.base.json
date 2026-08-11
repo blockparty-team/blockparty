@@ -187,7 +187,11 @@
       "libs/tweak/shared/image-upload": [
         "libs/tweak/shared/image-upload/src/index.ts"
       ]
-    }
+    },
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": false,
+    "ignoreDeprecations": "6.0"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

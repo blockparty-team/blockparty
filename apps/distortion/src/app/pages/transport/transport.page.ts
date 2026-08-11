@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { RouteHistoryService } from '@blockparty/festival/shared/service/route-history';
 import { map } from 'rxjs';
 import { Clipboard } from '@capacitor/clipboard';
@@ -20,6 +20,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   selector: 'app-transport',
   templateUrl: './transport.page.html',
   styleUrls: ['./transport.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,

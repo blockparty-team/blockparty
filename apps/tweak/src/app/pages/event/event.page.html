@@ -38,7 +38,7 @@
       <ion-title>{{isEditing() ? 'Edit' : 'Create'}} event</ion-title>
       @if(isEditing()) {
       <ion-buttons slot="end">
-        <ion-button color="danger" (click)="onDeleteEvent(selectedEvent()?.id)">
+        <ion-button color="danger" (click)="onDeleteEvent($safeNavigationMigration(selectedEvent()?.id))">
           <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         </ion-button>
       </ion-buttons>

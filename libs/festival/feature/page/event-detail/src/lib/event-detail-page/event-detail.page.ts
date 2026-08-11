@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { from } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
@@ -37,6 +37,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   selector: 'app-event-detail',
   templateUrl: './event-detail.page.html',
   styleUrls: ['./event-detail.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     RouterLink,
     IonHeader,

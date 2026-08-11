@@ -14,7 +14,7 @@
   <ion-label>
     <h2>{{ artist().name }}</h2>
     @for (act of artist().timetable; track act) {
-      <p>{{ (act?.day)!.name }} | {{ act?.start_time | date: 'HH:mm' }}</p>
+      <p>{{ (act?.day)!.name }} | {{ $safeNavigationMigration(act?.start_time) | date: 'HH:mm' }}</p>
     }
   </ion-label>
 </ion-item>

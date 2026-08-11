@@ -1,65 +1,50 @@
-import { FlatCompat } from '@eslint/eslintrc';
+import angular from 'angular-eslint';
+
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import js from '@eslint/js';
 import baseConfig from '../../eslint.config.mjs';
-
-const compat = new FlatCompat({
-  baseDirectory: dirname(fileURLToPath(import.meta.url)),
-  recommendedConfig: js.configs.recommended,
-});
 
 export default [
   {
     ignores: ['**/dist', '**/out-tsc'],
   },
   ...baseConfig,
-  ...compat
-    .config({
-      extends: [
-        'plugin:@angular-eslint/recommended',
-        'plugin:@angular-eslint/template/process-inline-templates',
+  ...angular.configs.tsRecommended.map((c) => ({ ...c, files: ['**/*.ts'] })),
+  { files: ['**/*.ts'], processor: angular.processInlineTemplates },
+  {
+    files: ['**/*.ts'],
+    rules: {
+      '@angular-eslint/component-class-suffix': [
+        'error',
+        {
+          suffixes: ['Page', 'Component'],
+        },
       ],
-    })
-    .map((config) => ({
-      ...config,
-      files: ['**/*.ts'],
-      rules: {
-        ...config.rules,
-        '@angular-eslint/component-class-suffix': [
-          'error',
-          {
-            suffixes: ['Page', 'Component'],
-          },
-        ],
-        '@angular-eslint/component-selector': [
-          'error',
-          {
-            type: 'element',
-            prefix: 'app',
-            style: 'kebab-case',
-          },
-        ],
-        '@angular-eslint/directive-selector': [
-          'error',
-          {
-            type: 'attribute',
-            prefix: 'app',
-            style: 'camelCase',
-          },
-        ],
-        '@angular-eslint/prefer-standalone': 'off',
-      },
-    })),
-  ...compat
-    .config({
-      extends: ['plugin:@angular-eslint/template/recommended'],
-    })
-    .map((config) => ({
-      ...config,
-      files: ['**/*.html'],
-      rules: {
-        ...config.rules,
-      },
-    })),
+      '@angular-eslint/component-selector': [
+        'error',
+        {
+          type: 'element',
+          prefix: 'app',
+          style: 'kebab-case',
+        },
+      ],
+      '@angular-eslint/directive-selector': [
+        'error',
+        {
+          type: 'attribute',
+          prefix: 'app',
+          style: 'camelCase',
+        },
+      ],
+      '@angular-eslint/prefer-standalone': 'off',
+    },
+  },
+  ...angular.configs.templateRecommended.map((c) => ({
+    ...c,
+    files: ['**/*.html'],
+  })),
+  {
+    files: ['**/*.html'],
+    rules: {},
+  },
 ];

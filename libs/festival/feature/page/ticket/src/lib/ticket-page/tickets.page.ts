@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { TicketStateService } from '@blockparty/festival/data-access/state/ticket';
 import { Browser } from '@capacitor/browser';
 import { EventsGroupedByType } from '@blockparty/festival/data-access/supabase';
@@ -22,6 +22,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
   selector: 'app-tickets',
   templateUrl: './tickets.page.html',
   styleUrls: ['./tickets.page.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     IonHeader,
     IonToolbar,
