@@ -340,7 +340,7 @@
     "targetVersion": "latest",
     "confirmedPackageUpdates": true,
     "runningMigrations": [
-      "22-7-0-add-self-healing-to-gitignore"
+      "23-0-0-consolidate-release-tag-config"
     ],
     "completedMigrations": {
       "22-7-0-add-polygraph-to-git-ignore": {
@@ -350,7 +350,14 @@
         "type": "successful",
         "name": "22-7-0-add-self-healing-to-gitignore",
         "changedFiles": [],
-        "ref": "51648a96f98911cb783c7c52d5f6082377dbb4cc",
+        "ref": "cfb980b2d58fe5ff63903981cc944466739e04ca",
+        "nextSteps": []
+      },
+      "23-0-0-consolidate-release-tag-config": {
+        "type": "successful",
+        "name": "23-0-0-consolidate-release-tag-config",
+        "changedFiles": [],
+        "ref": "6643ec8c2be2edbeafffa60a245f79028de78ea0",
         "nextSteps": []
       }
     }
