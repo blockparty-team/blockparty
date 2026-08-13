@@ -493,7 +493,7 @@ export class MapService {
           this.map.flyTo({
             center,
             offset,
-            zoom,
+            zoom: this.map.getZoom() > zoom ? this.map.getZoom() : zoom,
           });
         }),
       )
